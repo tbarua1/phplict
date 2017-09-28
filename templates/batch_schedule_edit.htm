@@ -1,0 +1,379 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-edit" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_editpage}
+<div {$editpage_chiddenattr} data-pageid="{$pageid}" data-container="editpage" class="container    "> 
+
+
+
+
+{BEGIN container_header}
+<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-9 col-md-offset-3"> 
+
+{BEGIN editheader}
+	<h2 {$editheader_hiddenattr} data-pageid="{$pageid}" data-brick="editheader" >{$pagetitlelabel batch_schedule edit}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END editheader}
+
+
+
+</div>
+{END container_header}
+
+
+
+
+
+
+
+
+{BEGIN container_message}
+<div {$message_chiddenattr} data-pageid="{$pageid}" data-container="message" class="   col-md-6 col-md-offset-3"> 
+
+{BEGIN message_block}
+<div {$message_hiddenattr} data-pageid="{$pageid}" data-brick="message" class="alert {$message_class}" role="alert">
+<h5>{$message}</h5>
+<div>
+{BEGIN back_button}
+		<button class="btn btn-sm btn-default" {$backbutton_attrs}>Back to list</button>
+{END back_button}
+{BEGIN view_page_button}
+	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>View</button>
+{END view_page_button}
+</div>
+</div>
+
+{END message_block}
+
+
+
+</div>
+{END container_message}
+
+
+
+
+
+
+
+</div>
+{END container_editpage}
+
+
+
+{BEGIN container_fields}
+<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+
+
+<div {$editfields_hiddenattr} data-pageid="{$pageid}" data-brick="editfields" class="form-horizontal" role="form">
+
+
+
+			{BEGIN Today_status_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_Today_status}" data-fieldname="Today_status" data-signal-error-for="Today_status{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_Today_status}">
+		{BEGIN Today_status_label}{$label batch_schedule Today_status}{END Today_status_label}
+	</label>
+	<div class="col-md-6" >
+		{$Today_status_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="Today_status">
+		<div class="text-muted" >
+		{$tooltip batch_schedule Today_status}
+		</div>
+	</div>
+</div>
+</div>
+{END Today_status_fieldblock}
+
+			{BEGIN batch_code_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_batch_code}" data-fieldname="batch_code" data-signal-error-for="batch_code{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_batch_code}">
+		{BEGIN batch_code_label}{$label batch_schedule batch_code}{END batch_code_label}
+	</label>
+	<div class="col-md-6" >
+		{$batch_code_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="batch_code">
+		<div class="text-muted" >
+		{$tooltip batch_schedule batch_code}
+		</div>
+	</div>
+</div>
+</div>
+{END batch_code_fieldblock}
+
+			{BEGIN today_attendance_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_today_attendance}" data-fieldname="today_attendance" data-signal-error-for="today_attendance{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_today_attendance}">
+		{BEGIN today_attendance_label}{$label batch_schedule today_attendance}{END today_attendance_label}
+	</label>
+	<div class="col-md-6" >
+		{$today_attendance_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="today_attendance">
+		<div class="text-muted" >
+		{$tooltip batch_schedule today_attendance}
+		</div>
+	</div>
+</div>
+</div>
+{END today_attendance_fieldblock}
+
+			{BEGIN cancle_remark_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_cancle_remark}" data-fieldname="cancle_remark" data-signal-error-for="cancle_remark{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_cancle_remark}">
+		{BEGIN cancle_remark_label}{$label batch_schedule cancle_remark}{END cancle_remark_label}
+	</label>
+	<div class="col-md-6" >
+		{$cancle_remark_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="cancle_remark">
+		<div class="text-muted" >
+		{$tooltip batch_schedule cancle_remark}
+		</div>
+	</div>
+</div>
+</div>
+{END cancle_remark_fieldblock}
+
+			{BEGIN class_date_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_class_date}" data-fieldname="class_date" data-signal-error-for="class_date{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_class_date}">
+		{BEGIN class_date_label}{$label batch_schedule class_date}{END class_date_label}
+	</label>
+	<div class="col-md-6" >
+		{$class_date_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="class_date">
+		<div class="text-muted" >
+		{$tooltip batch_schedule class_date}
+		</div>
+	</div>
+</div>
+</div>
+{END class_date_fieldblock}
+
+			{BEGIN start_time_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_start_time}" data-fieldname="start_time" data-signal-error-for="start_time{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_start_time}">
+		{BEGIN start_time_label}{$label batch_schedule start_time}{END start_time_label}
+	</label>
+	<div class="col-md-6" >
+		{$start_time_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="start_time">
+		<div class="text-muted" >
+		{$tooltip batch_schedule start_time}
+		</div>
+	</div>
+</div>
+</div>
+{END start_time_fieldblock}
+
+			{BEGIN end_time_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_end_time}" data-fieldname="end_time" data-signal-error-for="end_time{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_end_time}">
+		{BEGIN end_time_label}{$label batch_schedule end_time}{END end_time_label}
+	</label>
+	<div class="col-md-6" >
+		{$end_time_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="end_time">
+		<div class="text-muted" >
+		{$tooltip batch_schedule end_time}
+		</div>
+	</div>
+</div>
+</div>
+{END end_time_fieldblock}
+
+			{BEGIN batch_schedulecol_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_batch_schedulecol}" data-fieldname="batch_schedulecol" data-signal-error-for="batch_schedulecol{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_batch_schedulecol}">
+		{BEGIN batch_schedulecol_label}{$label batch_schedule batch_schedulecol}{END batch_schedulecol_label}
+	</label>
+	<div class="col-md-6" >
+		{$batch_schedulecol_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="batch_schedulecol">
+		<div class="text-muted" >
+		{$tooltip batch_schedule batch_schedulecol}
+		</div>
+	</div>
+</div>
+</div>
+{END batch_schedulecol_fieldblock}
+
+			{BEGIN remarks_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_remarks}" data-fieldname="remarks" data-signal-error-for="remarks{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_remarks}">
+		{BEGIN remarks_label}{$label batch_schedule remarks}{END remarks_label}
+	</label>
+	<div class="col-md-6" >
+		{$remarks_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="remarks">
+		<div class="text-muted" >
+		{$tooltip batch_schedule remarks}
+		</div>
+	</div>
+</div>
+</div>
+{END remarks_fieldblock}
+
+
+</div>
+
+
+
+
+</div>
+{END container_fields}
+
+
+
+{BEGIN container_bottombuttons}
+<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+
+
+
+
+{BEGIN container_buttons}
+<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
+
+
+
+
+{BEGIN container_leftbuttons}
+<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-3 col-md-offset-3"> 
+
+{BEGIN editbuttons}
+	{BEGIN save_button}
+	<button class="btn btn-primary" {$savebutton_attrs}>Save</button>
+	{END save_button}
+	{BEGIN back_button}
+		<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
+	{END back_button}
+	{BEGIN close_button}
+	<a href="#" class="btn btn-default" {$closebutton_attrs}>Cancel</a>
+	{END close_button}
+
+{END editbuttons}
+
+
+
+</div>
+{END container_leftbuttons}
+
+
+
+
+
+
+
+
+{BEGIN container_leftbuttons_1}
+<div {$leftbuttons_1_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons_1" class="  text-right col-md-3 "> 
+
+{BEGIN righteditbuttons}
+<div class="btn-group" role="group">
+
+	{BEGIN prev_button}
+	<button class="btn btn-default {$prevbutton_class}" {$prevbutton_attrs}><span class="glyphicon glyphicon-chevron-left"></span></button>
+	{END prev_button}
+	{BEGIN next_button}
+	<button class="btn btn-default  {$nextbutton_class}" {$nextbutton_attrs}><span class="glyphicon glyphicon-chevron-right"></span></button>
+	{END next_button}
+	<div class="btn-group dropup" role="group">
+		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+		<ul class="dropdown-menu dropdown-left">
+			{BEGIN reset_button}
+				<li><a href="#" {$resetbutton_attrs}>Reset</a></li>
+			{END reset_button}
+			{BEGIN view_page_button}
+				<li><a href="#" {$view_page_button_attrs}>View</a></li>
+			{END view_page_button}
+		</ul>
+	</div>
+</div>
+{END righteditbuttons}
+
+
+
+</div>
+{END container_leftbuttons_1}
+
+
+
+
+
+
+</div>
+{END container_buttons}
+
+
+
+
+
+
+</div>
+{END container_bottombuttons}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

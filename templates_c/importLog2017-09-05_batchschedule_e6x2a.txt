@@ -1,0 +1,6 @@
+Import into batchschedule
+9/5/2017 7:17:09 PM
+
+96 out of 96 records processed successfully.
+96 records added.
+0 records updated.

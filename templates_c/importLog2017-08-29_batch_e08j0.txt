@@ -1,0 +1,79 @@
+Import into batch
+8/29/2017 9:22:04 PM
+
+1 out of 25 records processed successfully.
+1 records added.
+0 records updated.
+24 records processed with errors:
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Saturday, Monday, Wednesday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Thur, Fri "
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sun, Tue, Thu"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Saturday, Monday, Wednesday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sunday, Tuesday, Thursday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Sunday, Tuesday, Thursday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Going","Saturday, Monday, Wednesday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Going","Sunday, Tuesday, Thursday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Hold","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Going","Sunday, Tuesday, Thursday"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Thurs, Fri, Sat"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On Going","Thurs, Fri, Sat"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Going","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Going","Sun, Tue, Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Hold","Sun, Tue, Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Hold","Sun, Tue, Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"FS","On Hold","Sat, Mon, Wed"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On going","Sat,Sun,Mon,Tues,Wed,Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On going","Sat,Sun,Mon,Tues,Wed,Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On going","Sun,Mon,Tues,Wed,Thurs"
+
+Duplicate entry '' for key 'Batchcode_UNIQUE'
+"TUP","On going","Mon,Tues,Wed,Thurs,Fri"

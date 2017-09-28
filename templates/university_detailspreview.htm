@@ -1,0 +1,61 @@
+<div {$pageattrs}>
+
+{BEGIN container_dcount}
+<div {$dcount_chiddenattr} data-pageid="{$pageid}" data-container="dcount" class="    "> 
+
+
+<span {$bsdetailspreviewcount_hiddenattr} data-pageid="{$pageid}" data-brick="bsdetailspreviewcount">Details found: <strong>{$row_count}</strong></span>
+
+
+
+
+
+</div>
+{END container_dcount}
+
+
+
+{BEGIN container_detailspreviewgrid}
+
+
+{BEGIN details_data}
+<table class="table striped">
+{BEGIN details_row_header}
+	<thead>
+		<tr class="{$gridHeader_class}" >
+			<th class="{$university_id_class}">{$label university university_id}</th>
+			<th class="{$University_name_class}">{$label university University_name}</th>
+			<th class="{$MOU_date_class}">{$label university MOU_date}</th>
+			<th class="{$TUP_class}">{$label university TUP}</th>
+			<th class="{$FS_class}">{$label university FS}</th>
+			<th class="{$TYPE_class}">{$label university TYPE}</th>
+			<th class="{$division_id_class}">{$label university division_id}</th>
+			<th class="{$Lat_class}">{$label university Lat}</th>
+			<th class="{$Lng_class}">{$label university Lng}</th>
+		</tr>
+	</thead>
+{END details_row_header}
+	<tbody>
+{BEGIN details_row}
+		<tr>
+			<td class="{$university_id_class}">{$university_id_value}</td>
+			<td class="{$University_name_class}">{$University_name_value}</td>
+			<td class="{$MOU_date_class}">{$MOU_date_value}</td>
+			<td class="{$TUP_class}">{$TUP_value}</td>
+			<td class="{$FS_class}">{$FS_value}</td>
+			<td class="{$TYPE_class}">{$TYPE_value}</td>
+			<td class="{$division_id_class}">{$division_id_value}</td>
+			<td class="{$Lat_class}">{$Lat_value}</td>
+			<td class="{$Lng_class}">{$Lng_value}</td>
+		</tr>
+{END details_row}	
+	</tbody>
+</table>
+
+{END details_data}
+
+
+
+{END container_detailspreviewgrid}
+
+</div>

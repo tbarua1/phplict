@@ -1,0 +1,330 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-search" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_searchpage}
+<div {$searchpage_chiddenattr} data-pageid="{$pageid}" data-container="searchpage" class="container    "> 
+
+
+
+
+{BEGIN container_header}
+<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-6 col-md-offset-3"> 
+
+{BEGIN searchheader}
+	<h2 {$bssearchheader_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchheader" >{$pagetitlelabel batchschedule search}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END searchheader}
+
+
+
+</div>
+{END container_header}
+
+
+
+
+
+
+</div>
+{END container_searchpage}
+
+
+
+{BEGIN container_fields}
+<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+
+
+<div {$bssearchfields_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchfields" class="form-horizontal" role="form">
+<div class="container">
+	<div class="form-group">
+		<div class="col-md-12" >
+			&nbsp;
+		</div>
+	</div>
+</div>
+	{BEGIN sid_fieldblock}		
+	<div class="container {$fielddispclass_sid}" data-fieldname="sid">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_sid}">
+				{$label batchschedule sid}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_sid}
+			</div>
+			<div class="col-md-4" >
+				{$sid_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$sid_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END sid_fieldblock}
+	{BEGIN Batchcode_fieldblock}		
+	<div class="container {$fielddispclass_Batchcode}" data-fieldname="Batchcode">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_Batchcode}">
+				{$label batchschedule Batchcode}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_Batchcode}
+			</div>
+			<div class="col-md-4" >
+				{$Batchcode_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$Batchcode_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END Batchcode_fieldblock}
+	{BEGIN sdate_fieldblock}		
+	<div class="container {$fielddispclass_sdate}" data-fieldname="sdate">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_sdate}">
+				{$label batchschedule sdate}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_sdate}
+			</div>
+			<div class="col-md-4" >
+				{$sdate_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$sdate_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END sdate_fieldblock}
+	{BEGIN stime_fieldblock}		
+	<div class="container {$fielddispclass_stime}" data-fieldname="stime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_stime}">
+				{$label batchschedule stime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_stime}
+			</div>
+			<div class="col-md-4" >
+				{$stime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$stime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END stime_fieldblock}
+	{BEGIN etime_fieldblock}		
+	<div class="container {$fielddispclass_etime}" data-fieldname="etime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_etime}">
+				{$label batchschedule etime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_etime}
+			</div>
+			<div class="col-md-4" >
+				{$etime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$etime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END etime_fieldblock}
+	{BEGIN realstime_fieldblock}		
+	<div class="container {$fielddispclass_realstime}" data-fieldname="realstime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_realstime}">
+				{$label batchschedule realstime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_realstime}
+			</div>
+			<div class="col-md-4" >
+				{$realstime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$realstime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END realstime_fieldblock}
+	{BEGIN realetime_fieldblock}		
+	<div class="container {$fielddispclass_realetime}" data-fieldname="realetime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_realetime}">
+				{$label batchschedule realetime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_realetime}
+			</div>
+			<div class="col-md-4" >
+				{$realetime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$realetime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END realetime_fieldblock}
+	{BEGIN status_fieldblock}		
+	<div class="container {$fielddispclass_status}" data-fieldname="status">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_status}">
+				{$label batchschedule status}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_status}
+			</div>
+			<div class="col-md-4" >
+				{$status_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$status_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END status_fieldblock}
+	{BEGIN remark_fieldblock}		
+	<div class="container {$fielddispclass_remark}" data-fieldname="remark">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_remark}">
+				{$label batchschedule remark}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_remark}
+			</div>
+			<div class="col-md-4" >
+				{$remark_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$remark_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END remark_fieldblock}
+	{BEGIN attendance_fieldblock}		
+	<div class="container {$fielddispclass_attendance}" data-fieldname="attendance">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_attendance}">
+				{$label batchschedule attendance}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_attendance}
+			</div>
+			<div class="col-md-4" >
+				{$attendance_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$attendance_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END attendance_fieldblock}
+</div>
+
+
+
+
+</div>
+{END container_fields}
+
+
+
+{BEGIN container_bottombuttons}
+<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container form-horizontal   "> 
+
+
+
+
+{BEGIN container_bbuttons}
+<div {$bbuttons_chiddenattr} data-pageid="{$pageid}" data-container="bbuttons" class=" form-group   "> 
+
+
+
+
+{BEGIN container_leftbuttons}
+<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-10 col-md-offset-2"> 
+
+{BEGIN searchbuttons}
+{BEGIN search_button}
+<button class="btn btn-primary" {$searchbutton_attrs}>Search</button>
+{END search_button} 
+{BEGIN reset_button}
+<button class="btn btn-default" {$resetbutton_attrs}>Reset</button>
+{END reset_button}
+{BEGIN back_button}
+<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
+{END back_button}
+{END searchbuttons}
+
+
+
+</div>
+{END container_leftbuttons}
+
+
+
+
+
+
+</div>
+{END container_bbuttons}
+
+
+
+
+
+
+</div>
+{END container_bottombuttons}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

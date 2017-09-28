@@ -1,0 +1,470 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-add" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_editpage}
+<div {$editpage_chiddenattr} data-pageid="{$pageid}" data-container="editpage" class="container    "> 
+
+
+
+
+{BEGIN container_header}
+<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-9 col-md-offset-3"> 
+
+{BEGIN addheader}
+	<h2 {$addheader_hiddenattr} data-pageid="{$pageid}" data-brick="addheader" >{$pagetitlelabel batch add}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END addheader}
+
+
+
+</div>
+{END container_header}
+
+
+
+
+
+
+
+
+{BEGIN container_message}
+<div {$message_chiddenattr} data-pageid="{$pageid}" data-container="message" class="   col-md-6 col-md-offset-3"> 
+
+{BEGIN message_block}
+<div {$message_hiddenattr} data-pageid="{$pageid}" data-brick="message" class="alert {$message_class}" role="alert">
+<h5>{$message}</h5>
+<div>
+{BEGIN back_button}
+		<button class="btn btn-sm btn-default" {$backbutton_attrs}>Back to list</button>
+{END back_button}
+{BEGIN view_page_button}
+	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>View</button>
+{END view_page_button}
+{BEGIN edit_page_button}
+	<button class="btn btn-sm btn-default" {$edit_page_button_attrs}>Edit</button>
+{END edit_page_button}
+</div>
+</div>
+
+{END message_block}
+
+
+
+</div>
+{END container_message}
+
+
+
+
+
+
+
+</div>
+{END container_editpage}
+
+
+
+{BEGIN container_fields}
+<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+
+
+<div {$addfields_hiddenattr} data-pageid="{$pageid}" data-brick="addfields" class="form-horizontal" role="form">
+			{BEGIN Batchcode_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_Batchcode}" data-fieldname="Batchcode" data-signal-error-for="Batchcode{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_Batchcode}">
+		{BEGIN Batchcode_label}{$label batch Batchcode}{END Batchcode_label}
+	</label>
+	<div class="col-md-6" >
+		{$Batchcode_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="Batchcode">
+		<div class="text-muted" >
+		{$tooltip batch Batchcode}
+		</div>
+	</div>
+</div>
+</div>
+{END Batchcode_fieldblock}
+
+			{BEGIN fbgroup_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_fbgroup}" data-fieldname="fbgroup" data-signal-error-for="fbgroup{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_fbgroup}">
+		{BEGIN fbgroup_label}{$label batch fbgroup}{END fbgroup_label}
+	</label>
+	<div class="col-md-6" >
+		{$fbgroup_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="fbgroup">
+		<div class="text-muted" >
+		{$tooltip batch fbgroup}
+		</div>
+	</div>
+</div>
+</div>
+{END fbgroup_fieldblock}
+
+			{BEGIN division_id_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_division_id}" data-fieldname="division_id" data-signal-error-for="division_id{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_division_id}">
+		{BEGIN division_id_label}{$label batch division_id}{END division_id_label}
+	</label>
+	<div class="col-md-6" >
+		{$division_id_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="division_id">
+		<div class="text-muted" >
+		{$tooltip batch division_id}
+		</div>
+	</div>
+</div>
+</div>
+{END division_id_fieldblock}
+
+			{BEGIN university_id_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_university_id}" data-fieldname="university_id" data-signal-error-for="university_id{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_university_id}">
+		{BEGIN university_id_label}{$label batch university_id}{END university_id_label}
+	</label>
+	<div class="col-md-6" >
+		{$university_id_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="university_id">
+		<div class="text-muted" >
+		{$tooltip batch university_id}
+		</div>
+	</div>
+</div>
+</div>
+{END university_id_fieldblock}
+
+			{BEGIN department_id_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_department_id}" data-fieldname="department_id" data-signal-error-for="department_id{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_department_id}">
+		{BEGIN department_id_label}{$label batch department_id}{END department_id_label}
+	</label>
+	<div class="col-md-6" >
+		{$department_id_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="department_id">
+		<div class="text-muted" >
+		{$tooltip batch department_id}
+		</div>
+	</div>
+</div>
+</div>
+{END department_id_fieldblock}
+
+			{BEGIN starting_Date_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_starting_Date}" data-fieldname="starting_Date" data-signal-error-for="starting_Date{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_starting_Date}">
+		{BEGIN starting_Date_label}{$label batch starting_Date}{END starting_Date_label}
+	</label>
+	<div class="col-md-6" >
+		{$starting_Date_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="starting_Date">
+		<div class="text-muted" >
+		{$tooltip batch starting_Date}
+		</div>
+	</div>
+</div>
+</div>
+{END starting_Date_fieldblock}
+
+			{BEGIN Track_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_Track}" data-fieldname="Track" data-signal-error-for="Track{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_Track}">
+		{BEGIN Track_label}{$label batch Track}{END Track_label}
+	</label>
+	<div class="col-md-6" >
+		{$Track_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="Track">
+		<div class="text-muted" >
+		{$tooltip batch Track}
+		</div>
+	</div>
+</div>
+</div>
+{END Track_fieldblock}
+
+			{BEGIN cid_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_cid}" data-fieldname="cid" data-signal-error-for="cid{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_cid}">
+		{BEGIN cid_label}{$label batch cid}{END cid_label}
+	</label>
+	<div class="col-md-6" >
+		{$cid_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="cid">
+		<div class="text-muted" >
+		{$tooltip batch cid}
+		</div>
+	</div>
+</div>
+</div>
+{END cid_fieldblock}
+
+			{BEGIN status_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_status}" data-fieldname="status" data-signal-error-for="status{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_status}">
+		{BEGIN status_label}{$label batch status}{END status_label}
+	</label>
+	<div class="col-md-6" >
+		{$status_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="status">
+		<div class="text-muted" >
+		{$tooltip batch status}
+		</div>
+	</div>
+</div>
+</div>
+{END status_fieldblock}
+
+			{BEGIN uni_spoc_name_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_uni_spoc_name}" data-fieldname="uni_spoc_name" data-signal-error-for="uni_spoc_name{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_uni_spoc_name}">
+		{BEGIN uni_spoc_name_label}{$label batch uni_spoc_name}{END uni_spoc_name_label}
+	</label>
+	<div class="col-md-6" >
+		{$uni_spoc_name_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="uni_spoc_name">
+		<div class="text-muted" >
+		{$tooltip batch uni_spoc_name}
+		</div>
+	</div>
+</div>
+</div>
+{END uni_spoc_name_fieldblock}
+
+			{BEGIN uni_spoc_contact_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_uni_spoc_contact}" data-fieldname="uni_spoc_contact" data-signal-error-for="uni_spoc_contact{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_uni_spoc_contact}">
+		{BEGIN uni_spoc_contact_label}{$label batch uni_spoc_contact}{END uni_spoc_contact_label}
+	</label>
+	<div class="col-md-6" >
+		{$uni_spoc_contact_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="uni_spoc_contact">
+		<div class="text-muted" >
+		{$tooltip batch uni_spoc_contact}
+		</div>
+	</div>
+</div>
+</div>
+{END uni_spoc_contact_fieldblock}
+
+			{BEGIN tech_trainer_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_tech_trainer}" data-fieldname="tech_trainer" data-signal-error-for="tech_trainer{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_tech_trainer}">
+		{BEGIN tech_trainer_label}{$label batch tech_trainer}{END tech_trainer_label}
+	</label>
+	<div class="col-md-6" >
+		{$tech_trainer_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="tech_trainer">
+		<div class="text-muted" >
+		{$tooltip batch tech_trainer}
+		</div>
+	</div>
+</div>
+</div>
+{END tech_trainer_fieldblock}
+
+			{BEGIN soft_skill_trainer_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_soft_skill_trainer}" data-fieldname="soft_skill_trainer" data-signal-error-for="soft_skill_trainer{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_soft_skill_trainer}">
+		{BEGIN soft_skill_trainer_label}{$label batch soft_skill_trainer}{END soft_skill_trainer_label}
+	</label>
+	<div class="col-md-6" >
+		{$soft_skill_trainer_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="soft_skill_trainer">
+		<div class="text-muted" >
+		{$tooltip batch soft_skill_trainer}
+		</div>
+	</div>
+</div>
+</div>
+{END soft_skill_trainer_fieldblock}
+
+			{BEGIN ey_spoc_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_ey_spoc}" data-fieldname="ey_spoc" data-signal-error-for="ey_spoc{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_ey_spoc}">
+		{BEGIN ey_spoc_label}{$label batch ey_spoc}{END ey_spoc_label}
+	</label>
+	<div class="col-md-6" >
+		{$ey_spoc_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="ey_spoc">
+		<div class="text-muted" >
+		{$tooltip batch ey_spoc}
+		</div>
+	</div>
+</div>
+</div>
+{END ey_spoc_fieldblock}
+
+			{BEGIN local_spoc_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_local_spoc}" data-fieldname="local_spoc" data-signal-error-for="local_spoc{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_local_spoc}">
+		{BEGIN local_spoc_label}{$label batch local_spoc}{END local_spoc_label}
+	</label>
+	<div class="col-md-6" >
+		{$local_spoc_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="local_spoc">
+		<div class="text-muted" >
+		{$tooltip batch local_spoc}
+		</div>
+	</div>
+</div>
+</div>
+{END local_spoc_fieldblock}
+
+			{BEGIN schedule_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_schedule}" data-fieldname="schedule" data-signal-error-for="schedule{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_schedule}">
+		{BEGIN schedule_label}{$label batch schedule}{END schedule_label}
+	</label>
+	<div class="col-md-6" >
+		{$schedule_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="schedule">
+		<div class="text-muted" >
+		{$tooltip batch schedule}
+		</div>
+	</div>
+</div>
+</div>
+{END schedule_fieldblock}
+
+
+</div>
+
+
+
+
+</div>
+{END container_fields}
+
+
+
+{BEGIN container_bottombuttons}
+<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+
+
+
+
+{BEGIN container_buttons}
+<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
+
+
+
+
+{BEGIN container_leftbuttons}
+<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-3 col-md-offset-3"> 
+
+{BEGIN addbuttons}
+	{BEGIN save_button}
+	<button class="btn btn-primary" {$savebutton_attrs}>Save</button>
+	{END save_button}
+	{BEGIN reset_button}
+	<button class="btn btn-default" id="resetButton{$id}">Reset</button>
+	{END reset_button}
+	{BEGIN back_button}
+		<button class="btn btn-default" id="backButton{$id}">Back to list</button>
+	{END back_button}
+	{BEGIN cancel_button}
+	<a href="#" class="btn btn-default" id="cancelButton{$id}">Cancel</a>
+	{END cancel_button}
+
+{END addbuttons}
+
+
+
+</div>
+{END container_leftbuttons}
+
+
+
+
+
+
+</div>
+{END container_buttons}
+
+
+
+
+
+
+</div>
+{END container_bottombuttons}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

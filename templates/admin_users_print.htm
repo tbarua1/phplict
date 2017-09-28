@@ -1,0 +1,354 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-print" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_pdf}
+<div {$pdf_chiddenattr} data-pageid="{$pageid}" data-container="pdf" class="   col-md-12 "> 
+
+{BEGIN printbuttons}
+
+{END printbuttons}
+
+
+
+</div>
+{END container_pdf}
+
+
+
+
+
+{BEGIN container_pageheader}
+<div {$pageheader_chiddenattr} data-pageid="{$pageid}" data-container="pageheader" class="    "> 
+
+{BEGIN printheader}
+	<h2 {$printheader_hiddenattr} data-pageid="{$pageid}" data-brick="printheader" >{$pagetitlelabel admin_users print}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END printheader}
+
+
+{BEGIN page_number}
+<span>Page <span class="rp-pageno">{$pageno}</span> of <span class="rp-pagecount">{$pagecount}</span></span>
+{END page_number}
+
+
+
+</div>
+{END container_pageheader}
+
+
+
+{BEGIN container_grid}
+
+
+{BEGIN grid_block}
+	<table class="table table-bordered rp-maintable" {$printgrid_hiddenattr} data-pageid="{$pageid}" data-brick="printgrid" >
+	<thead>
+	{BEGIN grid_header}
+		<tr class="{$gridHeader_class}" >
+		{BEGIN record_header}
+			{BEGIN eid_fieldheadercolumn}
+			<th class="{$eid_class}" {$eid_style}  data-field="eid">
+				{$label admin_users eid}
+			</th>
+			{END eid_fieldheadercolumn}
+			{BEGIN ename_fieldheadercolumn}
+			<th class="{$ename_class}" {$ename_style}  data-field="ename">
+				{$label admin_users ename}
+			</th>
+			{END ename_fieldheadercolumn}
+			{BEGIN emppic_fieldheadercolumn}
+			<th class="{$emppic_class}" {$emppic_style}  data-field="emppic">
+				{$label admin_users emppic}
+			</th>
+			{END emppic_fieldheadercolumn}
+			{BEGIN designation_fieldheadercolumn}
+			<th class="{$designation_class}" {$designation_style}  data-field="designation">
+				{$label admin_users designation}
+			</th>
+			{END designation_fieldheadercolumn}
+			{BEGIN whtasapp_fieldheadercolumn}
+			<th class="{$whtasapp_class}" {$whtasapp_style}  data-field="whtasapp">
+				{$label admin_users whtasapp}
+			</th>
+			{END whtasapp_fieldheadercolumn}
+			{BEGIN localnum_fieldheadercolumn}
+			<th class="{$localnum_class}" {$localnum_style}  data-field="localnum">
+				{$label admin_users localnum}
+			</th>
+			{END localnum_fieldheadercolumn}
+			{BEGIN skype_fieldheadercolumn}
+			<th class="{$skype_class}" {$skype_style}  data-field="skype">
+				{$label admin_users skype}
+			</th>
+			{END skype_fieldheadercolumn}
+			{BEGIN dropbox_fieldheadercolumn}
+			<th class="{$dropbox_class}" {$dropbox_style}  data-field="dropbox">
+				{$label admin_users dropbox}
+			</th>
+			{END dropbox_fieldheadercolumn}
+			{BEGIN email_fieldheadercolumn}
+			<th class="{$email_class}" {$email_style}  data-field="email">
+				{$label admin_users email}
+			</th>
+			{END email_fieldheadercolumn}
+			{BEGIN dob_fieldheadercolumn}
+			<th class="{$dob_class}" {$dob_style}  data-field="dob">
+				{$label admin_users dob}
+			</th>
+			{END dob_fieldheadercolumn}
+			{BEGIN passportno_fieldheadercolumn}
+			<th class="{$passportno_class}" {$passportno_style}  data-field="passportno">
+				{$label admin_users passportno}
+			</th>
+			{END passportno_fieldheadercolumn}
+			{BEGIN passport_expiry_fieldheadercolumn}
+			<th class="{$passport_expiry_class}" {$passport_expiry_style}  data-field="passport_expiry">
+				{$label admin_users passport_expiry}
+			</th>
+			{END passport_expiry_fieldheadercolumn}
+			{BEGIN visa_no_fieldheadercolumn}
+			<th class="{$visa_no_class}" {$visa_no_style}  data-field="visa_no">
+				{$label admin_users visa_no}
+			</th>
+			{END visa_no_fieldheadercolumn}
+			{BEGIN visa_expiry_fieldheadercolumn}
+			<th class="{$visa_expiry_class}" {$visa_expiry_style}  data-field="visa_expiry">
+				{$label admin_users visa_expiry}
+			</th>
+			{END visa_expiry_fieldheadercolumn}
+			{BEGIN division_id_fieldheadercolumn}
+			<th class="{$division_id_class}" {$division_id_style}  data-field="division_id">
+				{$label admin_users division_id}
+			</th>
+			{END division_id_fieldheadercolumn}
+			{BEGIN doj_fieldheadercolumn}
+			<th class="{$doj_class}" {$doj_style}  data-field="doj">
+				{$label admin_users doj}
+			</th>
+			{END doj_fieldheadercolumn}
+			{BEGIN dor_fieldheadercolumn}
+			<th class="{$dor_class}" {$dor_style}  data-field="dor">
+				{$label admin_users dor}
+			</th>
+			{END dor_fieldheadercolumn}
+			{BEGIN status_id_fieldheadercolumn}
+			<th class="{$status_id_class}" {$status_id_style}  data-field="status_id">
+				{$label admin_users status_id}
+			</th>
+			{END status_id_fieldheadercolumn}
+			{BEGIN experence_fieldheadercolumn}
+			<th class="{$experence_class}" {$experence_style}  data-field="experence">
+				{$label admin_users experence}
+			</th>
+			{END experence_fieldheadercolumn}
+			{BEGIN nationality_fieldheadercolumn}
+			<th class="{$nationality_class}" {$nationality_style}  data-field="nationality">
+				{$label admin_users nationality}
+			</th>
+			{END nationality_fieldheadercolumn}
+			{BEGIN qulification_fieldheadercolumn}
+			<th class="{$qulification_class}" {$qulification_style}  data-field="qulification">
+				{$label admin_users qulification}
+			</th>
+			{END qulification_fieldheadercolumn}
+			{BEGIN skillset_fieldheadercolumn}
+			<th class="{$skillset_class}" {$skillset_style}  data-field="skillset">
+				{$label admin_users skillset}
+			</th>
+			{END skillset_fieldheadercolumn}
+			{BEGIN cid_fieldheadercolumn}
+			<th class="{$cid_class}" {$cid_style}  data-field="cid">
+				{$label admin_users cid}
+			</th>
+			{END cid_fieldheadercolumn}
+			{BEGIN endrecordheader_block}
+			<th class="rnr-cs">&nbsp;</th>
+			{END endrecordheader_block}
+		{END record_header}
+		</tr>
+	{END grid_header}
+	</thead>
+	
+	<tbody>	
+	{BEGIN grid_row}
+		<tr class="{$rowclass}" {$rowattrs} {$rowstyle}>
+		{BEGIN grid_record}
+			{BEGIN eid_fieldcolumn}
+			<td  class="{$eid_class}" {$eid_style} {$recordattrs}>
+				{$eid_value}
+			</td>
+			{END eid_fieldcolumn}
+			{BEGIN ename_fieldcolumn}
+			<td  class="{$ename_class}" {$ename_style} {$recordattrs}>
+				{$ename_value}
+			</td>
+			{END ename_fieldcolumn}
+			{BEGIN emppic_fieldcolumn}
+			<td  class="{$emppic_class}" {$emppic_style} {$recordattrs}>
+				{$emppic_value}
+			</td>
+			{END emppic_fieldcolumn}
+			{BEGIN designation_fieldcolumn}
+			<td  class="{$designation_class}" {$designation_style} {$recordattrs}>
+				{$designation_value}
+			</td>
+			{END designation_fieldcolumn}
+			{BEGIN whtasapp_fieldcolumn}
+			<td  class="{$whtasapp_class}" {$whtasapp_style} {$recordattrs}>
+				{$whtasapp_value}
+			</td>
+			{END whtasapp_fieldcolumn}
+			{BEGIN localnum_fieldcolumn}
+			<td  class="{$localnum_class}" {$localnum_style} {$recordattrs}>
+				{$localnum_value}
+			</td>
+			{END localnum_fieldcolumn}
+			{BEGIN skype_fieldcolumn}
+			<td  class="{$skype_class}" {$skype_style} {$recordattrs}>
+				{$skype_value}
+			</td>
+			{END skype_fieldcolumn}
+			{BEGIN dropbox_fieldcolumn}
+			<td  class="{$dropbox_class}" {$dropbox_style} {$recordattrs}>
+				{$dropbox_value}
+			</td>
+			{END dropbox_fieldcolumn}
+			{BEGIN email_fieldcolumn}
+			<td  class="{$email_class}" {$email_style} {$recordattrs}>
+				{$email_value}
+			</td>
+			{END email_fieldcolumn}
+			{BEGIN dob_fieldcolumn}
+			<td  class="{$dob_class}" {$dob_style} {$recordattrs}>
+				{$dob_value}
+			</td>
+			{END dob_fieldcolumn}
+			{BEGIN passportno_fieldcolumn}
+			<td  class="{$passportno_class}" {$passportno_style} {$recordattrs}>
+				{$passportno_value}
+			</td>
+			{END passportno_fieldcolumn}
+			{BEGIN passport_expiry_fieldcolumn}
+			<td  class="{$passport_expiry_class}" {$passport_expiry_style} {$recordattrs}>
+				{$passport_expiry_value}
+			</td>
+			{END passport_expiry_fieldcolumn}
+			{BEGIN visa_no_fieldcolumn}
+			<td  class="{$visa_no_class}" {$visa_no_style} {$recordattrs}>
+				{$visa_no_value}
+			</td>
+			{END visa_no_fieldcolumn}
+			{BEGIN visa_expiry_fieldcolumn}
+			<td  class="{$visa_expiry_class}" {$visa_expiry_style} {$recordattrs}>
+				{$visa_expiry_value}
+			</td>
+			{END visa_expiry_fieldcolumn}
+			{BEGIN division_id_fieldcolumn}
+			<td  class="{$division_id_class}" {$division_id_style} {$recordattrs}>
+				{$division_id_value}
+			</td>
+			{END division_id_fieldcolumn}
+			{BEGIN doj_fieldcolumn}
+			<td  class="{$doj_class}" {$doj_style} {$recordattrs}>
+				{$doj_value}
+			</td>
+			{END doj_fieldcolumn}
+			{BEGIN dor_fieldcolumn}
+			<td  class="{$dor_class}" {$dor_style} {$recordattrs}>
+				{$dor_value}
+			</td>
+			{END dor_fieldcolumn}
+			{BEGIN status_id_fieldcolumn}
+			<td  class="{$status_id_class}" {$status_id_style} {$recordattrs}>
+				{$status_id_value}
+			</td>
+			{END status_id_fieldcolumn}
+			{BEGIN experence_fieldcolumn}
+			<td  class="{$experence_class}" {$experence_style} {$recordattrs}>
+				{$experence_value}
+			</td>
+			{END experence_fieldcolumn}
+			{BEGIN nationality_fieldcolumn}
+			<td  class="{$nationality_class}" {$nationality_style} {$recordattrs}>
+				{$nationality_value}
+			</td>
+			{END nationality_fieldcolumn}
+			{BEGIN qulification_fieldcolumn}
+			<td  class="{$qulification_class}" {$qulification_style} {$recordattrs}>
+				{$qulification_value}
+			</td>
+			{END qulification_fieldcolumn}
+			{BEGIN skillset_fieldcolumn}
+			<td  class="{$skillset_class}" {$skillset_style} {$recordattrs}>
+				{$skillset_value}
+			</td>
+			{END skillset_fieldcolumn}
+			{BEGIN cid_fieldcolumn}
+			<td  class="{$cid_class}" {$cid_style} {$recordattrs}>
+				{$cid_value}
+			</td>
+			{END cid_fieldcolumn}
+			{BEGIN endrecord_block}
+			<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
+			{END endrecord_block}
+		{END grid_record}
+		</tr>
+{END grid_row}
+	</tbody>
+
+</table>
+
+{END grid_block}
+
+
+
+{END container_grid}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

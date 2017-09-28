@@ -1,0 +1,57 @@
+<div {$pageattrs}>
+
+{BEGIN container_column}
+<div class="rnr-c rnr-ch rnr-c-column">
+
+{BEGIN masterlist_title}
+<div  class="style1 rnr-bl rnr-b-masterprintheader {$brickclass_masterprintheader}"><span>{$pagetitlelabel batch_schedule masterprint}</span></div>
+{END masterlist_title}
+
+<div class="rnr-hfiller"></div>
+</div>
+{END container_column}
+
+
+
+{BEGIN container_mastergrid}
+
+
+
+<table {$bsmasterprintgrid_hiddenattr} data-pageid="{$pageid}" data-brick="bsmasterprintgrid" class="table rnr-b-mastergridfields rnr-gridtable" >
+		<thead>
+		<tr>
+			<th class="{$batch_schedule_id_class}">{$label batch_schedule batch_schedule_id}</th>
+			<th class="{$Today_status_class}">{$label batch_schedule Today_status}</th>
+			<th class="{$batch_code_class}">{$label batch_schedule batch_code}</th>
+			<th class="{$today_attendance_class}">{$label batch_schedule today_attendance}</th>
+			<th class="{$cancle_remark_class}">{$label batch_schedule cancle_remark}</th>
+			<th class="{$class_date_class}">{$label batch_schedule class_date}</th>
+			<th class="{$start_time_class}">{$label batch_schedule start_time}</th>
+			<th class="{$end_time_class}">{$label batch_schedule end_time}</th>
+			<th class="{$batch_schedulecol_class}">{$label batch_schedule batch_schedulecol}</th>
+			<th class="{$remarks_class}">{$label batch_schedule remarks}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="{$batch_schedule_id_class}">{$batch_schedule_id_mastervalue}</td>
+			<td class="{$Today_status_class}">{$Today_status_mastervalue}</td>
+			<td class="{$batch_code_class}">{$batch_code_mastervalue}</td>
+			<td class="{$today_attendance_class}">{$today_attendance_mastervalue}</td>
+			<td class="{$cancle_remark_class}">{$cancle_remark_mastervalue}</td>
+			<td class="{$class_date_class}">{$class_date_mastervalue}</td>
+			<td class="{$start_time_class}">{$start_time_mastervalue}</td>
+			<td class="{$end_time_class}">{$end_time_mastervalue}</td>
+			<td class="{$batch_schedulecol_class}">{$batch_schedulecol_mastervalue}</td>
+			<td class="{$remarks_class}">{$remarks_mastervalue}</td>
+		</tr>
+	</tbody>
+
+</table> 
+
+
+
+
+{END container_mastergrid}
+
+</div>

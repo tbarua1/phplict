@@ -1,0 +1,62 @@
+<!DOCTYPE html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<HTML {$html_attrs}><HEAD> 
+<META http-equiv="X-UA-Compatible" content="IE=Edge"> 
+<META name="viewport" content="width=device-width, initial-scale=1.0"> 
+<TITLE>{$pagetitle}</TITLE> 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<LINK href="styles/default.css" rel="stylesheet" type="text/css"> {BEGIN rtlCSS}<LINK href="styles/defaultRTL.css" rel="stylesheet" type="text/css">{END rtlCSS} {BEGIN styleCSSFiles}<LINK href="{$stylepath}" rel="stylesheet" type="text/css">{END styleCSSFiles}      
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY class="{$stylename} function-export" {$bodyattrs}>{BEGIN body}
+
+{$header} 
+<STYLE>
+			{$containerCss}
+		</STYLE>
+ 
+<DIV class="bs-top">
+{BEGIN container_page}<DIV class="container" data-container="page" data-pageid="{$pageid}" {$page_chiddenattr}>
+{BEGIN container_page_1}<DIV class="bs-standalone-page col-md-6 col-md-offset-3" data-container="page_1" data-pageid="{$pageid}" {$page_1_chiddenattr}>
+{BEGIN container_panel}<DIV class="bs-pagepanel panel panel-primary" data-container="panel" data-pageid="{$pageid}" {$panel_chiddenattr}>
+{BEGIN container_header}<DIV class="panel-heading" data-container="header" data-pageid="{$pageid}" {$header_chiddenattr}>
+{BEGIN exportheader}<H3 class="panel-title" data-brick="exportheader" data-pageid="{$pageid}" {$exportheader_hiddenattr}>
+{$pagetitlelabel batchschedule export} </H3>{END exportheader}</DIV>
+{END container_header}{BEGIN container_body}<DIV class="panel-body" data-container="body" data-pageid="{$pageid}" {$body_chiddenattr}>
+{BEGIN container_range}<DIV class="col-sm-12 col-md-12" data-container="range" data-pageid="{$pageid}" {$range_chiddenattr}>
+{BEGIN range_block}<DIV class="row" data-brick="bsexprange" data-pageid="{$pageid}" {$bsexprange_hiddenattr}>
+<DIV class="col-md-4 col-sm-4">
+<DIV class="radio bs-desktop-right">	Data range </DIV></DIV>
+<DIV class="col-md-8 col-sm-8">
+<DIV class="radio"><LABEL><INPUT name="records" type="radio" checked value="all" {$allpageradio_attrs}>	All records </LABEL> </DIV>
+<DIV class="radio"><LABEL><INPUT name="records" type="radio" value="page" {$pageradio_attrs}>	Current page only </LABEL> 
+</DIV></DIV></DIV>{END range_block}</DIV>
+{END container_range}{BEGIN container_fields}<DIV class="col-sm-12 col-md-12" data-container="fields" data-pageid="{$pageid}" {$fields_chiddenattr}>{BEGIN choosefields}{END choosefields}</DIV>
+{END container_fields}{BEGIN container_fields_1}<DIV class="col-sm-12 col-md-12" data-container="fields_1" data-pageid="{$pageid}" {$fields_1_chiddenattr}>
+{BEGIN exportformat}<DIV class="row" data-brick="bsexportformat" data-pageid="{$pageid}" {$bsexportformat_hiddenattr}>
+<DIV class="col-sm-4 col-md-4">
+<DIV class="radio bs-desktop-right">	Data format </DIV></DIV>
+<DIV class="col-sm-8 col-md-8">
+<DIV class="radio"><LABEL><INPUT name="txtformatting" type="radio" checked="" 
+value="formatted">	formatted values </LABEL> </DIV>
+<DIV class="radio"><LABEL><INPUT name="txtformatting" type="radio" 
+value="raw">	raw values </LABEL> </DIV></DIV></DIV>{END exportformat}</DIV>
+{END container_fields_1}{BEGIN container_fields_2}<DIV class="col-sm-12 col-md-12" data-container="fields_2" data-pageid="{$pageid}" {$fields_2_chiddenattr}>
+<DIV class="row" data-brick="bsexpoutput" data-pageid="{$pageid}" {$bsexpoutput_hiddenattr}>
+<DIV class="col-sm-4 col-md-4">
+<DIV class="radio bs-desktop-right">	Output format </DIV></DIV>
+<DIV class="col-md-8 col-sm-8">
+<DIV class="radio">{BEGIN groupExcel}<LABEL><INPUT name="type" type="radio" checked value="excel2007" {$excelradio_attrs}> 
+<SPAN><IMG align="absmiddle" alt=" " src="images/excel.gif">&nbsp;Excel 2007</SPAN> </LABEL> 
+{END groupExcel}</DIV>
+<DIV class="radio"> <LABEL><INPUT name="type" type="radio" value="word" {$wordradio_attrs}> <SPAN><IMG align="absmiddle" alt=" " src="images/word.gif">&nbsp;Word</SPAN> </LABEL> 
+</DIV> </DIV></DIV></DIV>
+{END container_fields_2}{BEGIN container_buttons}<DIV class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4" data-container="buttons" data-pageid="{$pageid}" {$buttons_chiddenattr}>
+{BEGIN exportbuttons}<DIV data-brick="bsexpbuttons" data-pageid="{$pageid}" {$bsexpbuttons_hiddenattr}><A class="btn btn-primary" href="#" {$exportlink_attrs}>Export</A> {BEGIN cancel_button}<A class="btn btn-default" id="cancelButton{$id}" href="#">	Cancel 
+</A>	 {END cancel_button}</DIV>{END exportbuttons}</DIV>{END container_buttons}</DIV>{END container_body}</DIV>{END container_panel}</DIV>{END container_page_1}</DIV>{END container_page}</DIV>
+<DIV class="bs-middle">
+<DIV class="bs-topmiddle"></DIV>
+<DIV class="bs-left" {$blockattr_left}></DIV> 
+<DIV class="bs-center"></DIV> 
+<DIV class="bs-right"></DIV></DIV>
+<DIV class="bs-bottom"></DIV>
+{$footer}{END body} </BODY></HTML>
