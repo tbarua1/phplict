@@ -78,23 +78,39 @@ $tdatadistrict[".fieldsForRegister"] = array();
 
 $tdatadistrict[".listAjax"] = false;
 
-	$tdatadistrict[".audit"] = true;
+	$tdatadistrict[".audit"] = false;
 
-	$tdatadistrict[".locking"] = true;
+	$tdatadistrict[".locking"] = false;
 
+$tdatadistrict[".edit"] = true;
+$tdatadistrict[".afterEditAction"] = 1;
+$tdatadistrict[".closePopupAfterEdit"] = 1;
+$tdatadistrict[".afterEditActionDetTable"] = "";
 
+$tdatadistrict[".add"] = true;
+$tdatadistrict[".afterAddAction"] = 1;
+$tdatadistrict[".closePopupAfterAdd"] = 1;
+$tdatadistrict[".afterAddActionDetTable"] = "";
 
+$tdatadistrict[".list"] = true;
 
 
 
 $tdatadistrict[".reorderRecordsByHeader"] = true;
 
 
+$tdatadistrict[".exportFormatting"] = 2;
+$tdatadistrict[".exportDelimiter"] = ",";
+		
+$tdatadistrict[".view"] = true;
 
+$tdatadistrict[".import"] = true;
 
+$tdatadistrict[".exportTo"] = true;
 
+$tdatadistrict[".printFriendly"] = true;
 
-
+$tdatadistrict[".delete"] = true;
 
 $tdatadistrict[".showSimpleSearchOptions"] = false;
 
@@ -119,7 +135,7 @@ $tdatadistrict[".rowHighlite"] = true;
 
 
 
-						
+
 
 $tdatadistrict[".ajaxCodeSnippetAdded"] = false;
 
@@ -132,7 +148,7 @@ $tdatadistrict[".isUseTimeForSearch"] = false;
 
 
 
-$tdatadistrict[".badgeColor"] = "B22222";
+$tdatadistrict[".badgeColor"] = "4682B4";
 
 
 $tdatadistrict[".allSearchFields"] = array();
@@ -263,12 +279,16 @@ $tdatadistrict[".masterListFields"][] = "division_id";
 $tdatadistrict[".masterListFields"][] = "dname";
 
 $tdatadistrict[".inlineAddFields"] = array();
+$tdatadistrict[".inlineAddFields"][] = "division_id";
+$tdatadistrict[".inlineAddFields"][] = "dname";
 
 $tdatadistrict[".editFields"] = array();
 $tdatadistrict[".editFields"][] = "division_id";
 $tdatadistrict[".editFields"][] = "dname";
 
 $tdatadistrict[".inlineEditFields"] = array();
+$tdatadistrict[".inlineEditFields"][] = "division_id";
+$tdatadistrict[".inlineEditFields"][] = "dname";
 
 $tdatadistrict[".updateSelectedFields"] = array();
 $tdatadistrict[".updateSelectedFields"][] = "division_id";
@@ -439,10 +459,12 @@ $tdatadistrict[".printFields"][] = "dname";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -594,10 +616,12 @@ $tdatadistrict[".printFields"][] = "dname";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 

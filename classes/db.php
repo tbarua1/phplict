@@ -226,7 +226,7 @@ class DB
 		$whereSql = "";
 		if( count($conditions) > 0 )
 		{
-			$whereSql .= " WHERE " . implode(",", $conditions);
+			$whereSql .= " WHERE " . implode(" AND ", $conditions);
 		}
 
 		return $whereSql;
@@ -404,27 +404,28 @@ class DB
 		if( $dalTables[ $conn->connId ] )
 			return;
 		$dalTables[ $conn->connId ] = array();
-		if( "mydb_at_localhost" == $conn->connId )
+		if( "test_at_node3907_env_7428455_diadem_cloud" == $conn->connId )
 		{
-			$dalTables[$conn->connId][] = array("name" => "batch", "varname" => "mydb_at_localhost__batch", "altvarname" => "batch", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "batch_completion_status", "varname" => "mydb_at_localhost__batch_completion_status", "altvarname" => "batch_completion_status", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "batchschedule", "varname" => "mydb_at_localhost__batchschedule", "altvarname" => "batchschedule", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "consultant", "varname" => "mydb_at_localhost__consultant", "altvarname" => "consultant", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "consultant_view", "varname" => "mydb_at_localhost__consultant_view", "altvarname" => "consultant_view", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "courses", "varname" => "mydb_at_localhost__courses", "altvarname" => "courses", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "department", "varname" => "mydb_at_localhost__department", "altvarname" => "department", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "district", "varname" => "mydb_at_localhost__district", "altvarname" => "district", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "division", "varname" => "mydb_at_localhost__division", "altvarname" => "division", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "emp_status", "varname" => "mydb_at_localhost__emp_status", "altvarname" => "emp_status", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "employees", "varname" => "mydb_at_localhost__employees", "altvarname" => "employees", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "full_batch_details", "varname" => "mydb_at_localhost__full_batch_details", "altvarname" => "full_batch_details", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "lict_uggroups", "varname" => "mydb_at_localhost__lict_uggroups", "altvarname" => "lict_uggroups", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "lict_ugmembers", "varname" => "mydb_at_localhost__lict_ugmembers", "altvarname" => "lict_ugmembers", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "lict_ugrights", "varname" => "mydb_at_localhost__lict_ugrights", "altvarname" => "lict_ugrights", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "project1_audit", "varname" => "mydb_at_localhost__project1_audit", "altvarname" => "project1_audit", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "project1_locking", "varname" => "mydb_at_localhost__project1_locking", "altvarname" => "project1_locking", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "schedule_map", "varname" => "mydb_at_localhost__schedule_map", "altvarname" => "schedule_map", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-			$dalTables[$conn->connId][] = array("name" => "university", "varname" => "mydb_at_localhost__university", "altvarname" => "university", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
+			$dalTables[$conn->connId][] = array("name" => "batch", "varname" => "test_at_node3907_env_7428455_diadem_cloud__batch", "altvarname" => "batch", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "batchschedule", "varname" => "test_at_node3907_env_7428455_diadem_cloud__batchschedule", "altvarname" => "batchschedule", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "consultant", "varname" => "test_at_node3907_env_7428455_diadem_cloud__consultant", "altvarname" => "consultant", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "courses", "varname" => "test_at_node3907_env_7428455_diadem_cloud__courses", "altvarname" => "courses", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "department", "varname" => "test_at_node3907_env_7428455_diadem_cloud__department", "altvarname" => "department", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "district", "varname" => "test_at_node3907_env_7428455_diadem_cloud__district", "altvarname" => "district", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "division", "varname" => "test_at_node3907_env_7428455_diadem_cloud__division", "altvarname" => "division", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "emp_status", "varname" => "test_at_node3907_env_7428455_diadem_cloud__emp_status", "altvarname" => "emp_status", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "employees", "varname" => "test_at_node3907_env_7428455_diadem_cloud__employees", "altvarname" => "employees", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "full_batch_details", "varname" => "test_at_node3907_env_7428455_diadem_cloud__full_batch_details", "altvarname" => "full_batch_details", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "lict_uggroups", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_uggroups", "altvarname" => "lict_uggroups", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "lict_ugmembers", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_ugmembers", "altvarname" => "lict_ugmembers", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "lict_ugrights", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_ugrights", "altvarname" => "lict_ugrights", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "project1_audit", "varname" => "test_at_node3907_env_7428455_diadem_cloud__project1_audit", "altvarname" => "project1_audit", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "project1_locking", "varname" => "test_at_node3907_env_7428455_diadem_cloud__project1_locking", "altvarname" => "project1_locking", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "roles", "varname" => "test_at_node3907_env_7428455_diadem_cloud__roles", "altvarname" => "roles", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "schedule_map", "varname" => "test_at_node3907_env_7428455_diadem_cloud__schedule_map", "altvarname" => "schedule_map", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "trainer", "varname" => "test_at_node3907_env_7428455_diadem_cloud__trainer", "altvarname" => "trainer", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "university", "varname" => "test_at_node3907_env_7428455_diadem_cloud__university", "altvarname" => "university", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+			$dalTables[$conn->connId][] = array("name" => "university_view", "varname" => "test_at_node3907_env_7428455_diadem_cloud__university_view", "altvarname" => "university_view", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
 		}
 	}
 	
@@ -508,6 +509,15 @@ class DB
 	 *  tokens: ["aaa", "old.bbb", "master.order date"]
 	 *  matches: [":aaa", ":old.bbb", ":{master.order date}"]
 	 *  offsets: [28, 35, 46]
+	 *
+	 *	Exceptions for tokens without {}
+	 *	1. shouldn't start with number 
+	*		:62aaa 
+	 *	2. shouldn't follow letter
+	 *		x:aaa
+	 *	3. shouldn't follow :
+	 *		::aaa
+	 *
  	 *	@return Array [ "tokens" => Array, "matches" => Array, "offsets" => Array ]
 	 */
 	protected static function scanTokenString( $sql )
@@ -519,13 +529,24 @@ class DB
 		//	match aaa, old.bbb, master.order date from:
 		//	insert into table values (':aaa', :old.bbb, ':{master.order date}')
 
-		$pattern = '/\:([a-zA-Z_]{1}[\w\.]*)|\:\{(.*)\}/';
+		$pattern = '/(?:[^\w\:]|^)(\:([a-zA-Z_]{1}[\w\.]*))|\:\{(.*?)\}/';
+		
+		
 		$result = findMatches( $pattern, $sql );
 		foreach( $result as $m ) 
 		{
-			$matches[] = $m["match"];
-			$offsets[] = $m["offset"];
-			$tokens[] = $m["submatches"][0] != "" ? $m["submatches"][0] : $m["submatches"][1];
+			if( $m["submatches"][0] != "" ) {
+				//	first variant, no {}
+				$matches[] = $m["submatches"][0];
+				$tokens[] = $m["submatches"][1];
+				$offsets[] = $m["offset"] + strpos( $m["match"], $m["submatches"][0] );
+			} 
+			else
+			{
+				$matches[] = $m["match"];
+				$tokens[] = $m["submatches"][2];
+				$offsets[] = $m["offset"];
+			}
 		}
 		
 

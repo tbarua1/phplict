@@ -866,26 +866,6 @@ function fileCustomExpression($file, $data, $field, $ptype, $table="")
 	global $strTableName;
 	if(!$table)
 		$table = $strTableName;
-				if($table=="employees" && $field=="emppic")
-	{
-		;
-		return $value;
-	}
-				if($table=="admin_members" && $field=="emppic")
-	{
-		;
-		return $value;
-	}
-				if($table=="admin_users" && $field=="emppic")
-	{
-		;
-		return $value;
-	}
-				if($table=="employees1" && $field=="emppic")
-	{
-		;
-		return $value;
-	}
 	return $value;
 }
 
@@ -910,10 +890,6 @@ function GetDefaultValue($field, $ptype, $table="")
 	global $strTableName;
 	if(!$table)
 		$table=$strTableName;
-				if($table=="batchschedule" && $field=="status")
-	{
-		return Scheduled;
-	}
 	return "";
 }
 

@@ -1943,6 +1943,9 @@ class SearchClause extends SearchClauseBase
 		
 		if( !$sessionPrefix )
 			$sessionPrefix = $dashTName ? $dashTName."_".$tName : $tName;
+
+		if ( !postvalue("saveSearch") )
+			$searchSavingEnabled = true;		
 		
 		if( $_cachedSeachClauses[ $sessionPrefix ] )
 			return $_cachedSeachClauses[ $sessionPrefix ];

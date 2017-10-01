@@ -117,6 +117,16 @@
 				{$label batchschedule etime}
 			</th>
 			{END etime_fieldheadercolumn}
+			{BEGIN realstime_fieldheadercolumn}
+			<th class="{$realstime_class}" {$realstime_style}  data-field="realstime">
+				{$label batchschedule realstime}
+			</th>
+			{END realstime_fieldheadercolumn}
+			{BEGIN realetime_fieldheadercolumn}
+			<th class="{$realetime_class}" {$realetime_style}  data-field="realetime">
+				{$label batchschedule realetime}
+			</th>
+			{END realetime_fieldheadercolumn}
 			{BEGIN status_fieldheadercolumn}
 			<th class="{$status_class}" {$status_style}  data-field="status">
 				{$label batchschedule status}
@@ -169,6 +179,16 @@
 				{$etime_value}
 			</td>
 			{END etime_fieldcolumn}
+			{BEGIN realstime_fieldcolumn}
+			<td  class="{$realstime_class}" {$realstime_style} {$recordattrs}>
+				{$realstime_value}
+			</td>
+			{END realstime_fieldcolumn}
+			{BEGIN realetime_fieldcolumn}
+			<td  class="{$realetime_class}" {$realetime_style} {$recordattrs}>
+				{$realetime_value}
+			</td>
+			{END realetime_fieldcolumn}
 			{BEGIN status_fieldcolumn}
 			<td  class="{$status_class}" {$status_style} {$recordattrs}>
 				{$status_value}

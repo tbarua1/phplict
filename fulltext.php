@@ -29,7 +29,7 @@ $cipherer = new RunnerCipherer(GetTableByShort($table), $pSet);
 $_connection = $cman->byTable( $strTableName );
 
 $lookupInRegisterPage = false;
-																								if(!in_array($field,$pSet->getListFields()))
+												if(!in_array($field,$pSet->getListFields()))
 {
 	$lookupInRegisterPage = false;
 }

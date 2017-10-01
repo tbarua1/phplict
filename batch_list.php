@@ -29,7 +29,7 @@ if( ListPage::processSaveParams( $strTableName ) )
 
 $layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_list";
 $layout->blocks["center"] = array();
 $layout->containers["gridcontrols"] = array();
@@ -205,7 +205,36 @@ $page_layouts["batch_list"] = $layout;
 
 $layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
+		$layout->customCssPageName = "consultant_masterlist";
+$layout->blocks["bare"] = array();
+$layout->containers["column"] = array();
+$layout->container_properties["column"] = array(  );
+$layout->containers["column"][] = array("name"=>"masterlistheader",
+	"block"=>"masterlist_title", "substyle"=>1  );
+
+$layout->skins["column"] = "";
+
+$layout->blocks["bare"][] = "column";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "";
+
+$layout->blocks["bare"][] = "mastergrid";
+$page_layouts["consultant_masterlist"] = $layout;
+
+
+
+
+
+
+
+$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
+$layout->version = 3;
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "courses_masterlist";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();
@@ -234,7 +263,7 @@ $page_layouts["courses_masterlist"] = $layout;
 
 $layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "department_masterlist";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();
@@ -263,7 +292,7 @@ $page_layouts["department_masterlist"] = $layout;
 
 $layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "division_masterlist";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();
@@ -292,7 +321,36 @@ $page_layouts["division_masterlist"] = $layout;
 
 $layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
+		$layout->customCssPageName = "employees_masterlist";
+$layout->blocks["bare"] = array();
+$layout->containers["column"] = array();
+$layout->container_properties["column"] = array(  );
+$layout->containers["column"][] = array("name"=>"masterlistheader",
+	"block"=>"masterlist_title", "substyle"=>1  );
+
+$layout->skins["column"] = "";
+
+$layout->blocks["bare"][] = "column";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "";
+
+$layout->blocks["bare"][] = "mastergrid";
+$page_layouts["employees_masterlist"] = $layout;
+
+
+
+
+
+
+
+$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
+$layout->version = 3;
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "university_masterlist";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();
@@ -312,35 +370,6 @@ $layout->skins["mastergrid"] = "";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["university_masterlist"] = $layout;
-
-
-
-
-
-
-
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
-		$layout->customCssPageName = "consultant_masterlist";
-$layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
-	"block"=>"", "substyle"=>1  );
-
-$layout->skins["mastergrid"] = "";
-
-$layout->blocks["bare"][] = "mastergrid";
-$page_layouts["consultant_masterlist"] = $layout;
 
 
 

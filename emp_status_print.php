@@ -14,6 +14,8 @@ add_nocache_headers();
 
 require_once("include/emp_status_variables.php");
 
+if( !Security::processPageSecurity( $strtablename, 'P' ) )
+	return;
 
 
 

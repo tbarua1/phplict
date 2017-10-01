@@ -124,11 +124,10 @@
 				<li><a href="#" {$logoutlink_attrs}>Log out</a></li>
 		{END logoutbutton}
 		
-		{BEGIN adminarea_link}
-				<li><a href="admin_rights_list.php" {$adminarealink_attrs}>Admin Area</a></li>
-		{END adminarea_link}
 
-
+	{BEGIN changepwd_link}
+				<li><a href="#" {$changepwdlink_attrs}>Change password</a></li>
+	{END changepwd_link}
 			</ul>
 		</span>
 	{END loggedas_message}
@@ -307,7 +306,9 @@
 	
 	<div class="panel-footer bottomSearchButt" {$bottomSearchButt_attrs}>
 		<button class="btn btn-primary" id="searchButton{$id}" {$searchbutton_attrs}>Search</button>
-		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs}>Show all</button>
+		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs}>
+		Show all
+		</button>
 	</div>
 </div>
 

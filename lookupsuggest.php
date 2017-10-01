@@ -243,8 +243,9 @@ if( strlen($lookupOrderBy) )
 
 if($LookupType == LT_QUERY)
 {
-	$LookupSQL = $lookupQueryObj->toSql(whereAdd($lookupQueryObj->m_where->toSql($lookupQueryObj), $strLookupWhere),
-		strlen($lookupOrderBy) ? ' ORDER BY '.$lookupOrderBy : null);
+	$LookupSQL = $lookupQueryObj->buildSQL_default( $strLookupWhere );
+	if( strlen($lookupOrderBy) )
+		$LookupSQL .= ' ORDER BY '.$lookupOrderBy;
 }
 else
 {

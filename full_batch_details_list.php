@@ -29,7 +29,7 @@ if( ListPage::processSaveParams( $strTableName ) )
 
 $layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "full_batch_details_list";
 $layout->blocks["center"] = array();
 $layout->containers["gridcontrols"] = array();

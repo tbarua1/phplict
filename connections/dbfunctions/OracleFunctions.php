@@ -77,14 +77,6 @@ class OracleFunctions extends DBFunctions
 		return "upper(".$dbval.")";
 	}
 
-	/**
-	 * @param Mixed val
-	 * @return String
-	 */
-	public function addDateQuotes( $val )
-	{
-		return "'".$val."'";
-	}
 	
 	/**
 	 * @param Mixed value

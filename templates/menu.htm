@@ -23,13 +23,7 @@
 			{$containerCss}
 		</style>
 		<DIV class="bs-top">
-        
-
-{BEGIN container_top}
-<div {$top_chiddenattr} data-pageid="{$pageid}" data-container="top" class="container    "> 
-
-
-{BEGIN container_menu}<nav {$menu_chiddenattr} data-pageid="{$pageid}" data-container="menu" class="navbar navbar-default ">					
+        {BEGIN container_menu}<nav {$menu_chiddenattr} data-pageid="{$pageid}" data-container="menu" class="navbar navbar-default ">					
 
 
 
@@ -59,7 +53,7 @@
 
 
 
-{BEGIN container_menu_1}<div {$menu_1_chiddenattr} data-pageid="{$pageid}" data-container="menu_1" class="bs-navform navbar-collapse bs-navcontrolled bs-hidden-xs" aria-expanded="false" >												   
+{BEGIN container_menu_1}<div {$menu_1_chiddenattr} data-pageid="{$pageid}" data-container="menu_1" class="bs-navform navbar-collapse bs-hidden-xs bs-navcontrolled" aria-expanded="false" >												   
 {BEGIN menu_block}
 {$menu main horizontal}
 
@@ -92,10 +86,9 @@
 		{END logoutbutton}
 		
 
-		{BEGIN adminarea_link}
-				<li><a href="admin_rights_list.php" {$adminarealink_attrs}>Admin Area</a></li>
-		{END adminarea_link}
-
+	{BEGIN changepwd_link}
+				<li><a href="#" {$changepwdlink_attrs}>Change password</a></li>
+	{END changepwd_link}
 			</ul>
 		</span>
 	{END loggedas_message}
@@ -115,11 +108,6 @@
 
 									</nav>{END container_menu}
 
-
-
-
-
-
 {BEGIN container_center}
 <div {$center_chiddenattr} data-pageid="{$pageid}" data-container="center" class="container    "> 
 
@@ -132,14 +120,6 @@
 
 </div>
 {END container_center}
-
-
-
-
-
-
-</div>
-{END container_top}
 
 
 		</div>

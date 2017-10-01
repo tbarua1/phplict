@@ -69,7 +69,9 @@ class ODBCFunctions extends DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
-		return "#".$val."#";
+		if( $val == "" || $val === null )
+			return 'null';
+		return "#".$this->addSlashes($val)."#";
 	}
 
 	/**

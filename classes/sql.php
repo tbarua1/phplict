@@ -1215,8 +1215,11 @@ class SQLQuery extends SQLEntity
 		);
 	}
 
-	function buildSQL_default( $additionalWhere ){
+	function buildSQL_default( $additionalWhere = "" ){
 		
+		if( !is_array( $additionalWhere ) )
+			$additionalWhere = array( $additionalWhere );
+
 		return SQLQuery::buildSQL( $this->getSqlComponents(), $additionalWhere );
 	}
 

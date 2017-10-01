@@ -75,23 +75,39 @@ $tdatadepartment[".fieldsForRegister"] = array();
 
 $tdatadepartment[".listAjax"] = false;
 
-	$tdatadepartment[".audit"] = true;
+	$tdatadepartment[".audit"] = false;
 
-	$tdatadepartment[".locking"] = true;
+	$tdatadepartment[".locking"] = false;
 
+$tdatadepartment[".edit"] = true;
+$tdatadepartment[".afterEditAction"] = 1;
+$tdatadepartment[".closePopupAfterEdit"] = 1;
+$tdatadepartment[".afterEditActionDetTable"] = "";
 
+$tdatadepartment[".add"] = true;
+$tdatadepartment[".afterAddAction"] = 1;
+$tdatadepartment[".closePopupAfterAdd"] = 1;
+$tdatadepartment[".afterAddActionDetTable"] = "";
 
+$tdatadepartment[".list"] = true;
 
 
 
 $tdatadepartment[".reorderRecordsByHeader"] = true;
 
 
+$tdatadepartment[".exportFormatting"] = 2;
+$tdatadepartment[".exportDelimiter"] = ",";
+		
+$tdatadepartment[".view"] = true;
 
+$tdatadepartment[".import"] = true;
 
+$tdatadepartment[".exportTo"] = true;
 
+$tdatadepartment[".printFriendly"] = true;
 
-
+$tdatadepartment[".delete"] = true;
 
 $tdatadepartment[".showSimpleSearchOptions"] = false;
 
@@ -116,7 +132,7 @@ $tdatadepartment[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdatadepartment[".ajaxCodeSnippetAdded"] = false;
 
@@ -252,11 +268,13 @@ $tdatadepartment[".masterListFields"][] = "Department_id";
 $tdatadepartment[".masterListFields"][] = "Dname";
 
 $tdatadepartment[".inlineAddFields"] = array();
+$tdatadepartment[".inlineAddFields"][] = "Dname";
 
 $tdatadepartment[".editFields"] = array();
 $tdatadepartment[".editFields"][] = "Dname";
 
 $tdatadepartment[".inlineEditFields"] = array();
+$tdatadepartment[".inlineEditFields"][] = "Dname";
 
 $tdatadepartment[".updateSelectedFields"] = array();
 $tdatadepartment[".updateSelectedFields"][] = "Dname";
@@ -423,10 +441,12 @@ $tdatadepartment[".printFields"][] = "Dname";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 

@@ -44,18 +44,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsuniversity_view[""] = array();
 	$placeHoldersuniversity_view[""] = array();
 	$pageTitlesuniversity_view[""] = array();
-	$fieldLabelsuniversity_view[""]["university_id"] = "University Id";
-	$fieldToolTipsuniversity_view[""]["university_id"] = "";
-	$placeHoldersuniversity_view[""]["university_id"] = "";
-	$fieldLabelsuniversity_view[""]["University_name"] = "University Name";
-	$fieldToolTipsuniversity_view[""]["University_name"] = "";
-	$placeHoldersuniversity_view[""]["University_name"] = "";
-	$fieldLabelsuniversity_view[""]["division_id"] = "Division Id";
-	$fieldToolTipsuniversity_view[""]["division_id"] = "";
-	$placeHoldersuniversity_view[""]["division_id"] = "";
-	$fieldLabelsuniversity_view[""]["dname"] = "Dname";
-	$fieldToolTipsuniversity_view[""]["dname"] = "";
-	$placeHoldersuniversity_view[""]["dname"] = "";
 	if (count($fieldToolTipsuniversity_view[""]))
 		$tdatauniversity_view[".isUseToolTips"] = true;
 }
@@ -93,22 +81,28 @@ $tdatauniversity_view[".fieldsForRegister"] = array();
 
 $tdatauniversity_view[".listAjax"] = false;
 
-	$tdatauniversity_view[".audit"] = true;
+	$tdatauniversity_view[".audit"] = false;
 
-	$tdatauniversity_view[".locking"] = true;
+	$tdatauniversity_view[".locking"] = false;
 
 
 
+$tdatauniversity_view[".list"] = true;
 
 
 
 $tdatauniversity_view[".reorderRecordsByHeader"] = true;
 
 
+$tdatauniversity_view[".exportFormatting"] = 2;
+$tdatauniversity_view[".exportDelimiter"] = ",";
+		
 
+$tdatauniversity_view[".import"] = true;
 
+$tdatauniversity_view[".exportTo"] = true;
 
-
+$tdatauniversity_view[".printFriendly"] = true;
 
 
 $tdatauniversity_view[".showSimpleSearchOptions"] = false;
@@ -134,7 +128,7 @@ $tdatauniversity_view[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdatauniversity_view[".ajaxCodeSnippetAdded"] = false;
 
@@ -153,7 +147,11 @@ $tdatauniversity_view[".allSearchFields"] = array();
 $tdatauniversity_view[".filterFields"] = array();
 $tdatauniversity_view[".requiredSearchFields"] = array();
 
-
+$tdatauniversity_view[".allSearchFields"][] = "university_id";
+	$tdatauniversity_view[".allSearchFields"][] = "University_name";
+	$tdatauniversity_view[".allSearchFields"][] = "division_id";
+	$tdatauniversity_view[".allSearchFields"][] = "dname";
+	
 
 $tdatauniversity_view[".googleLikeFields"] = array();
 $tdatauniversity_view[".googleLikeFields"][] = "university_id";
@@ -162,6 +160,11 @@ $tdatauniversity_view[".googleLikeFields"][] = "division_id";
 $tdatauniversity_view[".googleLikeFields"][] = "dname";
 
 
+$tdatauniversity_view[".advSearchFields"] = array();
+$tdatauniversity_view[".advSearchFields"][] = "university_id";
+$tdatauniversity_view[".advSearchFields"][] = "University_name";
+$tdatauniversity_view[".advSearchFields"][] = "division_id";
+$tdatauniversity_view[".advSearchFields"][] = "dname";
 
 $tdatauniversity_view[".tableType"] = "list";
 
@@ -248,13 +251,25 @@ $tableKeysuniversity_view = array();
 $tdatauniversity_view[".Keys"] = $tableKeysuniversity_view;
 
 $tdatauniversity_view[".listFields"] = array();
+$tdatauniversity_view[".listFields"][] = "university_id";
+$tdatauniversity_view[".listFields"][] = "University_name";
+$tdatauniversity_view[".listFields"][] = "division_id";
+$tdatauniversity_view[".listFields"][] = "dname";
 
 $tdatauniversity_view[".hideMobileList"] = array();
 
 
 $tdatauniversity_view[".viewFields"] = array();
+$tdatauniversity_view[".viewFields"][] = "university_id";
+$tdatauniversity_view[".viewFields"][] = "University_name";
+$tdatauniversity_view[".viewFields"][] = "division_id";
+$tdatauniversity_view[".viewFields"][] = "dname";
 
 $tdatauniversity_view[".addFields"] = array();
+$tdatauniversity_view[".addFields"][] = "university_id";
+$tdatauniversity_view[".addFields"][] = "University_name";
+$tdatauniversity_view[".addFields"][] = "division_id";
+$tdatauniversity_view[".addFields"][] = "dname";
 
 $tdatauniversity_view[".masterListFields"] = array();
 $tdatauniversity_view[".masterListFields"][] = "university_id";
@@ -263,19 +278,47 @@ $tdatauniversity_view[".masterListFields"][] = "division_id";
 $tdatauniversity_view[".masterListFields"][] = "dname";
 
 $tdatauniversity_view[".inlineAddFields"] = array();
+$tdatauniversity_view[".inlineAddFields"][] = "university_id";
+$tdatauniversity_view[".inlineAddFields"][] = "University_name";
+$tdatauniversity_view[".inlineAddFields"][] = "division_id";
+$tdatauniversity_view[".inlineAddFields"][] = "dname";
 
 $tdatauniversity_view[".editFields"] = array();
+$tdatauniversity_view[".editFields"][] = "university_id";
+$tdatauniversity_view[".editFields"][] = "University_name";
+$tdatauniversity_view[".editFields"][] = "division_id";
+$tdatauniversity_view[".editFields"][] = "dname";
 
 $tdatauniversity_view[".inlineEditFields"] = array();
+$tdatauniversity_view[".inlineEditFields"][] = "university_id";
+$tdatauniversity_view[".inlineEditFields"][] = "University_name";
+$tdatauniversity_view[".inlineEditFields"][] = "division_id";
+$tdatauniversity_view[".inlineEditFields"][] = "dname";
 
 $tdatauniversity_view[".updateSelectedFields"] = array();
+$tdatauniversity_view[".updateSelectedFields"][] = "university_id";
+$tdatauniversity_view[".updateSelectedFields"][] = "University_name";
+$tdatauniversity_view[".updateSelectedFields"][] = "division_id";
+$tdatauniversity_view[".updateSelectedFields"][] = "dname";
 
 
 $tdatauniversity_view[".exportFields"] = array();
+$tdatauniversity_view[".exportFields"][] = "university_id";
+$tdatauniversity_view[".exportFields"][] = "University_name";
+$tdatauniversity_view[".exportFields"][] = "division_id";
+$tdatauniversity_view[".exportFields"][] = "dname";
 
 $tdatauniversity_view[".importFields"] = array();
+$tdatauniversity_view[".importFields"][] = "university_id";
+$tdatauniversity_view[".importFields"][] = "University_name";
+$tdatauniversity_view[".importFields"][] = "division_id";
+$tdatauniversity_view[".importFields"][] = "dname";
 
 $tdatauniversity_view[".printFields"] = array();
+$tdatauniversity_view[".printFields"][] = "university_id";
+$tdatauniversity_view[".printFields"][] = "University_name";
+$tdatauniversity_view[".printFields"][] = "division_id";
+$tdatauniversity_view[".printFields"][] = "dname";
 
 
 //	university_id
@@ -292,17 +335,27 @@ $tdatauniversity_view[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "university_id";
 
 		$fdata["isSQLExpression"] = true;
@@ -310,7 +363,8 @@ $tdatauniversity_view[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -388,6 +442,12 @@ $tdatauniversity_view[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -407,17 +467,27 @@ $tdatauniversity_view[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "University_name";
 
 		$fdata["isSQLExpression"] = true;
@@ -425,7 +495,8 @@ $tdatauniversity_view[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -503,6 +574,12 @@ $tdatauniversity_view[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -522,17 +599,27 @@ $tdatauniversity_view[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "division_id";
 
 		$fdata["isSQLExpression"] = true;
@@ -540,7 +627,8 @@ $tdatauniversity_view[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -618,6 +706,12 @@ $tdatauniversity_view[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -637,17 +731,27 @@ $tdatauniversity_view[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "dname";
 
 		$fdata["isSQLExpression"] = true;
@@ -655,7 +759,8 @@ $tdatauniversity_view[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -733,6 +838,12 @@ $tdatauniversity_view[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 

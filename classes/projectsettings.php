@@ -2739,6 +2739,10 @@ function fillProjectEntites()
 		return;
 	$projectEntities[ "batch" ] = array( "url" => "batch", "type" => 0 );
 	$projectEntitiesReverse[ "batch" ] = "batch";
+	$projectEntities[ "batchschedule" ] = array( "url" => "batchschedule", "type" => 0 );
+	$projectEntitiesReverse[ "batchschedule" ] = "batchschedule";
+	$projectEntities[ "consultant" ] = array( "url" => "consultant", "type" => 0 );
+	$projectEntitiesReverse[ "consultant" ] = "consultant";
 	$projectEntities[ "courses" ] = array( "url" => "courses", "type" => 0 );
 	$projectEntitiesReverse[ "courses" ] = "courses";
 	$projectEntities[ "department" ] = array( "url" => "department", "type" => 0 );
@@ -2749,30 +2753,18 @@ function fillProjectEntites()
 	$projectEntitiesReverse[ "division" ] = "division";
 	$projectEntities[ "emp_status" ] = array( "url" => "emp_status", "type" => 0 );
 	$projectEntitiesReverse[ "emp_status" ] = "emp_status";
-	$projectEntities[ "university" ] = array( "url" => "university", "type" => 0 );
-	$projectEntitiesReverse[ "university" ] = "university";
 	$projectEntities[ "employees" ] = array( "url" => "employees", "type" => 0 );
 	$projectEntitiesReverse[ "employees" ] = "employees";
 	$projectEntities[ "full_batch_details" ] = array( "url" => "full_batch_details", "type" => 0 );
 	$projectEntitiesReverse[ "full_batch_details" ] = "full_batch_details";
-	$projectEntities[ "batchschedule" ] = array( "url" => "batchschedule", "type" => 0 );
-	$projectEntitiesReverse[ "batchschedule" ] = "batchschedule";
 	$projectEntities[ "schedule_map" ] = array( "url" => "schedule_map", "type" => 0 );
 	$projectEntitiesReverse[ "schedule_map" ] = "schedule_map";
-	$projectEntities[ "admin_rights" ] = array( "url" => "admin_rights", "type" => 1 );
-	$projectEntitiesReverse[ "admin_rights" ] = "admin_rights";
-	$projectEntities[ "admin_members" ] = array( "url" => "admin_members", "type" => 1 );
-	$projectEntitiesReverse[ "admin_members" ] = "admin_members";
-	$projectEntities[ "admin_users" ] = array( "url" => "admin_users", "type" => 1 );
-	$projectEntitiesReverse[ "admin_users" ] = "admin_users";
-	$projectEntities[ "batch_completion_status" ] = array( "url" => "batch_completion_status", "type" => 0 );
-	$projectEntitiesReverse[ "batch_completion_status" ] = "batch_completion_status";
-	$projectEntities[ "employees1" ] = array( "url" => "employees1", "type" => 1 );
-	$projectEntitiesReverse[ "employees1" ] = "employees1";
-	$projectEntities[ "consultant_view" ] = array( "url" => "consultant_view", "type" => 0 );
-	$projectEntitiesReverse[ "consultant_view" ] = "consultant_view";
-	$projectEntities[ "consultant" ] = array( "url" => "consultant", "type" => 0 );
-	$projectEntitiesReverse[ "consultant" ] = "consultant";
+	$projectEntities[ "trainer" ] = array( "url" => "trainer", "type" => 0 );
+	$projectEntitiesReverse[ "trainer" ] = "trainer";
+	$projectEntities[ "university" ] = array( "url" => "university", "type" => 0 );
+	$projectEntitiesReverse[ "university" ] = "university";
+	$projectEntities[ "university_view" ] = array( "url" => "university_view", "type" => 0 );
+	$projectEntitiesReverse[ "university_view" ] = "university_view";
 }
 
 function findTable( $table ) {

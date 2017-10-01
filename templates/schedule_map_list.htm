@@ -117,11 +117,10 @@
 				<li><a href="#" {$logoutlink_attrs}>Log out</a></li>
 		{END logoutbutton}
 		
-		{BEGIN adminarea_link}
-				<li><a href="admin_rights_list.php" {$adminarealink_attrs}>Admin Area</a></li>
-		{END adminarea_link}
 
-
+	{BEGIN changepwd_link}
+				<li><a href="#" {$changepwdlink_attrs}>Change password</a></li>
+	{END changepwd_link}
 			</ul>
 		</span>
 	{END loggedas_message}
@@ -279,7 +278,9 @@
 	
 	<div class="panel-footer bottomSearchButt" {$bottomSearchButt_attrs}>
 		<button class="btn btn-primary" id="searchButton{$id}" {$searchbutton_attrs}>Search</button>
-		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs}>Show all</button>
+		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs}>
+		Show all
+		</button>
 	</div>
 </div>
 
@@ -507,19 +508,6 @@
 
 									
 																		
-									{BEGIN Date_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$Date_class}" data-field=Date>
-									{BEGIN Date_fieldheader}
-																				<span {$Date_orderlinkattrs}>
-											{$label schedule_map Date}
-										</span>
-									{END Date_fieldheader}
-									</th>
-									{END Date_fieldheadercolumn}
-									
-									
-									
-									
 									{BEGIN track_fieldheadercolumn}
 									<th class="rnr-gridfieldlabel {$track_class}" data-field=track>
 									{BEGIN track_fieldheader}
@@ -568,6 +556,19 @@
 									{END university_id_fieldheader}
 									</th>
 									{END university_id_fieldheadercolumn}
+									
+									
+									
+									
+									{BEGIN Date_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$Date_class}" data-field=Date>
+									{BEGIN Date_fieldheader}
+																				<span {$Date_orderlinkattrs}>
+											{$label schedule_map Date}
+										</span>
+									{END Date_fieldheader}
+									</th>
+									{END Date_fieldheadercolumn}
 									
 									
 									
@@ -652,13 +653,6 @@
 	
 	
 
-	{BEGIN Date_fieldcolumn}
-	<td class="bs-gridcell {$Date_class}"  data-field=Date {$rowstyle} {$recordattrs}>
-		{$Date_value}
-	</td>
-{END Date_fieldcolumn}
-
-
 	{BEGIN track_fieldcolumn}
 	<td class="bs-gridcell {$track_class}"  data-field=track {$rowstyle} {$recordattrs}>
 		{$track_value}
@@ -685,6 +679,13 @@
 		{$university_id_value}
 	</td>
 {END university_id_fieldcolumn}
+
+
+	{BEGIN Date_fieldcolumn}
+	<td class="bs-gridcell {$Date_class}"  data-field=Date {$rowstyle} {$recordattrs}>
+		{$Date_value}
+	</td>
+{END Date_fieldcolumn}
 
 
 	{BEGIN status_fieldcolumn}

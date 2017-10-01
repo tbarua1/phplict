@@ -90,6 +90,12 @@
 	.bs-gridcell[data-field=cid]:before {
 		content: "{$label employees cid}";
 	}
+	.bs-gridcell[data-field=reset_token]:before {
+		content: "{$label employees reset_token}";
+	}
+	.bs-gridcell[data-field=reset_date]:before {
+		content: "{$label employees reset_date}";
+	}
 </style>
 <table {$masterlistgrid_hiddenattr} data-pageid="{$pageid}" data-brick="masterlistgrid" class="table rnr-b-mastergridfields rnr-gridtable bs-flexgrid" >
 		<thead>
@@ -104,6 +110,7 @@
 			<th class="{$dropbox_class}">{$label employees dropbox}</th>
 			<th class="{$email_class}">{$label employees email}</th>
 			<th class="{$dob_class}">{$label employees dob}</th>
+			<th class="{$password_class}">{$label employees password}</th>
 			<th class="{$passportno_class}">{$label employees passportno}</th>
 			<th class="{$passport_expiry_class}">{$label employees passport_expiry}</th>
 			<th class="{$visa_no_class}">{$label employees visa_no}</th>
@@ -117,6 +124,8 @@
 			<th class="{$qulification_class}">{$label employees qulification}</th>
 			<th class="{$skillset_class}">{$label employees skillset}</th>
 			<th class="{$cid_class}">{$label employees cid}</th>
+			<th class="{$reset_token_class}">{$label employees reset_token}</th>
+			<th class="{$reset_date_class}">{$label employees reset_date}</th>
 		</tr>
 	</thead>
 	
@@ -132,6 +141,7 @@
 			<td class="{$dropbox_class} bs-gridcell" data-field=dropbox>{$dropbox_mastervalue}</td>
 			<td class="{$email_class} bs-gridcell" data-field=email>{$email_mastervalue}</td>
 			<td class="{$dob_class} bs-gridcell" data-field=dob>{$dob_mastervalue}</td>
+			<td class="{$password_class} bs-gridcell" data-field=password>{$password_mastervalue}</td>
 			<td class="{$passportno_class} bs-gridcell" data-field=passportno>{$passportno_mastervalue}</td>
 			<td class="{$passport_expiry_class} bs-gridcell" data-field=passport_expiry>{$passport_expiry_mastervalue}</td>
 			<td class="{$visa_no_class} bs-gridcell" data-field=visa_no>{$visa_no_mastervalue}</td>
@@ -145,6 +155,8 @@
 			<td class="{$qulification_class} bs-gridcell" data-field=qulification>{$qulification_mastervalue}</td>
 			<td class="{$skillset_class} bs-gridcell" data-field=skillset>{$skillset_mastervalue}</td>
 			<td class="{$cid_class} bs-gridcell" data-field=cid>{$cid_mastervalue}</td>
+			<td class="{$reset_token_class} bs-gridcell" data-field=reset_token>{$reset_token_mastervalue}</td>
+			<td class="{$reset_date_class} bs-gridcell" data-field=reset_date>{$reset_date_mastervalue}</td>
 		</tr>
 	</tbody>
 

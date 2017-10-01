@@ -477,6 +477,10 @@ class Chart
 			
 		if("batch" == $this->chrt_array['tables'][0])
 			return true;
+		if("batchschedule" == $this->chrt_array['tables'][0])
+			return true;
+		if("consultant" == $this->chrt_array['tables'][0])
+			return true;
 		if("courses" == $this->chrt_array['tables'][0])
 			return true;
 		if("department" == $this->chrt_array['tables'][0])
@@ -487,29 +491,17 @@ class Chart
 			return true;
 		if("emp_status" == $this->chrt_array['tables'][0])
 			return true;
-		if("university" == $this->chrt_array['tables'][0])
-			return true;
 		if("employees" == $this->chrt_array['tables'][0])
 			return true;
 		if("full_batch_details" == $this->chrt_array['tables'][0])
 			return true;
-		if("batchschedule" == $this->chrt_array['tables'][0])
-			return true;
 		if("schedule_map" == $this->chrt_array['tables'][0])
 			return true;
-		if("lict_ugrights" == $this->chrt_array['tables'][0])
+		if("trainer" == $this->chrt_array['tables'][0])
 			return true;
-		if("employees" == $this->chrt_array['tables'][0])
+		if("university" == $this->chrt_array['tables'][0])
 			return true;
-		if("employees" == $this->chrt_array['tables'][0])
-			return true;
-		if("batch_completion_status" == $this->chrt_array['tables'][0])
-			return true;
-		if("employees" == $this->chrt_array['tables'][0])
-			return true;
-		if("consultant_view" == $this->chrt_array['tables'][0])
-			return true;
-		if("consultant" == $this->chrt_array['tables'][0])
+		if("university_view" == $this->chrt_array['tables'][0])
 			return true;
 		return false;
 	}

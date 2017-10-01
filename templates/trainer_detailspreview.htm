@@ -1,0 +1,77 @@
+<div {$pageattrs}>
+
+{BEGIN container_dcount}
+<div {$dcount_chiddenattr} data-pageid="{$pageid}" data-container="dcount" class="    "> 
+
+
+<span {$bsdetailspreviewcount_hiddenattr} data-pageid="{$pageid}" data-brick="bsdetailspreviewcount">Details found: <strong>{$row_count}</strong></span>
+
+
+
+
+
+</div>
+{END container_dcount}
+
+
+
+{BEGIN container_detailspreviewgrid}
+
+
+{BEGIN details_data}
+<table class="table striped">
+{BEGIN details_row_header}
+	<thead>
+		<tr class="{$gridHeader_class}" >
+			<th class="{$id_class}">{$label trainer id}</th>
+			<th class="{$cid_class}">{$label trainer cid}</th>
+			<th class="{$date_class}">{$label trainer date}</th>
+			<th class="{$emailid_class}">{$label trainer emailid}</th>
+			<th class="{$experience_class}">{$label trainer experience}</th>
+			<th class="{$mobile_class}">{$label trainer mobile}</th>
+			<th class="{$name_class}">{$label trainer name}</th>
+			<th class="{$natianality_class}">{$label trainer natianality}</th>
+			<th class="{$password_class}">{$label trainer password}</th>
+			<th class="{$qualification_class}">{$label trainer qualification}</th>
+			<th class="{$registeredDate_class}">{$label trainer registeredDate}</th>
+			<th class="{$skillset_class}">{$label trainer skillset}</th>
+			<th class="{$skype_class}">{$label trainer skype}</th>
+			<th class="{$username_class}">{$label trainer username}</th>
+			<th class="{$usertype_class}">{$label trainer usertype}</th>
+			<th class="{$whatsapp_class}">{$label trainer whatsapp}</th>
+			<th class="{$photo_class}">{$label trainer photo}</th>
+		</tr>
+	</thead>
+{END details_row_header}
+	<tbody>
+{BEGIN details_row}
+		<tr>
+			<td class="{$id_class}">{$id_value}</td>
+			<td class="{$cid_class}">{$cid_value}</td>
+			<td class="{$date_class}">{$date_value}</td>
+			<td class="{$emailid_class}">{$emailid_value}</td>
+			<td class="{$experience_class}">{$experience_value}</td>
+			<td class="{$mobile_class}">{$mobile_value}</td>
+			<td class="{$name_class}">{$name_value}</td>
+			<td class="{$natianality_class}">{$natianality_value}</td>
+			<td class="{$password_class}">{$password_value}</td>
+			<td class="{$qualification_class}">{$qualification_value}</td>
+			<td class="{$registeredDate_class}">{$registeredDate_value}</td>
+			<td class="{$skillset_class}">{$skillset_value}</td>
+			<td class="{$skype_class}">{$skype_value}</td>
+			<td class="{$username_class}">{$username_value}</td>
+			<td class="{$usertype_class}">{$usertype_value}</td>
+			<td class="{$whatsapp_class}">{$whatsapp_value}</td>
+			<td class="{$photo_class}">{$photo_value}</td>
+		</tr>
+{END details_row}	
+	</tbody>
+</table>
+
+{END details_data}
+
+
+
+{END container_detailspreviewgrid}
+
+</div>

@@ -75,23 +75,39 @@ $tdatadivision[".fieldsForRegister"] = array();
 
 $tdatadivision[".listAjax"] = false;
 
-	$tdatadivision[".audit"] = true;
+	$tdatadivision[".audit"] = false;
 
-	$tdatadivision[".locking"] = true;
+	$tdatadivision[".locking"] = false;
 
+$tdatadivision[".edit"] = true;
+$tdatadivision[".afterEditAction"] = 1;
+$tdatadivision[".closePopupAfterEdit"] = 1;
+$tdatadivision[".afterEditActionDetTable"] = "";
 
+$tdatadivision[".add"] = true;
+$tdatadivision[".afterAddAction"] = 1;
+$tdatadivision[".closePopupAfterAdd"] = 1;
+$tdatadivision[".afterAddActionDetTable"] = "";
 
+$tdatadivision[".list"] = true;
 
 
 
 $tdatadivision[".reorderRecordsByHeader"] = true;
 
 
+$tdatadivision[".exportFormatting"] = 2;
+$tdatadivision[".exportDelimiter"] = ",";
+		
+$tdatadivision[".view"] = true;
 
+$tdatadivision[".import"] = true;
 
+$tdatadivision[".exportTo"] = true;
 
+$tdatadivision[".printFriendly"] = true;
 
-
+$tdatadivision[".delete"] = true;
 
 $tdatadivision[".showSimpleSearchOptions"] = false;
 
@@ -116,7 +132,7 @@ $tdatadivision[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdatadivision[".ajaxCodeSnippetAdded"] = false;
 
@@ -135,13 +151,18 @@ $tdatadivision[".allSearchFields"] = array();
 $tdatadivision[".filterFields"] = array();
 $tdatadivision[".requiredSearchFields"] = array();
 
-
+$tdatadivision[".allSearchFields"][] = "division_id";
+	$tdatadivision[".allSearchFields"][] = "dname";
+	
 
 $tdatadivision[".googleLikeFields"] = array();
 $tdatadivision[".googleLikeFields"][] = "division_id";
 $tdatadivision[".googleLikeFields"][] = "dname";
 
 
+$tdatadivision[".advSearchFields"] = array();
+$tdatadivision[".advSearchFields"][] = "division_id";
+$tdatadivision[".advSearchFields"][] = "dname";
 
 $tdatadivision[".tableType"] = "list";
 
@@ -229,32 +250,47 @@ $tableKeysdivision[] = "division_id";
 $tdatadivision[".Keys"] = $tableKeysdivision;
 
 $tdatadivision[".listFields"] = array();
+$tdatadivision[".listFields"][] = "division_id";
+$tdatadivision[".listFields"][] = "dname";
 
 $tdatadivision[".hideMobileList"] = array();
 
 
 $tdatadivision[".viewFields"] = array();
+$tdatadivision[".viewFields"][] = "division_id";
+$tdatadivision[".viewFields"][] = "dname";
 
 $tdatadivision[".addFields"] = array();
+$tdatadivision[".addFields"][] = "dname";
 
 $tdatadivision[".masterListFields"] = array();
 $tdatadivision[".masterListFields"][] = "division_id";
 $tdatadivision[".masterListFields"][] = "dname";
 
 $tdatadivision[".inlineAddFields"] = array();
+$tdatadivision[".inlineAddFields"][] = "dname";
 
 $tdatadivision[".editFields"] = array();
+$tdatadivision[".editFields"][] = "dname";
 
 $tdatadivision[".inlineEditFields"] = array();
+$tdatadivision[".inlineEditFields"][] = "dname";
 
 $tdatadivision[".updateSelectedFields"] = array();
+$tdatadivision[".updateSelectedFields"][] = "dname";
 
 
 $tdatadivision[".exportFields"] = array();
+$tdatadivision[".exportFields"][] = "division_id";
+$tdatadivision[".exportFields"][] = "dname";
 
 $tdatadivision[".importFields"] = array();
+$tdatadivision[".importFields"][] = "division_id";
+$tdatadivision[".importFields"][] = "dname";
 
 $tdatadivision[".printFields"] = array();
+$tdatadivision[".printFields"][] = "division_id";
+$tdatadivision[".printFields"][] = "dname";
 
 
 //	division_id
@@ -272,17 +308,22 @@ $tdatadivision[".printFields"] = array();
 
 	
 			
-	
+		$fdata["bListPage"] = true;
+
 	
 	
 	
 	
 	
 
-	
-	
-	
-	
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "division_id";
 
 		$fdata["isSQLExpression"] = true;
@@ -290,7 +331,8 @@ $tdatadivision[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -370,6 +412,12 @@ $tdatadivision[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -389,17 +437,27 @@ $tdatadivision[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "dname";
 
 		$fdata["isSQLExpression"] = true;
@@ -407,7 +465,8 @@ $tdatadivision[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -485,6 +544,12 @@ $tdatadivision[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -534,25 +599,28 @@ $detailsTablesData["division"] = array();
 				$detailsTablesData["division"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["detailKeys"][]="division_id";
-//	district
+//	consultant
 	
 	
 
 		$dIndex = 1;
 	$detailsParam = array();
-	$detailsParam["dDataSourceTable"]="district";
-		$detailsParam["dOriginalTable"] = "district";
+	$detailsParam["dDataSourceTable"]="consultant";
+		$detailsParam["dOriginalTable"] = "consultant";
 		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
-	$detailsParam["dShortTable"] = "district";
-	$detailsParam["dCaptionTable"] = GetTableCaption("district");
+	$detailsParam["dShortTable"] = "consultant";
+	$detailsParam["dCaptionTable"] = GetTableCaption("consultant");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
 
 	$detailsParam["dispChildCount"] = "0";
 
 		$detailsParam["hideChild"] = false;
-			$detailsParam["previewOnList"] = DP_NONE;
+						$detailsParam["previewOnList"] = "1";
+		$detailsParam["previewOnAdd"] = 0;
+		$detailsParam["previewOnEdit"] = 0;
+		$detailsParam["previewOnView"] = 0;
 		
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
 
@@ -563,19 +631,19 @@ $detailsTablesData["division"] = array();
 
 				$detailsTablesData["division"][$dIndex]["detailKeys"] = array();
 
-	$detailsTablesData["division"][$dIndex]["detailKeys"][]="division_id";
-//	university
+	$detailsTablesData["division"][$dIndex]["detailKeys"][]="divison_id";
+//	district
 	
 	
 
 		$dIndex = 2;
 	$detailsParam = array();
-	$detailsParam["dDataSourceTable"]="university";
-		$detailsParam["dOriginalTable"] = "university";
+	$detailsParam["dDataSourceTable"]="district";
+		$detailsParam["dOriginalTable"] = "district";
 		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
-	$detailsParam["dShortTable"] = "university";
-	$detailsParam["dCaptionTable"] = GetTableCaption("university");
+	$detailsParam["dShortTable"] = "district";
+	$detailsParam["dCaptionTable"] = GetTableCaption("district");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
 
@@ -630,18 +698,18 @@ $detailsTablesData["division"] = array();
 				$detailsTablesData["division"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["detailKeys"][]="division_id";
-//	consultant
+//	university
 	
 	
 
 		$dIndex = 4;
 	$detailsParam = array();
-	$detailsParam["dDataSourceTable"]="consultant";
-		$detailsParam["dOriginalTable"] = "consultant";
+	$detailsParam["dDataSourceTable"]="university";
+		$detailsParam["dOriginalTable"] = "university";
 		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
-	$detailsParam["dShortTable"] = "consultant";
-	$detailsParam["dCaptionTable"] = GetTableCaption("consultant");
+	$detailsParam["dShortTable"] = "university";
+	$detailsParam["dCaptionTable"] = GetTableCaption("university");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
 
@@ -662,7 +730,7 @@ $detailsTablesData["division"] = array();
 
 				$detailsTablesData["division"][$dIndex]["detailKeys"] = array();
 
-	$detailsTablesData["division"][$dIndex]["detailKeys"][]="divison_id";
+	$detailsTablesData["division"][$dIndex]["detailKeys"][]="division_id";
 
 // tables which are master tables for current table (detail)
 $masterTablesData["division"] = array();

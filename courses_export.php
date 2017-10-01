@@ -9,6 +9,8 @@ require_once("classes/sql.php");
 
 require_once("include/courses_variables.php");
 
+if( !Security::processPageSecurity( $strtablename, 'P' ) )
+	return;
 
 
 

@@ -240,6 +240,8 @@ class DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
+		if( $val == "" || $val === null )
+			return 'null';
 		return "'".$this->addSlashes($val)."'";
 	}
 

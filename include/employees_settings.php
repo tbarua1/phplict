@@ -8,7 +8,7 @@ $tdataemployees = array();
 	$tdataemployees[".truncateText"] = true;
 	$tdataemployees[".NumberOfChars"] = 80;
 	$tdataemployees[".ShortName"] = "employees";
-	$tdataemployees[".OwnerID"] = "";
+	$tdataemployees[".OwnerID"] = "cid";
 	$tdataemployees[".OriginalTable"] = "employees";
 
 //	field labels
@@ -29,6 +29,9 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsemployees["English"]["ename"] = "Ename";
 	$fieldToolTipsemployees["English"]["ename"] = "";
 	$placeHoldersemployees["English"]["ename"] = "";
+	$fieldLabelsemployees["English"]["emppic"] = "Emppic";
+	$fieldToolTipsemployees["English"]["emppic"] = "";
+	$placeHoldersemployees["English"]["emppic"] = "";
 	$fieldLabelsemployees["English"]["designation"] = "Designation";
 	$fieldToolTipsemployees["English"]["designation"] = "";
 	$placeHoldersemployees["English"]["designation"] = "";
@@ -77,9 +80,6 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsemployees["English"]["status_id"] = "Status Id";
 	$fieldToolTipsemployees["English"]["status_id"] = "";
 	$placeHoldersemployees["English"]["status_id"] = "";
-	$fieldLabelsemployees["English"]["emppic"] = "Emppic";
-	$fieldToolTipsemployees["English"]["emppic"] = "";
-	$placeHoldersemployees["English"]["emppic"] = "";
 	$fieldLabelsemployees["English"]["experence"] = "Experence";
 	$fieldToolTipsemployees["English"]["experence"] = "";
 	$placeHoldersemployees["English"]["experence"] = "";
@@ -95,6 +95,12 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsemployees["English"]["cid"] = "Cid";
 	$fieldToolTipsemployees["English"]["cid"] = "";
 	$placeHoldersemployees["English"]["cid"] = "";
+	$fieldLabelsemployees["English"]["reset_token"] = "Reset Token";
+	$fieldToolTipsemployees["English"]["reset_token"] = "";
+	$placeHoldersemployees["English"]["reset_token"] = "";
+	$fieldLabelsemployees["English"]["reset_date"] = "Reset Date";
+	$fieldToolTipsemployees["English"]["reset_date"] = "";
+	$placeHoldersemployees["English"]["reset_date"] = "";
 	if (count($fieldToolTipsemployees["English"]))
 		$tdataemployees[".isUseToolTips"] = true;
 }
@@ -104,78 +110,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsemployees[""] = array();
 	$placeHoldersemployees[""] = array();
 	$pageTitlesemployees[""] = array();
-	$fieldLabelsemployees[""]["eid"] = "Eid";
-	$fieldToolTipsemployees[""]["eid"] = "";
-	$placeHoldersemployees[""]["eid"] = "";
-	$fieldLabelsemployees[""]["ename"] = "Ename";
-	$fieldToolTipsemployees[""]["ename"] = "";
-	$placeHoldersemployees[""]["ename"] = "";
-	$fieldLabelsemployees[""]["designation"] = "Designation";
-	$fieldToolTipsemployees[""]["designation"] = "";
-	$placeHoldersemployees[""]["designation"] = "";
-	$fieldLabelsemployees[""]["whtasapp"] = "Whtasapp";
-	$fieldToolTipsemployees[""]["whtasapp"] = "";
-	$placeHoldersemployees[""]["whtasapp"] = "";
-	$fieldLabelsemployees[""]["localnum"] = "Localnum";
-	$fieldToolTipsemployees[""]["localnum"] = "";
-	$placeHoldersemployees[""]["localnum"] = "";
-	$fieldLabelsemployees[""]["skype"] = "Skype";
-	$fieldToolTipsemployees[""]["skype"] = "";
-	$placeHoldersemployees[""]["skype"] = "";
-	$fieldLabelsemployees[""]["dropbox"] = "Dropbox";
-	$fieldToolTipsemployees[""]["dropbox"] = "";
-	$placeHoldersemployees[""]["dropbox"] = "";
-	$fieldLabelsemployees[""]["email"] = "Email";
-	$fieldToolTipsemployees[""]["email"] = "";
-	$placeHoldersemployees[""]["email"] = "";
-	$fieldLabelsemployees[""]["dob"] = "Dob";
-	$fieldToolTipsemployees[""]["dob"] = "";
-	$placeHoldersemployees[""]["dob"] = "";
-	$fieldLabelsemployees[""]["password"] = "Password";
-	$fieldToolTipsemployees[""]["password"] = "";
-	$placeHoldersemployees[""]["password"] = "";
-	$fieldLabelsemployees[""]["passportno"] = "Passportno";
-	$fieldToolTipsemployees[""]["passportno"] = "";
-	$placeHoldersemployees[""]["passportno"] = "";
-	$fieldLabelsemployees[""]["passport_expiry"] = "Passport Expiry";
-	$fieldToolTipsemployees[""]["passport_expiry"] = "";
-	$placeHoldersemployees[""]["passport_expiry"] = "";
-	$fieldLabelsemployees[""]["visa_no"] = "Visa No";
-	$fieldToolTipsemployees[""]["visa_no"] = "";
-	$placeHoldersemployees[""]["visa_no"] = "";
-	$fieldLabelsemployees[""]["visa_expiry"] = "Visa Expiry";
-	$fieldToolTipsemployees[""]["visa_expiry"] = "";
-	$placeHoldersemployees[""]["visa_expiry"] = "";
-	$fieldLabelsemployees[""]["division_id"] = "Division Id";
-	$fieldToolTipsemployees[""]["division_id"] = "";
-	$placeHoldersemployees[""]["division_id"] = "";
-	$fieldLabelsemployees[""]["doj"] = "Doj";
-	$fieldToolTipsemployees[""]["doj"] = "";
-	$placeHoldersemployees[""]["doj"] = "";
-	$fieldLabelsemployees[""]["dor"] = "Dor";
-	$fieldToolTipsemployees[""]["dor"] = "";
-	$placeHoldersemployees[""]["dor"] = "";
-	$fieldLabelsemployees[""]["status_id"] = "Status Id";
-	$fieldToolTipsemployees[""]["status_id"] = "";
-	$placeHoldersemployees[""]["status_id"] = "";
-	$fieldLabelsemployees[""]["emppic"] = "Emppic";
-	$fieldToolTipsemployees[""]["emppic"] = "";
-	$placeHoldersemployees[""]["emppic"] = "";
-	$fieldLabelsemployees[""]["experence"] = "Experence";
-	$fieldToolTipsemployees[""]["experence"] = "";
-	$placeHoldersemployees[""]["experence"] = "";
-	$fieldLabelsemployees[""]["nationality"] = "Nationality";
-	$fieldToolTipsemployees[""]["nationality"] = "";
-	$placeHoldersemployees[""]["nationality"] = "";
-	$fieldLabelsemployees[""]["qulification"] = "Qulification";
-	$fieldToolTipsemployees[""]["qulification"] = "";
-	$placeHoldersemployees[""]["qulification"] = "";
-	$fieldLabelsemployees[""]["skillset"] = "Skillset";
-	$fieldToolTipsemployees[""]["skillset"] = "";
-	$placeHoldersemployees[""]["skillset"] = "";
-	$fieldLabelsemployees[""]["cid"] = "Cid";
-	$fieldToolTipsemployees[""]["cid"] = "";
-	$placeHoldersemployees[""]["cid"] = "";
 	if (count($fieldToolTipsemployees[""]))
 		$tdataemployees[".isUseToolTips"] = true;
 }
@@ -186,9 +120,9 @@ if(mlang_getcurrentlang()=="")
 
 
 $tdataemployees[".shortTableName"] = "employees";
-$tdataemployees[".nSecOptions"] = 0;
+$tdataemployees[".nSecOptions"] = 1;
 $tdataemployees[".recsPerRowPrint"] = 1;
-$tdataemployees[".mainTableOwnerID"] = "";
+$tdataemployees[".mainTableOwnerID"] = "cid";
 $tdataemployees[".moveNext"] = 1;
 $tdataemployees[".entityType"] = 0;
 
@@ -213,9 +147,9 @@ $tdataemployees[".fieldsForRegister"] = array();
 
 $tdataemployees[".listAjax"] = false;
 
-	$tdataemployees[".audit"] = true;
+	$tdataemployees[".audit"] = false;
 
-	$tdataemployees[".locking"] = true;
+	$tdataemployees[".locking"] = false;
 
 $tdataemployees[".edit"] = true;
 $tdataemployees[".afterEditAction"] = 1;
@@ -270,7 +204,7 @@ $tdataemployees[".rowHighlite"] = true;
 
 
 
-						
+
 
 $tdataemployees[".ajaxCodeSnippetAdded"] = false;
 
@@ -283,7 +217,7 @@ $tdataemployees[".isUseTimeForSearch"] = false;
 
 
 
-$tdataemployees[".badgeColor"] = "E8926F";
+$tdataemployees[".badgeColor"] = "BC8F8F";
 
 
 $tdataemployees[".allSearchFields"] = array();
@@ -292,6 +226,7 @@ $tdataemployees[".requiredSearchFields"] = array();
 
 $tdataemployees[".allSearchFields"][] = "eid";
 	$tdataemployees[".allSearchFields"][] = "ename";
+	$tdataemployees[".allSearchFields"][] = "emppic";
 	$tdataemployees[".allSearchFields"][] = "designation";
 	$tdataemployees[".allSearchFields"][] = "whtasapp";
 	$tdataemployees[".allSearchFields"][] = "localnum";
@@ -299,6 +234,7 @@ $tdataemployees[".allSearchFields"][] = "eid";
 	$tdataemployees[".allSearchFields"][] = "dropbox";
 	$tdataemployees[".allSearchFields"][] = "email";
 	$tdataemployees[".allSearchFields"][] = "dob";
+	$tdataemployees[".allSearchFields"][] = "password";
 	$tdataemployees[".allSearchFields"][] = "passportno";
 	$tdataemployees[".allSearchFields"][] = "passport_expiry";
 	$tdataemployees[".allSearchFields"][] = "visa_no";
@@ -312,6 +248,8 @@ $tdataemployees[".allSearchFields"][] = "eid";
 	$tdataemployees[".allSearchFields"][] = "qulification";
 	$tdataemployees[".allSearchFields"][] = "skillset";
 	$tdataemployees[".allSearchFields"][] = "cid";
+	$tdataemployees[".allSearchFields"][] = "reset_token";
+	$tdataemployees[".allSearchFields"][] = "reset_date";
 	
 
 $tdataemployees[".googleLikeFields"] = array();
@@ -339,11 +277,14 @@ $tdataemployees[".googleLikeFields"][] = "nationality";
 $tdataemployees[".googleLikeFields"][] = "qulification";
 $tdataemployees[".googleLikeFields"][] = "skillset";
 $tdataemployees[".googleLikeFields"][] = "cid";
+$tdataemployees[".googleLikeFields"][] = "reset_token";
+$tdataemployees[".googleLikeFields"][] = "reset_date";
 
 
 $tdataemployees[".advSearchFields"] = array();
 $tdataemployees[".advSearchFields"][] = "eid";
 $tdataemployees[".advSearchFields"][] = "ename";
+$tdataemployees[".advSearchFields"][] = "emppic";
 $tdataemployees[".advSearchFields"][] = "designation";
 $tdataemployees[".advSearchFields"][] = "whtasapp";
 $tdataemployees[".advSearchFields"][] = "localnum";
@@ -351,6 +292,7 @@ $tdataemployees[".advSearchFields"][] = "skype";
 $tdataemployees[".advSearchFields"][] = "dropbox";
 $tdataemployees[".advSearchFields"][] = "email";
 $tdataemployees[".advSearchFields"][] = "dob";
+$tdataemployees[".advSearchFields"][] = "password";
 $tdataemployees[".advSearchFields"][] = "passportno";
 $tdataemployees[".advSearchFields"][] = "passport_expiry";
 $tdataemployees[".advSearchFields"][] = "visa_no";
@@ -364,6 +306,8 @@ $tdataemployees[".advSearchFields"][] = "nationality";
 $tdataemployees[".advSearchFields"][] = "qulification";
 $tdataemployees[".advSearchFields"][] = "skillset";
 $tdataemployees[".advSearchFields"][] = "cid";
+$tdataemployees[".advSearchFields"][] = "reset_token";
+$tdataemployees[".advSearchFields"][] = "reset_date";
 
 $tdataemployees[".tableType"] = "list";
 
@@ -406,7 +350,7 @@ $tdataemployees[".strOrderBy"] = $tstrOrderBy;
 
 $tdataemployees[".orderindexes"] = array();
 
-$tdataemployees[".sqlHead"] = "SELECT eid,  	ename,  	emppic,  	designation,  	whtasapp,  	localnum,  	skype,  	dropbox,  	email,  	dob,  	password,  	passportno,  	passport_expiry,  	visa_no,  	visa_expiry,  	division_id,  	doj,  	dor,  	status_id,  	experence,  	nationality,  	qulification,  	skillset,  	cid";
+$tdataemployees[".sqlHead"] = "SELECT eid,  	ename,  	emppic,  	designation,  	whtasapp,  	localnum,  	skype,  	dropbox,  	email,  	dob,  	password,  	passportno,  	passport_expiry,  	visa_no,  	visa_expiry,  	division_id,  	doj,  	dor,  	status_id,  	experence,  	nationality,  	qulification,  	skillset,  	cid,  	reset_token,  	reset_date";
 $tdataemployees[".sqlFrom"] = "FROM employees";
 $tdataemployees[".sqlWhereExpr"] = "";
 $tdataemployees[".sqlTail"] = "";
@@ -461,6 +405,7 @@ $tdataemployees[".listFields"][] = "skype";
 $tdataemployees[".listFields"][] = "dropbox";
 $tdataemployees[".listFields"][] = "email";
 $tdataemployees[".listFields"][] = "dob";
+$tdataemployees[".listFields"][] = "password";
 $tdataemployees[".listFields"][] = "passportno";
 $tdataemployees[".listFields"][] = "passport_expiry";
 $tdataemployees[".listFields"][] = "visa_no";
@@ -474,6 +419,8 @@ $tdataemployees[".listFields"][] = "nationality";
 $tdataemployees[".listFields"][] = "qulification";
 $tdataemployees[".listFields"][] = "skillset";
 $tdataemployees[".listFields"][] = "cid";
+$tdataemployees[".listFields"][] = "reset_token";
+$tdataemployees[".listFields"][] = "reset_date";
 
 $tdataemployees[".hideMobileList"] = array();
 
@@ -489,6 +436,7 @@ $tdataemployees[".viewFields"][] = "skype";
 $tdataemployees[".viewFields"][] = "dropbox";
 $tdataemployees[".viewFields"][] = "email";
 $tdataemployees[".viewFields"][] = "dob";
+$tdataemployees[".viewFields"][] = "password";
 $tdataemployees[".viewFields"][] = "passportno";
 $tdataemployees[".viewFields"][] = "passport_expiry";
 $tdataemployees[".viewFields"][] = "visa_no";
@@ -502,6 +450,8 @@ $tdataemployees[".viewFields"][] = "nationality";
 $tdataemployees[".viewFields"][] = "qulification";
 $tdataemployees[".viewFields"][] = "skillset";
 $tdataemployees[".viewFields"][] = "cid";
+$tdataemployees[".viewFields"][] = "reset_token";
+$tdataemployees[".viewFields"][] = "reset_date";
 
 $tdataemployees[".addFields"] = array();
 $tdataemployees[".addFields"][] = "ename";
@@ -511,7 +461,9 @@ $tdataemployees[".addFields"][] = "whtasapp";
 $tdataemployees[".addFields"][] = "localnum";
 $tdataemployees[".addFields"][] = "skype";
 $tdataemployees[".addFields"][] = "dropbox";
+$tdataemployees[".addFields"][] = "email";
 $tdataemployees[".addFields"][] = "dob";
+$tdataemployees[".addFields"][] = "password";
 $tdataemployees[".addFields"][] = "passportno";
 $tdataemployees[".addFields"][] = "passport_expiry";
 $tdataemployees[".addFields"][] = "visa_no";
@@ -524,6 +476,8 @@ $tdataemployees[".addFields"][] = "experence";
 $tdataemployees[".addFields"][] = "nationality";
 $tdataemployees[".addFields"][] = "qulification";
 $tdataemployees[".addFields"][] = "skillset";
+$tdataemployees[".addFields"][] = "reset_token";
+$tdataemployees[".addFields"][] = "reset_date";
 
 $tdataemployees[".masterListFields"] = array();
 $tdataemployees[".masterListFields"][] = "eid";
@@ -536,6 +490,7 @@ $tdataemployees[".masterListFields"][] = "skype";
 $tdataemployees[".masterListFields"][] = "dropbox";
 $tdataemployees[".masterListFields"][] = "email";
 $tdataemployees[".masterListFields"][] = "dob";
+$tdataemployees[".masterListFields"][] = "password";
 $tdataemployees[".masterListFields"][] = "passportno";
 $tdataemployees[".masterListFields"][] = "passport_expiry";
 $tdataemployees[".masterListFields"][] = "visa_no";
@@ -549,8 +504,34 @@ $tdataemployees[".masterListFields"][] = "nationality";
 $tdataemployees[".masterListFields"][] = "qulification";
 $tdataemployees[".masterListFields"][] = "skillset";
 $tdataemployees[".masterListFields"][] = "cid";
+$tdataemployees[".masterListFields"][] = "reset_token";
+$tdataemployees[".masterListFields"][] = "reset_date";
 
 $tdataemployees[".inlineAddFields"] = array();
+$tdataemployees[".inlineAddFields"][] = "ename";
+$tdataemployees[".inlineAddFields"][] = "emppic";
+$tdataemployees[".inlineAddFields"][] = "designation";
+$tdataemployees[".inlineAddFields"][] = "whtasapp";
+$tdataemployees[".inlineAddFields"][] = "localnum";
+$tdataemployees[".inlineAddFields"][] = "skype";
+$tdataemployees[".inlineAddFields"][] = "dropbox";
+$tdataemployees[".inlineAddFields"][] = "email";
+$tdataemployees[".inlineAddFields"][] = "dob";
+$tdataemployees[".inlineAddFields"][] = "password";
+$tdataemployees[".inlineAddFields"][] = "passportno";
+$tdataemployees[".inlineAddFields"][] = "passport_expiry";
+$tdataemployees[".inlineAddFields"][] = "visa_no";
+$tdataemployees[".inlineAddFields"][] = "visa_expiry";
+$tdataemployees[".inlineAddFields"][] = "division_id";
+$tdataemployees[".inlineAddFields"][] = "doj";
+$tdataemployees[".inlineAddFields"][] = "dor";
+$tdataemployees[".inlineAddFields"][] = "status_id";
+$tdataemployees[".inlineAddFields"][] = "experence";
+$tdataemployees[".inlineAddFields"][] = "nationality";
+$tdataemployees[".inlineAddFields"][] = "qulification";
+$tdataemployees[".inlineAddFields"][] = "skillset";
+$tdataemployees[".inlineAddFields"][] = "reset_token";
+$tdataemployees[".inlineAddFields"][] = "reset_date";
 
 $tdataemployees[".editFields"] = array();
 $tdataemployees[".editFields"][] = "ename";
@@ -562,6 +543,7 @@ $tdataemployees[".editFields"][] = "skype";
 $tdataemployees[".editFields"][] = "dropbox";
 $tdataemployees[".editFields"][] = "email";
 $tdataemployees[".editFields"][] = "dob";
+$tdataemployees[".editFields"][] = "password";
 $tdataemployees[".editFields"][] = "passportno";
 $tdataemployees[".editFields"][] = "passport_expiry";
 $tdataemployees[".editFields"][] = "visa_no";
@@ -575,8 +557,35 @@ $tdataemployees[".editFields"][] = "nationality";
 $tdataemployees[".editFields"][] = "qulification";
 $tdataemployees[".editFields"][] = "skillset";
 $tdataemployees[".editFields"][] = "cid";
+$tdataemployees[".editFields"][] = "reset_token";
+$tdataemployees[".editFields"][] = "reset_date";
 
 $tdataemployees[".inlineEditFields"] = array();
+$tdataemployees[".inlineEditFields"][] = "ename";
+$tdataemployees[".inlineEditFields"][] = "emppic";
+$tdataemployees[".inlineEditFields"][] = "designation";
+$tdataemployees[".inlineEditFields"][] = "whtasapp";
+$tdataemployees[".inlineEditFields"][] = "localnum";
+$tdataemployees[".inlineEditFields"][] = "skype";
+$tdataemployees[".inlineEditFields"][] = "dropbox";
+$tdataemployees[".inlineEditFields"][] = "email";
+$tdataemployees[".inlineEditFields"][] = "dob";
+$tdataemployees[".inlineEditFields"][] = "password";
+$tdataemployees[".inlineEditFields"][] = "passportno";
+$tdataemployees[".inlineEditFields"][] = "passport_expiry";
+$tdataemployees[".inlineEditFields"][] = "visa_no";
+$tdataemployees[".inlineEditFields"][] = "visa_expiry";
+$tdataemployees[".inlineEditFields"][] = "division_id";
+$tdataemployees[".inlineEditFields"][] = "doj";
+$tdataemployees[".inlineEditFields"][] = "dor";
+$tdataemployees[".inlineEditFields"][] = "status_id";
+$tdataemployees[".inlineEditFields"][] = "experence";
+$tdataemployees[".inlineEditFields"][] = "nationality";
+$tdataemployees[".inlineEditFields"][] = "qulification";
+$tdataemployees[".inlineEditFields"][] = "skillset";
+$tdataemployees[".inlineEditFields"][] = "cid";
+$tdataemployees[".inlineEditFields"][] = "reset_token";
+$tdataemployees[".inlineEditFields"][] = "reset_date";
 
 $tdataemployees[".updateSelectedFields"] = array();
 $tdataemployees[".updateSelectedFields"][] = "ename";
@@ -588,6 +597,7 @@ $tdataemployees[".updateSelectedFields"][] = "skype";
 $tdataemployees[".updateSelectedFields"][] = "dropbox";
 $tdataemployees[".updateSelectedFields"][] = "email";
 $tdataemployees[".updateSelectedFields"][] = "dob";
+$tdataemployees[".updateSelectedFields"][] = "password";
 $tdataemployees[".updateSelectedFields"][] = "passportno";
 $tdataemployees[".updateSelectedFields"][] = "passport_expiry";
 $tdataemployees[".updateSelectedFields"][] = "visa_no";
@@ -601,11 +611,14 @@ $tdataemployees[".updateSelectedFields"][] = "nationality";
 $tdataemployees[".updateSelectedFields"][] = "qulification";
 $tdataemployees[".updateSelectedFields"][] = "skillset";
 $tdataemployees[".updateSelectedFields"][] = "cid";
+$tdataemployees[".updateSelectedFields"][] = "reset_token";
+$tdataemployees[".updateSelectedFields"][] = "reset_date";
 
 
 $tdataemployees[".exportFields"] = array();
 $tdataemployees[".exportFields"][] = "eid";
 $tdataemployees[".exportFields"][] = "ename";
+$tdataemployees[".exportFields"][] = "emppic";
 $tdataemployees[".exportFields"][] = "designation";
 $tdataemployees[".exportFields"][] = "whtasapp";
 $tdataemployees[".exportFields"][] = "localnum";
@@ -613,6 +626,7 @@ $tdataemployees[".exportFields"][] = "skype";
 $tdataemployees[".exportFields"][] = "dropbox";
 $tdataemployees[".exportFields"][] = "email";
 $tdataemployees[".exportFields"][] = "dob";
+$tdataemployees[".exportFields"][] = "password";
 $tdataemployees[".exportFields"][] = "passportno";
 $tdataemployees[".exportFields"][] = "passport_expiry";
 $tdataemployees[".exportFields"][] = "visa_no";
@@ -626,10 +640,13 @@ $tdataemployees[".exportFields"][] = "nationality";
 $tdataemployees[".exportFields"][] = "qulification";
 $tdataemployees[".exportFields"][] = "skillset";
 $tdataemployees[".exportFields"][] = "cid";
+$tdataemployees[".exportFields"][] = "reset_token";
+$tdataemployees[".exportFields"][] = "reset_date";
 
 $tdataemployees[".importFields"] = array();
 $tdataemployees[".importFields"][] = "eid";
 $tdataemployees[".importFields"][] = "ename";
+$tdataemployees[".importFields"][] = "emppic";
 $tdataemployees[".importFields"][] = "designation";
 $tdataemployees[".importFields"][] = "whtasapp";
 $tdataemployees[".importFields"][] = "localnum";
@@ -637,6 +654,7 @@ $tdataemployees[".importFields"][] = "skype";
 $tdataemployees[".importFields"][] = "dropbox";
 $tdataemployees[".importFields"][] = "email";
 $tdataemployees[".importFields"][] = "dob";
+$tdataemployees[".importFields"][] = "password";
 $tdataemployees[".importFields"][] = "passportno";
 $tdataemployees[".importFields"][] = "passport_expiry";
 $tdataemployees[".importFields"][] = "visa_no";
@@ -650,6 +668,8 @@ $tdataemployees[".importFields"][] = "nationality";
 $tdataemployees[".importFields"][] = "qulification";
 $tdataemployees[".importFields"][] = "skillset";
 $tdataemployees[".importFields"][] = "cid";
+$tdataemployees[".importFields"][] = "reset_token";
+$tdataemployees[".importFields"][] = "reset_date";
 
 $tdataemployees[".printFields"] = array();
 $tdataemployees[".printFields"][] = "eid";
@@ -662,6 +682,7 @@ $tdataemployees[".printFields"][] = "skype";
 $tdataemployees[".printFields"][] = "dropbox";
 $tdataemployees[".printFields"][] = "email";
 $tdataemployees[".printFields"][] = "dob";
+$tdataemployees[".printFields"][] = "password";
 $tdataemployees[".printFields"][] = "passportno";
 $tdataemployees[".printFields"][] = "passport_expiry";
 $tdataemployees[".printFields"][] = "visa_no";
@@ -675,6 +696,8 @@ $tdataemployees[".printFields"][] = "nationality";
 $tdataemployees[".printFields"][] = "qulification";
 $tdataemployees[".printFields"][] = "skillset";
 $tdataemployees[".printFields"][] = "cid";
+$tdataemployees[".printFields"][] = "reset_token";
+$tdataemployees[".printFields"][] = "reset_date";
 
 
 //	eid
@@ -825,10 +848,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -955,19 +980,23 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
 		$fdata["bViewPage"] = true;
 
-	
+		$fdata["bAdvancedSearch"] = true;
+
 		$fdata["bPrinterPage"] = true;
 
-	
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "emppic";
 
 		$fdata["isSQLExpression"] = true;
@@ -977,17 +1006,16 @@ $tdataemployees[".printFields"][] = "cid";
 	
 				$fdata["FieldPermissions"] = true;
 
-			
+				$fdata["UploadFolder"] = "files";
+
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Document Download");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
 	
-								$vdata["ShowIcon"] = true;
-		
 	
 	
 	
@@ -997,6 +1025,8 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	
 	
+		$vdata["NeedEncode"] = true;
+
 		
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
@@ -1005,7 +1035,7 @@ $tdataemployees[".printFields"][] = "cid";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Document upload");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
@@ -1016,22 +1046,19 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	
 	
-							$edata["acceptFileTypes"] = "bmp";
-						$edata["acceptFileTypes"] .= "|gif";
-						$edata["acceptFileTypes"] .= "|jpg";
-						$edata["acceptFileTypes"] .= "|png";
-		$edata["acceptFileTypes"] = "(".$edata["acceptFileTypes"].")$";
+			$edata["acceptFileTypes"] = ".+$";
 
 		$edata["maxNumberOfFiles"] = 1;
 
-		$edata["maxFileSize"] = 10000;
+	
+	
+	
+	
+			$edata["HTML5InuptType"] = "text";
 
-		$edata["maxTotalFilesSize"] = 10000;
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=300";
 
-	
-	
-	
-	
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1042,13 +1069,8 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	//	End validation
 
-		$edata["CreateThumbnail"] = true;
-	$edata["StrThumbnail"] = "th";
-			$edata["ThumbnailSize"] = 150;
-
-				$edata["ResizeImage"] = true;
-				$edata["NewSize"] = 200;
-
+	
+			
 	
 	
 	
@@ -1061,6 +1083,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -1084,10 +1112,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1137,33 +1167,12 @@ $tdataemployees[".printFields"][] = "cid";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "Technical Trainer";
-	$edata["LookupValues"][] = "Softskill Trainer";
-	$edata["LookupValues"][] = "Master Trainer";
-	$edata["LookupValues"][] = "Coordinator";
-	$edata["LookupValues"][] = "Consultant";
-	$edata["LookupValues"][] = "Human Resourse";
-	$edata["LookupValues"][] = "MIS Team";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -1177,8 +1186,11 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1204,7 +1216,7 @@ $tdataemployees[".printFields"][] = "cid";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1232,10 +1244,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1362,10 +1376,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1492,10 +1508,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1622,10 +1640,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1750,11 +1770,14 @@ $tdataemployees[".printFields"][] = "cid";
 			
 		$fdata["bListPage"] = true;
 
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1881,10 +1904,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2007,17 +2032,27 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "password";
 
 		$fdata["isSQLExpression"] = true;
@@ -2025,7 +2060,8 @@ $tdataemployees[".printFields"][] = "cid";
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -2103,6 +2139,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -2126,10 +2168,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2256,10 +2300,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2386,10 +2432,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2516,10 +2564,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2646,10 +2696,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2716,7 +2768,7 @@ $tdataemployees[".printFields"][] = "cid";
 		
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "dname";
+	$edata["DisplayField"] = "division_id";
 	
 	
 
@@ -2735,8 +2787,7 @@ $tdataemployees[".printFields"][] = "cid";
 // End Lookup Settings
 
 
-		$edata["IsRequired"] = true;
-
+	
 	
 	
 			$edata["acceptFileTypes"] = ".+$";
@@ -2755,8 +2806,7 @@ $tdataemployees[".printFields"][] = "cid";
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
+							
 	
 	//	End validation
 
@@ -2803,10 +2853,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -2935,10 +2987,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3065,10 +3119,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3118,44 +3174,15 @@ $tdataemployees[".printFields"][] = "cid";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-				$edata["LookupType"] = 2;
-	$edata["LookupTable"] = "emp_status";
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-		
-	$edata["LinkField"] = "status_id";
-	$edata["LinkFieldType"] = 0;
-	$edata["DisplayField"] = "status";
-	
-	
-
-	
-	$edata["LookupOrderBy"] = "";
-
-	
-	
-	
-	
-
-	
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
-		$edata["IsRequired"] = true;
-
+	
 	
 	
 			$edata["acceptFileTypes"] = ".+$";
@@ -3166,16 +3193,18 @@ $tdataemployees[".printFields"][] = "cid";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -3194,7 +3223,7 @@ $tdataemployees[".printFields"][] = "cid";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -3222,10 +3251,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3352,10 +3383,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3482,10 +3515,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3612,10 +3647,12 @@ $tdataemployees[".printFields"][] = "cid";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3744,7 +3781,8 @@ $tdataemployees[".printFields"][] = "cid";
 	
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -3811,7 +3849,7 @@ $tdataemployees[".printFields"][] = "cid";
 		
 	$edata["LinkField"] = "cid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "cname";
+	$edata["DisplayField"] = "cid";
 	
 	
 
@@ -3878,6 +3916,271 @@ $tdataemployees[".printFields"][] = "cid";
 
 
 	$tdataemployees["cid"] = $fdata;
+//	reset_token
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 25;
+	$fdata["strName"] = "reset_token";
+	$fdata["GoodName"] = "reset_token";
+	$fdata["ownerTable"] = "employees";
+	$fdata["Label"] = GetFieldLabel("employees","reset_token");
+	$fdata["FieldType"] = 200;
+
+	
+	
+	
+			
+		$fdata["bListPage"] = true;
+
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
+		$fdata["strField"] = "reset_token";
+
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "reset_token";
+
+	
+	
+				$fdata["FieldPermissions"] = true;
+
+				$fdata["UploadFolder"] = "files";
+
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+
+	$vdata = array("ViewFormat" => "");
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		$vdata["NeedEncode"] = true;
+
+		
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats
+	$fdata["EditFormats"] = array();
+
+	$edata = array("EditFormat" => "Text field");
+
+	
+	
+		
+	
+
+
+	
+	
+	
+			$edata["acceptFileTypes"] = ".+$";
+
+		$edata["maxNumberOfFiles"] = 1;
+
+	
+	
+	
+	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=50";
+
+		$edata["controlWidth"] = 200;
+
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+	
+	
+	//	End validation
+
+	
+			
+	
+	
+	
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+
+
+	$fdata["isSeparate"] = false;
+
+
+
+
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
+
+
+
+
+	$tdataemployees["reset_token"] = $fdata;
+//	reset_date
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 26;
+	$fdata["strName"] = "reset_date";
+	$fdata["GoodName"] = "reset_date";
+	$fdata["ownerTable"] = "employees";
+	$fdata["Label"] = GetFieldLabel("employees","reset_date");
+	$fdata["FieldType"] = 135;
+
+	
+	
+	
+			
+		$fdata["bListPage"] = true;
+
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
+		$fdata["strField"] = "reset_date";
+
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "reset_date";
+
+	
+	
+				$fdata["FieldPermissions"] = true;
+
+				$fdata["UploadFolder"] = "files";
+
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+
+	$vdata = array("ViewFormat" => "Short Date");
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		$vdata["NeedEncode"] = true;
+
+		
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats
+	$fdata["EditFormats"] = array();
+
+	$edata = array("EditFormat" => "Date");
+
+		$edata["ShowTime"] = true;
+
+	
+		
+	
+
+
+	
+	
+	
+			$edata["acceptFileTypes"] = ".+$";
+
+		$edata["maxNumberOfFiles"] = 1;
+
+	
+	
+		$edata["DateEditType"] = 13;
+	$edata["InitialYearFactor"] = 100;
+	$edata["LastYearFactor"] = 10;
+
+	
+	
+	
+		$edata["controlWidth"] = 200;
+
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+	
+	
+	//	End validation
+
+	
+			
+	
+	
+	
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+
+
+	$fdata["isSeparate"] = false;
+
+
+
+
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Equals";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
+// the end of search options settings
+
+
+
+
+	$tdataemployees["reset_date"] = $fdata;
 
 
 $tables_data["employees"]=&$tdataemployees;
@@ -3889,11 +4192,44 @@ $page_titles["employees"] = &$pageTitlesemployees;
 // -----------------start  prepare master-details data arrays ------------------------------//
 // tables which are detail tables for current table (master)
 $detailsTablesData["employees"] = array();
-//	consultant
+//	batch
 	
 	
 
 		$dIndex = 0;
+	$detailsParam = array();
+	$detailsParam["dDataSourceTable"]="batch";
+		$detailsParam["dOriginalTable"] = "batch";
+		$detailsParam["proceedLink"] = true;
+				$detailsParam["dType"]=PAGE_LIST;
+	$detailsParam["dShortTable"] = "batch";
+	$detailsParam["dCaptionTable"] = GetTableCaption("batch");
+	$detailsParam["masterKeys"] =array();
+	$detailsParam["detailKeys"] =array();
+
+	$detailsParam["dispChildCount"] = "1";
+
+		$detailsParam["hideChild"] = false;
+						$detailsParam["previewOnList"] = "1";
+		$detailsParam["previewOnAdd"] = 0;
+		$detailsParam["previewOnEdit"] = 0;
+		$detailsParam["previewOnView"] = 0;
+		
+	$detailsTablesData["employees"][$dIndex] = $detailsParam;
+
+	
+		$detailsTablesData["employees"][$dIndex]["masterKeys"] = array();
+
+	$detailsTablesData["employees"][$dIndex]["masterKeys"][]="eid";
+
+				$detailsTablesData["employees"][$dIndex]["detailKeys"] = array();
+
+	$detailsTablesData["employees"][$dIndex]["detailKeys"][]="local_spoc";
+//	consultant
+	
+	
+
+		$dIndex = 1;
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="consultant";
 		$detailsParam["dOriginalTable"] = "consultant";
@@ -3904,7 +4240,7 @@ $detailsTablesData["employees"] = array();
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
 
-	$detailsParam["dispChildCount"] = "1";
+	$detailsParam["dispChildCount"] = "0";
 
 		$detailsParam["hideChild"] = false;
 						$detailsParam["previewOnList"] = "1";
@@ -3955,6 +4291,34 @@ $masterTablesData["employees"] = array();
 				$masterTablesData["employees"][0]["detailKeys"] = array();
 	$masterTablesData["employees"][0]["detailKeys"][]="division_id";
 		
+	
+				$strOriginalDetailsTable="courses";
+	$masterParams = array();
+	$masterParams["mDataSourceTable"]="courses";
+	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
+	$masterParams["mShortTable"]= "courses";
+	$masterParams["masterKeys"]= array();
+	$masterParams["detailKeys"]= array();
+	
+		$masterParams["dispChildCount"]= "0";
+	$masterParams["hideChild"]= "0";
+	$masterParams["dispMasterInfo"] = array();
+				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
+			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
+		
+	$masterParams["previewOnList"]= 1;
+	$masterParams["previewOnAdd"]= 0;
+	$masterParams["previewOnEdit"]= 0;
+	$masterParams["previewOnView"]= 0;
+	$masterParams["proceedLink"]= 1;
+
+	$masterParams["type"] = PAGE_LIST;
+					$masterTablesData["employees"][1] = $masterParams;
+				$masterTablesData["employees"][1]["masterKeys"] = array();
+	$masterTablesData["employees"][1]["masterKeys"][]="cid";
+				$masterTablesData["employees"][1]["detailKeys"] = array();
+	$masterTablesData["employees"][1]["detailKeys"][]="cid";
+		
 // -----------------end  prepare master-details data arrays ------------------------------//
 
 require_once(getabspath("classes/sql.php"));
@@ -3972,7 +4336,7 @@ function createSqlQuery_employees()
 {
 $proto0=array();
 $proto0["m_strHead"] = "SELECT";
-$proto0["m_strFieldList"] = "eid,  	ename,  	emppic,  	designation,  	whtasapp,  	localnum,  	skype,  	dropbox,  	email,  	dob,  	password,  	passportno,  	passport_expiry,  	visa_no,  	visa_expiry,  	division_id,  	doj,  	dor,  	status_id,  	experence,  	nationality,  	qulification,  	skillset,  	cid";
+$proto0["m_strFieldList"] = "eid,  	ename,  	emppic,  	designation,  	whtasapp,  	localnum,  	skype,  	dropbox,  	email,  	dob,  	password,  	passportno,  	passport_expiry,  	visa_no,  	visa_expiry,  	division_id,  	doj,  	dor,  	status_id,  	experence,  	nationality,  	qulification,  	skillset,  	cid,  	reset_token,  	reset_date";
 $proto0["m_strFrom"] = "FROM employees";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
@@ -4348,62 +4712,90 @@ $proto52["m_alias"] = "";
 $obj = new SQLFieldListItem($proto52);
 
 $proto0["m_fieldlist"][]=$obj;
-$proto0["m_fromlist"] = array();
-												$proto54=array();
-$proto54["m_link"] = "SQLL_MAIN";
-			$proto55=array();
-$proto55["m_strName"] = "employees";
-$proto55["m_srcTableName"] = "employees";
-$proto55["m_columns"] = array();
-$proto55["m_columns"][] = "eid";
-$proto55["m_columns"][] = "ename";
-$proto55["m_columns"][] = "emppic";
-$proto55["m_columns"][] = "designation";
-$proto55["m_columns"][] = "whtasapp";
-$proto55["m_columns"][] = "localnum";
-$proto55["m_columns"][] = "skype";
-$proto55["m_columns"][] = "dropbox";
-$proto55["m_columns"][] = "email";
-$proto55["m_columns"][] = "dob";
-$proto55["m_columns"][] = "password";
-$proto55["m_columns"][] = "passportno";
-$proto55["m_columns"][] = "passport_expiry";
-$proto55["m_columns"][] = "visa_no";
-$proto55["m_columns"][] = "visa_expiry";
-$proto55["m_columns"][] = "division_id";
-$proto55["m_columns"][] = "doj";
-$proto55["m_columns"][] = "dor";
-$proto55["m_columns"][] = "status_id";
-$proto55["m_columns"][] = "experence";
-$proto55["m_columns"][] = "nationality";
-$proto55["m_columns"][] = "qulification";
-$proto55["m_columns"][] = "skillset";
-$proto55["m_columns"][] = "cid";
-$proto55["m_columns"][] = "reset_token";
-$proto55["m_columns"][] = "reset_date";
-$obj = new SQLTable($proto55);
+						$proto54=array();
+			$obj = new SQLField(array(
+	"m_strName" => "reset_token",
+	"m_strTable" => "employees",
+	"m_srcTableName" => "employees"
+));
 
-$proto54["m_table"] = $obj;
-$proto54["m_sql"] = "employees";
-$proto54["m_alias"] = "";
+$proto54["m_sql"] = "reset_token";
 $proto54["m_srcTableName"] = "employees";
-$proto56=array();
-$proto56["m_sql"] = "";
-$proto56["m_uniontype"] = "SQLL_UNKNOWN";
+$proto54["m_expr"]=$obj;
+$proto54["m_alias"] = "";
+$obj = new SQLFieldListItem($proto54);
+
+$proto0["m_fieldlist"][]=$obj;
+						$proto56=array();
+			$obj = new SQLField(array(
+	"m_strName" => "reset_date",
+	"m_strTable" => "employees",
+	"m_srcTableName" => "employees"
+));
+
+$proto56["m_sql"] = "reset_date";
+$proto56["m_srcTableName"] = "employees";
+$proto56["m_expr"]=$obj;
+$proto56["m_alias"] = "";
+$obj = new SQLFieldListItem($proto56);
+
+$proto0["m_fieldlist"][]=$obj;
+$proto0["m_fromlist"] = array();
+												$proto58=array();
+$proto58["m_link"] = "SQLL_MAIN";
+			$proto59=array();
+$proto59["m_strName"] = "employees";
+$proto59["m_srcTableName"] = "employees";
+$proto59["m_columns"] = array();
+$proto59["m_columns"][] = "eid";
+$proto59["m_columns"][] = "ename";
+$proto59["m_columns"][] = "emppic";
+$proto59["m_columns"][] = "designation";
+$proto59["m_columns"][] = "whtasapp";
+$proto59["m_columns"][] = "localnum";
+$proto59["m_columns"][] = "skype";
+$proto59["m_columns"][] = "dropbox";
+$proto59["m_columns"][] = "email";
+$proto59["m_columns"][] = "dob";
+$proto59["m_columns"][] = "password";
+$proto59["m_columns"][] = "passportno";
+$proto59["m_columns"][] = "passport_expiry";
+$proto59["m_columns"][] = "visa_no";
+$proto59["m_columns"][] = "visa_expiry";
+$proto59["m_columns"][] = "division_id";
+$proto59["m_columns"][] = "doj";
+$proto59["m_columns"][] = "dor";
+$proto59["m_columns"][] = "status_id";
+$proto59["m_columns"][] = "experence";
+$proto59["m_columns"][] = "nationality";
+$proto59["m_columns"][] = "qulification";
+$proto59["m_columns"][] = "skillset";
+$proto59["m_columns"][] = "cid";
+$proto59["m_columns"][] = "reset_token";
+$proto59["m_columns"][] = "reset_date";
+$obj = new SQLTable($proto59);
+
+$proto58["m_table"] = $obj;
+$proto58["m_sql"] = "employees";
+$proto58["m_alias"] = "";
+$proto58["m_srcTableName"] = "employees";
+$proto60=array();
+$proto60["m_sql"] = "";
+$proto60["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto56["m_column"]=$obj;
-$proto56["m_contained"] = array();
-$proto56["m_strCase"] = "";
-$proto56["m_havingmode"] = false;
-$proto56["m_inBrackets"] = false;
-$proto56["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto56);
+$proto60["m_column"]=$obj;
+$proto60["m_contained"] = array();
+$proto60["m_strCase"] = "";
+$proto60["m_havingmode"] = false;
+$proto60["m_inBrackets"] = false;
+$proto60["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto60);
 
-$proto54["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto54);
+$proto58["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto58);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -4419,7 +4811,7 @@ $queryData_employees = createSqlQuery_employees();
 	
 		;
 
-																								
+																										
 
 $tdataemployees[".sqlquery"] = $queryData_employees;
 

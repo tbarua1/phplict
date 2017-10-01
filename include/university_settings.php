@@ -96,9 +96,9 @@ $tdatauniversity[".fieldsForRegister"] = array();
 
 $tdatauniversity[".listAjax"] = false;
 
-	$tdatauniversity[".audit"] = true;
+	$tdatauniversity[".audit"] = false;
 
-	$tdatauniversity[".locking"] = true;
+	$tdatauniversity[".locking"] = false;
 
 $tdatauniversity[".edit"] = true;
 $tdatauniversity[".afterEditAction"] = 1;
@@ -153,7 +153,7 @@ $tdatauniversity[".rowHighlite"] = true;
 
 
 
-						
+
 
 $tdatauniversity[".ajaxCodeSnippetAdded"] = false;
 
@@ -166,7 +166,7 @@ $tdatauniversity[".isUseTimeForSearch"] = false;
 
 
 
-$tdatauniversity[".badgeColor"] = "9ACD32";
+$tdatauniversity[".badgeColor"] = "CD5C5C";
 
 
 $tdatauniversity[".allSearchFields"] = array();
@@ -218,11 +218,7 @@ $tdatauniversity[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdatauniversity[".geocodingEnabled"] = true;
-$tdatauniversity[".geocodingData"] = array();
-$tdatauniversity[".geocodingData"]["latField"] = "Lat";
-$tdatauniversity[".geocodingData"]["lngField"] = "Lng";
-$tdatauniversity[".geocodingData"]["addressFields"] = array();
+$tdatauniversity[".geocodingEnabled"] = false;
 
 
 
@@ -343,6 +339,14 @@ $tdatauniversity[".masterListFields"][] = "Lat";
 $tdatauniversity[".masterListFields"][] = "Lng";
 
 $tdatauniversity[".inlineAddFields"] = array();
+$tdatauniversity[".inlineAddFields"][] = "University_name";
+$tdatauniversity[".inlineAddFields"][] = "MOU_date";
+$tdatauniversity[".inlineAddFields"][] = "TUP";
+$tdatauniversity[".inlineAddFields"][] = "FS";
+$tdatauniversity[".inlineAddFields"][] = "TYPE";
+$tdatauniversity[".inlineAddFields"][] = "division_id";
+$tdatauniversity[".inlineAddFields"][] = "Lat";
+$tdatauniversity[".inlineAddFields"][] = "Lng";
 
 $tdatauniversity[".editFields"] = array();
 $tdatauniversity[".editFields"][] = "University_name";
@@ -355,6 +359,14 @@ $tdatauniversity[".editFields"][] = "Lat";
 $tdatauniversity[".editFields"][] = "Lng";
 
 $tdatauniversity[".inlineEditFields"] = array();
+$tdatauniversity[".inlineEditFields"][] = "University_name";
+$tdatauniversity[".inlineEditFields"][] = "MOU_date";
+$tdatauniversity[".inlineEditFields"][] = "TUP";
+$tdatauniversity[".inlineEditFields"][] = "FS";
+$tdatauniversity[".inlineEditFields"][] = "TYPE";
+$tdatauniversity[".inlineEditFields"][] = "division_id";
+$tdatauniversity[".inlineEditFields"][] = "Lat";
+$tdatauniversity[".inlineEditFields"][] = "Lng";
 
 $tdatauniversity[".updateSelectedFields"] = array();
 $tdatauniversity[".updateSelectedFields"][] = "University_name";
@@ -549,10 +561,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -679,10 +693,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -809,10 +825,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -838,7 +856,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Checkbox");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
@@ -852,7 +870,8 @@ $tdatauniversity[".printFields"][] = "Lng";
 	
 	
 	
-	
+		$vdata["NeedEncode"] = true;
+
 		
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
@@ -861,7 +880,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Checkbox");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
@@ -880,14 +899,17 @@ $tdatauniversity[".printFields"][] = "Lng";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
 							
 	
 	//	End validation
@@ -907,7 +929,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -935,10 +957,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -964,7 +988,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Checkbox");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
@@ -978,7 +1002,8 @@ $tdatauniversity[".printFields"][] = "Lng";
 	
 	
 	
-	
+		$vdata["NeedEncode"] = true;
+
 		
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
@@ -987,7 +1012,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Checkbox");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
@@ -1006,14 +1031,17 @@ $tdatauniversity[".printFields"][] = "Lng";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
 							
 	
 	//	End validation
@@ -1033,7 +1061,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1061,10 +1089,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1114,29 +1144,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "Private";
-	$edata["LookupValues"][] = "Public";
-	$edata["LookupValues"][] = "Off Campus";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -1150,8 +1163,11 @@ $tdatauniversity[".printFields"][] = "Lng";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1177,7 +1193,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1205,10 +1221,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1275,7 +1293,7 @@ $tdatauniversity[".printFields"][] = "Lng";
 		
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "dname";
+	$edata["DisplayField"] = "division_id";
 	
 	
 
@@ -1362,10 +1380,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -1493,10 +1513,12 @@ $tdatauniversity[".printFields"][] = "Lng";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 

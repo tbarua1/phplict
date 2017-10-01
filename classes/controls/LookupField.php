@@ -1367,21 +1367,19 @@ class LookupField extends EditControl
 			
 		$pSet = $this->pageObject->pSetEdit;	
 		
-		$strWhere = $dispFieldSearchClause;
-		
 		if( $this->lookupType == LT_QUERY )
 		{
 			$this->fillLookupFieldsIndexes();
 			
 			$lookupQueryObj = $this->lookupPSet->getSQLQuery()->CloneObject();
 			$lookupQueryObj->deleteAllFieldsExcept( $this->linkFieldIndex );
-			return $lookupQueryObj->toSql( $strWhere, "" /* suppress order by expression */ );
+			return $lookupQueryObj->buildSQL_default( $dispFieldSearchClause );
 		}		
 
 		return "SELECT ".
 			$this->lwLinkField.
 			" FROM ".$this->lookupConnection->addTableWrappers( $this->lookupTable ).
-			" WHERE ".$strWhere;
+			" WHERE ".$dispFieldSearchClause;
 	}
 
 	/**

@@ -18,6 +18,8 @@ require_once('include/lookuplinks.php');
 //  Verify the eligibility of such a call.
 
 InitLookupLinks();
+if( !ListPage::processListPageSecurity( $strTableName ) )
+	return;
 
 if( ListPage::processSaveParams( $strTableName ) )
 	return;
@@ -145,6 +147,9 @@ $layout->containers["more"] = array();
 $layout->container_properties["more"] = array(  );
 $layout->containers["more"][] = array("name"=>"morebutton",
 	"block"=>"more_list", "substyle"=>1  );
+
+$layout->containers["more"][] = array("name"=>"loggedas",
+	"block"=>"security_block", "substyle"=>1  );
 
 $layout->skins["more"] = "";
 

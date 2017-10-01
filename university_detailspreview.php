@@ -31,7 +31,7 @@ $xt = new Xtempl();
 
 $layout = new TLayout("detailspreview_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "university_detailspreview";
 $layout->blocks["bare"] = array();
 $layout->containers["dcount"] = array();
@@ -186,7 +186,7 @@ if($rowcount)
 			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("MOU_date")))
 				$class = ' rnr-field-number';
 			$row["MOU_date_class"] = $class;
-	//	TUP - Checkbox
+	//	TUP - 
 			$viewContainer->recId = $recordsCounter;
 		    $value = $viewContainer->showDBValue("TUP", $data, $keylink);
 			$row["TUP_value"] = $value;
@@ -201,7 +201,7 @@ if($rowcount)
 			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("TUP")))
 				$class = ' rnr-field-number';
 			$row["TUP_class"] = $class;
-	//	FS - Checkbox
+	//	FS - 
 			$viewContainer->recId = $recordsCounter;
 		    $value = $viewContainer->showDBValue("FS", $data, $keylink);
 			$row["FS_value"] = $value;

@@ -35,6 +35,9 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsschedule_map["English"]["university_id"] = "University Id";
 	$fieldToolTipsschedule_map["English"]["university_id"] = "";
 	$placeHoldersschedule_map["English"]["university_id"] = "";
+	$fieldLabelsschedule_map["English"]["Date"] = "Date";
+	$fieldToolTipsschedule_map["English"]["Date"] = "";
+	$placeHoldersschedule_map["English"]["Date"] = "";
 	$fieldLabelsschedule_map["English"]["status"] = "Status";
 	$fieldToolTipsschedule_map["English"]["status"] = "";
 	$placeHoldersschedule_map["English"]["status"] = "";
@@ -47,9 +50,6 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsschedule_map["English"]["Lng"] = "Lng";
 	$fieldToolTipsschedule_map["English"]["Lng"] = "";
 	$placeHoldersschedule_map["English"]["Lng"] = "";
-	$fieldLabelsschedule_map["English"]["Date"] = "Date";
-	$fieldToolTipsschedule_map["English"]["Date"] = "";
-	$placeHoldersschedule_map["English"]["Date"] = "";
 	if (count($fieldToolTipsschedule_map["English"]))
 		$tdataschedule_map[".isUseToolTips"] = true;
 }
@@ -59,33 +59,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsschedule_map[""] = array();
 	$placeHoldersschedule_map[""] = array();
 	$pageTitlesschedule_map[""] = array();
-	$fieldLabelsschedule_map[""]["track"] = "Track";
-	$fieldToolTipsschedule_map[""]["track"] = "";
-	$placeHoldersschedule_map[""]["track"] = "";
-	$fieldLabelsschedule_map[""]["Batchcode"] = "Batchcode";
-	$fieldToolTipsschedule_map[""]["Batchcode"] = "";
-	$placeHoldersschedule_map[""]["Batchcode"] = "";
-	$fieldLabelsschedule_map[""]["fbgroup"] = "Fbgroup";
-	$fieldToolTipsschedule_map[""]["fbgroup"] = "";
-	$placeHoldersschedule_map[""]["fbgroup"] = "";
-	$fieldLabelsschedule_map[""]["university_id"] = "University Id";
-	$fieldToolTipsschedule_map[""]["university_id"] = "";
-	$placeHoldersschedule_map[""]["university_id"] = "";
-	$fieldLabelsschedule_map[""]["status"] = "Status";
-	$fieldToolTipsschedule_map[""]["status"] = "";
-	$placeHoldersschedule_map[""]["status"] = "";
-	$fieldLabelsschedule_map[""]["University_name"] = "University Name";
-	$fieldToolTipsschedule_map[""]["University_name"] = "";
-	$placeHoldersschedule_map[""]["University_name"] = "";
-	$fieldLabelsschedule_map[""]["Lat"] = "Lat";
-	$fieldToolTipsschedule_map[""]["Lat"] = "";
-	$placeHoldersschedule_map[""]["Lat"] = "";
-	$fieldLabelsschedule_map[""]["Lng"] = "Lng";
-	$fieldToolTipsschedule_map[""]["Lng"] = "";
-	$placeHoldersschedule_map[""]["Lng"] = "";
-	$fieldLabelsschedule_map[""]["Date"] = "Date";
-	$fieldToolTipsschedule_map[""]["Date"] = "";
-	$placeHoldersschedule_map[""]["Date"] = "";
 	if (count($fieldToolTipsschedule_map[""]))
 		$tdataschedule_map[".isUseToolTips"] = true;
 }
@@ -170,7 +143,7 @@ $tdataschedule_map[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdataschedule_map[".ajaxCodeSnippetAdded"] = false;
 
@@ -234,13 +207,7 @@ $tdataschedule_map[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdataschedule_map[".geocodingEnabled"] = true;
-$tdataschedule_map[".geocodingData"] = array();
-$tdataschedule_map[".geocodingData"]["latField"] = "Lat";
-$tdataschedule_map[".geocodingData"]["lngField"] = "Lng";
-$tdataschedule_map[".geocodingData"]["addressFields"] = array();
-	$tdataschedule_map[".geocodingData"]["addressFields"][] = "University_name";
-	$tdataschedule_map[".geocodingData"]["addressFields"][] = "status";
+$tdataschedule_map[".geocodingEnabled"] = false;
 
 
 
@@ -314,11 +281,11 @@ $tableKeysschedule_map = array();
 $tdataschedule_map[".Keys"] = $tableKeysschedule_map;
 
 $tdataschedule_map[".listFields"] = array();
-$tdataschedule_map[".listFields"][] = "Date";
 $tdataschedule_map[".listFields"][] = "track";
 $tdataschedule_map[".listFields"][] = "Batchcode";
 $tdataschedule_map[".listFields"][] = "fbgroup";
 $tdataschedule_map[".listFields"][] = "university_id";
+$tdataschedule_map[".listFields"][] = "Date";
 $tdataschedule_map[".listFields"][] = "status";
 $tdataschedule_map[".listFields"][] = "University_name";
 $tdataschedule_map[".listFields"][] = "Lat";
@@ -361,11 +328,11 @@ $tdataschedule_map[".masterListFields"][] = "Lat";
 $tdataschedule_map[".masterListFields"][] = "Lng";
 
 $tdataschedule_map[".inlineAddFields"] = array();
-$tdataschedule_map[".inlineAddFields"][] = "Date";
 $tdataschedule_map[".inlineAddFields"][] = "track";
 $tdataschedule_map[".inlineAddFields"][] = "Batchcode";
 $tdataschedule_map[".inlineAddFields"][] = "fbgroup";
 $tdataschedule_map[".inlineAddFields"][] = "university_id";
+$tdataschedule_map[".inlineAddFields"][] = "Date";
 $tdataschedule_map[".inlineAddFields"][] = "status";
 $tdataschedule_map[".inlineAddFields"][] = "University_name";
 $tdataschedule_map[".inlineAddFields"][] = "Lat";
@@ -383,11 +350,11 @@ $tdataschedule_map[".editFields"][] = "Lat";
 $tdataschedule_map[".editFields"][] = "Lng";
 
 $tdataschedule_map[".inlineEditFields"] = array();
-$tdataschedule_map[".inlineEditFields"][] = "Date";
 $tdataschedule_map[".inlineEditFields"][] = "track";
 $tdataschedule_map[".inlineEditFields"][] = "Batchcode";
 $tdataschedule_map[".inlineEditFields"][] = "fbgroup";
 $tdataschedule_map[".inlineEditFields"][] = "university_id";
+$tdataschedule_map[".inlineEditFields"][] = "Date";
 $tdataschedule_map[".inlineEditFields"][] = "status";
 $tdataschedule_map[".inlineEditFields"][] = "University_name";
 $tdataschedule_map[".inlineEditFields"][] = "Lat";
@@ -447,7 +414,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "track";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","track");
-	$fdata["FieldType"] = 200;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -534,15 +501,15 @@ $tdataschedule_map[".printFields"][] = "Lng";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -579,7 +546,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "Batchcode";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","Batchcode");
-	$fdata["FieldType"] = 200;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -666,15 +633,15 @@ $tdataschedule_map[".printFields"][] = "Lng";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -711,7 +678,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "fbgroup";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","fbgroup");
-	$fdata["FieldType"] = 200;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -798,15 +765,15 @@ $tdataschedule_map[".printFields"][] = "Lng";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -975,7 +942,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "Date";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","Date");
-	$fdata["FieldType"] = 7;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -1016,7 +983,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Short Date");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
@@ -1040,7 +1007,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Date");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
@@ -1057,20 +1024,20 @@ $tdataschedule_map[".printFields"][] = "Lng";
 
 	
 	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
+	
+	
+			$edata["HTML5InuptType"] = "text";
 
-	
-	
-	
+		$edata["EditParams"] = "";
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -1089,10 +1056,10 @@ $tdataschedule_map[".printFields"][] = "Lng";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
 // the end of search options settings
 
 
@@ -1107,7 +1074,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "status";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","status");
-	$fdata["FieldType"] = 200;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -1194,15 +1161,15 @@ $tdataschedule_map[".printFields"][] = "Lng";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -1239,7 +1206,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "University_name";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","University_name");
-	$fdata["FieldType"] = 200;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -1326,15 +1293,15 @@ $tdataschedule_map[".printFields"][] = "Lng";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
+		
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+							
 	
 	//	End validation
 
@@ -1371,7 +1338,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "Lat";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","Lat");
-	$fdata["FieldType"] = 14;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -1412,7 +1379,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Number");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
@@ -1420,8 +1387,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	
 	
 	
-		$vdata["DecimalDigits"] = 2;
-
+	
 	
 	
 	
@@ -1504,7 +1470,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	$fdata["GoodName"] = "Lng";
 	$fdata["ownerTable"] = "schedule_map";
 	$fdata["Label"] = GetFieldLabel("schedule_map","Lng");
-	$fdata["FieldType"] = 14;
+	$fdata["FieldType"] = 3;
 
 	
 	
@@ -1545,7 +1511,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
 
-	$vdata = array("ViewFormat" => "Number");
+	$vdata = array("ViewFormat" => "");
 
 	
 	
@@ -1553,8 +1519,7 @@ $tdataschedule_map[".printFields"][] = "Lng";
 	
 	
 	
-		$vdata["DecimalDigits"] = 2;
-
+	
 	
 	
 	

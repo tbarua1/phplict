@@ -637,9 +637,7 @@ class AddPage extends RunnerPage
 	 */
 	protected function mergeNewRecordData()
 	{
-		if( !$this->auditObj && !$this->eventsObject->exists("AfterAdd") )
-			return;
-			
+		
 		foreach($this->keys as $keyFName => $keyValue)
 		{
 			$this->newRecordData[ $keyFName ] = $keyValue;
@@ -1031,27 +1029,32 @@ class AddPage extends RunnerPage
 				return true;	
 				
 			case AA_TO_DETAIL_LIST:
-				HeaderRedirect( GetTableURL( $this->pSet->getAADetailTable() ), PAGE_LIST );
+				$dTName = $this->pSet->getAADetailTable();
+				HeaderRedirect( GetTableURL( $dTName ), PAGE_LIST, implode("&", $this->getNewRecordMasterKeys( $dTName ) ). "&mastertable=" .$this->tName );
 				return true;
 				
 			case AA_TO_DETAIL_ADD:
 				$_SESSION["message_add"] = $this->message ? $this->message : "";
 				
 				$dTName = $this->pSet->getAADetailTable();
-				$data = $this->getNewRecordData();
-				
-				$mKeys = array();
-				foreach($this->pSet->getMasterKeysByDetailTable( $dTName ) as $i => $mk)
-				{
-					$mKeys[] = "masterkey". ($i + 1) . "=" .$data[ $mk ];
-				}
-				
-				HeaderRedirect( GetTableURL( $dTName ), PAGE_ADD, implode("&", $mKeys). "&mastertable=" .$this->tName );
+				HeaderRedirect( GetTableURL( $dTName ), PAGE_ADD, implode("&", $this->getNewRecordMasterKeys( $dTName ) ). "&mastertable=" .$this->tName );
 				return true;
 				
 			default:
 				return false;
 		}
+	}
+	
+	function getNewRecordMasterKeys( $dTName ) 
+	{
+		$data = $this->getNewRecordData();
+		
+		$mKeys = array();
+		foreach($this->pSet->getMasterKeysByDetailTable( $dTName ) as $i => $mk)
+		{
+			$mKeys[] = "masterkey". ($i + 1) . "=" .$data[ $mk ];
+		}
+		return $mKeys;
 	}
 	
 	
@@ -1571,16 +1574,15 @@ class AddPage extends RunnerPage
 		$linkFieldName = $lookupMainSettings->getLinkField( $this->lookupField );
 		$dispfield = $lookupMainSettings->getDisplayField( $this->lookupField );
 		
-		if( $lookupMainSettings->getCustomDisplay( $this->lookupField ) )
-			$this->pSet->getSQLQuery()->AddCustomExpression($dispfield, $this->pSet, $mainTable, $this->lookupField);
 		$lookupQueryObj = $this->pSet->getSQLQuery()->CloneObject();
+		if( $lookupMainSettings->getCustomDisplay( $this->lookupField ) )
+			$lookupQueryObj->AddCustomExpression($dispfield, $this->pSet, $mainTable, $this->lookupField);
 			
 		$data = array();
 		$lookupIndexes = array("linkFieldIndex" => 0, "displayFieldIndex" => 0);
 		if( count($this->keys) )
 		{
-			$where = KeyWhere($this->keys);
-			$LookupSQL = $lookupQueryObj->toSql( whereAdd($lookupQueryObj->m_where->toSql($lookupQueryObj), $where) );
+			$LookupSQL = $lookupQueryObj->buildSQL_default( KeyWhere($this->keys) );
 				
 			$lookupIndexes = GetLookupFieldsIndexes($lookupMainSettings, $this->lookupField);
 			LogInfo($LookupSQL);

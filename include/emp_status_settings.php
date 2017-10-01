@@ -75,23 +75,39 @@ $tdataemp_status[".fieldsForRegister"] = array();
 
 $tdataemp_status[".listAjax"] = false;
 
-	$tdataemp_status[".audit"] = true;
+	$tdataemp_status[".audit"] = false;
 
-	$tdataemp_status[".locking"] = true;
+	$tdataemp_status[".locking"] = false;
 
+$tdataemp_status[".edit"] = true;
+$tdataemp_status[".afterEditAction"] = 1;
+$tdataemp_status[".closePopupAfterEdit"] = 1;
+$tdataemp_status[".afterEditActionDetTable"] = "";
 
+$tdataemp_status[".add"] = true;
+$tdataemp_status[".afterAddAction"] = 1;
+$tdataemp_status[".closePopupAfterAdd"] = 1;
+$tdataemp_status[".afterAddActionDetTable"] = "";
 
+$tdataemp_status[".list"] = true;
 
 
 
 $tdataemp_status[".reorderRecordsByHeader"] = true;
 
 
+$tdataemp_status[".exportFormatting"] = 2;
+$tdataemp_status[".exportDelimiter"] = ",";
+		
+$tdataemp_status[".view"] = true;
 
+$tdataemp_status[".import"] = true;
 
+$tdataemp_status[".exportTo"] = true;
 
+$tdataemp_status[".printFriendly"] = true;
 
-
+$tdataemp_status[".delete"] = true;
 
 $tdataemp_status[".showSimpleSearchOptions"] = false;
 
@@ -116,7 +132,7 @@ $tdataemp_status[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdataemp_status[".ajaxCodeSnippetAdded"] = false;
 
@@ -135,13 +151,18 @@ $tdataemp_status[".allSearchFields"] = array();
 $tdataemp_status[".filterFields"] = array();
 $tdataemp_status[".requiredSearchFields"] = array();
 
-
+$tdataemp_status[".allSearchFields"][] = "status_id";
+	$tdataemp_status[".allSearchFields"][] = "status";
+	
 
 $tdataemp_status[".googleLikeFields"] = array();
 $tdataemp_status[".googleLikeFields"][] = "status_id";
 $tdataemp_status[".googleLikeFields"][] = "status";
 
 
+$tdataemp_status[".advSearchFields"] = array();
+$tdataemp_status[".advSearchFields"][] = "status_id";
+$tdataemp_status[".advSearchFields"][] = "status";
 
 $tdataemp_status[".tableType"] = "list";
 
@@ -229,32 +250,52 @@ $tableKeysemp_status[] = "status_id";
 $tdataemp_status[".Keys"] = $tableKeysemp_status;
 
 $tdataemp_status[".listFields"] = array();
+$tdataemp_status[".listFields"][] = "status_id";
+$tdataemp_status[".listFields"][] = "status";
 
 $tdataemp_status[".hideMobileList"] = array();
 
 
 $tdataemp_status[".viewFields"] = array();
+$tdataemp_status[".viewFields"][] = "status_id";
+$tdataemp_status[".viewFields"][] = "status";
 
 $tdataemp_status[".addFields"] = array();
+$tdataemp_status[".addFields"][] = "status_id";
+$tdataemp_status[".addFields"][] = "status";
 
 $tdataemp_status[".masterListFields"] = array();
 $tdataemp_status[".masterListFields"][] = "status_id";
 $tdataemp_status[".masterListFields"][] = "status";
 
 $tdataemp_status[".inlineAddFields"] = array();
+$tdataemp_status[".inlineAddFields"][] = "status_id";
+$tdataemp_status[".inlineAddFields"][] = "status";
 
 $tdataemp_status[".editFields"] = array();
+$tdataemp_status[".editFields"][] = "status_id";
+$tdataemp_status[".editFields"][] = "status";
 
 $tdataemp_status[".inlineEditFields"] = array();
+$tdataemp_status[".inlineEditFields"][] = "status_id";
+$tdataemp_status[".inlineEditFields"][] = "status";
 
 $tdataemp_status[".updateSelectedFields"] = array();
+$tdataemp_status[".updateSelectedFields"][] = "status_id";
+$tdataemp_status[".updateSelectedFields"][] = "status";
 
 
 $tdataemp_status[".exportFields"] = array();
+$tdataemp_status[".exportFields"][] = "status_id";
+$tdataemp_status[".exportFields"][] = "status";
 
 $tdataemp_status[".importFields"] = array();
+$tdataemp_status[".importFields"][] = "status_id";
+$tdataemp_status[".importFields"][] = "status";
 
 $tdataemp_status[".printFields"] = array();
+$tdataemp_status[".printFields"][] = "status_id";
+$tdataemp_status[".printFields"][] = "status";
 
 
 //	status_id
@@ -271,17 +312,27 @@ $tdataemp_status[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "status_id";
 
 		$fdata["isSQLExpression"] = true;
@@ -289,7 +340,8 @@ $tdataemp_status[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -369,6 +421,12 @@ $tdataemp_status[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 
@@ -388,17 +446,27 @@ $tdataemp_status[".printFields"] = array();
 	
 	
 			
-	
-	
-	
-	
-	
-	
+		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
+
+		$fdata["bInlineAdd"] = true;
+
+		$fdata["bEditPage"] = true;
+
+		$fdata["bInlineEdit"] = true;
+
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "status";
 
 		$fdata["isSQLExpression"] = true;
@@ -406,7 +474,8 @@ $tdataemp_status[".printFields"] = array();
 
 	
 	
-			
+				$fdata["FieldPermissions"] = true;
+
 				$fdata["UploadFolder"] = "files";
 
 //  Begin View Formats
@@ -484,6 +553,12 @@ $tdataemp_status[".printFields"] = array();
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Contains";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
+// the end of search options settings
 
 
 

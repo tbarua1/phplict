@@ -71,6 +71,11 @@
 	{BEGIN grid_header}
 		<tr class="{$gridHeader_class}" >
 		{BEGIN record_header}
+			{BEGIN track_fieldheadercolumn}
+			<th class="{$track_class}" {$track_style}  data-field="track">
+				{$label full_batch_details track}
+			</th>
+			{END track_fieldheadercolumn}
 			{BEGIN Batchcode_fieldheadercolumn}
 			<th class="{$Batchcode_class}" {$Batchcode_style}  data-field="Batchcode">
 				{$label full_batch_details Batchcode}
@@ -81,41 +86,21 @@
 				{$label full_batch_details fbgroup}
 			</th>
 			{END fbgroup_fieldheadercolumn}
-			{BEGIN division_id_fieldheadercolumn}
-			<th class="{$division_id_class}" {$division_id_style}  data-field="division_id">
-				{$label full_batch_details division_id}
-			</th>
-			{END division_id_fieldheadercolumn}
 			{BEGIN university_id_fieldheadercolumn}
 			<th class="{$university_id_class}" {$university_id_style}  data-field="university_id">
 				{$label full_batch_details university_id}
 			</th>
 			{END university_id_fieldheadercolumn}
+			{BEGIN division_id_fieldheadercolumn}
+			<th class="{$division_id_class}" {$division_id_style}  data-field="division_id">
+				{$label full_batch_details division_id}
+			</th>
+			{END division_id_fieldheadercolumn}
 			{BEGIN department_id_fieldheadercolumn}
 			<th class="{$department_id_class}" {$department_id_style}  data-field="department_id">
 				{$label full_batch_details department_id}
 			</th>
 			{END department_id_fieldheadercolumn}
-			{BEGIN starting_Date_fieldheadercolumn}
-			<th class="{$starting_Date_class}" {$starting_Date_style}  data-field="starting_Date">
-				{$label full_batch_details starting_Date}
-			</th>
-			{END starting_Date_fieldheadercolumn}
-			{BEGIN Track_fieldheadercolumn}
-			<th class="{$Track_class}" {$Track_style}  data-field="Track">
-				{$label full_batch_details Track}
-			</th>
-			{END Track_fieldheadercolumn}
-			{BEGIN cid_fieldheadercolumn}
-			<th class="{$cid_class}" {$cid_style}  data-field="cid">
-				{$label full_batch_details cid}
-			</th>
-			{END cid_fieldheadercolumn}
-			{BEGIN status_fieldheadercolumn}
-			<th class="{$status_class}" {$status_style}  data-field="status">
-				{$label full_batch_details status}
-			</th>
-			{END status_fieldheadercolumn}
 			{BEGIN uni_spoc_name_fieldheadercolumn}
 			<th class="{$uni_spoc_name_class}" {$uni_spoc_name_style}  data-field="uni_spoc_name">
 				{$label full_batch_details uni_spoc_name}
@@ -136,6 +121,11 @@
 				{$label full_batch_details local_spoc}
 			</th>
 			{END local_spoc_fieldheadercolumn}
+			{BEGIN cid_fieldheadercolumn}
+			<th class="{$cid_class}" {$cid_style}  data-field="cid">
+				{$label full_batch_details cid}
+			</th>
+			{END cid_fieldheadercolumn}
 			{BEGIN schedule_fieldheadercolumn}
 			<th class="{$schedule_class}" {$schedule_style}  data-field="schedule">
 				{$label full_batch_details schedule}
@@ -151,6 +141,31 @@
 				{$label full_batch_details soft_skill_trainer}
 			</th>
 			{END soft_skill_trainer_fieldheadercolumn}
+			{BEGIN sdate_fieldheadercolumn}
+			<th class="{$sdate_class}" {$sdate_style}  data-field="sdate">
+				{$label full_batch_details sdate}
+			</th>
+			{END sdate_fieldheadercolumn}
+			{BEGIN stime_fieldheadercolumn}
+			<th class="{$stime_class}" {$stime_style}  data-field="stime">
+				{$label full_batch_details stime}
+			</th>
+			{END stime_fieldheadercolumn}
+			{BEGIN etime_fieldheadercolumn}
+			<th class="{$etime_class}" {$etime_style}  data-field="etime">
+				{$label full_batch_details etime}
+			</th>
+			{END etime_fieldheadercolumn}
+			{BEGIN status_fieldheadercolumn}
+			<th class="{$status_class}" {$status_style}  data-field="status">
+				{$label full_batch_details status}
+			</th>
+			{END status_fieldheadercolumn}
+			{BEGIN remark_fieldheadercolumn}
+			<th class="{$remark_class}" {$remark_style}  data-field="remark">
+				{$label full_batch_details remark}
+			</th>
+			{END remark_fieldheadercolumn}
 			{BEGIN endrecordheader_block}
 			<th class="rnr-cs">&nbsp;</th>
 			{END endrecordheader_block}
@@ -163,6 +178,11 @@
 	{BEGIN grid_row}
 		<tr class="{$rowclass}" {$rowattrs} {$rowstyle}>
 		{BEGIN grid_record}
+			{BEGIN track_fieldcolumn}
+			<td  class="{$track_class}" {$track_style} {$recordattrs}>
+				{$track_value}
+			</td>
+			{END track_fieldcolumn}
 			{BEGIN Batchcode_fieldcolumn}
 			<td  class="{$Batchcode_class}" {$Batchcode_style} {$recordattrs}>
 				{$Batchcode_value}
@@ -173,41 +193,21 @@
 				{$fbgroup_value}
 			</td>
 			{END fbgroup_fieldcolumn}
-			{BEGIN division_id_fieldcolumn}
-			<td  class="{$division_id_class}" {$division_id_style} {$recordattrs}>
-				{$division_id_value}
-			</td>
-			{END division_id_fieldcolumn}
 			{BEGIN university_id_fieldcolumn}
 			<td  class="{$university_id_class}" {$university_id_style} {$recordattrs}>
 				{$university_id_value}
 			</td>
 			{END university_id_fieldcolumn}
+			{BEGIN division_id_fieldcolumn}
+			<td  class="{$division_id_class}" {$division_id_style} {$recordattrs}>
+				{$division_id_value}
+			</td>
+			{END division_id_fieldcolumn}
 			{BEGIN department_id_fieldcolumn}
 			<td  class="{$department_id_class}" {$department_id_style} {$recordattrs}>
 				{$department_id_value}
 			</td>
 			{END department_id_fieldcolumn}
-			{BEGIN starting_Date_fieldcolumn}
-			<td  class="{$starting_Date_class}" {$starting_Date_style} {$recordattrs}>
-				{$starting_Date_value}
-			</td>
-			{END starting_Date_fieldcolumn}
-			{BEGIN Track_fieldcolumn}
-			<td  class="{$Track_class}" {$Track_style} {$recordattrs}>
-				{$Track_value}
-			</td>
-			{END Track_fieldcolumn}
-			{BEGIN cid_fieldcolumn}
-			<td  class="{$cid_class}" {$cid_style} {$recordattrs}>
-				{$cid_value}
-			</td>
-			{END cid_fieldcolumn}
-			{BEGIN status_fieldcolumn}
-			<td  class="{$status_class}" {$status_style} {$recordattrs}>
-				{$status_value}
-			</td>
-			{END status_fieldcolumn}
 			{BEGIN uni_spoc_name_fieldcolumn}
 			<td  class="{$uni_spoc_name_class}" {$uni_spoc_name_style} {$recordattrs}>
 				{$uni_spoc_name_value}
@@ -228,6 +228,11 @@
 				{$local_spoc_value}
 			</td>
 			{END local_spoc_fieldcolumn}
+			{BEGIN cid_fieldcolumn}
+			<td  class="{$cid_class}" {$cid_style} {$recordattrs}>
+				{$cid_value}
+			</td>
+			{END cid_fieldcolumn}
 			{BEGIN schedule_fieldcolumn}
 			<td  class="{$schedule_class}" {$schedule_style} {$recordattrs}>
 				{$schedule_value}
@@ -243,6 +248,31 @@
 				{$soft_skill_trainer_value}
 			</td>
 			{END soft_skill_trainer_fieldcolumn}
+			{BEGIN sdate_fieldcolumn}
+			<td  class="{$sdate_class}" {$sdate_style} {$recordattrs}>
+				{$sdate_value}
+			</td>
+			{END sdate_fieldcolumn}
+			{BEGIN stime_fieldcolumn}
+			<td  class="{$stime_class}" {$stime_style} {$recordattrs}>
+				{$stime_value}
+			</td>
+			{END stime_fieldcolumn}
+			{BEGIN etime_fieldcolumn}
+			<td  class="{$etime_class}" {$etime_style} {$recordattrs}>
+				{$etime_value}
+			</td>
+			{END etime_fieldcolumn}
+			{BEGIN status_fieldcolumn}
+			<td  class="{$status_class}" {$status_style} {$recordattrs}>
+				{$status_value}
+			</td>
+			{END status_fieldcolumn}
+			{BEGIN remark_fieldcolumn}
+			<td  class="{$remark_class}" {$remark_style} {$recordattrs}>
+				{$remark_value}
+			</td>
+			{END remark_fieldcolumn}
 			{BEGIN endrecord_block}
 			<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
 			{END endrecord_block}

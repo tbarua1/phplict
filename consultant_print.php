@@ -22,7 +22,7 @@ if( !Security::processPageSecurity( $strtablename, 'P' ) )
 
 $layout = new TLayout("print_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "consultant_print";
 $layout->blocks["top"] = array();
 $layout->containers["pdf"] = array();
@@ -70,35 +70,7 @@ $page_layouts["consultant_print"] = $layout;
 
 $layout = new TLayout("masterprint_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
-		$layout->customCssPageName = "employees_masterprint";
-$layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterprintheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"bsmasterprintgrid",
-	"block"=>"", "substyle"=>1  );
-
-$layout->skins["mastergrid"] = "";
-
-$layout->blocks["bare"][] = "mastergrid";
-$page_layouts["employees_masterprint"] = $layout;
-
-
-
-			
-
-
-$layout = new TLayout("masterprint_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "division_masterprint";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();
@@ -121,13 +93,41 @@ $page_layouts["division_masterprint"] = $layout;
 
 
 
+			
+
+
+$layout = new TLayout("masterprint_bootstrap", "OfficeOffice", "MobileOffice");
+$layout->version = 3;
+	$layout->bootstrapTheme = "cerulean";
+		$layout->customCssPageName = "employees_masterprint";
+$layout->blocks["bare"] = array();
+$layout->containers["column"] = array();
+$layout->container_properties["column"] = array(  );
+$layout->containers["column"][] = array("name"=>"masterprintheader",
+	"block"=>"masterlist_title", "substyle"=>1  );
+
+$layout->skins["column"] = "";
+
+$layout->blocks["bare"][] = "column";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"bsmasterprintgrid",
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "";
+
+$layout->blocks["bare"][] = "mastergrid";
+$page_layouts["employees_masterprint"] = $layout;
+
+
+
 
 		
 
 
 $layout = new TLayout("print_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_print";
 $layout->blocks["top"] = array();
 $layout->containers["pdf"] = array();

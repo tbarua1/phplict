@@ -31,7 +31,7 @@ $xt = new Xtempl();
 
 $layout = new TLayout("detailspreview_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "employees_detailspreview";
 $layout->blocks["bare"] = array();
 $layout->containers["dcount"] = array();
@@ -98,6 +98,14 @@ if($mastertable == "division")
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("division_id") . " is null";
 	else
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("division_id") . "=" . $formattedValue;
+}
+if($mastertable == "courses")
+{
+	$formattedValue = make_db_value("cid",$_SESSION[$sessionPrefix."_masterkey1"]);
+	if( $formattedValue == "null" )
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("cid") . " is null";
+	else
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("cid") . "=" . $formattedValue;
 }
 
 $whereClauses[] = SecuritySQL("Search", $strTableName);
@@ -171,7 +179,7 @@ if($rowcount)
 			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("ename")))
 				$class = ' rnr-field-number';
 			$row["ename_class"] = $class;
-	//	emppic - Document Download
+	//	emppic - 
 			$viewContainer->recId = $recordsCounter;
 		    $value = $viewContainer->showDBValue("emppic", $data, $keylink);
 			$row["emppic_value"] = $value;
@@ -291,6 +299,21 @@ if($rowcount)
 			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("dob")))
 				$class = ' rnr-field-number';
 			$row["dob_class"] = $class;
+	//	password - 
+			$viewContainer->recId = $recordsCounter;
+		    $value = $viewContainer->showDBValue("password", $data, $keylink);
+			$row["password_value"] = $value;
+			$format = $pSet->getViewFormat("password");
+			$class = "rnr-field-text";
+			if($format==FORMAT_FILE) 
+				$class = ' rnr-field-file'; 
+			if($format==FORMAT_AUDIO)
+				$class = ' rnr-field-audio';
+			if($format==FORMAT_CHECKBOX)
+				$class = ' rnr-field-checkbox';
+			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("password")))
+				$class = ' rnr-field-number';
+			$row["password_class"] = $class;
 	//	passportno - 
 			$viewContainer->recId = $recordsCounter;
 		    $value = $viewContainer->showDBValue("passportno", $data, $keylink);
@@ -486,6 +509,36 @@ if($rowcount)
 			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("cid")))
 				$class = ' rnr-field-number';
 			$row["cid_class"] = $class;
+	//	reset_token - 
+			$viewContainer->recId = $recordsCounter;
+		    $value = $viewContainer->showDBValue("reset_token", $data, $keylink);
+			$row["reset_token_value"] = $value;
+			$format = $pSet->getViewFormat("reset_token");
+			$class = "rnr-field-text";
+			if($format==FORMAT_FILE) 
+				$class = ' rnr-field-file'; 
+			if($format==FORMAT_AUDIO)
+				$class = ' rnr-field-audio';
+			if($format==FORMAT_CHECKBOX)
+				$class = ' rnr-field-checkbox';
+			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("reset_token")))
+				$class = ' rnr-field-number';
+			$row["reset_token_class"] = $class;
+	//	reset_date - Short Date
+			$viewContainer->recId = $recordsCounter;
+		    $value = $viewContainer->showDBValue("reset_date", $data, $keylink);
+			$row["reset_date_value"] = $value;
+			$format = $pSet->getViewFormat("reset_date");
+			$class = "rnr-field-text";
+			if($format==FORMAT_FILE) 
+				$class = ' rnr-field-file'; 
+			if($format==FORMAT_AUDIO)
+				$class = ' rnr-field-audio';
+			if($format==FORMAT_CHECKBOX)
+				$class = ' rnr-field-checkbox';
+			if($format==FORMAT_NUMBER || IsNumberType($pSet->getFieldType("reset_date")))
+				$class = ' rnr-field-number';
+			$row["reset_date_class"] = $class;
 		$rowinfo[] = $row;
 		if ($b) {
 			$rowinfo2[] = $row;

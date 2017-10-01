@@ -10,6 +10,8 @@ require_once("classes/searchclause.php");
 
 add_nocache_headers();
 
+if( !ViewPage::processEditPageSecurity( $strTableName ) )
+	return;	
 
 
 

@@ -18,7 +18,7 @@ if( !ViewPage::processEditPageSecurity( $strTableName ) )
 
 $layout = new TLayout("view_bootstrap_2col", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_view";
 $layout->blocks["top"] = array();
 $layout->containers["viewpage"] = array();
@@ -93,7 +93,7 @@ $xt = new Xtempl();
 
 // $keys could not be set properly if editid params were no passed
 $keys = array();
-$keys["batch_id"] = postvalue("editid1");
+$keys["Batchcode"] = postvalue("editid1");
 
 //array of params for classes
 $params = array();

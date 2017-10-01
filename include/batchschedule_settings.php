@@ -29,27 +29,27 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsbatchschedule["English"]["Batchcode"] = "Batchcode";
 	$fieldToolTipsbatchschedule["English"]["Batchcode"] = "";
 	$placeHoldersbatchschedule["English"]["Batchcode"] = "";
-	$fieldLabelsbatchschedule["English"]["sdate"] = "Date";
+	$fieldLabelsbatchschedule["English"]["sdate"] = "Sdate";
 	$fieldToolTipsbatchschedule["English"]["sdate"] = "";
 	$placeHoldersbatchschedule["English"]["sdate"] = "";
-	$fieldLabelsbatchschedule["English"]["stime"] = "Start Time";
+	$fieldLabelsbatchschedule["English"]["stime"] = "Stime";
 	$fieldToolTipsbatchschedule["English"]["stime"] = "";
-	$placeHoldersbatchschedule["English"]["stime"] = "XX:XX AM/PM";
-	$fieldLabelsbatchschedule["English"]["etime"] = "End Time";
+	$placeHoldersbatchschedule["English"]["stime"] = "";
+	$fieldLabelsbatchschedule["English"]["etime"] = "Etime";
 	$fieldToolTipsbatchschedule["English"]["etime"] = "";
-	$placeHoldersbatchschedule["English"]["etime"] = "XX:XX AM/PM";
-	$fieldLabelsbatchschedule["English"]["status"] = "Status";
-	$fieldToolTipsbatchschedule["English"]["status"] = "";
-	$placeHoldersbatchschedule["English"]["status"] = "";
-	$fieldLabelsbatchschedule["English"]["remark"] = "Remark";
-	$fieldToolTipsbatchschedule["English"]["remark"] = "";
-	$placeHoldersbatchschedule["English"]["remark"] = "";
+	$placeHoldersbatchschedule["English"]["etime"] = "";
 	$fieldLabelsbatchschedule["English"]["realstime"] = "Realstime";
 	$fieldToolTipsbatchschedule["English"]["realstime"] = "";
 	$placeHoldersbatchschedule["English"]["realstime"] = "";
 	$fieldLabelsbatchschedule["English"]["realetime"] = "Realetime";
 	$fieldToolTipsbatchschedule["English"]["realetime"] = "";
 	$placeHoldersbatchschedule["English"]["realetime"] = "";
+	$fieldLabelsbatchschedule["English"]["status"] = "Status";
+	$fieldToolTipsbatchschedule["English"]["status"] = "";
+	$placeHoldersbatchschedule["English"]["status"] = "";
+	$fieldLabelsbatchschedule["English"]["remark"] = "Remark";
+	$fieldToolTipsbatchschedule["English"]["remark"] = "";
+	$placeHoldersbatchschedule["English"]["remark"] = "";
 	$fieldLabelsbatchschedule["English"]["attendance"] = "Attendance";
 	$fieldToolTipsbatchschedule["English"]["attendance"] = "";
 	$placeHoldersbatchschedule["English"]["attendance"] = "";
@@ -62,36 +62,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsbatchschedule[""] = array();
 	$placeHoldersbatchschedule[""] = array();
 	$pageTitlesbatchschedule[""] = array();
-	$fieldLabelsbatchschedule[""]["sid"] = "Sid";
-	$fieldToolTipsbatchschedule[""]["sid"] = "";
-	$placeHoldersbatchschedule[""]["sid"] = "";
-	$fieldLabelsbatchschedule[""]["Batchcode"] = "Batchcode";
-	$fieldToolTipsbatchschedule[""]["Batchcode"] = "";
-	$placeHoldersbatchschedule[""]["Batchcode"] = "";
-	$fieldLabelsbatchschedule[""]["sdate"] = "Sdate";
-	$fieldToolTipsbatchschedule[""]["sdate"] = "";
-	$placeHoldersbatchschedule[""]["sdate"] = "";
-	$fieldLabelsbatchschedule[""]["stime"] = "Stime";
-	$fieldToolTipsbatchschedule[""]["stime"] = "";
-	$placeHoldersbatchschedule[""]["stime"] = "";
-	$fieldLabelsbatchschedule[""]["etime"] = "Etime";
-	$fieldToolTipsbatchschedule[""]["etime"] = "";
-	$placeHoldersbatchschedule[""]["etime"] = "";
-	$fieldLabelsbatchschedule[""]["status"] = "Status";
-	$fieldToolTipsbatchschedule[""]["status"] = "";
-	$placeHoldersbatchschedule[""]["status"] = "";
-	$fieldLabelsbatchschedule[""]["remark"] = "Remark";
-	$fieldToolTipsbatchschedule[""]["remark"] = "";
-	$placeHoldersbatchschedule[""]["remark"] = "";
-	$fieldLabelsbatchschedule[""]["realstime"] = "Realstime";
-	$fieldToolTipsbatchschedule[""]["realstime"] = "";
-	$placeHoldersbatchschedule[""]["realstime"] = "";
-	$fieldLabelsbatchschedule[""]["realetime"] = "Realetime";
-	$fieldToolTipsbatchschedule[""]["realetime"] = "";
-	$placeHoldersbatchschedule[""]["realetime"] = "";
-	$fieldLabelsbatchschedule[""]["attendance"] = "Attendance";
-	$fieldToolTipsbatchschedule[""]["attendance"] = "";
-	$placeHoldersbatchschedule[""]["attendance"] = "";
 	if (count($fieldToolTipsbatchschedule[""]))
 		$tdatabatchschedule[".isUseToolTips"] = true;
 }
@@ -186,7 +156,7 @@ $tdatabatchschedule[".rowHighlite"] = true;
 
 
 
-						
+
 
 $tdatabatchschedule[".ajaxCodeSnippetAdded"] = false;
 
@@ -199,7 +169,7 @@ $tdatabatchschedule[".isUseTimeForSearch"] = false;
 
 
 
-$tdatabatchschedule[".badgeColor"] = "E67349";
+$tdatabatchschedule[".badgeColor"] = "778899";
 
 
 $tdatabatchschedule[".allSearchFields"] = array();
@@ -211,6 +181,8 @@ $tdatabatchschedule[".allSearchFields"][] = "sid";
 	$tdatabatchschedule[".allSearchFields"][] = "sdate";
 	$tdatabatchschedule[".allSearchFields"][] = "stime";
 	$tdatabatchschedule[".allSearchFields"][] = "etime";
+	$tdatabatchschedule[".allSearchFields"][] = "realstime";
+	$tdatabatchschedule[".allSearchFields"][] = "realetime";
 	$tdatabatchschedule[".allSearchFields"][] = "status";
 	$tdatabatchschedule[".allSearchFields"][] = "remark";
 	$tdatabatchschedule[".allSearchFields"][] = "attendance";
@@ -235,6 +207,8 @@ $tdatabatchschedule[".advSearchFields"][] = "Batchcode";
 $tdatabatchschedule[".advSearchFields"][] = "sdate";
 $tdatabatchschedule[".advSearchFields"][] = "stime";
 $tdatabatchschedule[".advSearchFields"][] = "etime";
+$tdatabatchschedule[".advSearchFields"][] = "realstime";
+$tdatabatchschedule[".advSearchFields"][] = "realetime";
 $tdatabatchschedule[".advSearchFields"][] = "status";
 $tdatabatchschedule[".advSearchFields"][] = "remark";
 $tdatabatchschedule[".advSearchFields"][] = "attendance";
@@ -325,16 +299,16 @@ $tableKeysbatchschedule[] = "sid";
 $tdatabatchschedule[".Keys"] = $tableKeysbatchschedule;
 
 $tdatabatchschedule[".listFields"] = array();
-$tdatabatchschedule[".listFields"][] = "realstime";
-$tdatabatchschedule[".listFields"][] = "realetime";
-$tdatabatchschedule[".listFields"][] = "attendance";
 $tdatabatchschedule[".listFields"][] = "sid";
 $tdatabatchschedule[".listFields"][] = "Batchcode";
 $tdatabatchschedule[".listFields"][] = "sdate";
 $tdatabatchschedule[".listFields"][] = "stime";
 $tdatabatchschedule[".listFields"][] = "etime";
+$tdatabatchschedule[".listFields"][] = "realstime";
+$tdatabatchschedule[".listFields"][] = "realetime";
 $tdatabatchschedule[".listFields"][] = "status";
 $tdatabatchschedule[".listFields"][] = "remark";
+$tdatabatchschedule[".listFields"][] = "attendance";
 
 $tdatabatchschedule[".hideMobileList"] = array();
 
@@ -345,14 +319,19 @@ $tdatabatchschedule[".viewFields"][] = "Batchcode";
 $tdatabatchschedule[".viewFields"][] = "sdate";
 $tdatabatchschedule[".viewFields"][] = "stime";
 $tdatabatchschedule[".viewFields"][] = "etime";
+$tdatabatchschedule[".viewFields"][] = "realstime";
+$tdatabatchschedule[".viewFields"][] = "realetime";
 $tdatabatchschedule[".viewFields"][] = "status";
 $tdatabatchschedule[".viewFields"][] = "remark";
+$tdatabatchschedule[".viewFields"][] = "attendance";
 
 $tdatabatchschedule[".addFields"] = array();
 $tdatabatchschedule[".addFields"][] = "Batchcode";
 $tdatabatchschedule[".addFields"][] = "sdate";
 $tdatabatchschedule[".addFields"][] = "stime";
 $tdatabatchschedule[".addFields"][] = "etime";
+$tdatabatchschedule[".addFields"][] = "realstime";
+$tdatabatchschedule[".addFields"][] = "realetime";
 $tdatabatchschedule[".addFields"][] = "status";
 $tdatabatchschedule[".addFields"][] = "remark";
 
@@ -375,8 +354,11 @@ $tdatabatchschedule[".editFields"][] = "Batchcode";
 $tdatabatchschedule[".editFields"][] = "sdate";
 $tdatabatchschedule[".editFields"][] = "stime";
 $tdatabatchschedule[".editFields"][] = "etime";
+$tdatabatchschedule[".editFields"][] = "realstime";
+$tdatabatchschedule[".editFields"][] = "realetime";
 $tdatabatchschedule[".editFields"][] = "status";
 $tdatabatchschedule[".editFields"][] = "remark";
+$tdatabatchschedule[".editFields"][] = "attendance";
 
 $tdatabatchschedule[".inlineEditFields"] = array();
 
@@ -385,8 +367,11 @@ $tdatabatchschedule[".updateSelectedFields"][] = "Batchcode";
 $tdatabatchschedule[".updateSelectedFields"][] = "sdate";
 $tdatabatchschedule[".updateSelectedFields"][] = "stime";
 $tdatabatchschedule[".updateSelectedFields"][] = "etime";
+$tdatabatchschedule[".updateSelectedFields"][] = "realstime";
+$tdatabatchschedule[".updateSelectedFields"][] = "realetime";
 $tdatabatchschedule[".updateSelectedFields"][] = "status";
 $tdatabatchschedule[".updateSelectedFields"][] = "remark";
+$tdatabatchschedule[".updateSelectedFields"][] = "attendance";
 
 
 $tdatabatchschedule[".exportFields"] = array();
@@ -395,8 +380,11 @@ $tdatabatchschedule[".exportFields"][] = "Batchcode";
 $tdatabatchschedule[".exportFields"][] = "sdate";
 $tdatabatchschedule[".exportFields"][] = "stime";
 $tdatabatchschedule[".exportFields"][] = "etime";
+$tdatabatchschedule[".exportFields"][] = "realstime";
+$tdatabatchschedule[".exportFields"][] = "realetime";
 $tdatabatchschedule[".exportFields"][] = "status";
 $tdatabatchschedule[".exportFields"][] = "remark";
+$tdatabatchschedule[".exportFields"][] = "attendance";
 
 $tdatabatchschedule[".importFields"] = array();
 $tdatabatchschedule[".importFields"][] = "sid";
@@ -404,8 +392,11 @@ $tdatabatchschedule[".importFields"][] = "Batchcode";
 $tdatabatchschedule[".importFields"][] = "sdate";
 $tdatabatchschedule[".importFields"][] = "stime";
 $tdatabatchschedule[".importFields"][] = "etime";
+$tdatabatchschedule[".importFields"][] = "realstime";
+$tdatabatchschedule[".importFields"][] = "realetime";
 $tdatabatchschedule[".importFields"][] = "status";
 $tdatabatchschedule[".importFields"][] = "remark";
+$tdatabatchschedule[".importFields"][] = "attendance";
 
 $tdatabatchschedule[".printFields"] = array();
 $tdatabatchschedule[".printFields"][] = "sid";
@@ -413,6 +404,8 @@ $tdatabatchschedule[".printFields"][] = "Batchcode";
 $tdatabatchschedule[".printFields"][] = "sdate";
 $tdatabatchschedule[".printFields"][] = "stime";
 $tdatabatchschedule[".printFields"][] = "etime";
+$tdatabatchschedule[".printFields"][] = "realstime";
+$tdatabatchschedule[".printFields"][] = "realetime";
 $tdatabatchschedule[".printFields"][] = "status";
 $tdatabatchschedule[".printFields"][] = "remark";
 $tdatabatchschedule[".printFields"][] = "attendance";
@@ -1115,16 +1108,23 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 			
 		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
 
 	
+		$fdata["bEditPage"] = true;
+
 	
-	
-	
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "realstime";
 
 		$fdata["isSQLExpression"] = true;
@@ -1214,6 +1214,12 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Equals";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
+// the end of search options settings
 
 
 
@@ -1235,16 +1241,23 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 			
 		$fdata["bListPage"] = true;
 
-	
-	
-	
-	
-	
+		$fdata["bAddPage"] = true;
 
 	
+		$fdata["bEditPage"] = true;
+
 	
-	
-	
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
+		$fdata["bAdvancedSearch"] = true;
+
+		$fdata["bPrinterPage"] = true;
+
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "realetime";
 
 		$fdata["isSQLExpression"] = true;
@@ -1334,6 +1347,12 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 
 
 
+// the field's search options settings
+		$fdata["defaultSearchOption"] = "Equals";
+
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
+// the end of search options settings
 
 
 
@@ -1410,28 +1429,12 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "scheduled";
-	$edata["LookupValues"][] = "Cancelled";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -1445,8 +1448,11 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1472,7 +1478,7 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1630,16 +1636,20 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 
 	
 	
-	
-	
-	
+		$fdata["bEditPage"] = true;
 
 	
+		$fdata["bUpdateSelected"] = true;
+
+
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
 
-	
+		$fdata["bExportPage"] = true;
+
 		$fdata["strField"] = "attendance";
 
 		$fdata["isSQLExpression"] = true;

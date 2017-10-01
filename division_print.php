@@ -14,6 +14,8 @@ add_nocache_headers();
 
 require_once("include/division_variables.php");
 
+if( !Security::processPageSecurity( $strtablename, 'P' ) )
+	return;
 
 
 
@@ -206,53 +208,6 @@ $page_layouts["district_print"] = $layout;
 $layout = new TLayout("print_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
 	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "university_print";
-$layout->blocks["top"] = array();
-$layout->containers["pdf"] = array();
-$layout->container_properties["pdf"] = array(  "print" => "none"  );
-$layout->containers["pdf"][] = array("name"=>"printbuttons",
-	"block"=>"printbuttons", "substyle"=>1  );
-
-$layout->skins["pdf"] = "";
-
-$layout->blocks["top"][] = "pdf";
-$layout->containers["master"] = array();
-$layout->container_properties["master"] = array(  );
-$layout->containers["master"][] = array("name"=>"masterinfo",
-	"block"=>"mastertable_block", "substyle"=>1  );
-
-$layout->skins["master"] = "";
-
-$layout->blocks["top"][] = "master";
-$layout->containers["pageheader"] = array();
-$layout->container_properties["pageheader"] = array(  "print" => "repeat"  );
-$layout->containers["pageheader"][] = array("name"=>"printheader",
-	"block"=>"printheader", "substyle"=>1  );
-
-$layout->containers["pageheader"][] = array("name"=>"page_of_print",
-	"block"=>"page_number", "substyle"=>1  );
-
-$layout->skins["pageheader"] = "";
-
-$layout->blocks["top"][] = "pageheader";
-$layout->containers["grid"] = array();
-$layout->container_properties["grid"] = array(  );
-$layout->containers["grid"][] = array("name"=>"printgrid",
-	"block"=>"grid_block", "substyle"=>1  );
-
-$layout->skins["grid"] = "";
-
-$layout->blocks["top"][] = "grid";
-$page_layouts["university_print"] = $layout;
-
-
-
-		
-
-
-$layout = new TLayout("print_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "employees_print";
 $layout->blocks["top"] = array();
 $layout->containers["pdf"] = array();
@@ -291,6 +246,53 @@ $layout->skins["grid"] = "";
 
 $layout->blocks["top"][] = "grid";
 $page_layouts["employees_print"] = $layout;
+
+
+
+		
+
+
+$layout = new TLayout("print_bootstrap", "OfficeOffice", "MobileOffice");
+$layout->version = 3;
+	$layout->bootstrapTheme = "cerulean";
+		$layout->customCssPageName = "university_print";
+$layout->blocks["top"] = array();
+$layout->containers["pdf"] = array();
+$layout->container_properties["pdf"] = array(  "print" => "none"  );
+$layout->containers["pdf"][] = array("name"=>"printbuttons",
+	"block"=>"printbuttons", "substyle"=>1  );
+
+$layout->skins["pdf"] = "";
+
+$layout->blocks["top"][] = "pdf";
+$layout->containers["master"] = array();
+$layout->container_properties["master"] = array(  );
+$layout->containers["master"][] = array("name"=>"masterinfo",
+	"block"=>"mastertable_block", "substyle"=>1  );
+
+$layout->skins["master"] = "";
+
+$layout->blocks["top"][] = "master";
+$layout->containers["pageheader"] = array();
+$layout->container_properties["pageheader"] = array(  "print" => "repeat"  );
+$layout->containers["pageheader"][] = array("name"=>"printheader",
+	"block"=>"printheader", "substyle"=>1  );
+
+$layout->containers["pageheader"][] = array("name"=>"page_of_print",
+	"block"=>"page_number", "substyle"=>1  );
+
+$layout->skins["pageheader"] = "";
+
+$layout->blocks["top"][] = "pageheader";
+$layout->containers["grid"] = array();
+$layout->container_properties["grid"] = array(  );
+$layout->containers["grid"][] = array("name"=>"printgrid",
+	"block"=>"grid_block", "substyle"=>1  );
+
+$layout->skins["grid"] = "";
+
+$layout->blocks["top"][] = "grid";
+$page_layouts["university_print"] = $layout;
 
 
 

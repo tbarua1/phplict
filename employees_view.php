@@ -18,7 +18,7 @@ if( !ViewPage::processEditPageSecurity( $strTableName ) )
 
 $layout = new TLayout("view_bootstrap_2col", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "employees_view";
 $layout->blocks["top"] = array();
 $layout->containers["viewpage"] = array();
@@ -86,6 +86,7 @@ $page_layouts["employees_view"] = $layout;
 
 
 	
+		
 	
 $pageMode = ViewPage::readViewModeFromRequest();
 

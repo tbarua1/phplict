@@ -38,8 +38,6 @@ class AuditTrailTable
 		global $cman;
 		
 		$this->connection = $cman->getForAudit();		
-		$this->attLogin=3;
-		$this->timeLogin=5;
 		$userid="";
 		if(@$_SESSION["UserID"])
 			$userid=$_SESSION["UserID"];
@@ -49,69 +47,18 @@ class AuditTrailTable
 	
     function LogLogin($pUsername)
     {
-		global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$this->params[1]=$pUsername;
-		$arr=array();
-		$this->params=array($_SERVER["REMOTE_ADDR"],$_SESSION["UserID"]);
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strLogin, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$this->insert(now(), $this->params[0], $this->params[1], $table, $this->strLogin, "");
-		}
-		return $retval;
     }
 	
     function LogLoginFailed($pUsername)
     {
-		global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$this->params[1]=$pUsername;
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strFailLogin, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$this->insert(now(), $this->params[0], $this->params[1], $table, $this->strFailLogin, "");
-		}
-		$this->params=array($_SERVER["REMOTE_ADDR"],"");
-		return $retval;
     }
 	
     function LogLogout()
     {
-	global $globalEvents;
-	if($_SESSION["UserID"]!="")
-	{
-		$retval=true;
-		$table="employees";
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strLogout, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$this->insert(now(), $this->params[0], $this->params[1], $table, $this->strLogout, "");
-		}
-		return $retval;
-	}
     }
 	
     function LogChPassword()
     {
-		global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strChPass, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$this->insert(now(), $this->params[0], $this->params[1], $table, $this->strChPass, "");
-		}
-		return $retval;
     }
 	
     function LogAdd($str_table,$values,$keys)
@@ -358,41 +305,41 @@ class AuditTrailTable
 	{
 		if($table=="batch")
 		{
-			return true;
-		}
-		if($table=="courses")
-		{
-			return true;
-		}
-		if($table=="department")
-		{
-			return true;
-		}
-		if($table=="district")
-		{
-			return true;
-		}
-		if($table=="division")
-		{
-			return true;
-		}
-		if($table=="emp_status")
-		{
-			return true;
-		}
-		if($table=="university")
-		{
-			return true;
-		}
-		if($table=="employees")
-		{
-			return true;
-		}
-		if($table=="full_batch_details")
-		{
 			return false;
 		}
 		if($table=="batchschedule")
+		{
+			return false;
+		}
+		if($table=="consultant")
+		{
+			return false;
+		}
+		if($table=="courses")
+		{
+			return false;
+		}
+		if($table=="department")
+		{
+			return false;
+		}
+		if($table=="district")
+		{
+			return false;
+		}
+		if($table=="division")
+		{
+			return false;
+		}
+		if($table=="emp_status")
+		{
+			return false;
+		}
+		if($table=="employees")
+		{
+			return false;
+		}
+		if($table=="full_batch_details")
 		{
 			return false;
 		}
@@ -400,31 +347,15 @@ class AuditTrailTable
 		{
 			return false;
 		}
-		if($table=="admin_rights")
+		if($table=="trainer")
 		{
 			return false;
 		}
-		if($table=="admin_members")
-		{
-			return true;
-		}
-		if($table=="admin_users")
-		{
-			return true;
-		}
-		if($table=="batch_completion_status")
+		if($table=="university")
 		{
 			return false;
 		}
-		if($table=="employees1")
-		{
-			return true;
-		}
-		if($table=="consultant_view")
-		{
-			return false;
-		}
-		if($table=="consultant")
+		if($table=="university_view")
 		{
 			return false;
 		}
@@ -487,71 +418,18 @@ class AuditTrailFile
 	
     function LogLogin($pUsername)
     {
-				global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$this->params[1]=$pUsername;
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strLogin, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strLogin."\r\n";
-			$this->writeToLogFile( $str );
-		}
-		return $retval;
-    }
+		    }
 	
     function LogLoginFailed($pUsername)
     {
-				global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$this->params[1]=$pUsername;
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strFailLogin, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strFailLogin."\r\n";
-			$this->writeToLogFile( $str );
-		}
-		return $retval;
-    }
+		    }
 	
     function LogLogout()
     {
-		global $globalEvents;
-		if($_SESSION["UserID"]!="")
-		{
-			$retval=true;
-			$table="employees";
-			$arr=array();
-			if($globalEvents->exists("OnAuditLog"))
-				$retval=$globalEvents->OnAuditLog($this->strLogout, $this->params, $table, $arr, $arr, $arr);
-			if($retval)
-			{
-				$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strLogout."\r\n";
-				$this->writeToLogFile( $str );
-			}
-			return $retval;
-		}
     }
 	
     function LogChPassword()
     {
-		global $globalEvents;
-		$retval=true;
-		$table="employees";
-		$arr=array();
-		if($globalEvents->exists("OnAuditLog"))
-			$retval=$globalEvents->OnAuditLog($this->strChPass, $this->params, $table, $arr, $arr, $arr);
-		if($retval)
-		{
-			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strChPass."\r\n";
-			$this->writeToLogFile( $str );
-		}
-		return $retval;
     }
 	
     function LogAdd($str_table,$values,$keys)
@@ -782,41 +660,41 @@ class AuditTrailFile
 	{
 		if($table=="batch")
 		{
-			return true;
-		}
-		if($table=="courses")
-		{
-			return true;
-		}
-		if($table=="department")
-		{
-			return true;
-		}
-		if($table=="district")
-		{
-			return true;
-		}
-		if($table=="division")
-		{
-			return true;
-		}
-		if($table=="emp_status")
-		{
-			return true;
-		}
-		if($table=="university")
-		{
-			return true;
-		}
-		if($table=="employees")
-		{
-			return true;
-		}
-		if($table=="full_batch_details")
-		{
 			return false;
 		}
 		if($table=="batchschedule")
+		{
+			return false;
+		}
+		if($table=="consultant")
+		{
+			return false;
+		}
+		if($table=="courses")
+		{
+			return false;
+		}
+		if($table=="department")
+		{
+			return false;
+		}
+		if($table=="district")
+		{
+			return false;
+		}
+		if($table=="division")
+		{
+			return false;
+		}
+		if($table=="emp_status")
+		{
+			return false;
+		}
+		if($table=="employees")
+		{
+			return false;
+		}
+		if($table=="full_batch_details")
 		{
 			return false;
 		}
@@ -824,31 +702,15 @@ class AuditTrailFile
 		{
 			return false;
 		}
-		if($table=="admin_rights")
+		if($table=="trainer")
 		{
 			return false;
 		}
-		if($table=="admin_members")
-		{
-			return true;
-		}
-		if($table=="admin_users")
-		{
-			return true;
-		}
-		if($table=="batch_completion_status")
+		if($table=="university")
 		{
 			return false;
 		}
-		if($table=="employees1")
-		{
-			return true;
-		}
-		if($table=="consultant_view")
-		{
-			return false;
-		}
-		if($table=="consultant")
+		if($table=="university_view")
 		{
 			return false;
 		}

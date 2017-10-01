@@ -92,31 +92,6 @@
 	{BEGIN grid_header}
 		<tr class="{$gridHeader_class}" >
 		{BEGIN record_header}
-			{BEGIN ey_spoc_fieldheadercolumn}
-			<th class="{$ey_spoc_class}" {$ey_spoc_style}  data-field="ey_spoc">
-				{$label batch ey_spoc}
-			</th>
-			{END ey_spoc_fieldheadercolumn}
-			{BEGIN local_spoc_fieldheadercolumn}
-			<th class="{$local_spoc_class}" {$local_spoc_style}  data-field="local_spoc">
-				{$label batch local_spoc}
-			</th>
-			{END local_spoc_fieldheadercolumn}
-			{BEGIN schedule_fieldheadercolumn}
-			<th class="{$schedule_class}" {$schedule_style}  data-field="schedule">
-				{$label batch schedule}
-			</th>
-			{END schedule_fieldheadercolumn}
-			{BEGIN tech_trainer_fieldheadercolumn}
-			<th class="{$tech_trainer_class}" {$tech_trainer_style}  data-field="tech_trainer">
-				{$label batch tech_trainer}
-			</th>
-			{END tech_trainer_fieldheadercolumn}
-			{BEGIN soft_skill_trainer_fieldheadercolumn}
-			<th class="{$soft_skill_trainer_class}" {$soft_skill_trainer_style}  data-field="soft_skill_trainer">
-				{$label batch soft_skill_trainer}
-			</th>
-			{END soft_skill_trainer_fieldheadercolumn}
 			{BEGIN Batchcode_fieldheadercolumn}
 			<th class="{$Batchcode_class}" {$Batchcode_style}  data-field="Batchcode">
 				{$label batch Batchcode}
@@ -172,6 +147,31 @@
 				{$label batch uni_spoc_contact}
 			</th>
 			{END uni_spoc_contact_fieldheadercolumn}
+			{BEGIN ey_spoc_fieldheadercolumn}
+			<th class="{$ey_spoc_class}" {$ey_spoc_style}  data-field="ey_spoc">
+				{$label batch ey_spoc}
+			</th>
+			{END ey_spoc_fieldheadercolumn}
+			{BEGIN local_spoc_fieldheadercolumn}
+			<th class="{$local_spoc_class}" {$local_spoc_style}  data-field="local_spoc">
+				{$label batch local_spoc}
+			</th>
+			{END local_spoc_fieldheadercolumn}
+			{BEGIN schedule_fieldheadercolumn}
+			<th class="{$schedule_class}" {$schedule_style}  data-field="schedule">
+				{$label batch schedule}
+			</th>
+			{END schedule_fieldheadercolumn}
+			{BEGIN tech_trainer_fieldheadercolumn}
+			<th class="{$tech_trainer_class}" {$tech_trainer_style}  data-field="tech_trainer">
+				{$label batch tech_trainer}
+			</th>
+			{END tech_trainer_fieldheadercolumn}
+			{BEGIN soft_skill_trainer_fieldheadercolumn}
+			<th class="{$soft_skill_trainer_class}" {$soft_skill_trainer_style}  data-field="soft_skill_trainer">
+				{$label batch soft_skill_trainer}
+			</th>
+			{END soft_skill_trainer_fieldheadercolumn}
 			{BEGIN endrecordheader_block}
 			<th class="rnr-cs">&nbsp;</th>
 			{END endrecordheader_block}
@@ -184,31 +184,6 @@
 	{BEGIN grid_row}
 		<tr class="{$rowclass}" {$rowattrs} {$rowstyle}>
 		{BEGIN grid_record}
-			{BEGIN ey_spoc_fieldcolumn}
-			<td  class="{$ey_spoc_class}" {$ey_spoc_style} {$recordattrs}>
-				{$ey_spoc_value}
-			</td>
-			{END ey_spoc_fieldcolumn}
-			{BEGIN local_spoc_fieldcolumn}
-			<td  class="{$local_spoc_class}" {$local_spoc_style} {$recordattrs}>
-				{$local_spoc_value}
-			</td>
-			{END local_spoc_fieldcolumn}
-			{BEGIN schedule_fieldcolumn}
-			<td  class="{$schedule_class}" {$schedule_style} {$recordattrs}>
-				{$schedule_value}
-			</td>
-			{END schedule_fieldcolumn}
-			{BEGIN tech_trainer_fieldcolumn}
-			<td  class="{$tech_trainer_class}" {$tech_trainer_style} {$recordattrs}>
-				{$tech_trainer_value}
-			</td>
-			{END tech_trainer_fieldcolumn}
-			{BEGIN soft_skill_trainer_fieldcolumn}
-			<td  class="{$soft_skill_trainer_class}" {$soft_skill_trainer_style} {$recordattrs}>
-				{$soft_skill_trainer_value}
-			</td>
-			{END soft_skill_trainer_fieldcolumn}
 			{BEGIN Batchcode_fieldcolumn}
 			<td  class="{$Batchcode_class}" {$Batchcode_style} {$recordattrs}>
 				{$Batchcode_value}
@@ -264,6 +239,31 @@
 				{$uni_spoc_contact_value}
 			</td>
 			{END uni_spoc_contact_fieldcolumn}
+			{BEGIN ey_spoc_fieldcolumn}
+			<td  class="{$ey_spoc_class}" {$ey_spoc_style} {$recordattrs}>
+				{$ey_spoc_value}
+			</td>
+			{END ey_spoc_fieldcolumn}
+			{BEGIN local_spoc_fieldcolumn}
+			<td  class="{$local_spoc_class}" {$local_spoc_style} {$recordattrs}>
+				{$local_spoc_value}
+			</td>
+			{END local_spoc_fieldcolumn}
+			{BEGIN schedule_fieldcolumn}
+			<td  class="{$schedule_class}" {$schedule_style} {$recordattrs}>
+				{$schedule_value}
+			</td>
+			{END schedule_fieldcolumn}
+			{BEGIN tech_trainer_fieldcolumn}
+			<td  class="{$tech_trainer_class}" {$tech_trainer_style} {$recordattrs}>
+				{$tech_trainer_value}
+			</td>
+			{END tech_trainer_fieldcolumn}
+			{BEGIN soft_skill_trainer_fieldcolumn}
+			<td  class="{$soft_skill_trainer_class}" {$soft_skill_trainer_style} {$recordattrs}>
+				{$soft_skill_trainer_value}
+			</td>
+			{END soft_skill_trainer_fieldcolumn}
 			{BEGIN endrecord_block}
 			<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
 			{END endrecord_block}

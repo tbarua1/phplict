@@ -67,7 +67,9 @@ class MSSQLFunctions extends DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
-		return "convert(datetime,'".$val."',120)";
+		if( $val == "" || $val === null )
+			return 'null';
+		return "convert(datetime,'".$this->addSlashes($val)."',120)";
 	}
 	
 	/**

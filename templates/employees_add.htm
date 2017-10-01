@@ -112,6 +112,24 @@
 </div>
 {END ename_fieldblock}
 
+			{BEGIN emppic_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_emppic}" data-fieldname="emppic" data-signal-error-for="emppic{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_emppic}">
+		{BEGIN emppic_label}{$label employees emppic}{END emppic_label}
+	</label>
+	<div class="col-md-6" >
+		{$emppic_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="emppic">
+		<div class="text-muted" >
+		{$tooltip employees emppic}
+		</div>
+	</div>
+</div>
+</div>
+{END emppic_fieldblock}
+
 			{BEGIN designation_fieldblock}
 <div class=container>
 <div class="form-group {$fielddispclass_designation}" data-fieldname="designation" data-signal-error-for="designation{$id}" >
@@ -202,6 +220,24 @@
 </div>
 {END dropbox_fieldblock}
 
+			{BEGIN email_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_email}" data-fieldname="email" data-signal-error-for="email{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_email}">
+		{BEGIN email_label}{$label employees email}{END email_label}
+	</label>
+	<div class="col-md-6" >
+		{$email_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="email">
+		<div class="text-muted" >
+		{$tooltip employees email}
+		</div>
+	</div>
+</div>
+</div>
+{END email_fieldblock}
+
 			{BEGIN dob_fieldblock}
 <div class=container>
 <div class="form-group {$fielddispclass_dob}" data-fieldname="dob" data-signal-error-for="dob{$id}" >
@@ -219,6 +255,24 @@
 </div>
 </div>
 {END dob_fieldblock}
+
+			{BEGIN password_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_password}" data-fieldname="password" data-signal-error-for="password{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_password}">
+		{BEGIN password_label}{$label employees password}{END password_label}
+	</label>
+	<div class="col-md-6" >
+		{$password_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="password">
+		<div class="text-muted" >
+		{$tooltip employees password}
+		</div>
+	</div>
+</div>
+</div>
+{END password_fieldblock}
 
 			{BEGIN passportno_fieldblock}
 <div class=container>
@@ -364,24 +418,6 @@
 </div>
 {END status_id_fieldblock}
 
-			{BEGIN emppic_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_emppic}" data-fieldname="emppic" data-signal-error-for="emppic{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_emppic}">
-		{BEGIN emppic_label}{$label employees emppic}{END emppic_label}
-	</label>
-	<div class="col-md-6" >
-		{$emppic_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="emppic">
-		<div class="text-muted" >
-		{$tooltip employees emppic}
-		</div>
-	</div>
-</div>
-</div>
-{END emppic_fieldblock}
-
 			{BEGIN experence_fieldblock}
 <div class=container>
 <div class="form-group {$fielddispclass_experence}" data-fieldname="experence" data-signal-error-for="experence{$id}" >
@@ -453,6 +489,42 @@
 </div>
 </div>
 {END skillset_fieldblock}
+
+			{BEGIN reset_token_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_reset_token}" data-fieldname="reset_token" data-signal-error-for="reset_token{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_reset_token}">
+		{BEGIN reset_token_label}{$label employees reset_token}{END reset_token_label}
+	</label>
+	<div class="col-md-6" >
+		{$reset_token_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="reset_token">
+		<div class="text-muted" >
+		{$tooltip employees reset_token}
+		</div>
+	</div>
+</div>
+</div>
+{END reset_token_fieldblock}
+
+			{BEGIN reset_date_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_reset_date}" data-fieldname="reset_date" data-signal-error-for="reset_date{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_reset_date}">
+		{BEGIN reset_date_label}{$label employees reset_date}{END reset_date_label}
+	</label>
+	<div class="col-md-6" >
+		{$reset_date_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="reset_date">
+		<div class="text-muted" >
+		{$tooltip employees reset_date}
+		</div>
+	</div>
+</div>
+</div>
+{END reset_date_fieldblock}
 
 
 </div>

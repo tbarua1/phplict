@@ -13,6 +13,8 @@ add_nocache_headers();
 
 InitLookupLinks();
 
+if( !AddPage::processAddPageSecurity( $strTableName ) )
+	return;
 
 AddPage::handleBrokenRequest();
 
@@ -207,6 +209,9 @@ $layout->container_properties["more"] = array(  );
 $layout->containers["more"][] = array("name"=>"morebutton",
 	"block"=>"more_list", "substyle"=>1  );
 
+$layout->containers["more"][] = array("name"=>"loggedas",
+	"block"=>"security_block", "substyle"=>1  );
+
 $layout->skins["more"] = "";
 
 
@@ -255,6 +260,8 @@ $page_layouts["courses_list"] = $layout;
 
 
 	
+		
+		
 	
 $pageMode = AddPage::readAddModeFromRequest();
 

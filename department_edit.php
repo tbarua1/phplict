@@ -11,6 +11,8 @@ require_once('classes/editpage.php');
 
 add_nocache_headers();
 
+if( !EditPage::processEditPageSecurity( $strTableName ) )
+	return;
 
 EditPage::handleBrokenRequest();
 
@@ -216,6 +218,9 @@ $layout->containers["more"] = array();
 $layout->container_properties["more"] = array(  );
 $layout->containers["more"][] = array("name"=>"morebutton",
 	"block"=>"more_list", "substyle"=>1  );
+
+$layout->containers["more"][] = array("name"=>"loggedas",
+	"block"=>"security_block", "substyle"=>1  );
 
 $layout->skins["more"] = "";
 

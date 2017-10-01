@@ -166,6 +166,42 @@
 </div>
 {END etime_fieldblock}
 
+			{BEGIN realstime_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_realstime}" data-fieldname="realstime" data-signal-error-for="realstime{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_realstime}">
+		{BEGIN realstime_label}{$label batchschedule realstime}{END realstime_label}
+	</label>
+	<div class="col-md-6" >
+		{$realstime_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="realstime">
+		<div class="text-muted" >
+		{$tooltip batchschedule realstime}
+		</div>
+	</div>
+</div>
+</div>
+{END realstime_fieldblock}
+
+			{BEGIN realetime_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_realetime}" data-fieldname="realetime" data-signal-error-for="realetime{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_realetime}">
+		{BEGIN realetime_label}{$label batchschedule realetime}{END realetime_label}
+	</label>
+	<div class="col-md-6" >
+		{$realetime_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="realetime">
+		<div class="text-muted" >
+		{$tooltip batchschedule realetime}
+		</div>
+	</div>
+</div>
+</div>
+{END realetime_fieldblock}
+
 			{BEGIN status_fieldblock}
 <div class=container>
 <div class="form-group {$fielddispclass_status}" data-fieldname="status" data-signal-error-for="status{$id}" >
@@ -201,6 +237,24 @@
 </div>
 </div>
 {END remark_fieldblock}
+
+			{BEGIN attendance_fieldblock}
+<div class=container>
+<div class="form-group {$fielddispclass_attendance}" data-fieldname="attendance" data-signal-error-for="attendance{$id}" >
+	<label class="col-md-3 control-label" for="{$labelfor_attendance}">
+		{BEGIN attendance_label}{$label batchschedule attendance}{END attendance_label}
+	</label>
+	<div class="col-md-6" >
+		{$attendance_editcontrol}
+	</div>
+	<div class="col-md-3 help-block" data-helpfor="attendance">
+		<div class="text-muted" >
+		{$tooltip batchschedule attendance}
+		</div>
+	</div>
+</div>
+</div>
+{END attendance_fieldblock}
 
 
 </div>

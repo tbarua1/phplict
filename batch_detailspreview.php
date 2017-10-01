@@ -31,7 +31,7 @@ $xt = new Xtempl();
 
 $layout = new TLayout("detailspreview_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_detailspreview";
 $layout->blocks["bare"] = array();
 $layout->containers["dcount"] = array();
@@ -91,6 +91,14 @@ $pSet = new ProjectSettings($strTableName, PAGE_LIST);
 
 
 $whereClauses = array();
+if($mastertable == "consultant")
+{
+	$formattedValue = make_db_value("ey_spoc",$_SESSION[$sessionPrefix."_masterkey1"]);
+	if( $formattedValue == "null" )
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("ey_spoc") . " is null";
+	else
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("ey_spoc") . "=" . $formattedValue;
+}
 if($mastertable == "courses")
 {
 	$formattedValue = make_db_value("cid",$_SESSION[$sessionPrefix."_masterkey1"]);
@@ -115,6 +123,14 @@ if($mastertable == "division")
 	else
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("division_id") . "=" . $formattedValue;
 }
+if($mastertable == "employees")
+{
+	$formattedValue = make_db_value("local_spoc",$_SESSION[$sessionPrefix."_masterkey1"]);
+	if( $formattedValue == "null" )
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("local_spoc") . " is null";
+	else
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("local_spoc") . "=" . $formattedValue;
+}
 if($mastertable == "university")
 {
 	$formattedValue = make_db_value("university_id",$_SESSION[$sessionPrefix."_masterkey1"]);
@@ -122,14 +138,6 @@ if($mastertable == "university")
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("university_id") . " is null";
 	else
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("university_id") . "=" . $formattedValue;
-}
-if($mastertable == "consultant")
-{
-	$formattedValue = make_db_value("ey_spoc",$_SESSION[$sessionPrefix."_masterkey1"]);
-	if( $formattedValue == "null" )
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("ey_spoc") . " is null";
-	else
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("ey_spoc") . "=" . $formattedValue;
 }
 
 $whereClauses[] = SecuritySQL("Search", $strTableName);

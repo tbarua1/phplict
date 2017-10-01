@@ -1,0 +1,315 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-print" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_pdf}
+<div {$pdf_chiddenattr} data-pageid="{$pageid}" data-container="pdf" class="   col-md-12 "> 
+
+{BEGIN printbuttons}
+
+{END printbuttons}
+
+
+
+</div>
+{END container_pdf}
+
+
+
+{BEGIN container_master}
+<div {$master_chiddenattr} data-pageid="{$pageid}" data-container="master" class="    "> 
+
+{BEGIN mastertable_block}
+<div class="panel panel-info table-panel">
+	<div class="panel-heading">
+		{$master_heading}
+	</div>
+	<div class="panel-body">
+		{$showmasterfile}
+		
+	</div>
+</div>
+
+{END mastertable_block}
+
+
+
+</div>
+{END container_master}
+
+
+
+{BEGIN container_pageheader}
+<div {$pageheader_chiddenattr} data-pageid="{$pageid}" data-container="pageheader" class="    "> 
+
+{BEGIN printheader}
+	<h2 {$printheader_hiddenattr} data-pageid="{$pageid}" data-brick="printheader" >{$pagetitlelabel trainer print}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END printheader}
+
+
+{BEGIN page_number}
+<span>Page <span class="rp-pageno">{$pageno}</span> of <span class="rp-pagecount">{$pagecount}</span></span>
+{END page_number}
+
+
+
+</div>
+{END container_pageheader}
+
+
+
+{BEGIN container_grid}
+
+
+{BEGIN grid_block}
+	<table class="table table-bordered rp-maintable" {$printgrid_hiddenattr} data-pageid="{$pageid}" data-brick="printgrid" >
+	<thead>
+	{BEGIN grid_header}
+		<tr class="{$gridHeader_class}" >
+		{BEGIN record_header}
+			{BEGIN id_fieldheadercolumn}
+			<th class="{$id_class}" {$id_style}  data-field="id">
+				{$label trainer id}
+			</th>
+			{END id_fieldheadercolumn}
+			{BEGIN cid_fieldheadercolumn}
+			<th class="{$cid_class}" {$cid_style}  data-field="cid">
+				{$label trainer cid}
+			</th>
+			{END cid_fieldheadercolumn}
+			{BEGIN date_fieldheadercolumn}
+			<th class="{$date_class}" {$date_style}  data-field="date">
+				{$label trainer date}
+			</th>
+			{END date_fieldheadercolumn}
+			{BEGIN emailid_fieldheadercolumn}
+			<th class="{$emailid_class}" {$emailid_style}  data-field="emailid">
+				{$label trainer emailid}
+			</th>
+			{END emailid_fieldheadercolumn}
+			{BEGIN experience_fieldheadercolumn}
+			<th class="{$experience_class}" {$experience_style}  data-field="experience">
+				{$label trainer experience}
+			</th>
+			{END experience_fieldheadercolumn}
+			{BEGIN mobile_fieldheadercolumn}
+			<th class="{$mobile_class}" {$mobile_style}  data-field="mobile">
+				{$label trainer mobile}
+			</th>
+			{END mobile_fieldheadercolumn}
+			{BEGIN name_fieldheadercolumn}
+			<th class="{$name_class}" {$name_style}  data-field="name">
+				{$label trainer name}
+			</th>
+			{END name_fieldheadercolumn}
+			{BEGIN natianality_fieldheadercolumn}
+			<th class="{$natianality_class}" {$natianality_style}  data-field="natianality">
+				{$label trainer natianality}
+			</th>
+			{END natianality_fieldheadercolumn}
+			{BEGIN password_fieldheadercolumn}
+			<th class="{$password_class}" {$password_style}  data-field="password">
+				{$label trainer password}
+			</th>
+			{END password_fieldheadercolumn}
+			{BEGIN qualification_fieldheadercolumn}
+			<th class="{$qualification_class}" {$qualification_style}  data-field="qualification">
+				{$label trainer qualification}
+			</th>
+			{END qualification_fieldheadercolumn}
+			{BEGIN registeredDate_fieldheadercolumn}
+			<th class="{$registeredDate_class}" {$registeredDate_style}  data-field="registeredDate">
+				{$label trainer registeredDate}
+			</th>
+			{END registeredDate_fieldheadercolumn}
+			{BEGIN skillset_fieldheadercolumn}
+			<th class="{$skillset_class}" {$skillset_style}  data-field="skillset">
+				{$label trainer skillset}
+			</th>
+			{END skillset_fieldheadercolumn}
+			{BEGIN skype_fieldheadercolumn}
+			<th class="{$skype_class}" {$skype_style}  data-field="skype">
+				{$label trainer skype}
+			</th>
+			{END skype_fieldheadercolumn}
+			{BEGIN username_fieldheadercolumn}
+			<th class="{$username_class}" {$username_style}  data-field="username">
+				{$label trainer username}
+			</th>
+			{END username_fieldheadercolumn}
+			{BEGIN usertype_fieldheadercolumn}
+			<th class="{$usertype_class}" {$usertype_style}  data-field="usertype">
+				{$label trainer usertype}
+			</th>
+			{END usertype_fieldheadercolumn}
+			{BEGIN whatsapp_fieldheadercolumn}
+			<th class="{$whatsapp_class}" {$whatsapp_style}  data-field="whatsapp">
+				{$label trainer whatsapp}
+			</th>
+			{END whatsapp_fieldheadercolumn}
+			{BEGIN photo_fieldheadercolumn}
+			<th class="{$photo_class}" {$photo_style}  data-field="photo">
+				{$label trainer photo}
+			</th>
+			{END photo_fieldheadercolumn}
+			{BEGIN endrecordheader_block}
+			<th class="rnr-cs">&nbsp;</th>
+			{END endrecordheader_block}
+		{END record_header}
+		</tr>
+	{END grid_header}
+	</thead>
+	
+	<tbody>	
+	{BEGIN grid_row}
+		<tr class="{$rowclass}" {$rowattrs} {$rowstyle}>
+		{BEGIN grid_record}
+			{BEGIN id_fieldcolumn}
+			<td  class="{$id_class}" {$id_style} {$recordattrs}>
+				{$id_value}
+			</td>
+			{END id_fieldcolumn}
+			{BEGIN cid_fieldcolumn}
+			<td  class="{$cid_class}" {$cid_style} {$recordattrs}>
+				{$cid_value}
+			</td>
+			{END cid_fieldcolumn}
+			{BEGIN date_fieldcolumn}
+			<td  class="{$date_class}" {$date_style} {$recordattrs}>
+				{$date_value}
+			</td>
+			{END date_fieldcolumn}
+			{BEGIN emailid_fieldcolumn}
+			<td  class="{$emailid_class}" {$emailid_style} {$recordattrs}>
+				{$emailid_value}
+			</td>
+			{END emailid_fieldcolumn}
+			{BEGIN experience_fieldcolumn}
+			<td  class="{$experience_class}" {$experience_style} {$recordattrs}>
+				{$experience_value}
+			</td>
+			{END experience_fieldcolumn}
+			{BEGIN mobile_fieldcolumn}
+			<td  class="{$mobile_class}" {$mobile_style} {$recordattrs}>
+				{$mobile_value}
+			</td>
+			{END mobile_fieldcolumn}
+			{BEGIN name_fieldcolumn}
+			<td  class="{$name_class}" {$name_style} {$recordattrs}>
+				{$name_value}
+			</td>
+			{END name_fieldcolumn}
+			{BEGIN natianality_fieldcolumn}
+			<td  class="{$natianality_class}" {$natianality_style} {$recordattrs}>
+				{$natianality_value}
+			</td>
+			{END natianality_fieldcolumn}
+			{BEGIN password_fieldcolumn}
+			<td  class="{$password_class}" {$password_style} {$recordattrs}>
+				{$password_value}
+			</td>
+			{END password_fieldcolumn}
+			{BEGIN qualification_fieldcolumn}
+			<td  class="{$qualification_class}" {$qualification_style} {$recordattrs}>
+				{$qualification_value}
+			</td>
+			{END qualification_fieldcolumn}
+			{BEGIN registeredDate_fieldcolumn}
+			<td  class="{$registeredDate_class}" {$registeredDate_style} {$recordattrs}>
+				{$registeredDate_value}
+			</td>
+			{END registeredDate_fieldcolumn}
+			{BEGIN skillset_fieldcolumn}
+			<td  class="{$skillset_class}" {$skillset_style} {$recordattrs}>
+				{$skillset_value}
+			</td>
+			{END skillset_fieldcolumn}
+			{BEGIN skype_fieldcolumn}
+			<td  class="{$skype_class}" {$skype_style} {$recordattrs}>
+				{$skype_value}
+			</td>
+			{END skype_fieldcolumn}
+			{BEGIN username_fieldcolumn}
+			<td  class="{$username_class}" {$username_style} {$recordattrs}>
+				{$username_value}
+			</td>
+			{END username_fieldcolumn}
+			{BEGIN usertype_fieldcolumn}
+			<td  class="{$usertype_class}" {$usertype_style} {$recordattrs}>
+				{$usertype_value}
+			</td>
+			{END usertype_fieldcolumn}
+			{BEGIN whatsapp_fieldcolumn}
+			<td  class="{$whatsapp_class}" {$whatsapp_style} {$recordattrs}>
+				{$whatsapp_value}
+			</td>
+			{END whatsapp_fieldcolumn}
+			{BEGIN photo_fieldcolumn}
+			<td  class="{$photo_class}" {$photo_style} {$recordattrs}>
+				{$photo_value}
+			</td>
+			{END photo_fieldcolumn}
+			{BEGIN endrecord_block}
+			<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
+			{END endrecord_block}
+		{END grid_record}
+		</tr>
+{END grid_row}
+	</tbody>
+
+</table>
+
+{END grid_block}
+
+
+
+{END container_grid}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

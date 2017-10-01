@@ -56,12 +56,6 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsbatch["English"]["uni_spoc_contact"] = "Uni Spoc Contact";
 	$fieldToolTipsbatch["English"]["uni_spoc_contact"] = "";
 	$placeHoldersbatch["English"]["uni_spoc_contact"] = "";
-	$fieldLabelsbatch["English"]["tech_trainer"] = "Tech Trainer";
-	$fieldToolTipsbatch["English"]["tech_trainer"] = "";
-	$placeHoldersbatch["English"]["tech_trainer"] = "";
-	$fieldLabelsbatch["English"]["soft_skill_trainer"] = "Soft Skill Trainer";
-	$fieldToolTipsbatch["English"]["soft_skill_trainer"] = "";
-	$placeHoldersbatch["English"]["soft_skill_trainer"] = "";
 	$fieldLabelsbatch["English"]["ey_spoc"] = "Ey Spoc";
 	$fieldToolTipsbatch["English"]["ey_spoc"] = "";
 	$placeHoldersbatch["English"]["ey_spoc"] = "";
@@ -71,6 +65,12 @@ if(mlang_getcurrentlang()=="English")
 	$fieldLabelsbatch["English"]["schedule"] = "Schedule";
 	$fieldToolTipsbatch["English"]["schedule"] = "";
 	$placeHoldersbatch["English"]["schedule"] = "";
+	$fieldLabelsbatch["English"]["tech_trainer"] = "Tech Trainer";
+	$fieldToolTipsbatch["English"]["tech_trainer"] = "";
+	$placeHoldersbatch["English"]["tech_trainer"] = "";
+	$fieldLabelsbatch["English"]["soft_skill_trainer"] = "Soft Skill Trainer";
+	$fieldToolTipsbatch["English"]["soft_skill_trainer"] = "";
+	$placeHoldersbatch["English"]["soft_skill_trainer"] = "";
 	if (count($fieldToolTipsbatch["English"]))
 		$tdatabatch[".isUseToolTips"] = true;
 }
@@ -80,21 +80,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsbatch[""] = array();
 	$placeHoldersbatch[""] = array();
 	$pageTitlesbatch[""] = array();
-	$fieldLabelsbatch[""]["tech_trainer"] = "Tech Trainer";
-	$fieldToolTipsbatch[""]["tech_trainer"] = "";
-	$placeHoldersbatch[""]["tech_trainer"] = "";
-	$fieldLabelsbatch[""]["soft_skill_trainer"] = "Soft Skill Trainer";
-	$fieldToolTipsbatch[""]["soft_skill_trainer"] = "";
-	$placeHoldersbatch[""]["soft_skill_trainer"] = "";
-	$fieldLabelsbatch[""]["ey_spoc"] = "Ey Spoc";
-	$fieldToolTipsbatch[""]["ey_spoc"] = "";
-	$placeHoldersbatch[""]["ey_spoc"] = "";
-	$fieldLabelsbatch[""]["local_spoc"] = "Local Spoc";
-	$fieldToolTipsbatch[""]["local_spoc"] = "";
-	$placeHoldersbatch[""]["local_spoc"] = "";
-	$fieldLabelsbatch[""]["schedule"] = "Schedule";
-	$fieldToolTipsbatch[""]["schedule"] = "";
-	$placeHoldersbatch[""]["schedule"] = "";
 	if (count($fieldToolTipsbatch[""]))
 		$tdatabatch[".isUseToolTips"] = true;
 }
@@ -132,9 +117,9 @@ $tdatabatch[".fieldsForRegister"] = array();
 
 $tdatabatch[".listAjax"] = false;
 
-	$tdatabatch[".audit"] = true;
+	$tdatabatch[".audit"] = false;
 
-	$tdatabatch[".locking"] = true;
+	$tdatabatch[".locking"] = false;
 
 $tdatabatch[".edit"] = true;
 $tdatabatch[".afterEditAction"] = 1;
@@ -156,6 +141,7 @@ $tdatabatch[".reorderRecordsByHeader"] = true;
 $tdatabatch[".exportFormatting"] = 2;
 $tdatabatch[".exportDelimiter"] = ",";
 		
+$tdatabatch[".view"] = true;
 
 $tdatabatch[".import"] = true;
 
@@ -163,6 +149,7 @@ $tdatabatch[".exportTo"] = true;
 
 $tdatabatch[".printFriendly"] = true;
 
+$tdatabatch[".delete"] = true;
 
 $tdatabatch[".showSimpleSearchOptions"] = false;
 
@@ -187,7 +174,7 @@ $tdatabatch[".rowHighlite"] = true;
 
 
 
-																		
+
 
 $tdatabatch[".ajaxCodeSnippetAdded"] = false;
 
@@ -200,7 +187,7 @@ $tdatabatch[".isUseTimeForSearch"] = false;
 
 
 
-$tdatabatch[".badgeColor"] = "DAA520";
+$tdatabatch[".badgeColor"] = "008B8B";
 
 
 $tdatabatch[".allSearchFields"] = array();
@@ -348,11 +335,6 @@ $tableKeysbatch[] = "Batchcode";
 $tdatabatch[".Keys"] = $tableKeysbatch;
 
 $tdatabatch[".listFields"] = array();
-$tdatabatch[".listFields"][] = "ey_spoc";
-$tdatabatch[".listFields"][] = "local_spoc";
-$tdatabatch[".listFields"][] = "schedule";
-$tdatabatch[".listFields"][] = "tech_trainer";
-$tdatabatch[".listFields"][] = "soft_skill_trainer";
 $tdatabatch[".listFields"][] = "Batchcode";
 $tdatabatch[".listFields"][] = "fbgroup";
 $tdatabatch[".listFields"][] = "division_id";
@@ -364,11 +346,32 @@ $tdatabatch[".listFields"][] = "cid";
 $tdatabatch[".listFields"][] = "status";
 $tdatabatch[".listFields"][] = "uni_spoc_name";
 $tdatabatch[".listFields"][] = "uni_spoc_contact";
+$tdatabatch[".listFields"][] = "ey_spoc";
+$tdatabatch[".listFields"][] = "local_spoc";
+$tdatabatch[".listFields"][] = "schedule";
+$tdatabatch[".listFields"][] = "tech_trainer";
+$tdatabatch[".listFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".hideMobileList"] = array();
 
 
 $tdatabatch[".viewFields"] = array();
+$tdatabatch[".viewFields"][] = "Batchcode";
+$tdatabatch[".viewFields"][] = "fbgroup";
+$tdatabatch[".viewFields"][] = "division_id";
+$tdatabatch[".viewFields"][] = "university_id";
+$tdatabatch[".viewFields"][] = "department_id";
+$tdatabatch[".viewFields"][] = "starting_Date";
+$tdatabatch[".viewFields"][] = "Track";
+$tdatabatch[".viewFields"][] = "cid";
+$tdatabatch[".viewFields"][] = "status";
+$tdatabatch[".viewFields"][] = "uni_spoc_name";
+$tdatabatch[".viewFields"][] = "uni_spoc_contact";
+$tdatabatch[".viewFields"][] = "ey_spoc";
+$tdatabatch[".viewFields"][] = "local_spoc";
+$tdatabatch[".viewFields"][] = "schedule";
+$tdatabatch[".viewFields"][] = "tech_trainer";
+$tdatabatch[".viewFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".addFields"] = array();
 $tdatabatch[".addFields"][] = "Batchcode";
@@ -407,6 +410,22 @@ $tdatabatch[".masterListFields"][] = "tech_trainer";
 $tdatabatch[".masterListFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".inlineAddFields"] = array();
+$tdatabatch[".inlineAddFields"][] = "Batchcode";
+$tdatabatch[".inlineAddFields"][] = "fbgroup";
+$tdatabatch[".inlineAddFields"][] = "division_id";
+$tdatabatch[".inlineAddFields"][] = "university_id";
+$tdatabatch[".inlineAddFields"][] = "department_id";
+$tdatabatch[".inlineAddFields"][] = "starting_Date";
+$tdatabatch[".inlineAddFields"][] = "Track";
+$tdatabatch[".inlineAddFields"][] = "cid";
+$tdatabatch[".inlineAddFields"][] = "status";
+$tdatabatch[".inlineAddFields"][] = "uni_spoc_name";
+$tdatabatch[".inlineAddFields"][] = "uni_spoc_contact";
+$tdatabatch[".inlineAddFields"][] = "ey_spoc";
+$tdatabatch[".inlineAddFields"][] = "local_spoc";
+$tdatabatch[".inlineAddFields"][] = "schedule";
+$tdatabatch[".inlineAddFields"][] = "tech_trainer";
+$tdatabatch[".inlineAddFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".editFields"] = array();
 $tdatabatch[".editFields"][] = "Batchcode";
@@ -427,6 +446,22 @@ $tdatabatch[".editFields"][] = "tech_trainer";
 $tdatabatch[".editFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".inlineEditFields"] = array();
+$tdatabatch[".inlineEditFields"][] = "Batchcode";
+$tdatabatch[".inlineEditFields"][] = "fbgroup";
+$tdatabatch[".inlineEditFields"][] = "division_id";
+$tdatabatch[".inlineEditFields"][] = "university_id";
+$tdatabatch[".inlineEditFields"][] = "department_id";
+$tdatabatch[".inlineEditFields"][] = "starting_Date";
+$tdatabatch[".inlineEditFields"][] = "Track";
+$tdatabatch[".inlineEditFields"][] = "cid";
+$tdatabatch[".inlineEditFields"][] = "status";
+$tdatabatch[".inlineEditFields"][] = "uni_spoc_name";
+$tdatabatch[".inlineEditFields"][] = "uni_spoc_contact";
+$tdatabatch[".inlineEditFields"][] = "ey_spoc";
+$tdatabatch[".inlineEditFields"][] = "local_spoc";
+$tdatabatch[".inlineEditFields"][] = "schedule";
+$tdatabatch[".inlineEditFields"][] = "tech_trainer";
+$tdatabatch[".inlineEditFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".updateSelectedFields"] = array();
 $tdatabatch[".updateSelectedFields"][] = "Batchcode";
@@ -484,11 +519,6 @@ $tdatabatch[".importFields"][] = "tech_trainer";
 $tdatabatch[".importFields"][] = "soft_skill_trainer";
 
 $tdatabatch[".printFields"] = array();
-$tdatabatch[".printFields"][] = "ey_spoc";
-$tdatabatch[".printFields"][] = "local_spoc";
-$tdatabatch[".printFields"][] = "schedule";
-$tdatabatch[".printFields"][] = "tech_trainer";
-$tdatabatch[".printFields"][] = "soft_skill_trainer";
 $tdatabatch[".printFields"][] = "Batchcode";
 $tdatabatch[".printFields"][] = "fbgroup";
 $tdatabatch[".printFields"][] = "division_id";
@@ -500,6 +530,11 @@ $tdatabatch[".printFields"][] = "cid";
 $tdatabatch[".printFields"][] = "status";
 $tdatabatch[".printFields"][] = "uni_spoc_name";
 $tdatabatch[".printFields"][] = "uni_spoc_contact";
+$tdatabatch[".printFields"][] = "ey_spoc";
+$tdatabatch[".printFields"][] = "local_spoc";
+$tdatabatch[".printFields"][] = "schedule";
+$tdatabatch[".printFields"][] = "tech_trainer";
+$tdatabatch[".printFields"][] = "soft_skill_trainer";
 
 
 //	Batchcode
@@ -520,14 +555,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -649,14 +687,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -723,7 +764,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 			$edata["HTML5InuptType"] = "text";
 
 		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
+			$edata["EditParams"].= " maxlength=100";
 
 		$edata["controlWidth"] = 200;
 
@@ -778,14 +819,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -847,7 +891,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "dname";
+	$edata["DisplayField"] = "division_id";
 	
 	
 
@@ -858,9 +902,6 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 	
 	
-				//dependent dropdowns @deprecated data ?
-	$edata["DependentLookups"] = array();
-	$edata["DependentLookups"][] = "university_id";
 
 	
 	
@@ -935,14 +976,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -996,7 +1040,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
 	$edata["LookupTable"] = "university";
-		$edata["autoCompleteFieldsOnEdit"] = 1;
+		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
 
@@ -1004,18 +1048,15 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "university_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "University_name";
+	$edata["DisplayField"] = "university_id";
 	
 	
 
 	
-	$edata["LookupOrderBy"] = "University_name";
+	$edata["LookupOrderBy"] = "";
 
 	
-		$edata["UseCategory"] = true;
-	$edata["categoryFields"] = array();
-	$edata["categoryFields"][] = array( "main" => "division_id", "lookup" => "division_id" );
-
+	
 	
 	
 
@@ -1092,14 +1133,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1161,7 +1205,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "Department_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "Dname";
+	$edata["DisplayField"] = "Department_id";
 	
 	
 
@@ -1246,14 +1290,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1375,14 +1422,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1427,28 +1477,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "Top Up";
-	$edata["LookupValues"][] = "Foundation skill";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -1462,8 +1496,11 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1489,7 +1526,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1517,14 +1554,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1586,12 +1626,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "cid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "cname";
+	$edata["DisplayField"] = "cid";
 	
 	
 
 	
-	$edata["LookupOrderBy"] = "cname";
+	$edata["LookupOrderBy"] = "";
 
 	
 	
@@ -1671,14 +1711,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1723,30 +1766,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "Complete";
-	$edata["LookupValues"][] = "On Going";
-	$edata["LookupValues"][] = "Schedued";
-	$edata["LookupValues"][] = "On Hold";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -1760,8 +1785,11 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -1787,7 +1815,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -1815,14 +1843,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -1944,14 +1975,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2073,14 +2107,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2133,7 +2170,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
-	$edata["LookupTable"] = "consultant_view";
+	$edata["LookupTable"] = "consultant";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
@@ -2142,12 +2179,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "consultant_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "ename";
+	$edata["DisplayField"] = "consultant_id";
 	
 	
 
 	
-	$edata["LookupOrderBy"] = "ename";
+	$edata["LookupOrderBy"] = "";
 
 	
 	
@@ -2227,14 +2264,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2287,7 +2327,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
-	$edata["LookupTable"] = "employees1";
+	$edata["LookupTable"] = "employees";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
@@ -2296,10 +2336,9 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "eid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "ename";
+	$edata["DisplayField"] = "eid";
 	
-				$edata["LookupWhere"] = "designation='Coordinator'";
-
+	
 
 	
 	$edata["LookupOrderBy"] = "";
@@ -2382,14 +2421,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2434,34 +2476,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "Sunday";
-	$edata["LookupValues"][] = "Monday";
-	$edata["LookupValues"][] = "Tuesday";
-	$edata["LookupValues"][] = "Wednesday";
-	$edata["LookupValues"][] = "Thursday";
-	$edata["LookupValues"][] = "Friday";
-	$edata["LookupValues"][] = "saturday";
-
-		$edata["Multiselect"] = true;
-
-		$edata["SelectSize"] = 7;
-
-// End Lookup Settings
 
 
 	
@@ -2475,8 +2495,11 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=80";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -2502,7 +2525,7 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -2530,14 +2553,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2599,13 +2625,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "eid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "ename";
+	$edata["DisplayField"] = "eid";
 	
-				$edata["LookupWhere"] = "designation='Technical trainer'";
-
+	
 
 	
-	$edata["LookupOrderBy"] = "ename";
+	$edata["LookupOrderBy"] = "";
 
 	
 	
@@ -2685,14 +2710,17 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
-	
+		$fdata["bViewPage"] = true;
+
 		$fdata["bAdvancedSearch"] = true;
 
 		$fdata["bPrinterPage"] = true;
@@ -2754,13 +2782,12 @@ $tdatabatch[".printFields"][] = "uni_spoc_contact";
 		
 	$edata["LinkField"] = "eid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "ename";
+	$edata["DisplayField"] = "eid";
 	
-				$edata["LookupWhere"] = "designation='softskill Trainer'";
-
+	
 
 	
-	$edata["LookupOrderBy"] = "ename";
+	$edata["LookupOrderBy"] = "";
 
 	
 	
@@ -2872,6 +2899,34 @@ $masterTablesData["batch"] = array();
 
 
 	
+				$strOriginalDetailsTable="consultant";
+	$masterParams = array();
+	$masterParams["mDataSourceTable"]="consultant";
+	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
+	$masterParams["mShortTable"]= "consultant";
+	$masterParams["masterKeys"]= array();
+	$masterParams["detailKeys"]= array();
+	
+		$masterParams["dispChildCount"]= "1";
+	$masterParams["hideChild"]= "0";
+	$masterParams["dispMasterInfo"] = array();
+				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
+			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
+		
+	$masterParams["previewOnList"]= 1;
+	$masterParams["previewOnAdd"]= 0;
+	$masterParams["previewOnEdit"]= 0;
+	$masterParams["previewOnView"]= 0;
+	$masterParams["proceedLink"]= 1;
+
+	$masterParams["type"] = PAGE_LIST;
+					$masterTablesData["batch"][0] = $masterParams;
+				$masterTablesData["batch"][0]["masterKeys"] = array();
+	$masterTablesData["batch"][0]["masterKeys"][]="consultant_id";
+				$masterTablesData["batch"][0]["detailKeys"] = array();
+	$masterTablesData["batch"][0]["detailKeys"][]="ey_spoc";
+		
+	
 				$strOriginalDetailsTable="courses";
 	$masterParams = array();
 	$masterParams["mDataSourceTable"]="courses";
@@ -2893,11 +2948,11 @@ $masterTablesData["batch"] = array();
 	$masterParams["proceedLink"]= 1;
 
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batch"][0] = $masterParams;
-				$masterTablesData["batch"][0]["masterKeys"] = array();
-	$masterTablesData["batch"][0]["masterKeys"][]="cid";
-				$masterTablesData["batch"][0]["detailKeys"] = array();
-	$masterTablesData["batch"][0]["detailKeys"][]="cid";
+					$masterTablesData["batch"][1] = $masterParams;
+				$masterTablesData["batch"][1]["masterKeys"] = array();
+	$masterTablesData["batch"][1]["masterKeys"][]="cid";
+				$masterTablesData["batch"][1]["detailKeys"] = array();
+	$masterTablesData["batch"][1]["detailKeys"][]="cid";
 		
 	
 				$strOriginalDetailsTable="department";
@@ -2921,11 +2976,11 @@ $masterTablesData["batch"] = array();
 	$masterParams["proceedLink"]= 1;
 
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batch"][1] = $masterParams;
-				$masterTablesData["batch"][1]["masterKeys"] = array();
-	$masterTablesData["batch"][1]["masterKeys"][]="Department_id";
-				$masterTablesData["batch"][1]["detailKeys"] = array();
-	$masterTablesData["batch"][1]["detailKeys"][]="department_id";
+					$masterTablesData["batch"][2] = $masterParams;
+				$masterTablesData["batch"][2]["masterKeys"] = array();
+	$masterTablesData["batch"][2]["masterKeys"][]="Department_id";
+				$masterTablesData["batch"][2]["detailKeys"] = array();
+	$masterTablesData["batch"][2]["detailKeys"][]="department_id";
 		
 	
 				$strOriginalDetailsTable="division";
@@ -2949,11 +3004,39 @@ $masterTablesData["batch"] = array();
 	$masterParams["proceedLink"]= 1;
 
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batch"][2] = $masterParams;
-				$masterTablesData["batch"][2]["masterKeys"] = array();
-	$masterTablesData["batch"][2]["masterKeys"][]="division_id";
-				$masterTablesData["batch"][2]["detailKeys"] = array();
-	$masterTablesData["batch"][2]["detailKeys"][]="division_id";
+					$masterTablesData["batch"][3] = $masterParams;
+				$masterTablesData["batch"][3]["masterKeys"] = array();
+	$masterTablesData["batch"][3]["masterKeys"][]="division_id";
+				$masterTablesData["batch"][3]["detailKeys"] = array();
+	$masterTablesData["batch"][3]["detailKeys"][]="division_id";
+		
+	
+				$strOriginalDetailsTable="employees";
+	$masterParams = array();
+	$masterParams["mDataSourceTable"]="employees";
+	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
+	$masterParams["mShortTable"]= "employees";
+	$masterParams["masterKeys"]= array();
+	$masterParams["detailKeys"]= array();
+	
+		$masterParams["dispChildCount"]= "1";
+	$masterParams["hideChild"]= "0";
+	$masterParams["dispMasterInfo"] = array();
+				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
+			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
+		
+	$masterParams["previewOnList"]= 1;
+	$masterParams["previewOnAdd"]= 0;
+	$masterParams["previewOnEdit"]= 0;
+	$masterParams["previewOnView"]= 0;
+	$masterParams["proceedLink"]= 1;
+
+	$masterParams["type"] = PAGE_LIST;
+					$masterTablesData["batch"][4] = $masterParams;
+				$masterTablesData["batch"][4]["masterKeys"] = array();
+	$masterTablesData["batch"][4]["masterKeys"][]="eid";
+				$masterTablesData["batch"][4]["detailKeys"] = array();
+	$masterTablesData["batch"][4]["detailKeys"][]="local_spoc";
 		
 	
 				$strOriginalDetailsTable="university";
@@ -2977,39 +3060,11 @@ $masterTablesData["batch"] = array();
 	$masterParams["proceedLink"]= 1;
 
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batch"][3] = $masterParams;
-				$masterTablesData["batch"][3]["masterKeys"] = array();
-	$masterTablesData["batch"][3]["masterKeys"][]="university_id";
-				$masterTablesData["batch"][3]["detailKeys"] = array();
-	$masterTablesData["batch"][3]["detailKeys"][]="university_id";
-		
-	
-				$strOriginalDetailsTable="consultant";
-	$masterParams = array();
-	$masterParams["mDataSourceTable"]="consultant";
-	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
-	$masterParams["mShortTable"]= "consultant";
-	$masterParams["masterKeys"]= array();
-	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "1";
-	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
-	$masterParams["previewOnList"]= 1;
-	$masterParams["previewOnAdd"]= 0;
-	$masterParams["previewOnEdit"]= 0;
-	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
-	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batch"][4] = $masterParams;
-				$masterTablesData["batch"][4]["masterKeys"] = array();
-	$masterTablesData["batch"][4]["masterKeys"][]="consultant_id";
-				$masterTablesData["batch"][4]["detailKeys"] = array();
-	$masterTablesData["batch"][4]["detailKeys"][]="ey_spoc";
+					$masterTablesData["batch"][5] = $masterParams;
+				$masterTablesData["batch"][5]["masterKeys"] = array();
+	$masterTablesData["batch"][5]["masterKeys"][]="university_id";
+				$masterTablesData["batch"][5]["detailKeys"] = array();
+	$masterTablesData["batch"][5]["detailKeys"][]="university_id";
 		
 // -----------------end  prepare master-details data arrays ------------------------------//
 

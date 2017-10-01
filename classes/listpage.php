@@ -725,19 +725,7 @@ class ListPage extends RunnerPage
 					}
 					$this->audit->LogDelete($this->tName, $deleted_audit_values, $keys);
 				}
-						if( $this->tName == ADMIN_USERS )
-				{
-					// delete _ugmembers corr. rec.
-					global $cman;
-					$grConnection = $cman->getForUserGroups();
-					
-					$sql = "delete from ". $grConnection->addTableWrappers( "lict_ugmembers" ) 
-						." where ". $grConnection->addFieldWrappers( "UserName" ) 
-						."=". $grConnection->prepareString( $deleted_values[ GetUserNameField() ] );
-
-					$grConnection->exec( $sql );
-				}
-				
+						
 				if($this->eventExists("AfterDelete"))
 				{
 					RunnerContext::pushRecordContext( $deleted_values, $this );
@@ -1504,10 +1492,10 @@ class ListPage extends RunnerPage
 		$record["view_link"]= true;
 		$record["copy_link"]= true;
 		$record["checkbox"]= true;
-		$record["editlink_attrs"]= "id=\"editLink_add".$this->id."\"";
+		$record["editlink_attrs"]= "id=\"editLink_add".$this->id."\" data-gridlink";
 		
-		$record["copylink_attrs"]= "id=\"copyLink_add".$this->id."\" name=\"copyLink_add".$this->id."\"";
-		$record["viewlink_attrs"]= "id=\"viewLink_add".$this->id."\" name=\"viewLink_add".$this->id."\"";
+		$record["copylink_attrs"]= "id=\"copyLink_add".$this->id."\" name=\"copyLink_add".$this->id."\" data-gridlink";
+		$record["viewlink_attrs"]= "id=\"viewLink_add".$this->id."\" name=\"viewLink_add".$this->id."\" data-gridlink";
 		$record["checkbox_attrs"]= "id=\"check_add".$this->id."\" name=\"selection[]\"";
 		
 		//	add container for inline add controls
@@ -1773,11 +1761,13 @@ class ListPage extends RunnerPage
 				}
 				
 				$this->recIds[] = $this->recId;
+				
 				$record["recordattrs"] = "data-record-id=\"".$this->recId."\"";	
-				$record["editlink_attrs"]= "id=\"editLink".$this->recId."\" name=\"editLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."'";
-				$record["copylink_attrs"]= "id=\"copyLink".$this->recId."\" name=\"copyLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "add", $copylink)."'";
-				$record["viewlink_attrs"]= "id=\"viewLink".$this->recId."\" name=\"viewLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "view", $editlink)."'";
-				$record["inlineeditlink_attrs"]= "id=\"iEditLink".$this->recId."\" name=\"iEditLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."'";
+				$record["editlink_attrs"]= "id=\"editLink".$this->recId."\" name=\"editLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."' data-gridlink";
+				$record["copylink_attrs"]= "id=\"copyLink".$this->recId."\" name=\"copyLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "add", $copylink)."' data-gridlink";
+				
+				$record["viewlink_attrs"]= "id=\"viewLink".$this->recId."\" name=\"viewLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "view", $editlink)."' data-gridlink";
+				$record["inlineeditlink_attrs"]= "id=\"iEditLink".$this->recId."\" name=\"iEditLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."' data-gridlink";
 				$record["ieditbuttonsholder_attrs"]= "id=\"ieditbuttonsholder".$this->recId."\" ";
 				
 				if( $this->mobileTemplateMode() ) 

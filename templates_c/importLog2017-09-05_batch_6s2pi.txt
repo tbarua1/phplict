@@ -1,6 +1,0 @@
-Import into batch
-9/5/2017 8:43:09 PM
-
-55 out of 55 records processed successfully.
-55 records added.
-0 records updated.

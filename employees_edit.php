@@ -23,7 +23,7 @@ EditPage::handleBrokenRequest();
 
 $layout = new TLayout("edit_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "employees_edit";
 $layout->blocks["top"] = array();
 $layout->containers["editpage"] = array();
@@ -100,7 +100,7 @@ $page_layouts["employees_edit"] = $layout;
 
 $layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "employees_list";
 $layout->blocks["center"] = array();
 $layout->containers["gridcontrols"] = array();
@@ -274,6 +274,7 @@ $page_layouts["employees_list"] = $layout;
 
 
 	
+		
 	
 // parse control parameters
 $pageMode = EditPage::readEditModeFromRequest();

@@ -364,6 +364,8 @@ class EditPage extends RunnerPage
 		}
 	}
 
+	
+	
 	/**
 	 * Assign basic page's xt variables
 	 */
@@ -467,10 +469,7 @@ class EditPage extends RunnerPage
 			$this->xt->load_template( $templateFile );
 			$returnJSON["html"] = array();
 			foreach($this->editFields as $f)
-			{
-				if( $this->detailKeysByM && in_array( $f, $this->detailKeysByM ) )
-					continue;
-				
+			{			
 				// build controls	
 				$returnJSON["html"][ $f ] = $this->xt->fetchVar(GoodFieldName($f)."_editcontrol");
 			}
@@ -861,7 +860,9 @@ class EditPage extends RunnerPage
 				return true;
 
 			case AE_TO_DETAIL_LIST:
-				HeaderRedirect( GetTableURL( $this->pSet->getAEDetailTable() ), PAGE_LIST );
+
+				$dTName = $this->pSet->getAEDetailTable();
+				HeaderRedirect( GetTableURL( $dTName ), PAGE_LIST, implode("&", $this->getNewRecordMasterKeys( $dTName ) ). "&mastertable=" .$this->tName );
 				return true;
 
 			default:
@@ -869,6 +870,19 @@ class EditPage extends RunnerPage
 		}
 	}
 
+	
+	function getNewRecordMasterKeys( $dTName ) 
+	{
+		$data = $this->getCurrentRecordInternal();
+		
+		$mKeys = array();
+		foreach($this->pSet->getMasterKeysByDetailTable( $dTName ) as $i => $mk)
+		{
+			$mKeys[] = "masterkey". ($i + 1) . "=" .$data[ $mk ];
+		}
+		return $mKeys;
+	}
+	
 
 	/**
 	 * Get the previous record keys
@@ -893,8 +907,8 @@ class EditPage extends RunnerPage
 		if( isset($this->nextKeys) and !is_null($this->nextKeys) )
 			return $this->nextKeys;
 
-		$keys = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal(), PREV_RECORD );
-		$this->prevKeys = $keys['next'];
+		$keys = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal(), NEXT_RECORD );
+		$this->nextKeys = $keys['next'];
 		return $this->nextKeys;
 	}
 

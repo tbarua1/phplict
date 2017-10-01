@@ -47,25 +47,26 @@ function DBLookup($sql)
   */
 class tDAL
 {
-	var $tblmydb_at_localhost__batch;
-	var $tblmydb_at_localhost__batch_completion_status;
-	var $tblmydb_at_localhost__batchschedule;
-	var $tblmydb_at_localhost__consultant;
-	var $tblmydb_at_localhost__consultant_view;
-	var $tblmydb_at_localhost__courses;
-	var $tblmydb_at_localhost__department;
-	var $tblmydb_at_localhost__district;
-	var $tblmydb_at_localhost__division;
-	var $tblmydb_at_localhost__emp_status;
-	var $tblmydb_at_localhost__employees;
-	var $tblmydb_at_localhost__full_batch_details;
-	var $tblmydb_at_localhost__lict_uggroups;
-	var $tblmydb_at_localhost__lict_ugmembers;
-	var $tblmydb_at_localhost__lict_ugrights;
-	var $tblmydb_at_localhost__project1_audit;
-	var $tblmydb_at_localhost__project1_locking;
-	var $tblmydb_at_localhost__schedule_map;
-	var $tblmydb_at_localhost__university;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__batch;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__batchschedule;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__consultant;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__courses;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__department;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__district;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__division;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__emp_status;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__employees;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__full_batch_details;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__lict_uggroups;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__lict_ugmembers;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__lict_ugrights;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__project1_audit;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__project1_locking;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__roles;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__schedule_map;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__trainer;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__university;
+	var $tbltest_at_node3907_env_7428455_diadem_cloud__university_view;
 	var $lstTables;
 	var $Table = array();
 
@@ -73,25 +74,26 @@ class tDAL
 	{
 		if($this->lstTables)
 			return;
-		$this->lstTables[] = array("name" => "batch", "varname" => "mydb_at_localhost__batch", "altvarname" => "batch", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "batch_completion_status", "varname" => "mydb_at_localhost__batch_completion_status", "altvarname" => "batch_completion_status", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "batchschedule", "varname" => "mydb_at_localhost__batchschedule", "altvarname" => "batchschedule", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "consultant", "varname" => "mydb_at_localhost__consultant", "altvarname" => "consultant", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "consultant_view", "varname" => "mydb_at_localhost__consultant_view", "altvarname" => "consultant_view", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "courses", "varname" => "mydb_at_localhost__courses", "altvarname" => "courses", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "department", "varname" => "mydb_at_localhost__department", "altvarname" => "department", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "district", "varname" => "mydb_at_localhost__district", "altvarname" => "district", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "division", "varname" => "mydb_at_localhost__division", "altvarname" => "division", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "emp_status", "varname" => "mydb_at_localhost__emp_status", "altvarname" => "emp_status", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "employees", "varname" => "mydb_at_localhost__employees", "altvarname" => "employees", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "full_batch_details", "varname" => "mydb_at_localhost__full_batch_details", "altvarname" => "full_batch_details", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "lict_uggroups", "varname" => "mydb_at_localhost__lict_uggroups", "altvarname" => "lict_uggroups", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "lict_ugmembers", "varname" => "mydb_at_localhost__lict_ugmembers", "altvarname" => "lict_ugmembers", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "lict_ugrights", "varname" => "mydb_at_localhost__lict_ugrights", "altvarname" => "lict_ugrights", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "project1_audit", "varname" => "mydb_at_localhost__project1_audit", "altvarname" => "project1_audit", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "project1_locking", "varname" => "mydb_at_localhost__project1_locking", "altvarname" => "project1_locking", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "schedule_map", "varname" => "mydb_at_localhost__schedule_map", "altvarname" => "schedule_map", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
-		$this->lstTables[] = array("name" => "university", "varname" => "mydb_at_localhost__university", "altvarname" => "university", "connId" => "mydb_at_localhost", "schema" => "", "connName" => "mydb at localhost");
+		$this->lstTables[] = array("name" => "batch", "varname" => "test_at_node3907_env_7428455_diadem_cloud__batch", "altvarname" => "batch", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "batchschedule", "varname" => "test_at_node3907_env_7428455_diadem_cloud__batchschedule", "altvarname" => "batchschedule", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "consultant", "varname" => "test_at_node3907_env_7428455_diadem_cloud__consultant", "altvarname" => "consultant", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "courses", "varname" => "test_at_node3907_env_7428455_diadem_cloud__courses", "altvarname" => "courses", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "department", "varname" => "test_at_node3907_env_7428455_diadem_cloud__department", "altvarname" => "department", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "district", "varname" => "test_at_node3907_env_7428455_diadem_cloud__district", "altvarname" => "district", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "division", "varname" => "test_at_node3907_env_7428455_diadem_cloud__division", "altvarname" => "division", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "emp_status", "varname" => "test_at_node3907_env_7428455_diadem_cloud__emp_status", "altvarname" => "emp_status", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "employees", "varname" => "test_at_node3907_env_7428455_diadem_cloud__employees", "altvarname" => "employees", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "full_batch_details", "varname" => "test_at_node3907_env_7428455_diadem_cloud__full_batch_details", "altvarname" => "full_batch_details", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "lict_uggroups", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_uggroups", "altvarname" => "lict_uggroups", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "lict_ugmembers", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_ugmembers", "altvarname" => "lict_ugmembers", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "lict_ugrights", "varname" => "test_at_node3907_env_7428455_diadem_cloud__lict_ugrights", "altvarname" => "lict_ugrights", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "project1_audit", "varname" => "test_at_node3907_env_7428455_diadem_cloud__project1_audit", "altvarname" => "project1_audit", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "project1_locking", "varname" => "test_at_node3907_env_7428455_diadem_cloud__project1_locking", "altvarname" => "project1_locking", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "roles", "varname" => "test_at_node3907_env_7428455_diadem_cloud__roles", "altvarname" => "roles", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "schedule_map", "varname" => "test_at_node3907_env_7428455_diadem_cloud__schedule_map", "altvarname" => "schedule_map", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "trainer", "varname" => "test_at_node3907_env_7428455_diadem_cloud__trainer", "altvarname" => "trainer", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "university", "varname" => "test_at_node3907_env_7428455_diadem_cloud__university", "altvarname" => "university", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
+		$this->lstTables[] = array("name" => "university_view", "varname" => "test_at_node3907_env_7428455_diadem_cloud__university_view", "altvarname" => "university_view", "connId" => "test_at_node3907_env_7428455_diadem_cloud", "schema" => "", "connName" => "test at node3907-env-7428455.diadem.cloud");
 	}
 
 	/**

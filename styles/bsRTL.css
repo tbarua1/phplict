@@ -1952,3 +1952,8 @@ span.bs-date-control {
         display: none;
     }
 }
+
+
+.chosen-container.chosen-container-multi.chosen-container-multi {
+	min-width: 150px;
+}

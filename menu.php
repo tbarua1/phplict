@@ -21,15 +21,11 @@ if (($_SESSION["MyURL"] == "") || (!isLoggedAsGuest())) {
 
 
 
-$layout = new TLayout("menu_bootstrap", "OfficeOffice", "MobileOffice");
+$layout = new TLayout("menu_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "_menu";
 $layout->blocks["top"] = array();
-$layout->containers["top"] = array();
-$layout->container_properties["top"] = array(  );
-$layout->containers["top"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"menu" );
 $layout->containers["menu"] = array();
 $layout->container_properties["menu"] = array(  );
 $layout->containers["menu"][] = array("name"=>"wrapper",
@@ -70,9 +66,7 @@ $layout->skins["menu_1"] = "";
 
 $layout->skins["menu"] = "";
 
-
-$layout->containers["top"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"center" );
+$layout->blocks["top"][] = "menu";
 $layout->containers["center"] = array();
 $layout->container_properties["center"] = array(  );
 $layout->containers["center"][] = array("name"=>"welcome",
@@ -80,10 +74,7 @@ $layout->containers["center"][] = array("name"=>"welcome",
 
 $layout->skins["center"] = "";
 
-
-$layout->skins["top"] = "";
-
-$layout->blocks["top"][] = "top";
+$layout->blocks["top"][] = "center";
 $page_layouts["menu"] = $layout;
 
 
@@ -138,8 +129,6 @@ $xt->assign("logout_link", true);
 $xt->assign("guestloginbutton", isLoggedAsGuest());
 $xt->assign("logoutbutton", isSingleSign() && !isLoggedAsGuest());
 
-if( IsAdmin() )
-	$xt->assign("adminarea_link", true);
 
 // get redirect location for menu page
 $redirect = $pageObject->getRedirectForMenuPage();

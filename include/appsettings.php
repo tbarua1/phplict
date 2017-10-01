@@ -477,8 +477,6 @@ $globalSettings["strFromEmail"] = "";
 
 $ajaxSearchStartsWith = true;
 
-$globalSettings["isDynamicPerm"] = true;
-
 
 
 
@@ -492,7 +490,7 @@ $globalSettings["ProjectLogo"]["English"] = "LICT";
 
 $globalSettings["createLoginPage"] = true;
 
-$globalSettings["apiGoogleMapsCode"] = " AIzaSyAt_Fg_zK4_J9lB3fVLWDM-cOzV2Pxfx_0";
+$globalSettings["apiGoogleMapsCode"] = "";
 
 
 
@@ -536,7 +534,7 @@ $globalSettings["CaptchaSettings"] = array();
 $globalSettings["CaptchaSettings"]["type"] = 0;
 $globalSettings["CaptchaSettings"]["siteKey"] = "";
 $globalSettings["CaptchaSettings"]["secretKey"] = "";
-$globalSettings["CaptchaSettings"]["captchaPassesCount"] = "1000";
+$globalSettings["CaptchaSettings"]["captchaPassesCount"] = "5";
 
 $globalSettings["CaptchaSettings"]["isEnabledOnLogin"] = false;
 $globalSettings["CaptchaSettings"]["isEnabledOnRegister"] = false;
@@ -566,8 +564,6 @@ $cEmailFieldType = 200;
 						$cEmailFieldType = 200;
 															$cPasswordFieldType	= 200;
 																																																																																																																																										
-$gPermissionsRefreshTime = 0;
-$gPermissionsRead = false;
 
 $useAJAX = true;
 $suggestAllContent = true;
@@ -607,38 +603,23 @@ $tableCaptions = array();
 $tableCaptions["English"] = array();
 $tableCaptions["English"][""] = "";
 $tableCaptions["English"]["batch"] = "Batch";
+$tableCaptions["English"]["batchschedule"] = "Batchschedule";
+$tableCaptions["English"]["consultant"] = "Consultant";
 $tableCaptions["English"]["courses"] = "Courses";
 $tableCaptions["English"]["department"] = "Department";
 $tableCaptions["English"]["district"] = "District";
 $tableCaptions["English"]["division"] = "Division";
 $tableCaptions["English"]["emp_status"] = "Emp Status";
-$tableCaptions["English"]["university"] = "University";
-$tableCaptions["English"][""] = "";
 $tableCaptions["English"]["employees"] = "Employees";
 $tableCaptions["English"]["full_batch_details"] = "Full Batch Details";
-$tableCaptions["English"]["batchschedule"] = "Batchschedule";
 $tableCaptions["English"]["schedule_map"] = "Schedule Map";
-$tableCaptions["English"]["admin_rights"] = "Admin Rights";
-$tableCaptions["English"]["admin_members"] = "Admin Members";
-$tableCaptions["English"]["admin_users"] = "Add/Edit users";
-$tableCaptions["English"]["batch_completion_status"] = "Batch Completion Status";
-$tableCaptions["English"]["employees1"] = "Employees1";
-$tableCaptions["English"]["consultant_view"] = "Consultant View";
-$tableCaptions["English"]["consultant"] = "Consultant";
+$tableCaptions["English"]["trainer"] = "Trainer";
+$tableCaptions["English"]["university"] = "University";
+$tableCaptions["English"]["university_view"] = "University View";
+$tableCaptions["English"][""] = "";
 $tableCaptions[""] = array();
 $tableCaptions[""][""] = "";
 $tableCaptions[""]["batch"] = "Batch";
-$tableCaptions[""]["university"] = "University";
-$tableCaptions[""]["employees"] = "Employees";
-$tableCaptions[""]["full_batch_details"] = "Full Batch Details";
-$tableCaptions[""]["batchschedule"] = "Batchschedule";
-$tableCaptions[""]["schedule_map"] = "Schedule Map";
-$tableCaptions[""]["admin_rights"] = "Admin Rights";
-$tableCaptions[""]["admin_members"] = "Admin Members";
-$tableCaptions[""]["admin_users"] = "Admin Users";
-$tableCaptions[""]["batch_completion_status"] = "Batch Completion Status";
-$tableCaptions[""]["consultant_view"] = "Consultant View";
-$tableCaptions[""]["consultant"] = "Consultant";
 
 
 $globalEvents = new class_GlobalEvents;
@@ -670,8 +651,6 @@ $mlang_defaultlang = getDefaultLanguage();
 $page_titles[".global"] = array();
 if(mlang_getcurrentlang()=="English")
 {
-				$page_titles[".global"]["English"] = array();
-	$page_titles[".global"]["English"]["login"] = "Lict Login ";
 }
 if(mlang_getcurrentlang()=="")
 {
@@ -698,7 +677,7 @@ $scriptname = getFileNameFromURL();
 
 $isGroupSecurity = true;
 
-$isUseRTEBasic = true;
+$isUseRTEBasic = false;
 
 $isUseRTECK = false;
 

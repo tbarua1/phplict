@@ -271,6 +271,10 @@ function checkTableName($shortTName, $type=false)
 
 	if ("batch" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
+	if ("batchschedule" == $shortTName && ($type===false || ($type!==false && $type == 0)))
+		return true;
+	if ("consultant" == $shortTName && ($type===false || ($type!==false && $type == 0)))
+		return true;
 	if ("courses" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	if ("department" == $shortTName && ($type===false || ($type!==false && $type == 0)))
@@ -281,29 +285,17 @@ function checkTableName($shortTName, $type=false)
 		return true;
 	if ("emp_status" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
-	if ("university" == $shortTName && ($type===false || ($type!==false && $type == 0)))
-		return true;
 	if ("employees" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	if ("full_batch_details" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
-	if ("batchschedule" == $shortTName && ($type===false || ($type!==false && $type == 0)))
-		return true;
 	if ("schedule_map" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
-	if ("admin_rights" == $shortTName && ($type===false || ($type!==false && $type == 1)))
+	if ("trainer" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
-	if ("admin_members" == $shortTName && ($type===false || ($type!==false && $type == 1)))
+	if ("university" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
-	if ("admin_users" == $shortTName && ($type===false || ($type!==false && $type == 1)))
-		return true;
-	if ("batch_completion_status" == $shortTName && ($type===false || ($type!==false && $type == 0)))
-		return true;
-	if ("employees1" == $shortTName && ($type===false || ($type!==false && $type == 1)))
-		return true;
-	if ("consultant_view" == $shortTName && ($type===false || ($type!==false && $type == 0)))
-		return true;
-	if ("consultant" == $shortTName && ($type===false || ($type!==false && $type == 0)))
+	if ("university_view" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	return false;
 }
@@ -359,6 +351,16 @@ function GetTablesList($pdfMode = false)
 	{
 		$arr[]="batch";
 	}
+	$strPerm = GetUserPermissions("batchschedule");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="batchschedule";
+	}
+	$strPerm = GetUserPermissions("consultant");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="consultant";
+	}
 	$strPerm = GetUserPermissions("courses");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
@@ -384,11 +386,6 @@ function GetTablesList($pdfMode = false)
 	{
 		$arr[]="emp_status";
 	}
-	$strPerm = GetUserPermissions("university");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="university";
-	}
 	$strPerm = GetUserPermissions("employees");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
@@ -399,50 +396,25 @@ function GetTablesList($pdfMode = false)
 	{
 		$arr[]="full_batch_details";
 	}
-	$strPerm = GetUserPermissions("batchschedule");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="batchschedule";
-	}
 	$strPerm = GetUserPermissions("schedule_map");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
 		$arr[]="schedule_map";
 	}
-	$strPerm = GetUserPermissions("admin_rights");
+	$strPerm = GetUserPermissions("trainer");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
-		$arr[]="admin_rights";
+		$arr[]="trainer";
 	}
-	$strPerm = GetUserPermissions("admin_members");
+	$strPerm = GetUserPermissions("university");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
-		$arr[]="admin_members";
+		$arr[]="university";
 	}
-	$strPerm = GetUserPermissions("admin_users");
+	$strPerm = GetUserPermissions("university_view");
 	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
 	{
-		$arr[]="admin_users";
-	}
-	$strPerm = GetUserPermissions("batch_completion_status");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="batch_completion_status";
-	}
-	$strPerm = GetUserPermissions("employees1");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="employees1";
-	}
-	$strPerm = GetUserPermissions("consultant_view");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="consultant_view";
-	}
-	$strPerm = GetUserPermissions("consultant");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="consultant";
+		$arr[]="university_view";
 	}
 	return $arr;
 }
@@ -454,23 +426,19 @@ function GetTablesListWithoutSecurity()
 {
 	$arr = array();
 	$arr[]="batch";
+	$arr[]="batchschedule";
+	$arr[]="consultant";
 	$arr[]="courses";
 	$arr[]="department";
 	$arr[]="district";
 	$arr[]="division";
 	$arr[]="emp_status";
-	$arr[]="university";
 	$arr[]="employees";
 	$arr[]="full_batch_details";
-	$arr[]="batchschedule";
 	$arr[]="schedule_map";
-	$arr[]="admin_rights";
-	$arr[]="admin_members";
-	$arr[]="admin_users";
-	$arr[]="batch_completion_status";
-	$arr[]="employees1";
-	$arr[]="consultant_view";
-	$arr[]="consultant";
+	$arr[]="trainer";
+	$arr[]="university";
+	$arr[]="university_view";
 	return $arr;
 }
 
@@ -1081,127 +1049,93 @@ function IsBigInt($type)
 ////////////////////////////////////////////////////////////////////////////////
 // security functions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * @param String userID
- * @intellisense
- */
-function ReadUserPermissions($userID = "")
-{
-	global $gPermissionsRead, $gPermissionsRefreshTime, $caseInsensitiveUsername, $cman;
-
-	if (!strlen($userID))
-		$userID = $_SESSION["UserID"];
-
-	$needreload = false;
-	if( !isset( $_SESSION["UserRights"] ) )
-		$needreload = true;
-	elseif( !isset( $_SESSION["UserRights"][ $userID ] ) )
-		$needreload = true;
-
-	if(!$needreload && ($gPermissionsRead || time()-@$_SESSION["LastReadRights"]<=$gPermissionsRefreshTime))
-		return;
-
-	$groups = array();
-	$bIsAdmin = false;
-	$gConn = $cman->getForUserGroups();
-	$userGroups = array();
-	
-	if($userID != "Guest")
-	{
-
-		if($caseInsensitiveUsername)
-			$usernameClause = $gConn->upper($gConn->addFieldWrappers( "UserName" )) . "=" . $gConn->upper( $gConn->prepareString($userID) );
-		else
-			$usernameClause = $gConn->addFieldWrappers( "UserName" ) . "=" . $gConn->prepareString($userID);
-
-		$sql = "select ".$gConn->addFieldWrappers( "GroupID" )
-			.", ".$gConn->addFieldWrappers( "UserName" )
-			." from ". $gConn->addTableWrappers( "lict_ugmembers" )
-			." where " . $usernameClause;
-
-		$qResult = $gConn->query( $sql );
-		while( $data = $qResult->fetchNumeric() )
-		{
-			if ( $caseInsensitiveUsername || strcmp($data[1],$userID) == 0 )
-				$groups[] = $data[0];
-		}
-
-		if( !count($groups) )
-			$groups[] = -2;
-	}
-	else
-		$groups[] = -3;
-
-
-	$groupstr = "";
-	foreach($groups as $g)
-	{
-		if($groupstr != "")
-			$groupstr.= ",";
-		$groupstr.= $g;
-		if($g == -1)
-			$bIsAdmin = true;
-	}
-	$rights = array();
-
-	$sql = "select ". $gConn->addFieldWrappers( "TableName" )
-		.", ". $gConn->addFieldWrappers( "AccessMask" )
-		." from ". $gConn->addTableWrappers( "lict_ugrights" )
-		." where ". $gConn->addFieldWrappers( "GroupID" ) ." in (".$groupstr.")";
-
-	$qResult = $gConn->query( $sql );
-	while( $data = $qResult->fetchNumeric() )
-	{
-		if(!array_key_exists($data[0], $rights))
-		{
-			$rights[ $data[0] ] = $data[1];
-			continue;
-		}
-		for($i = 0; $i < strlen($data[1]); $i++)
-		{
-			if( strpos($rights[ $data[0] ], substr($data[1], $i, 1)) === false )
-				$rights[ $data[0] ].= substr($data[1], $i, 1);
-		}
-	}
-
-	if(!array_key_exists("UserRights", $_SESSION))
-		$_SESSION["UserRights"] = array();
-
-	if($bIsAdmin)
-		$rights[".IsAdmin"] = true;
-	$rights[".Groups"] = $groups;
-	$_SESSION["UserRights"][ $userID ] = &$rights;
-	$_SESSION["LastReadRights"] = time();
-
-	$gPermissionsRead = true;
-}
-
+ //the bDynamicPermissions block
 
 /**
  * @intellisense
  */
-function GetUserPermissionsDynamic($table="")
+function GetUserPermissionsStatic( $table )
 {
 	if( !isLogged() )
 		return "";
-	global $strTableName,$gPermissionsRefreshTime,$gPermissionsRead;
-	if(!$table)
-		$table=$strTableName;
 
-	ReadUserPermissions();
-	if(IsAdmin())
+	$extraPerm = $_SESSION["AccessLevel"] == ACCESS_LEVEL_ADMINGROUP ? 'M' : '';
+	$sUserGroup=@$_SESSION["GroupID"];
+//	default permissions
+	if($table=="batch")
 	{
-		if($table=="admin_rights")
-			return "ADESPIM";
-		if($table=="admin_members")
-			return "ADESPIM";
-		if($table=="admin_users")
-			return "ADESPIM";
+		return "ADESPI".$extraPerm;
 	}
-
-	return @$_SESSION["UserRights"][$_SESSION["UserID"]][$table];
+//	default permissions
+	if($table=="batchschedule")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="consultant")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="courses")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="department")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="district")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="division")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="emp_status")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="employees")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="full_batch_details")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="schedule_map")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="trainer")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="university")
+	{
+		return "ADESPI".$extraPerm;
+	}
+//	default permissions
+	if($table=="university_view")
+	{
+		return "ADESPI".$extraPerm;
+	}
+	// grant nothing by default
+	return "";
 }
 
+// end of the bDynamicPermissions block
 // end of the bCreateLoginPage block
 
 
@@ -1212,9 +1146,7 @@ function GetUserPermissionsDynamic($table="")
  */
 function IsAdmin()
 {
-	global $gPermissionsRefreshTime, $gPermissionsRead, $caseInsensitiveUsername;
-	ReadUserPermissions();
-	return array_key_exists(".IsAdmin", @$_SESSION["UserRights"][ $_SESSION["UserID"] ]);
+	return false;
 }
 
 /**
@@ -1243,7 +1175,7 @@ function GetUserPermissions($table="")
 			return $_SESSION["securityOverrides"][ $table ];
 	}
 	
-		$permissions =  GetUserPermissionsDynamic($table);
+		$permissions =  GetUserPermissionsStatic($table);
 
 	if($globalEvents->exists("GetTablePermissions", $table))
 	{
@@ -1272,13 +1204,6 @@ if( @$_SESSION["UserID"] )
 function guestHasPermissions()
 {
 	$tables = GetTablesListWithoutSecurity();
-	ReadUserPermissions("Guest");
-	if(!count($_SESSION["UserRights"]["Guest"]))
-		return false;
-	foreach($tables as $t) {
-		if(array_key_exists( $t ,$_SESSION["UserRights"]["Guest"]))
-			return true;
-	}
 	return false;
 }
 
@@ -1325,11 +1250,9 @@ function SetAuthSessionData($pUsername, &$data, $fromFacebook, $password, &$page
 	$_SESSION["GroupID"] = $data["email"];
 
 
-		$_SESSION["OwnerID"] = $data["email"];
-	$_SESSION["_employees_OwnerID"] = $data["email"];
-		$_SESSION["_admin_members_OwnerID"] = $data["email"];
-		$_SESSION["_admin_users_OwnerID"] = $data["email"];
-		$_SESSION["_employees1_OwnerID"] = $data["email"];
+		$_SESSION["OwnerID"] = $data["cid"];
+	$_SESSION["_batchschedule_OwnerID"] = $data["cid"];
+		$_SESSION["_employees_OwnerID"] = $data["cid"];
 
 	$_SESSION["UserData"] = $data;
 	
@@ -1388,6 +1311,12 @@ function CheckSecurity($strValue, $strAction, $table = "")
 	$strPerm = GetUserPermissions();
 	if( strpos($strPerm, "M") === false )
 	{
+		if($table=="employees")
+		{
+
+				if(!($pSet->getCaseSensitiveUsername((string)$_SESSION["_".$table."_OwnerID"])===$pSet->getCaseSensitiveUsername((string)$strValue)))
+				return false;
+		}
 	}
 	//	 check user group permissions
 	$localAction = strtolower($strAction);
@@ -1456,8 +1385,12 @@ function SecuritySQL($strAction, $table="", $strPerm="")
 	if(!strlen($strPerm))
 		$strPerm = GetUserPermissions($table);
 
-	if(strpos($strPerm,"M")===false)
+	if( strpos($strPerm, "M") === false )
 	{
+		if($table=="employees")
+		{
+				$ret = GetFullFieldName($pSet->getTableOwnerID(), $table, false)."=".make_db_value($pSet->getTableOwnerID(), $ownerid, "", "", $table);
+		}
 	}
 
 	if($strAction=="Edit" && !(strpos($strPerm, "E")===false) ||
@@ -2030,7 +1963,7 @@ function GetAuditObject($table="")
 	if ($linkAudit)
 	{
 		require_once(getabspath("include/audit.php"));
-		return new AuditTrailTable();
+		return new AuditTrailFile();
 	}
 	else
 	{
@@ -3000,9 +2933,6 @@ function isLoggedAsGuest()
  */
 function isGuestLoginAvailable()
 {
-	// if guest have any permissions
-	if(guestHasPermissions())
-		return true;
 	return false;
 }
 

@@ -9,6 +9,14 @@ require_once("include/district_variables.php");
 
 $mode = postvalue("mode");
 
+if(!isLogged())
+{ 
+	return;
+}
+if(!CheckSecurity(@$_SESSION["_".$strTableName."_OwnerID"],"Search"))
+{
+	return;
+}
 
 require_once("classes/searchclause.php");
 

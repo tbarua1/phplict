@@ -29,7 +29,7 @@ if( ListPage::processSaveParams( $strTableName ) )
 
 $layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "university_list";
 $layout->blocks["center"] = array();
 $layout->containers["gridcontrols"] = array();
@@ -205,7 +205,7 @@ $page_layouts["university_list"] = $layout;
 
 $layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "division_masterlist";
 $layout->blocks["bare"] = array();
 $layout->containers["column"] = array();

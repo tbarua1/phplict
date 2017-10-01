@@ -44,18 +44,6 @@ if(mlang_getcurrentlang()=="")
 	$fieldToolTipsconsultant[""] = array();
 	$placeHoldersconsultant[""] = array();
 	$pageTitlesconsultant[""] = array();
-	$fieldLabelsconsultant[""]["consultant_id"] = "Consultant Id";
-	$fieldToolTipsconsultant[""]["consultant_id"] = "";
-	$placeHoldersconsultant[""]["consultant_id"] = "";
-	$fieldLabelsconsultant[""]["eid"] = "Eid";
-	$fieldToolTipsconsultant[""]["eid"] = "";
-	$placeHoldersconsultant[""]["eid"] = "";
-	$fieldLabelsconsultant[""]["divison_id"] = "Divison Id";
-	$fieldToolTipsconsultant[""]["divison_id"] = "";
-	$placeHoldersconsultant[""]["divison_id"] = "";
-	$fieldLabelsconsultant[""]["Type"] = "Type";
-	$fieldToolTipsconsultant[""]["Type"] = "";
-	$placeHoldersconsultant[""]["Type"] = "";
 	if (count($fieldToolTipsconsultant[""]))
 		$tdataconsultant[".isUseToolTips"] = true;
 }
@@ -150,7 +138,7 @@ $tdataconsultant[".rowHighlite"] = true;
 
 
 
-									
+
 
 $tdataconsultant[".ajaxCodeSnippetAdded"] = false;
 
@@ -301,6 +289,9 @@ $tdataconsultant[".masterListFields"][] = "divison_id";
 $tdataconsultant[".masterListFields"][] = "Type";
 
 $tdataconsultant[".inlineAddFields"] = array();
+$tdataconsultant[".inlineAddFields"][] = "eid";
+$tdataconsultant[".inlineAddFields"][] = "divison_id";
+$tdataconsultant[".inlineAddFields"][] = "Type";
 
 $tdataconsultant[".editFields"] = array();
 $tdataconsultant[".editFields"][] = "eid";
@@ -308,6 +299,9 @@ $tdataconsultant[".editFields"][] = "divison_id";
 $tdataconsultant[".editFields"][] = "Type";
 
 $tdataconsultant[".inlineEditFields"] = array();
+$tdataconsultant[".inlineEditFields"][] = "eid";
+$tdataconsultant[".inlineEditFields"][] = "divison_id";
+$tdataconsultant[".inlineEditFields"][] = "Type";
 
 $tdataconsultant[".updateSelectedFields"] = array();
 $tdataconsultant[".updateSelectedFields"][] = "eid";
@@ -482,10 +476,12 @@ $tdataconsultant[".printFields"][] = "Type";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -552,7 +548,7 @@ $tdataconsultant[".printFields"][] = "Type";
 		
 	$edata["LinkField"] = "eid";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "ename";
+	$edata["DisplayField"] = "eid";
 	
 	
 
@@ -639,10 +635,12 @@ $tdataconsultant[".printFields"][] = "Type";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -709,7 +707,7 @@ $tdataconsultant[".printFields"][] = "Type";
 		
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
-	$edata["DisplayField"] = "dname";
+	$edata["DisplayField"] = "division_id";
 	
 	
 
@@ -796,10 +794,12 @@ $tdataconsultant[".printFields"][] = "Type";
 
 		$fdata["bAddPage"] = true;
 
-	
+		$fdata["bInlineAdd"] = true;
+
 		$fdata["bEditPage"] = true;
 
-	
+		$fdata["bInlineEdit"] = true;
+
 		$fdata["bUpdateSelected"] = true;
 
 
@@ -849,30 +849,12 @@ $tdataconsultant[".printFields"][] = "Type";
 //	Begin Edit Formats
 	$fdata["EditFormats"] = array();
 
-	$edata = array("EditFormat" => "Lookup wizard");
+	$edata = array("EditFormat" => "Text field");
 
 	
 	
 		
 	
-// Begin Lookup settings
-		$edata["LookupType"] = 0;
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-	
-		$edata["LookupValues"] = array();
-	$edata["LookupValues"][] = "On Campus Consultant";
-	$edata["LookupValues"][] = "Off Campus Consultant";
-	$edata["LookupValues"][] = "Placement Consultant";
-	$edata["LookupValues"][] = "Consultant";
-
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
 
 
 	
@@ -886,8 +868,11 @@ $tdataconsultant[".printFields"][] = "Type";
 	
 	
 	
-	
-	
+			$edata["HTML5InuptType"] = "text";
+
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+
 		$edata["controlWidth"] = 200;
 
 //	Begin validation
@@ -913,7 +898,7 @@ $tdataconsultant[".printFields"][] = "Type";
 
 
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
+		$fdata["defaultSearchOption"] = "Contains";
 
 			// the default search options list
 				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
@@ -973,34 +958,6 @@ $masterTablesData["consultant"] = array();
 
 
 	
-				$strOriginalDetailsTable="employees";
-	$masterParams = array();
-	$masterParams["mDataSourceTable"]="employees";
-	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
-	$masterParams["mShortTable"]= "employees";
-	$masterParams["masterKeys"]= array();
-	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "1";
-	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
-	$masterParams["previewOnList"]= 1;
-	$masterParams["previewOnAdd"]= 0;
-	$masterParams["previewOnEdit"]= 0;
-	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
-	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["consultant"][0] = $masterParams;
-				$masterTablesData["consultant"][0]["masterKeys"] = array();
-	$masterTablesData["consultant"][0]["masterKeys"][]="eid";
-				$masterTablesData["consultant"][0]["detailKeys"] = array();
-	$masterTablesData["consultant"][0]["detailKeys"][]="eid";
-		
-	
 				$strOriginalDetailsTable="division";
 	$masterParams = array();
 	$masterParams["mDataSourceTable"]="division";
@@ -1022,11 +979,39 @@ $masterTablesData["consultant"] = array();
 	$masterParams["proceedLink"]= 1;
 
 	$masterParams["type"] = PAGE_LIST;
+					$masterTablesData["consultant"][0] = $masterParams;
+				$masterTablesData["consultant"][0]["masterKeys"] = array();
+	$masterTablesData["consultant"][0]["masterKeys"][]="division_id";
+				$masterTablesData["consultant"][0]["detailKeys"] = array();
+	$masterTablesData["consultant"][0]["detailKeys"][]="divison_id";
+		
+	
+				$strOriginalDetailsTable="employees";
+	$masterParams = array();
+	$masterParams["mDataSourceTable"]="employees";
+	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
+	$masterParams["mShortTable"]= "employees";
+	$masterParams["masterKeys"]= array();
+	$masterParams["detailKeys"]= array();
+	
+		$masterParams["dispChildCount"]= "0";
+	$masterParams["hideChild"]= "0";
+	$masterParams["dispMasterInfo"] = array();
+				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
+			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
+		
+	$masterParams["previewOnList"]= 1;
+	$masterParams["previewOnAdd"]= 0;
+	$masterParams["previewOnEdit"]= 0;
+	$masterParams["previewOnView"]= 0;
+	$masterParams["proceedLink"]= 1;
+
+	$masterParams["type"] = PAGE_LIST;
 					$masterTablesData["consultant"][1] = $masterParams;
 				$masterTablesData["consultant"][1]["masterKeys"] = array();
-	$masterTablesData["consultant"][1]["masterKeys"][]="division_id";
+	$masterTablesData["consultant"][1]["masterKeys"][]="eid";
 				$masterTablesData["consultant"][1]["detailKeys"] = array();
-	$masterTablesData["consultant"][1]["detailKeys"][]="divison_id";
+	$masterTablesData["consultant"][1]["detailKeys"][]="eid";
 		
 // -----------------end  prepare master-details data arrays ------------------------------//
 

@@ -27,5 +27,13 @@
 
 .rnr-horizontal-lookup {
 	margin-top:8px;
-	height:38px;
+	height:30px;
+}
+
+select.form-control[size="1"] {
+ height: 38px; 
+}
+
+.chosen-container-multi .chosen-choices.chosen-choices {
+ height: 38px !important; 
 }

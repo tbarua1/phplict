@@ -23,7 +23,7 @@ AddPage::handleBrokenRequest();
 
 $layout = new TLayout("add_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_add";
 $layout->blocks["top"] = array();
 $layout->containers["editpage"] = array();
@@ -90,7 +90,7 @@ $page_layouts["batch_add"] = $layout;
 
 $layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "batch_list";
 $layout->blocks["center"] = array();
 $layout->containers["gridcontrols"] = array();

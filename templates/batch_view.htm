@@ -62,16 +62,6 @@
 <div {$viewfields_hiddenattr} data-pageid="{$pageid}" data-brick="viewfields" >
 
 	<div class="container">
-					{BEGIN batch_id_fieldblock}
-	<div class="{$fielddispclass_batch_id} col-md-6 bs-viewcontrolgroup" data-fieldname="batch_id">
-		<label class="control-label" for="{$labelfor_batch_id}">
-			{$label batch batch_id}
-		</label>
-		<div class="" >
-			{$batch_id_value}&nbsp;
-		</div>
-	</div>
-{END batch_id_fieldblock}
 					{BEGIN Batchcode_fieldblock}
 	<div class="{$fielddispclass_Batchcode} col-md-6 bs-viewcontrolgroup" data-fieldname="Batchcode">
 		<label class="control-label" for="{$labelfor_Batchcode}">
@@ -182,26 +172,6 @@
 		</div>
 	</div>
 {END uni_spoc_contact_fieldblock}
-					{BEGIN tech_trainer_fieldblock}
-	<div class="{$fielddispclass_tech_trainer} col-md-6 bs-viewcontrolgroup" data-fieldname="tech_trainer">
-		<label class="control-label" for="{$labelfor_tech_trainer}">
-			{$label batch tech_trainer}
-		</label>
-		<div class="" >
-			{$tech_trainer_value}&nbsp;
-		</div>
-	</div>
-{END tech_trainer_fieldblock}
-					{BEGIN soft_skill_trainer_fieldblock}
-	<div class="{$fielddispclass_soft_skill_trainer} col-md-6 bs-viewcontrolgroup" data-fieldname="soft_skill_trainer">
-		<label class="control-label" for="{$labelfor_soft_skill_trainer}">
-			{$label batch soft_skill_trainer}
-		</label>
-		<div class="" >
-			{$soft_skill_trainer_value}&nbsp;
-		</div>
-	</div>
-{END soft_skill_trainer_fieldblock}
 					{BEGIN ey_spoc_fieldblock}
 	<div class="{$fielddispclass_ey_spoc} col-md-6 bs-viewcontrolgroup" data-fieldname="ey_spoc">
 		<label class="control-label" for="{$labelfor_ey_spoc}">
@@ -232,6 +202,26 @@
 		</div>
 	</div>
 {END schedule_fieldblock}
+					{BEGIN tech_trainer_fieldblock}
+	<div class="{$fielddispclass_tech_trainer} col-md-6 bs-viewcontrolgroup" data-fieldname="tech_trainer">
+		<label class="control-label" for="{$labelfor_tech_trainer}">
+			{$label batch tech_trainer}
+		</label>
+		<div class="" >
+			{$tech_trainer_value}&nbsp;
+		</div>
+	</div>
+{END tech_trainer_fieldblock}
+					{BEGIN soft_skill_trainer_fieldblock}
+	<div class="{$fielddispclass_soft_skill_trainer} col-md-6 bs-viewcontrolgroup" data-fieldname="soft_skill_trainer">
+		<label class="control-label" for="{$labelfor_soft_skill_trainer}">
+			{$label batch soft_skill_trainer}
+		</label>
+		<div class="" >
+			{$soft_skill_trainer_value}&nbsp;
+		</div>
+	</div>
+{END soft_skill_trainer_fieldblock}
 	</div>
 </div>
 

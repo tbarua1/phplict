@@ -12,7 +12,7 @@ add_nocache_headers();
 
 $layout = new TLayout("login_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "_login";
 $layout->blocks["top"] = array();
 $layout->containers["page"] = array();

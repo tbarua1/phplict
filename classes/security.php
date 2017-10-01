@@ -225,11 +225,6 @@ class Security
 	
 	public static function doGuestLogin()
 	{
-			$allowGuest = guestHasPermissions();
-	if( !$allowGuest )
-		return;
-		
-	DoLogin(true);
 	}	
 	
 	/**
@@ -275,8 +270,7 @@ class Security
 		}
 
 		//	dynamic permissions
-				ReadUserPermissions();
-		$groups = array();
+				$groups = array();
 		foreach( $_SESSION["UserRights"][ $_SESSION["UserID"] ][ ".Groups" ] as $g )
 			$groups[$g] = true;
 		return $groups;
@@ -307,8 +301,8 @@ class Security
 		global $cman;
 		$grConnection = $cman->getForUserGroups();
 
-		$sql = "select ". $grConnection->addFieldWrappers( "Label" )
-			." from ". $grConnection->addTableWrappers( "lict_uggroups" ) . " WHERE " . $grConnection->addFieldWrappers( "GroupID" ) 
+		$sql = "select ". $grConnection->addFieldWrappers( "" )
+			." from ". $grConnection->addTableWrappers( "" ) . " WHERE " . $grConnection->addFieldWrappers( "" ) 
 			." in ( " . implode( ",", array_keys( $groupIds ) ) . ")";
 
 		$qResult = $grConnection->query( $sql );

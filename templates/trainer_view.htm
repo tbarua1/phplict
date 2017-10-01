@@ -1,0 +1,349 @@
+<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
+<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-view" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		<DIV class="bs-top">
+        
+
+{BEGIN container_viewpage}
+<div {$viewpage_chiddenattr} data-pageid="{$pageid}" data-container="viewpage" class="container    "> 
+
+
+
+
+{BEGIN container_header}
+<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-12 "> 
+
+{BEGIN viewheader}
+	<h2 {$viewheader_hiddenattr} data-pageid="{$pageid}" data-brick="viewheader" >{$pagetitlelabel trainer view}</h2>
+	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+
+{END viewheader}
+
+
+
+</div>
+{END container_header}
+
+
+
+
+
+
+</div>
+{END container_viewpage}
+
+
+
+{BEGIN container_fields}
+<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class=" form-horizontal  col-md-12 "> 
+
+
+<div {$viewfields_hiddenattr} data-pageid="{$pageid}" data-brick="viewfields" >
+
+	<div class="container">
+					{BEGIN id_fieldblock}
+	<div class="{$fielddispclass_id} col-md-6 bs-viewcontrolgroup" data-fieldname="id">
+		<label class="control-label" for="{$labelfor_id}">
+			{$label trainer id}
+		</label>
+		<div class="" >
+			{$id_value}&nbsp;
+		</div>
+	</div>
+{END id_fieldblock}
+					{BEGIN cid_fieldblock}
+	<div class="{$fielddispclass_cid} col-md-6 bs-viewcontrolgroup" data-fieldname="cid">
+		<label class="control-label" for="{$labelfor_cid}">
+			{$label trainer cid}
+		</label>
+		<div class="" >
+			{$cid_value}&nbsp;
+		</div>
+	</div>
+{END cid_fieldblock}
+					{BEGIN date_fieldblock}
+	<div class="{$fielddispclass_date} col-md-6 bs-viewcontrolgroup" data-fieldname="date">
+		<label class="control-label" for="{$labelfor_date}">
+			{$label trainer date}
+		</label>
+		<div class="" >
+			{$date_value}&nbsp;
+		</div>
+	</div>
+{END date_fieldblock}
+					{BEGIN emailid_fieldblock}
+	<div class="{$fielddispclass_emailid} col-md-6 bs-viewcontrolgroup" data-fieldname="emailid">
+		<label class="control-label" for="{$labelfor_emailid}">
+			{$label trainer emailid}
+		</label>
+		<div class="" >
+			{$emailid_value}&nbsp;
+		</div>
+	</div>
+{END emailid_fieldblock}
+					{BEGIN experience_fieldblock}
+	<div class="{$fielddispclass_experience} col-md-6 bs-viewcontrolgroup" data-fieldname="experience">
+		<label class="control-label" for="{$labelfor_experience}">
+			{$label trainer experience}
+		</label>
+		<div class="" >
+			{$experience_value}&nbsp;
+		</div>
+	</div>
+{END experience_fieldblock}
+					{BEGIN mobile_fieldblock}
+	<div class="{$fielddispclass_mobile} col-md-6 bs-viewcontrolgroup" data-fieldname="mobile">
+		<label class="control-label" for="{$labelfor_mobile}">
+			{$label trainer mobile}
+		</label>
+		<div class="" >
+			{$mobile_value}&nbsp;
+		</div>
+	</div>
+{END mobile_fieldblock}
+					{BEGIN name_fieldblock}
+	<div class="{$fielddispclass_name} col-md-6 bs-viewcontrolgroup" data-fieldname="name">
+		<label class="control-label" for="{$labelfor_name}">
+			{$label trainer name}
+		</label>
+		<div class="" >
+			{$name_value}&nbsp;
+		</div>
+	</div>
+{END name_fieldblock}
+					{BEGIN natianality_fieldblock}
+	<div class="{$fielddispclass_natianality} col-md-6 bs-viewcontrolgroup" data-fieldname="natianality">
+		<label class="control-label" for="{$labelfor_natianality}">
+			{$label trainer natianality}
+		</label>
+		<div class="" >
+			{$natianality_value}&nbsp;
+		</div>
+	</div>
+{END natianality_fieldblock}
+					{BEGIN password_fieldblock}
+	<div class="{$fielddispclass_password} col-md-6 bs-viewcontrolgroup" data-fieldname="password">
+		<label class="control-label" for="{$labelfor_password}">
+			{$label trainer password}
+		</label>
+		<div class="" >
+			{$password_value}&nbsp;
+		</div>
+	</div>
+{END password_fieldblock}
+					{BEGIN qualification_fieldblock}
+	<div class="{$fielddispclass_qualification} col-md-6 bs-viewcontrolgroup" data-fieldname="qualification">
+		<label class="control-label" for="{$labelfor_qualification}">
+			{$label trainer qualification}
+		</label>
+		<div class="" >
+			{$qualification_value}&nbsp;
+		</div>
+	</div>
+{END qualification_fieldblock}
+					{BEGIN registeredDate_fieldblock}
+	<div class="{$fielddispclass_registeredDate} col-md-6 bs-viewcontrolgroup" data-fieldname="registeredDate">
+		<label class="control-label" for="{$labelfor_registeredDate}">
+			{$label trainer registeredDate}
+		</label>
+		<div class="" >
+			{$registeredDate_value}&nbsp;
+		</div>
+	</div>
+{END registeredDate_fieldblock}
+					{BEGIN skillset_fieldblock}
+	<div class="{$fielddispclass_skillset} col-md-6 bs-viewcontrolgroup" data-fieldname="skillset">
+		<label class="control-label" for="{$labelfor_skillset}">
+			{$label trainer skillset}
+		</label>
+		<div class="" >
+			{$skillset_value}&nbsp;
+		</div>
+	</div>
+{END skillset_fieldblock}
+					{BEGIN skype_fieldblock}
+	<div class="{$fielddispclass_skype} col-md-6 bs-viewcontrolgroup" data-fieldname="skype">
+		<label class="control-label" for="{$labelfor_skype}">
+			{$label trainer skype}
+		</label>
+		<div class="" >
+			{$skype_value}&nbsp;
+		</div>
+	</div>
+{END skype_fieldblock}
+					{BEGIN username_fieldblock}
+	<div class="{$fielddispclass_username} col-md-6 bs-viewcontrolgroup" data-fieldname="username">
+		<label class="control-label" for="{$labelfor_username}">
+			{$label trainer username}
+		</label>
+		<div class="" >
+			{$username_value}&nbsp;
+		</div>
+	</div>
+{END username_fieldblock}
+					{BEGIN usertype_fieldblock}
+	<div class="{$fielddispclass_usertype} col-md-6 bs-viewcontrolgroup" data-fieldname="usertype">
+		<label class="control-label" for="{$labelfor_usertype}">
+			{$label trainer usertype}
+		</label>
+		<div class="" >
+			{$usertype_value}&nbsp;
+		</div>
+	</div>
+{END usertype_fieldblock}
+					{BEGIN whatsapp_fieldblock}
+	<div class="{$fielddispclass_whatsapp} col-md-6 bs-viewcontrolgroup" data-fieldname="whatsapp">
+		<label class="control-label" for="{$labelfor_whatsapp}">
+			{$label trainer whatsapp}
+		</label>
+		<div class="" >
+			{$whatsapp_value}&nbsp;
+		</div>
+	</div>
+{END whatsapp_fieldblock}
+					{BEGIN photo_fieldblock}
+	<div class="{$fielddispclass_photo} col-md-6 bs-viewcontrolgroup" data-fieldname="photo">
+		<label class="control-label" for="{$labelfor_photo}">
+			{$label trainer photo}
+		</label>
+		<div class="" >
+			{$photo_value}&nbsp;
+		</div>
+	</div>
+{END photo_fieldblock}
+	</div>
+</div>
+
+
+
+
+</div>
+{END container_fields}
+
+
+
+{BEGIN container_bottombuttons}
+<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+
+
+
+
+{BEGIN container_buttons}
+<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
+
+
+
+
+{BEGIN container_leftbuttons}
+<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-6 "> 
+
+{BEGIN viewbuttons}
+{BEGIN back_button}
+<button class="btn btn-primary" {$backbutton_attrs}>Back to list</button>
+{END back_button}
+{BEGIN close_button}
+<button href="#" class="btn btn-primary" {$closebutton_attrs}>Close window</button>
+{END close_button}
+{END viewbuttons}
+
+
+
+</div>
+{END container_leftbuttons}
+
+
+
+
+
+
+
+
+{BEGIN container_leftbuttons_1}
+<div {$leftbuttons_1_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons_1" class="   col-md-4 "> 
+
+{BEGIN rightviewbuttons}
+<div class="btn-group" role="group">
+		{BEGIN prev_button}
+	<button class="btn btn-default {$prevbutton_class}" {$prevbutton_attrs}><span class="glyphicon glyphicon-chevron-left"></span></button>
+	{END prev_button}
+	{BEGIN next_button}
+	<button class="btn btn-default {$nextbutton_class}" {$nextbutton_attrs}><span class="glyphicon glyphicon-chevron-right"></span></button>
+	{END next_button}
+		{BEGIN view_menu_button}
+	<div class="btn-group dropup" role="group">
+		<button class="btn btn-default dropdown-toggle {$groupbutton_class}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+		<ul class="dropdown-menu dropdown-left">
+									{BEGIN edit_page_button}
+				<li><a href=# {$edit_page_button_attrs}>Edit</a></li>
+			{END edit_page_button}
+		</ul>
+	</div>
+	{END view_menu_button}
+</div>
+{END rightviewbuttons}
+
+
+
+</div>
+{END container_leftbuttons_1}
+
+
+
+
+
+
+</div>
+{END container_buttons}
+
+
+
+
+
+
+</div>
+{END container_bottombuttons}
+
+
+		</div>
+		<div class="bs-middle ">
+			<div class="bs-topmiddle">
+				
+			</div>
+			<div class="bs-left" {$blockattr_left}>
+				
+			</div>
+			<div class="bs-center">
+				
+			</div>
+			<div class="bs-right">
+				
+			</div>
+		</div>
+		<DIV class="bs-bottom">
+        
+		</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

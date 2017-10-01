@@ -36,6 +36,8 @@ class InformixFunctions extends DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
+		if( $val == "" || $val === null )
+			return 'null';
 		$arrDate = db2time($val);
 		return "'".$arrDate[0]."-".$arrDate[1]."-".$arrDate[2]." ".$arrDate[3].":".$arrDate[4].":".$arrDate[5]."'";
 	}

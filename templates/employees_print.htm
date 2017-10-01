@@ -142,6 +142,11 @@
 				{$label employees dob}
 			</th>
 			{END dob_fieldheadercolumn}
+			{BEGIN password_fieldheadercolumn}
+			<th class="{$password_class}" {$password_style}  data-field="password">
+				{$label employees password}
+			</th>
+			{END password_fieldheadercolumn}
 			{BEGIN passportno_fieldheadercolumn}
 			<th class="{$passportno_class}" {$passportno_style}  data-field="passportno">
 				{$label employees passportno}
@@ -207,6 +212,16 @@
 				{$label employees cid}
 			</th>
 			{END cid_fieldheadercolumn}
+			{BEGIN reset_token_fieldheadercolumn}
+			<th class="{$reset_token_class}" {$reset_token_style}  data-field="reset_token">
+				{$label employees reset_token}
+			</th>
+			{END reset_token_fieldheadercolumn}
+			{BEGIN reset_date_fieldheadercolumn}
+			<th class="{$reset_date_class}" {$reset_date_style}  data-field="reset_date">
+				{$label employees reset_date}
+			</th>
+			{END reset_date_fieldheadercolumn}
 			{BEGIN endrecordheader_block}
 			<th class="rnr-cs">&nbsp;</th>
 			{END endrecordheader_block}
@@ -269,6 +284,11 @@
 				{$dob_value}
 			</td>
 			{END dob_fieldcolumn}
+			{BEGIN password_fieldcolumn}
+			<td  class="{$password_class}" {$password_style} {$recordattrs}>
+				{$password_value}
+			</td>
+			{END password_fieldcolumn}
 			{BEGIN passportno_fieldcolumn}
 			<td  class="{$passportno_class}" {$passportno_style} {$recordattrs}>
 				{$passportno_value}
@@ -334,6 +354,16 @@
 				{$cid_value}
 			</td>
 			{END cid_fieldcolumn}
+			{BEGIN reset_token_fieldcolumn}
+			<td  class="{$reset_token_class}" {$reset_token_style} {$recordattrs}>
+				{$reset_token_value}
+			</td>
+			{END reset_token_fieldcolumn}
+			{BEGIN reset_date_fieldcolumn}
+			<td  class="{$reset_date_class}" {$reset_date_style} {$recordattrs}>
+				{$reset_date_value}
+			</td>
+			{END reset_date_fieldcolumn}
 			{BEGIN endrecord_block}
 			<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
 			{END endrecord_block}
@@ -342,7 +372,7 @@
 	{BEGIN details_row}
 		<tr class="{$rowclass}" {$rowattrs} {$rowstyle}>
 			{BEGIN details_record}
-				<td colspan="24">
+				<td colspan="27">
 					{BEGIN details_table}
 						{$details}
 					{END details_table}

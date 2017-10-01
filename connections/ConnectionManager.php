@@ -92,7 +92,7 @@ class ConnectionManager
 	 */
 	public function getDefault()
 	{
-		return $this->byId( "mydb_at_localhost" );
+		return $this->byId( "test_at_node3907_env_7428455_diadem_cloud" );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class ConnectionManager
 	 */	
 	public function getForLogin()
 	{
-		return $this->byId( "mydb_at_localhost" );
+		return $this->byId( "test_at_node3907_env_7428455_diadem_cloud" );
 	}
 	
 	/**
@@ -128,7 +128,7 @@ class ConnectionManager
 	 */	
 	public function getForUserGroups()
 	{
-		return $this->byId( "mydb_at_localhost" );
+		return $this->getDefault();
 	}		
 
 	/**
@@ -275,37 +275,37 @@ class ConnectionManager
 		
 		$data = array();
 		$data["dbType"] = 0;
-		$data["connId"] = "mydb_at_localhost";
-		$data["connName"] = "mydb at localhost";
+		$data["connId"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$data["connName"] = "test at node3907-env-7428455.diadem.cloud";
 		$data["connStringType"] = "mysql";
-		$data["connectionString"] = "mysql;localhost;root;aaaAAA123;;mydb;;1"; //currently unused
+		$data["connectionString"] = "mysql;node3907-env-7428455.diadem.cloud;root;;;test;;1"; //currently unused
 
-		$this->_connectionsIdByName["mydb at localhost"] = "mydb_at_localhost";
+		$this->_connectionsIdByName["test at node3907-env-7428455.diadem.cloud"] = "test_at_node3907_env_7428455_diadem_cloud";
 		
 		$data["connInfo"] = array();
 		$data["ODBCUID"] = "root";
-		$data["ODBCPWD"] = "aaaAAA123";
+		$data["ODBCPWD"] = "";
 		$data["leftWrap"] = "`";
 		$data["rightWrap"] = "`";
 		
 		$data["DBPath"] = "db"; //currently unused	
 		$data["useServerMapPath"] = 1; //currently unused
 		
-		$data["connInfo"][0] = "localhost";
+		$data["connInfo"][0] = "node3907-env-7428455.diadem.cloud";
 		$data["connInfo"][1] = "root";
-		$data["connInfo"][2] = "aaaAAA123";
+		$data["connInfo"][2] = "";
 		$data["connInfo"][3] = "";
-		$data["connInfo"][4] = "mydb";
+		$data["connInfo"][4] = "test";
 		$data["connInfo"][5] = ""; //currently unused
 		$data["connInfo"][6] = "1"; //currently unused
-		$data["ODBCString"] = "DRIVER={MySQL ODBC 3.51 Driver};Server=localhost;Uid=root;Pwd=aaaAAA123;Database=mydb;OPTION=3";
+		$data["ODBCString"] = "DRIVER={MySQL ODBC 3.51 Driver};Server=node3907-env-7428455.diadem.cloud;Uid=root;Pwd=;Database=test;OPTION=3";
 		// encription set
 		$data["EncryptInfo"] = array();
 		$data["EncryptInfo"]["mode"] = 0;
 		$data["EncryptInfo"]["alg"]  = 128;
 		$data["EncryptInfo"]["key"]  = "";
 
-		$connectionsData["mydb_at_localhost"] = $data;
+		$connectionsData["test_at_node3907_env_7428455_diadem_cloud"] = $data;
 		$this->_connectionsData = $connectionsData;
 	}
 	
@@ -316,24 +316,20 @@ class ConnectionManager
 	protected function _setTablesConnectionIds()
 	{
 		$connectionsIds = array();
-		$connectionsIds["batch"] = "mydb_at_localhost";
-		$connectionsIds["courses"] = "mydb_at_localhost";
-		$connectionsIds["department"] = "mydb_at_localhost";
-		$connectionsIds["district"] = "mydb_at_localhost";
-		$connectionsIds["division"] = "mydb_at_localhost";
-		$connectionsIds["emp_status"] = "mydb_at_localhost";
-		$connectionsIds["university"] = "mydb_at_localhost";
-		$connectionsIds["employees"] = "mydb_at_localhost";
-		$connectionsIds["full_batch_details"] = "mydb_at_localhost";
-		$connectionsIds["batchschedule"] = "mydb_at_localhost";
-		$connectionsIds["schedule_map"] = "mydb_at_localhost";
-		$connectionsIds["admin_rights"] = "mydb_at_localhost";
-		$connectionsIds["admin_members"] = "mydb_at_localhost";
-		$connectionsIds["admin_users"] = "mydb_at_localhost";
-		$connectionsIds["batch_completion_status"] = "mydb_at_localhost";
-		$connectionsIds["employees1"] = "mydb_at_localhost";
-		$connectionsIds["consultant_view"] = "mydb_at_localhost";
-		$connectionsIds["consultant"] = "mydb_at_localhost";
+		$connectionsIds["batch"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["batchschedule"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["consultant"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["courses"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["department"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["district"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["division"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["emp_status"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["employees"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["full_batch_details"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["schedule_map"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["trainer"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["university"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["university_view"] = "test_at_node3907_env_7428455_diadem_cloud";
 		$this->_tablesConnectionIds = $connectionsIds;
 	}
 	

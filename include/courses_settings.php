@@ -84,23 +84,39 @@ $tdatacourses[".fieldsForRegister"] = array();
 
 $tdatacourses[".listAjax"] = false;
 
-	$tdatacourses[".audit"] = true;
+	$tdatacourses[".audit"] = false;
 
-	$tdatacourses[".locking"] = true;
+	$tdatacourses[".locking"] = false;
 
+$tdatacourses[".edit"] = true;
+$tdatacourses[".afterEditAction"] = 1;
+$tdatacourses[".closePopupAfterEdit"] = 1;
+$tdatacourses[".afterEditActionDetTable"] = "";
 
+$tdatacourses[".add"] = true;
+$tdatacourses[".afterAddAction"] = 1;
+$tdatacourses[".closePopupAfterAdd"] = 1;
+$tdatacourses[".afterAddActionDetTable"] = "";
 
+$tdatacourses[".list"] = true;
 
 
 
 $tdatacourses[".reorderRecordsByHeader"] = true;
 
 
+$tdatacourses[".exportFormatting"] = 2;
+$tdatacourses[".exportDelimiter"] = ",";
+		
+$tdatacourses[".view"] = true;
 
+$tdatacourses[".import"] = true;
 
+$tdatacourses[".exportTo"] = true;
 
+$tdatacourses[".printFriendly"] = true;
 
-
+$tdatacourses[".delete"] = true;
 
 $tdatacourses[".showSimpleSearchOptions"] = false;
 
@@ -125,7 +141,7 @@ $tdatacourses[".rowHighlite"] = true;
 
 
 
-			
+
 
 $tdatacourses[".ajaxCodeSnippetAdded"] = false;
 
@@ -1013,6 +1029,72 @@ $detailsTablesData["courses"] = array();
 	$detailsParam["detailKeys"] =array();
 
 	$detailsParam["dispChildCount"] = "1";
+
+		$detailsParam["hideChild"] = false;
+						$detailsParam["previewOnList"] = "1";
+		$detailsParam["previewOnAdd"] = 0;
+		$detailsParam["previewOnEdit"] = 0;
+		$detailsParam["previewOnView"] = 0;
+		
+	$detailsTablesData["courses"][$dIndex] = $detailsParam;
+
+	
+		$detailsTablesData["courses"][$dIndex]["masterKeys"] = array();
+
+	$detailsTablesData["courses"][$dIndex]["masterKeys"][]="cid";
+
+				$detailsTablesData["courses"][$dIndex]["detailKeys"] = array();
+
+	$detailsTablesData["courses"][$dIndex]["detailKeys"][]="cid";
+//	employees
+	
+	
+
+		$dIndex = 1;
+	$detailsParam = array();
+	$detailsParam["dDataSourceTable"]="employees";
+		$detailsParam["dOriginalTable"] = "employees";
+		$detailsParam["proceedLink"] = true;
+				$detailsParam["dType"]=PAGE_LIST;
+	$detailsParam["dShortTable"] = "employees";
+	$detailsParam["dCaptionTable"] = GetTableCaption("employees");
+	$detailsParam["masterKeys"] =array();
+	$detailsParam["detailKeys"] =array();
+
+	$detailsParam["dispChildCount"] = "0";
+
+		$detailsParam["hideChild"] = false;
+						$detailsParam["previewOnList"] = "1";
+		$detailsParam["previewOnAdd"] = 0;
+		$detailsParam["previewOnEdit"] = 0;
+		$detailsParam["previewOnView"] = 0;
+		
+	$detailsTablesData["courses"][$dIndex] = $detailsParam;
+
+	
+		$detailsTablesData["courses"][$dIndex]["masterKeys"] = array();
+
+	$detailsTablesData["courses"][$dIndex]["masterKeys"][]="cid";
+
+				$detailsTablesData["courses"][$dIndex]["detailKeys"] = array();
+
+	$detailsTablesData["courses"][$dIndex]["detailKeys"][]="cid";
+//	trainer
+	
+	
+
+		$dIndex = 2;
+	$detailsParam = array();
+	$detailsParam["dDataSourceTable"]="trainer";
+		$detailsParam["dOriginalTable"] = "trainer";
+		$detailsParam["proceedLink"] = true;
+				$detailsParam["dType"]=PAGE_LIST;
+	$detailsParam["dShortTable"] = "trainer";
+	$detailsParam["dCaptionTable"] = GetTableCaption("trainer");
+	$detailsParam["masterKeys"] =array();
+	$detailsParam["detailKeys"] =array();
+
+	$detailsParam["dispChildCount"] = "0";
 
 		$detailsParam["hideChild"] = false;
 						$detailsParam["previewOnList"] = "1";

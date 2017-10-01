@@ -772,10 +772,11 @@ class LoginPage extends RunnerPage
 			}
 			
 			$where.= $activateWhere;
+			
+			// don't remove $tempSQLQuery. PHP 5.0 compatibility
+			
 			$tempSQLQuery = $loginSet->GetTableData(".sqlquery");
-			$tempSQLQuery->addWhere( $where );
-
-			return $tempSQLQuery->toSql();		 
+			return $tempSQLQuery->buildSQL_default( array( $where ) );
 		}
 		
 

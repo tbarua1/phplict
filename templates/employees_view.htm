@@ -82,6 +82,16 @@
 		</div>
 	</div>
 {END ename_fieldblock}
+					{BEGIN emppic_fieldblock}
+	<div class="{$fielddispclass_emppic} col-md-6 bs-viewcontrolgroup" data-fieldname="emppic">
+		<label class="control-label" for="{$labelfor_emppic}">
+			{$label employees emppic}
+		</label>
+		<div class="" >
+			{$emppic_value}&nbsp;
+		</div>
+	</div>
+{END emppic_fieldblock}
 					{BEGIN designation_fieldblock}
 	<div class="{$fielddispclass_designation} col-md-6 bs-viewcontrolgroup" data-fieldname="designation">
 		<label class="control-label" for="{$labelfor_designation}">
@@ -152,6 +162,16 @@
 		</div>
 	</div>
 {END dob_fieldblock}
+					{BEGIN password_fieldblock}
+	<div class="{$fielddispclass_password} col-md-6 bs-viewcontrolgroup" data-fieldname="password">
+		<label class="control-label" for="{$labelfor_password}">
+			{$label employees password}
+		</label>
+		<div class="" >
+			{$password_value}&nbsp;
+		</div>
+	</div>
+{END password_fieldblock}
 					{BEGIN passportno_fieldblock}
 	<div class="{$fielddispclass_passportno} col-md-6 bs-viewcontrolgroup" data-fieldname="passportno">
 		<label class="control-label" for="{$labelfor_passportno}">
@@ -232,16 +252,6 @@
 		</div>
 	</div>
 {END status_id_fieldblock}
-					{BEGIN emppic_fieldblock}
-	<div class="{$fielddispclass_emppic} col-md-6 bs-viewcontrolgroup" data-fieldname="emppic">
-		<label class="control-label" for="{$labelfor_emppic}">
-			{$label employees emppic}
-		</label>
-		<div class="" >
-			{$emppic_value}&nbsp;
-		</div>
-	</div>
-{END emppic_fieldblock}
 					{BEGIN experence_fieldblock}
 	<div class="{$fielddispclass_experence} col-md-6 bs-viewcontrolgroup" data-fieldname="experence">
 		<label class="control-label" for="{$labelfor_experence}">
@@ -292,6 +302,26 @@
 		</div>
 	</div>
 {END cid_fieldblock}
+					{BEGIN reset_token_fieldblock}
+	<div class="{$fielddispclass_reset_token} col-md-6 bs-viewcontrolgroup" data-fieldname="reset_token">
+		<label class="control-label" for="{$labelfor_reset_token}">
+			{$label employees reset_token}
+		</label>
+		<div class="" >
+			{$reset_token_value}&nbsp;
+		</div>
+	</div>
+{END reset_token_fieldblock}
+					{BEGIN reset_date_fieldblock}
+	<div class="{$fielddispclass_reset_date} col-md-6 bs-viewcontrolgroup" data-fieldname="reset_date">
+		<label class="control-label" for="{$labelfor_reset_date}">
+			{$label employees reset_date}
+		</label>
+		<div class="" >
+			{$reset_date_value}&nbsp;
+		</div>
+	</div>
+{END reset_date_fieldblock}
 	</div>
 </div>
 

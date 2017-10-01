@@ -42,15 +42,6 @@ class DB2Functions extends DBFunctions
 	}
 
 	/**
-	 * @param Mixed $val
-	 * @return String
-	 */
-	public function addDateQuotes( $val )
-	{
-		return "'".$val."'";
-	}
-
-	/**
 	 * It's called for Contains and Starts with searches
 	 * @param Mixed value
 	 * @param Number type (oprional)

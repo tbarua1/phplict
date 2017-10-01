@@ -67,6 +67,24 @@
 		</div>
 	</div>
 </div>
+	{BEGIN track_fieldblock}		
+	<div class="container {$fielddispclass_track}" data-fieldname="track">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_track}">
+				{$label full_batch_details track}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_track}
+			</div>
+			<div class="col-md-4" >
+				{$track_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$track_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END track_fieldblock}
 	{BEGIN Batchcode_fieldblock}		
 	<div class="container {$fielddispclass_Batchcode}" data-fieldname="Batchcode">
 		<div class="form-group">
@@ -103,24 +121,6 @@
 		</div>
 	</div>
 {END fbgroup_fieldblock}
-	{BEGIN division_id_fieldblock}		
-	<div class="container {$fielddispclass_division_id}" data-fieldname="division_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_division_id}">
-				{$label full_batch_details division_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_division_id}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END division_id_fieldblock}
 	{BEGIN university_id_fieldblock}		
 	<div class="container {$fielddispclass_university_id}" data-fieldname="university_id">
 		<div class="form-group">
@@ -139,6 +139,24 @@
 		</div>
 	</div>
 {END university_id_fieldblock}
+	{BEGIN division_id_fieldblock}		
+	<div class="container {$fielddispclass_division_id}" data-fieldname="division_id">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_division_id}">
+				{$label full_batch_details division_id}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_division_id}
+			</div>
+			<div class="col-md-4" >
+				{$division_id_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$division_id_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END division_id_fieldblock}
 	{BEGIN department_id_fieldblock}		
 	<div class="container {$fielddispclass_department_id}" data-fieldname="department_id">
 		<div class="form-group">
@@ -157,78 +175,6 @@
 		</div>
 	</div>
 {END department_id_fieldblock}
-	{BEGIN starting_Date_fieldblock}		
-	<div class="container {$fielddispclass_starting_Date}" data-fieldname="starting_Date">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_starting_Date}">
-				{$label full_batch_details starting_Date}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_starting_Date}
-			</div>
-			<div class="col-md-4" >
-				{$starting_Date_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$starting_Date_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END starting_Date_fieldblock}
-	{BEGIN Track_fieldblock}		
-	<div class="container {$fielddispclass_Track}" data-fieldname="Track">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_Track}">
-				{$label full_batch_details Track}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_Track}
-			</div>
-			<div class="col-md-4" >
-				{$Track_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$Track_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END Track_fieldblock}
-	{BEGIN cid_fieldblock}		
-	<div class="container {$fielddispclass_cid}" data-fieldname="cid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_cid}">
-				{$label full_batch_details cid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_cid}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END cid_fieldblock}
-	{BEGIN status_fieldblock}		
-	<div class="container {$fielddispclass_status}" data-fieldname="status">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_status}">
-				{$label full_batch_details status}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_status}
-			</div>
-			<div class="col-md-4" >
-				{$status_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$status_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END status_fieldblock}
 	{BEGIN uni_spoc_name_fieldblock}		
 	<div class="container {$fielddispclass_uni_spoc_name}" data-fieldname="uni_spoc_name">
 		<div class="form-group">
@@ -301,6 +247,24 @@
 		</div>
 	</div>
 {END local_spoc_fieldblock}
+	{BEGIN cid_fieldblock}		
+	<div class="container {$fielddispclass_cid}" data-fieldname="cid">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_cid}">
+				{$label full_batch_details cid}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_cid}
+			</div>
+			<div class="col-md-4" >
+				{$cid_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$cid_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END cid_fieldblock}
 	{BEGIN schedule_fieldblock}		
 	<div class="container {$fielddispclass_schedule}" data-fieldname="schedule">
 		<div class="form-group">
@@ -355,6 +319,96 @@
 		</div>
 	</div>
 {END soft_skill_trainer_fieldblock}
+	{BEGIN sdate_fieldblock}		
+	<div class="container {$fielddispclass_sdate}" data-fieldname="sdate">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_sdate}">
+				{$label full_batch_details sdate}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_sdate}
+			</div>
+			<div class="col-md-4" >
+				{$sdate_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$sdate_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END sdate_fieldblock}
+	{BEGIN stime_fieldblock}		
+	<div class="container {$fielddispclass_stime}" data-fieldname="stime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_stime}">
+				{$label full_batch_details stime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_stime}
+			</div>
+			<div class="col-md-4" >
+				{$stime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$stime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END stime_fieldblock}
+	{BEGIN etime_fieldblock}		
+	<div class="container {$fielddispclass_etime}" data-fieldname="etime">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_etime}">
+				{$label full_batch_details etime}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_etime}
+			</div>
+			<div class="col-md-4" >
+				{$etime_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$etime_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END etime_fieldblock}
+	{BEGIN status_fieldblock}		
+	<div class="container {$fielddispclass_status}" data-fieldname="status">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_status}">
+				{$label full_batch_details status}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_status}
+			</div>
+			<div class="col-md-4" >
+				{$status_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$status_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END status_fieldblock}
+	{BEGIN remark_fieldblock}		
+	<div class="container {$fielddispclass_remark}" data-fieldname="remark">
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="{$labelfor_remark}">
+				{$label full_batch_details remark}
+			</label>
+			<div class="col-md-2 bs-srchoption" >
+				{$searchtype_remark}
+			</div>
+			<div class="col-md-4" >
+				{$remark_editcontrol}
+			</div>
+			<div class="col-md-4" >
+				{$remark_editcontrol1}
+			</div>
+		</div>
+	</div>
+{END remark_fieldblock}
 </div>
 
 

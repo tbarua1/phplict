@@ -157,7 +157,7 @@ class ViewLookupWizardField extends ViewControl
 			if( !$withoutWhere && strlen($where) )
 				$inWhere.=" and (".$where.")";
 				
-			$LookupSQL = $this->lookupQueryObj->toSql(whereAdd($this->lookupQueryObj->m_where->toSql($this->lookupQueryObj), $inWhere));
+			$LookupSQL = $this->lookupQueryObj->buildSQL_default( $inWhere );
 		}
 		else
 		{
@@ -187,7 +187,8 @@ class ViewLookupWizardField extends ViewControl
 			if( !$withoutWhere && strlen($where) )
 				$strWhere.= " and (".$where.")";
 				
-			$LookupSQL = $this->lookupQueryObj->toSql(whereAdd($this->lookupQueryObj->m_where->toSql($this->lookupQueryObj), $strWhere));
+			$LookupSQL = $this->lookupQueryObj->buildSQL_default( $strWhere );
+			
 		}
 		else
 		{

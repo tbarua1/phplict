@@ -22,7 +22,7 @@ require_once(getabspath("classes/cipherer.php"));
 
 $layout = new TLayout("changepwd_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "_changepwd";
 $layout->blocks["top"] = array();
 $layout->containers["page"] = array();
@@ -101,7 +101,7 @@ $page_layouts["changepwd"] = $layout;
 
 $layout = new TLayout("changepwd_success_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "_changepwd_success";
 $layout->blocks["top"] = array();
 $layout->containers["page"] = array();

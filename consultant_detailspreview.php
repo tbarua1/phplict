@@ -31,7 +31,7 @@ $xt = new Xtempl();
 
 $layout = new TLayout("detailspreview_bootstrap", "OfficeOffice", "MobileOffice");
 $layout->version = 3;
-	$layout->bootstrapTheme = "yeti";
+	$layout->bootstrapTheme = "cerulean";
 		$layout->customCssPageName = "consultant_detailspreview";
 $layout->blocks["bare"] = array();
 $layout->containers["dcount"] = array();
@@ -91,14 +91,6 @@ $pSet = new ProjectSettings($strTableName, PAGE_LIST);
 
 
 $whereClauses = array();
-if($mastertable == "employees")
-{
-	$formattedValue = make_db_value("eid",$_SESSION[$sessionPrefix."_masterkey1"]);
-	if( $formattedValue == "null" )
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . " is null";
-	else
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . "=" . $formattedValue;
-}
 if($mastertable == "division")
 {
 	$formattedValue = make_db_value("divison_id",$_SESSION[$sessionPrefix."_masterkey1"]);
@@ -106,6 +98,14 @@ if($mastertable == "division")
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("divison_id") . " is null";
 	else
 		$whereClauses[] = $pageObject->getFieldSQLDecrypt("divison_id") . "=" . $formattedValue;
+}
+if($mastertable == "employees")
+{
+	$formattedValue = make_db_value("eid",$_SESSION[$sessionPrefix."_masterkey1"]);
+	if( $formattedValue == "null" )
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . " is null";
+	else
+		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . "=" . $formattedValue;
 }
 
 $whereClauses[] = SecuritySQL("Search", $strTableName);

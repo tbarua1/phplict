@@ -87,14 +87,6 @@ class PostgreFunctions extends DBFunctions
 		return "upper(".$dbval.")";
 	}
 	
-	/**
-	 * @param Mixed val
-	 * @return String
-	 */
-	public function addDateQuotes( $val )
-	{
-		return "'".$val."'";
-	}
 
 	/**
 	 * It's called for Contains and Starts with searches

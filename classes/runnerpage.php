@@ -1162,7 +1162,7 @@ class RunnerPage
 
 		$this->isUseToolTips = $this->isUseToolTips || $this->pSet->isUseToolTips();
 
-		$this->googleMapCfg["APIcode"] = " AIzaSyAt_Fg_zK4_J9lB3fVLWDM-cOzV2Pxfx_0";
+		$this->googleMapCfg["APIcode"] = "";
 
 		$this->processMasterKeyValue();
 		if ( $this->masterTable )
@@ -2355,12 +2355,7 @@ class RunnerPage
 				getMenuNodes_main($menuNodesObject);
 				return $this->menuNodes[$name];
 			}
-				if($name == 'adminarea')
-			{
-				getMenuNodes_adminarea($menuNodesObject);
-				return $this->menuNodes[$name];
-			}
-
+	
 			if($name == 'welcome_page')
 			{
 				getMenuNodes_welcome_page($menuNodesObject);
@@ -2926,7 +2921,7 @@ class RunnerPage
 	{
 		$fname = "";
 		if( $pSet )
-			$fname = $pSet->getFullFieldName($field);
+			$fname = DB::PrepareSQL( $pSet->getFullFieldName($field) );
 		global $cman;
 		if( !$connection )
 			$connection = $cman->getDefault();
@@ -3722,12 +3717,13 @@ class RunnerPage
 	 */
 	function AddCSSFile($file)
 	{
-			if( $this->pdfMode && $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
+		if( $this->pdfMode && $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
 		{
 			if( 0 == count( $this->includes_css ) )
 				$this->includes_css[] = "styles/pdf.css";
 			return;
 		}
+	
 		if(is_array($file))
 		{
 			foreach($file as $f)
@@ -3933,22 +3929,14 @@ class RunnerPage
 					"include/runnerJS/button.js");
 			}
 
-				if ($this->pageType == PAGE_MENU || $this->pageType == PAGE_REGISTER || $this->pageType == PAGE_LOGIN || $this->pageType == PAGE_CHANGEPASS || $this->pageType == PAGE_REMIND)
-			{
-				$this->AddJSFile("include/runnerJS/events/globalevents.js", "include/runnerJS/pages/PageSettings.js", "include/runnerJS/button.js");
 			}
-		}
 		else
 		{
 			if ($this->pSet->isAddPageEvents() && $this->pageType != PAGE_LOGIN && $this->shortTableName != "")
 			{
 				$this->AddJSFile("include/runnerJS/events/pageevents_".$this->shortTableName.".js");
 			}
-				if ($this->pageType == PAGE_MENU || $this->pageType == PAGE_REGISTER || $this->pageType == PAGE_LOGIN || $this->pageType == PAGE_CHANGEPASS || $this->pageType == PAGE_REMIND)
-			{
-				$this->AddJSFile("include/runnerJS/events/globalevents.js");
 			}
-		}
 
 		if ( $this->getLayoutVersion() != BOOTSTRAP_LAYOUT )
 			$this->AddJSFile("include/yui/yui-min.js");
@@ -4285,7 +4273,7 @@ class RunnerPage
 		$this->googleMapCfg['id'] = $this->id;
 
 		if( !$this->googleMapCfg['APIcode'] )
-			$this->googleMapCfg['APIcode'] = ' AIzaSyAt_Fg_zK4_J9lB3fVLWDM-cOzV2Pxfx_0';
+			$this->googleMapCfg['APIcode'] = '';
 
 		$this->controlsMap['gMaps'] = &$this->googleMapCfg;
 	}
@@ -4725,7 +4713,7 @@ class RunnerPage
 		$keyParams = array();
 		foreach( $this->pSet->getTableKeys() as $i => $k )
 		{
-			$keyParams[] = "editid" . ($i + 1) . "=" . rawurldecode( $keys[ $k ] );
+			$keyParams[] = "editid" . ($i + 1) . "=" . rawurldecode( isset( $keys[ $k ] ) ? $keys[ $k ] : $keys[ $i ] )  ;
 		}
 
 		return implode("&", $keyParams);
