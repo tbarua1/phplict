@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,653 +12,360 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-edit" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_editpage}
-<div {$editpage_chiddenattr} data-pageid="{$pageid}" data-container="editpage" class="container    "> 
+{BEGIN container_all}
+<div class="rnr-c rnr-cv rnr-c-all">
 
 
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_edit} rnr-wrapper rnr-cbw-edit">
 
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-9 col-md-offset-3"> 
+{BEGIN container_edit}
+<div class="rnr-c rnr-cv rnr-c-edit">
 
 {BEGIN editheader}
-	<h2 {$editheader_hiddenattr} data-pageid="{$pageid}" data-brick="editheader" >{$pagetitlelabel employees edit}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+<div  class="rnr-brickcontents style2 rnr-b-editheader {$brickclass_editheader}"><span>	<h1>{$pagetitlelabel employees edit}</h1>
+</span></div>{END editheader}
 
-{END editheader}
-
-
-
-</div>
-{END container_header}
-
-
-
-
-
-
-
-
-{BEGIN container_message}
-<div {$message_chiddenattr} data-pageid="{$pageid}" data-container="message" class="   col-md-6 col-md-offset-3"> 
 
 {BEGIN message_block}
-<div {$message_hiddenattr} data-pageid="{$pageid}" data-brick="message" class="alert {$message_class}" role="alert">
-<h5>{$message}</h5>
-<div>
-{BEGIN back_button}
-		<button class="btn btn-sm btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{BEGIN view_page_button}
-	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>View</button>
-{END view_page_button}
-</div>
-</div>
-
-{END message_block}
+<div  class="rnr-brickcontents style1 rnr-b-message {$brickclass_message}"><div class="rnr-message">{$message}</div></div>{END message_block}
 
 
 
-</div>
-{END container_message}
-
-
-
-
-
-
-
-</div>
-{END container_editpage}
-
-
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$editfields_hiddenattr} data-pageid="{$pageid}" data-brick="editfields" class="form-horizontal" role="form">
-
-
-
-			{BEGIN ename_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_ename}" data-fieldname="ename" data-signal-error-for="ename{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_ename}">
+<div  class="rnr-brickcontents style1 rnr-b-editfields {$brickclass_editfields}"><table class="fieldGrid">
+	{BEGIN ename_fieldblock}
+<tr class="{$fielddispclass_ename}" data-fieldname="ename">
+	<td class="rnr-label">
 		{BEGIN ename_label}{$label employees ename}{END ename_label}
-	</label>
-	<div class="col-md-6" >
-		{$ename_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="ename">
-		<div class="text-muted" >
-		{$tooltip employees ename}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$ename_editcontrol}&nbsp;
+	</td>
+</tr>
 {END ename_fieldblock}
-
-			{BEGIN emppic_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_emppic}" data-fieldname="emppic" data-signal-error-for="emppic{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_emppic}">
+	{BEGIN emppic_fieldblock}
+<tr class="{$fielddispclass_emppic}" data-fieldname="emppic">
+	<td class="rnr-label">
 		{BEGIN emppic_label}{$label employees emppic}{END emppic_label}
-	</label>
-	<div class="col-md-6" >
-		{$emppic_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="emppic">
-		<div class="text-muted" >
-		{$tooltip employees emppic}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$emppic_editcontrol}&nbsp;
+	</td>
+</tr>
 {END emppic_fieldblock}
-
-			{BEGIN designation_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_designation}" data-fieldname="designation" data-signal-error-for="designation{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_designation}">
+	{BEGIN designation_fieldblock}
+<tr class="{$fielddispclass_designation}" data-fieldname="designation">
+	<td class="rnr-label">
 		{BEGIN designation_label}{$label employees designation}{END designation_label}
-	</label>
-	<div class="col-md-6" >
-		{$designation_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="designation">
-		<div class="text-muted" >
-		{$tooltip employees designation}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$designation_editcontrol}&nbsp;
+	</td>
+</tr>
 {END designation_fieldblock}
-
-			{BEGIN whtasapp_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_whtasapp}" data-fieldname="whtasapp" data-signal-error-for="whtasapp{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_whtasapp}">
+	{BEGIN whtasapp_fieldblock}
+<tr class="{$fielddispclass_whtasapp}" data-fieldname="whtasapp">
+	<td class="rnr-label">
 		{BEGIN whtasapp_label}{$label employees whtasapp}{END whtasapp_label}
-	</label>
-	<div class="col-md-6" >
-		{$whtasapp_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="whtasapp">
-		<div class="text-muted" >
-		{$tooltip employees whtasapp}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$whtasapp_editcontrol}&nbsp;
+	</td>
+</tr>
 {END whtasapp_fieldblock}
-
-			{BEGIN localnum_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_localnum}" data-fieldname="localnum" data-signal-error-for="localnum{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_localnum}">
+	{BEGIN localnum_fieldblock}
+<tr class="{$fielddispclass_localnum}" data-fieldname="localnum">
+	<td class="rnr-label">
 		{BEGIN localnum_label}{$label employees localnum}{END localnum_label}
-	</label>
-	<div class="col-md-6" >
-		{$localnum_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="localnum">
-		<div class="text-muted" >
-		{$tooltip employees localnum}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$localnum_editcontrol}&nbsp;
+	</td>
+</tr>
 {END localnum_fieldblock}
-
-			{BEGIN skype_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_skype}" data-fieldname="skype" data-signal-error-for="skype{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_skype}">
+	{BEGIN skype_fieldblock}
+<tr class="{$fielddispclass_skype}" data-fieldname="skype">
+	<td class="rnr-label">
 		{BEGIN skype_label}{$label employees skype}{END skype_label}
-	</label>
-	<div class="col-md-6" >
-		{$skype_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="skype">
-		<div class="text-muted" >
-		{$tooltip employees skype}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$skype_editcontrol}&nbsp;
+	</td>
+</tr>
 {END skype_fieldblock}
-
-			{BEGIN dropbox_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_dropbox}" data-fieldname="dropbox" data-signal-error-for="dropbox{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_dropbox}">
+	{BEGIN dropbox_fieldblock}
+<tr class="{$fielddispclass_dropbox}" data-fieldname="dropbox">
+	<td class="rnr-label">
 		{BEGIN dropbox_label}{$label employees dropbox}{END dropbox_label}
-	</label>
-	<div class="col-md-6" >
-		{$dropbox_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="dropbox">
-		<div class="text-muted" >
-		{$tooltip employees dropbox}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$dropbox_editcontrol}&nbsp;
+	</td>
+</tr>
 {END dropbox_fieldblock}
-
-			{BEGIN email_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_email}" data-fieldname="email" data-signal-error-for="email{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_email}">
+	{BEGIN email_fieldblock}
+<tr class="{$fielddispclass_email}" data-fieldname="email">
+	<td class="rnr-label">
 		{BEGIN email_label}{$label employees email}{END email_label}
-	</label>
-	<div class="col-md-6" >
-		{$email_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="email">
-		<div class="text-muted" >
-		{$tooltip employees email}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$email_editcontrol}&nbsp;
+	</td>
+</tr>
 {END email_fieldblock}
-
-			{BEGIN dob_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_dob}" data-fieldname="dob" data-signal-error-for="dob{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_dob}">
+	{BEGIN dob_fieldblock}
+<tr class="{$fielddispclass_dob}" data-fieldname="dob">
+	<td class="rnr-label">
 		{BEGIN dob_label}{$label employees dob}{END dob_label}
-	</label>
-	<div class="col-md-6" >
-		{$dob_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="dob">
-		<div class="text-muted" >
-		{$tooltip employees dob}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$dob_editcontrol}&nbsp;
+	</td>
+</tr>
 {END dob_fieldblock}
-
-			{BEGIN password_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_password}" data-fieldname="password" data-signal-error-for="password{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_password}">
+	{BEGIN password_fieldblock}
+<tr class="{$fielddispclass_password}" data-fieldname="password">
+	<td class="rnr-label">
 		{BEGIN password_label}{$label employees password}{END password_label}
-	</label>
-	<div class="col-md-6" >
-		{$password_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="password">
-		<div class="text-muted" >
-		{$tooltip employees password}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$password_editcontrol}&nbsp;
+	</td>
+</tr>
 {END password_fieldblock}
-
-			{BEGIN passportno_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_passportno}" data-fieldname="passportno" data-signal-error-for="passportno{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_passportno}">
+	{BEGIN passportno_fieldblock}
+<tr class="{$fielddispclass_passportno}" data-fieldname="passportno">
+	<td class="rnr-label">
 		{BEGIN passportno_label}{$label employees passportno}{END passportno_label}
-	</label>
-	<div class="col-md-6" >
-		{$passportno_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="passportno">
-		<div class="text-muted" >
-		{$tooltip employees passportno}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$passportno_editcontrol}&nbsp;
+	</td>
+</tr>
 {END passportno_fieldblock}
-
-			{BEGIN passport_expiry_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_passport_expiry}" data-fieldname="passport_expiry" data-signal-error-for="passport_expiry{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_passport_expiry}">
+	{BEGIN passport_expiry_fieldblock}
+<tr class="{$fielddispclass_passport_expiry}" data-fieldname="passport_expiry">
+	<td class="rnr-label">
 		{BEGIN passport_expiry_label}{$label employees passport_expiry}{END passport_expiry_label}
-	</label>
-	<div class="col-md-6" >
-		{$passport_expiry_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="passport_expiry">
-		<div class="text-muted" >
-		{$tooltip employees passport_expiry}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$passport_expiry_editcontrol}&nbsp;
+	</td>
+</tr>
 {END passport_expiry_fieldblock}
-
-			{BEGIN visa_no_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_visa_no}" data-fieldname="visa_no" data-signal-error-for="visa_no{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_visa_no}">
+	{BEGIN visa_no_fieldblock}
+<tr class="{$fielddispclass_visa_no}" data-fieldname="visa_no">
+	<td class="rnr-label">
 		{BEGIN visa_no_label}{$label employees visa_no}{END visa_no_label}
-	</label>
-	<div class="col-md-6" >
-		{$visa_no_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="visa_no">
-		<div class="text-muted" >
-		{$tooltip employees visa_no}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$visa_no_editcontrol}&nbsp;
+	</td>
+</tr>
 {END visa_no_fieldblock}
-
-			{BEGIN visa_expiry_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_visa_expiry}" data-fieldname="visa_expiry" data-signal-error-for="visa_expiry{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_visa_expiry}">
+	{BEGIN visa_expiry_fieldblock}
+<tr class="{$fielddispclass_visa_expiry}" data-fieldname="visa_expiry">
+	<td class="rnr-label">
 		{BEGIN visa_expiry_label}{$label employees visa_expiry}{END visa_expiry_label}
-	</label>
-	<div class="col-md-6" >
-		{$visa_expiry_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="visa_expiry">
-		<div class="text-muted" >
-		{$tooltip employees visa_expiry}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$visa_expiry_editcontrol}&nbsp;
+	</td>
+</tr>
 {END visa_expiry_fieldblock}
-
-			{BEGIN division_id_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_division_id}" data-fieldname="division_id" data-signal-error-for="division_id{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_division_id}">
+	{BEGIN division_id_fieldblock}
+<tr class="{$fielddispclass_division_id}" data-fieldname="division_id">
+	<td class="rnr-label">
 		{BEGIN division_id_label}{$label employees division_id}{END division_id_label}
-	</label>
-	<div class="col-md-6" >
-		{$division_id_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="division_id">
-		<div class="text-muted" >
-		{$tooltip employees division_id}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$division_id_editcontrol}&nbsp;
+	</td>
+</tr>
 {END division_id_fieldblock}
-
-			{BEGIN doj_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_doj}" data-fieldname="doj" data-signal-error-for="doj{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_doj}">
+	{BEGIN doj_fieldblock}
+<tr class="{$fielddispclass_doj}" data-fieldname="doj">
+	<td class="rnr-label">
 		{BEGIN doj_label}{$label employees doj}{END doj_label}
-	</label>
-	<div class="col-md-6" >
-		{$doj_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="doj">
-		<div class="text-muted" >
-		{$tooltip employees doj}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$doj_editcontrol}&nbsp;
+	</td>
+</tr>
 {END doj_fieldblock}
-
-			{BEGIN dor_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_dor}" data-fieldname="dor" data-signal-error-for="dor{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_dor}">
+	{BEGIN dor_fieldblock}
+<tr class="{$fielddispclass_dor}" data-fieldname="dor">
+	<td class="rnr-label">
 		{BEGIN dor_label}{$label employees dor}{END dor_label}
-	</label>
-	<div class="col-md-6" >
-		{$dor_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="dor">
-		<div class="text-muted" >
-		{$tooltip employees dor}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$dor_editcontrol}&nbsp;
+	</td>
+</tr>
 {END dor_fieldblock}
-
-			{BEGIN status_id_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_status_id}" data-fieldname="status_id" data-signal-error-for="status_id{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_status_id}">
+	{BEGIN status_id_fieldblock}
+<tr class="{$fielddispclass_status_id}" data-fieldname="status_id">
+	<td class="rnr-label">
 		{BEGIN status_id_label}{$label employees status_id}{END status_id_label}
-	</label>
-	<div class="col-md-6" >
-		{$status_id_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="status_id">
-		<div class="text-muted" >
-		{$tooltip employees status_id}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$status_id_editcontrol}&nbsp;
+	</td>
+</tr>
 {END status_id_fieldblock}
-
-			{BEGIN experence_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_experence}" data-fieldname="experence" data-signal-error-for="experence{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_experence}">
+	{BEGIN experence_fieldblock}
+<tr class="{$fielddispclass_experence}" data-fieldname="experence">
+	<td class="rnr-label">
 		{BEGIN experence_label}{$label employees experence}{END experence_label}
-	</label>
-	<div class="col-md-6" >
-		{$experence_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="experence">
-		<div class="text-muted" >
-		{$tooltip employees experence}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$experence_editcontrol}&nbsp;
+	</td>
+</tr>
 {END experence_fieldblock}
-
-			{BEGIN nationality_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_nationality}" data-fieldname="nationality" data-signal-error-for="nationality{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_nationality}">
+	{BEGIN nationality_fieldblock}
+<tr class="{$fielddispclass_nationality}" data-fieldname="nationality">
+	<td class="rnr-label">
 		{BEGIN nationality_label}{$label employees nationality}{END nationality_label}
-	</label>
-	<div class="col-md-6" >
-		{$nationality_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="nationality">
-		<div class="text-muted" >
-		{$tooltip employees nationality}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$nationality_editcontrol}&nbsp;
+	</td>
+</tr>
 {END nationality_fieldblock}
-
-			{BEGIN qulification_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_qulification}" data-fieldname="qulification" data-signal-error-for="qulification{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_qulification}">
+	{BEGIN qulification_fieldblock}
+<tr class="{$fielddispclass_qulification}" data-fieldname="qulification">
+	<td class="rnr-label">
 		{BEGIN qulification_label}{$label employees qulification}{END qulification_label}
-	</label>
-	<div class="col-md-6" >
-		{$qulification_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="qulification">
-		<div class="text-muted" >
-		{$tooltip employees qulification}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$qulification_editcontrol}&nbsp;
+	</td>
+</tr>
 {END qulification_fieldblock}
-
-			{BEGIN skillset_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_skillset}" data-fieldname="skillset" data-signal-error-for="skillset{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_skillset}">
+	{BEGIN skillset_fieldblock}
+<tr class="{$fielddispclass_skillset}" data-fieldname="skillset">
+	<td class="rnr-label">
 		{BEGIN skillset_label}{$label employees skillset}{END skillset_label}
-	</label>
-	<div class="col-md-6" >
-		{$skillset_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="skillset">
-		<div class="text-muted" >
-		{$tooltip employees skillset}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$skillset_editcontrol}&nbsp;
+	</td>
+</tr>
 {END skillset_fieldblock}
-
-			{BEGIN cid_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_cid}" data-fieldname="cid" data-signal-error-for="cid{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_cid}">
+	{BEGIN cid_fieldblock}
+<tr class="{$fielddispclass_cid}" data-fieldname="cid">
+	<td class="rnr-label">
 		{BEGIN cid_label}{$label employees cid}{END cid_label}
-	</label>
-	<div class="col-md-6" >
-		{$cid_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="cid">
-		<div class="text-muted" >
-		{$tooltip employees cid}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$cid_editcontrol}&nbsp;
+	</td>
+</tr>
 {END cid_fieldblock}
-
-			{BEGIN reset_token_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_reset_token}" data-fieldname="reset_token" data-signal-error-for="reset_token{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_reset_token}">
+	{BEGIN reset_token_fieldblock}
+<tr class="{$fielddispclass_reset_token}" data-fieldname="reset_token">
+	<td class="rnr-label">
 		{BEGIN reset_token_label}{$label employees reset_token}{END reset_token_label}
-	</label>
-	<div class="col-md-6" >
-		{$reset_token_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="reset_token">
-		<div class="text-muted" >
-		{$tooltip employees reset_token}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$reset_token_editcontrol}&nbsp;
+	</td>
+</tr>
 {END reset_token_fieldblock}
-
-			{BEGIN reset_date_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_reset_date}" data-fieldname="reset_date" data-signal-error-for="reset_date{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_reset_date}">
+	{BEGIN reset_date_fieldblock}
+<tr class="{$fielddispclass_reset_date}" data-fieldname="reset_date">
+	<td class="rnr-label">
 		{BEGIN reset_date_label}{$label employees reset_date}{END reset_date_label}
-	</label>
-	<div class="col-md-6" >
-		{$reset_date_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="reset_date">
-		<div class="text-muted" >
-		{$tooltip employees reset_date}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$reset_date_editcontrol}&nbsp;
+	</td>
+</tr>
 {END reset_date_fieldblock}
+</table></div>
 
 
+{BEGIN editbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-editbuttons {$brickclass_editbuttons}"><div class="rnr-buttons-right">
+{BEGIN prev_button}
+<a href="#" class="rnr-button {$prevbutton_class}" {$prevbutton_attrs}>&lt;&lt;&lt;</a>
+{END prev_button}
+{BEGIN next_button}
+<a href="#" class="rnr-button  {$nextbutton_class}" {$nextbutton_attrs}>&gt;&gt;&gt;</a>
+{END next_button}
 </div>
-
-
+<div class="rnr-buttons-left">
+{BEGIN save_button}
+<a href="#" class="rnr-button main" {$savebutton_attrs}>Save</a>
+{END save_button}
+{BEGIN reset_button}
+<a href="#" class="rnr-button" {$resetbutton_attrs}>Reset</a>
+{END reset_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}
+{BEGIN close_button}
+<a href="#" class="rnr-button" {$closebutton_attrs}>Close window</a>
+{END close_button}
+{BEGIN view_page_button}
+<a href="#" class="rnr-button" {$view_page_button_attrs}>View</a>
+{END view_page_button}
+</div>
+</div>{END editbuttons}
 
 
 </div>
 {END container_fields}
 
+</div>
 
 
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+</div>
+{END container_edit}
 
-
-
-
-{BEGIN container_buttons}
-<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-3 col-md-offset-3"> 
-
-{BEGIN editbuttons}
-	{BEGIN save_button}
-	<button class="btn btn-primary" {$savebutton_attrs}>Save</button>
-	{END save_button}
-	{BEGIN back_button}
-		<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
-	{END back_button}
-	{BEGIN close_button}
-	<a href="#" class="btn btn-default" {$closebutton_attrs}>Cancel</a>
-	{END close_button}
-
-{END editbuttons}
+</div>
 
 
 
 </div>
-{END container_leftbuttons}
+{END container_all}
 
 
-
-
-
-
-
-
-{BEGIN container_leftbuttons_1}
-<div {$leftbuttons_1_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons_1" class="  text-right col-md-3 "> 
-
-{BEGIN righteditbuttons}
-<div class="btn-group" role="group">
-
-	{BEGIN prev_button}
-	<button class="btn btn-default {$prevbutton_class}" {$prevbutton_attrs}><span class="glyphicon glyphicon-chevron-left"></span></button>
-	{END prev_button}
-	{BEGIN next_button}
-	<button class="btn btn-default  {$nextbutton_class}" {$nextbutton_attrs}><span class="glyphicon glyphicon-chevron-right"></span></button>
-	{END next_button}
-	<div class="btn-group dropup" role="group">
-		<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-		<ul class="dropdown-menu dropdown-left">
-			{BEGIN reset_button}
-				<li><a href="#" {$resetbutton_attrs}>Reset</a></li>
-			{END reset_button}
-			{BEGIN view_page_button}
-				<li><a href="#" {$view_page_button_attrs}>View</a></li>
-			{END view_page_button}
-		</ul>
+		</div>
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
+				
+			</div>
+			<div class="rnr-center {$blockclass_center}">
+				
+			</div>
+			<div class="rnr-right {$blockclass_right}">
+				
+			</div>
+		</div>
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
+		</div>
 	</div>
-</div>
-{END righteditbuttons}
-
-
-
-</div>
-{END container_leftbuttons_1}
-
-
-
-
-
-
-</div>
-{END container_buttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
-
-
-		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
-				
-			</div>
-			<div class="bs-left" {$blockattr_left}>
-				
-			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
-				
-			</div>
-		</div>
-		<DIV class="bs-bottom">
-        
-		</div>
+		
 		{$footer}
 	{END body}
 	</body>

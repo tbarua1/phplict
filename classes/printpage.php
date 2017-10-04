@@ -2,21 +2,18 @@
 class PrintPage extends RunnerPage
 {
 	public $allPagesMode = false;
+	public $selectedRecords = array();
 	public $masterKeys = array();
 	public $masterTable = "";
 	public $recordset = null;
-
+	public $keyField = array();
 	public $pdfWidth = PDF_PAGE_WIDTH;
-	public $pdfContent = "";
-	
 	public $fetchedRecordCount = 0;
 	public $splitByRecords = 0;
-	public $detailTables;
+	
+	public $pdfContent = "";
 	
 	public $pageBody = array();
-
-	public $querySQL = "";
-	public $countSQL = "";
 
 	
 	/**
@@ -31,7 +28,11 @@ class PrintPage extends RunnerPage
 	 * @type array
 	 */
 	public $totals = array();
+
 	
+	public $sql = "";
+	
+	public $sqlParts = array( "searchCriteria" => "and" );
 	
 	/**
 	 *	Total number of records in the query
@@ -49,92 +50,63 @@ class PrintPage extends RunnerPage
 	
 	public $pageNo = 1;
 	
-	public $hideColumns = array();
-	
-	
 	/**
 	 * @constructor
 	 */
-	function __construct(&$params = "")
+	function PrintPage(&$params = "")
 	{
-		parent::__construct($params);
-		
-		if( $this->selection )
+		parent::RunnerPage($params);
+		if( $this->selectedRecords )
+		{
 			$this->allPagesMode = true;
+		}
 
-		if( !$this->detailTables )
-			$this->detailTables = array();
-			
-		if( !is_array( $this->detailTables ) )
-			$this->detailTables = array( $this->detailTables );		
-		
-		//	save selected records and detail tables in session in normal mode
+		//	save selected records in session in normal mode
 		//	read them in PDF mode	
 		if( !$this->pdfMode )
 		{
-			$this->controlsMap["pdfSettings"] = array();
-			$this->controlsMap["pdfSettings"]["selectedJSON"] = rawurlencode(my_json_encode($this->selection));
-			$this->controlsMap["pdfSettings"]["detailTablesJSON"] = rawurlencode(my_json_encode($this->detailTables));
-			$this->controlsMap["pdfSettings"]["allPagesMode"] = $this->allPagesMode;
+			$_SESSION[ $this->sessionPrefix . "_selection" ] = $this->selectedRecords;
 		}
 		else
 		{
-			$this->allPagesMode =  postvalue("allPagesMode");
-			$this->selection = my_json_decode(rawurldecode(postvalue("selectedJSON")));
-				
-			//	ensure selection records is array
-			if( !$this->selection )
-				$this->selection = array();
-				
-			$this->detailTables = my_json_decode(rawurldecode(postvalue("detailTablesJSON")));
+			$this->selectedRecords = $_SESSION[ $this->sessionPrefix . "_selection" ];
+			unset($_SESSION[ $this->sessionPrefix . "_selection" ]);
+			//	ensure selectedRecords records is array
+			if( !$this->selectedRecords )
+				$this->selectedRecords = array();
 		}
 		
+
 		$this->printGridLayout = $this->pSet->getPrintGridLayout();
-		$this->recsPerRowPrint = $this->pSet->getRecordsPerRowPrint();
 		
 		for($i = 0; $i < count($this->detailKeysByM); $i++)
 		{
 			$this->masterKeys[] = $_SESSION[ $this->sessionPrefix . "_masterkey" . ( $i + 1 ) ];
 		}
-		
 		$this->masterTable = $_SESSION[$this->sessionPrefix . "_mastertable"];
 		$this->totalsFields = $this->pSet->getTotalsFields();
-		
-		if( !$this->splitByRecords )
-			$this->splitByRecords = $this->pSet->getPrinterSplitRecords();
-		
+		$this->splitByRecords = $this->pSet->getPrinterSplitRecords();
 		if( $this->pdfMode )
 			$this->splitByRecords = $this->pSet->getPrinterPDFSplitRecords();
-		
-		if( $this->pSet->isAllowShowHideFields() )
-		{
-			$hideColumns = $this->getColumnsToHide();
-			$this->hideColumns = $hideColumns[DESKTOP];
-			if( !is_array( $this->hideColumns ) )
-				$this->hideColumns = array();
-		}
-		
 	}
 
-	/**
-	 * @param String table
-	 * @return Array
-	 */
-	public static function readSelectedRecordsFromRequest( $table )
+	function init()
 	{
-		if( !$_REQUEST["selection"] )
+		parent::init();
+	}
+
+	static function readSelectedRecordsFromRequest( $table )
+	{
+		if(!$_REQUEST["selection"])
 			return array();
-			
+		$selected_recs = array();
 		$pSet = new ProjectSettings( $table );
 		$keyFields = $pSet->getTableKeys();
-		
-		$selected_recs = array();
 		foreach(@$_REQUEST["selection"] as $keyblock)
 		{
-			$arr = explode("&", refine($keyblock));
-			if( count($arr) < count($keyFields) )
+			$arr = explode("&",refine($keyblock));
+			if(count($arr) < count($keyFields))
 				continue;
-			
 			$keys = array();
 			foreach($arr as $i => $value)
 			{
@@ -142,46 +114,122 @@ class PrintPage extends RunnerPage
 			}
 			$selected_recs[] = $keys;
 		}
-		
 		return $selected_recs;
 	}
 
-	/**
-	 *
-	 */
-	protected function calcRowCount()
+	protected function buildSQL()
 	{
-		
-//	custom GetRowCount event:
-		$rowcount = false;
-		
-		if($this->eventExists("ListGetRowCount"))
+		global $gQuery, $gstrOrderBy;
+		//	build Where expression
+		if( $this->selectedRecords )
 		{
-			$rowcount = $this->eventsObject->ListGetRowCount($this->searchClauseObj, $this->masterTable, $this->masterKeysReq, null, $this);
-			if( $rowcount !== false )
+			$selectionSQL = array();
+			foreach($this->selectedRecords as $keys)
 			{
-				$this->totalRowCount = $rowcount;
-				return;
+				
+				$selectionSQL[] = $this->keysSQLExpression( $keys );
 			}
+			$sWhere = implode(" or ", $selectionSQL );
+			if( $this->pSet->getAdvancedSecurityType() == ADVSECURITY_VIEW_OWN )
+			{
+				// select only owned records
+				$sWhere = whereAdd($sWhere, SecuritySQL("Search", $this->tName));
+			}
+			$this->sqlParts["sql"] = $gQuery->gSQLWhere($sWhere);
+			$this->sqlParts["where"] = $sWhere;
+		
 		}
-		
-//	normal mode row count
-		$this->totalRowCount = $this->connection->getFetchedRowsNumber( $this->countSQL );
-		
+		else
+		{
+			$this->sqlParts["where"] = @$_SESSION[$this->sessionPrefix . "_where"];
+			$this->sqlParts["having"] = @$_SESSION[$this->sessionPrefix . "_having"];
+			$this->sqlParts["searchCriteria"] = @$_SESSION[$this->sessionPrefix . "_criteria"];
+			$this->sqlParts["join"] = @$_SESSION[$this->sessionPrefix . "_joinFromPart"];
+			if( !$this->sqlParts["where"] && $this->pSet->getAdvancedSecurityType() == ADVSECURITY_VIEW_OWN )
+			{
+				$this->sqlParts["where"] = SecuritySQL("Search", $this->tName);
+			}
+			$this->sqlParts["sql"] = SQLQuery::gSQLWhere_having($gQuery->HeadToSql(), 
+				$gQuery->FromToSql().$this->sqlParts["join"], 
+				$gQuery->WhereToSql(),
+				$gQuery->GroupByToSql(), 
+				$gQuery->Having()->toSql($gQuery), 
+				$this->sqlParts["where"], 
+				$this->sqlParts["having"], 
+				$this->sqlParts["searchCriteria"]);	
+		}
+		$this->sqlParts["orderby"] = $_SESSION[$this->sessionPrefix . "_order"];
+		if(!$this->sqlParts["orderby"])
+			$this->sqlParts["orderby"] = $gstrOrderBy;
+		$this->sqlParts["sql"] .= " " . trim( $this->sqlParts["orderby"] );
+
 	}
 	
-	/**
-	 *
-	 */
+	protected function calcRowCount()
+	{
+		global $gQuery;
+		
+		$strSQLbak = $this->sqlParts["sql"];
+		$sql = $this->sqlParts["sql"];
+		$where = $this->sqlParts["where"];
+		$orderby = $this->sqlParts["orderby"];
+		if($this->eventsObject->exists("BeforeQueryPrint"))
+			$this->eventsObject->BeforeQueryPrint($sql, $where, $orderby, $this);
+
+		//	Rebuild SQL if needed
+		
+		if($sql != $strSQLbak)
+		{
+			//	changed $strSQL - old style	
+			$this->totalRowCount = GetRowCount($sql, $this->connection);
+			return;
+		}
+
+		// rebuild sql
+
+		$this->sqlParts["where"] = $where;
+		$this->sqlParts["orderby"] = $orderby;
+		$this->sqlParts["sql"] = SQLQuery::gSQLWhere_having($gQuery->HeadToSql(), 
+			$gQuery->FromToSql().$this->sqlParts["join"], 
+			$gQuery->WhereToSql(),
+			$gQuery->GroupByToSql(), 
+			$gQuery->Having()->toSql($gQuery), 
+			$this->sqlParts["where"], 
+			$this->sqlParts["having"], 
+			$this->sqlParts["searchCriteria"]);	
+		$this->sqlParts["sql"] .= " ".trim( $this->sqlParts["orderby"] );
+		
+		if($this->eventsObject->exists("ListGetRowCount"))
+		{
+			$this->totalRowCount = $this->eventsObject->ListGetRowCount($this->searchClauseObj, 
+				$this->masterTable, 
+				$this->masterKeys, 
+				$this->selectedRecords, 
+				$this);
+		}
+		
+		if($this->totalRowCount === false)
+		{
+			$this->totalRowCount = SQLQuery::gSQLRowCount_int( $gQuery->HeadToSql(), 
+				$gQuery->FromToSql().$this->sqlParts["join"], 
+				$gQuery->WhereToSql(), 
+				$gQuery->GroupByToSql(), 
+				$gQuery->Having()->toSql($gQuery), 
+				$this->sqlParts["where"], 
+				$this->sqlParts["having"], 
+				$this->connection, 
+				$this->sqlParts["searchCriteria"] );		
+		}
+	
+	}
+	
 	protected function prepareCustomListQueryLegacySorting()
 	{
 		if( !$this->eventsObject->exists("ListQuery") )
 			return;
-			
 		$arrFieldForSort = array();
 		$arrHowFieldSort = array();
 		require_once getabspath('classes/orderclause.php');
-		
 		$fieldList = unserialize( $_SESSION[ $this->sessionPrefix . "_orderFieldsList" ] );
 		for($i = 0; $i < count($fieldList); $i++)
 		{
@@ -190,9 +238,6 @@ class PrintPage extends RunnerPage
 		}
 	}
 
-	/**
-	 *
-	 */
 	protected function calcPageSizeAndNumber()
 	{
 		if( $this->allPagesMode )
@@ -211,47 +256,41 @@ class PrintPage extends RunnerPage
 			$this->allPagesMode = true;	
 	}
 	
-	/**
-	 *
-	 */
 	protected function openQuery()
 	{
+
 		$this->prepareCustomListQueryLegacySorting();
 		$this->calcPageSizeAndNumber();
 		
 		$listarray = false;
-		if( $this->eventsObject->exists("ListQuery") )
+		if($this->eventsObject->exists("ListQuery"))
 		{
 			$listarray = $this->eventsObject->ListQuery($this->searchClauseObj, 
 				$this->customFieldForSort, 
 				$this->customHowFieldSort,
 				$this->masterTable,
 				$this->masterKeys, 
-				$this->selection, 
+				$this->selectedRecords, 
 				$this->queryPageSize, 
 				$this->queryPageNo, 
 				$this);
 		}
-		
-		if( $listarray !== false )
+		if( $listarray !== false)
 		{
 			$this->recordset = $listarray;
 		}
 		else
 		{
 			if( $this->allPagesMode )
-				$this->recordset = $this->connection->query( $this->querySQL ); 
+				$this->recordset = $this->connection->query( $this->sqlParts["sql"] )->getQueryHandle(); 
 			else
-				$this->recordset = $this->connection->queryPage( $this->querySQL, 
+				$this->recordset = $this->connection->queryPage( $this->sqlParts["sql"], 
 					$this->queryPageNo, 
 					$this->queryPageSize, 
 					$this->totalRowCount );
 		}
 	}
 	
-	/**
-	 *
-	 */
 	protected function setMapParams()
 	{
 		$fieldsArr = array();
@@ -261,7 +300,6 @@ class PrintPage extends RunnerPage
 		}
 		$this->setGoogleMapsParams( $fieldsArr );
 	}
-	
 	/**
 	 * Process the page 
 	 */
@@ -274,21 +312,20 @@ class PrintPage extends RunnerPage
 			return;
 		}
 
-		//	Before Process event
+
+	//	Before Process event
 		if( $this->eventsObject->exists("BeforeProcessPrint") )
 			$this->eventsObject->BeforeProcessPrint( $this );
-					
+			
+		
 		$this->prepareJsSettings();
 		$this->addButtonHandlers();
 		$this->addCommonJs();
 		$this->commonAssign();
 		$this->setMapParams();
-	
+
+		
 		$this->buildSQL();
-
-		// build tabs
-		$this->processGridTabs();
-
 		$this->calcRowCount();
 		$this->openQuery();
 		
@@ -298,9 +335,7 @@ class PrintPage extends RunnerPage
 			$this->fillGridPage();
 			$this->showTotals();
 			// display the 'Back to Master' link and master table info
-			$this->displayMasterTableInfo();
-//			$this->printMasterTableInfo();
-
+			$this->printMasterTableInfo();
 			$this->body["data"][] = $this->pageBody;
 		}
 		else
@@ -310,8 +345,7 @@ class PrintPage extends RunnerPage
 			{
 				if( !$masterAdded )
 				{
-					//$this->printMasterTableInfo();
-					$this->displayMasterTableInfo();
+					$this->printMasterTableInfo();
 					$masterAdded = true;
 				}
 				else
@@ -321,11 +355,9 @@ class PrintPage extends RunnerPage
 					$this->pageBody["container_pdf"] = false;
 					
 				}
-				
 				$this->fillGridPage();
 				if($this->EOF())
 					break;
-				
 				$this->wrapPageBody();					
 				
 				$this->body["data"][] = $this->pageBody;
@@ -337,7 +369,6 @@ class PrintPage extends RunnerPage
 			$this->wrapPageBody();					
 			$this->body["data"][] = $this->pageBody;
 		}
-		
 		$this->xt->assign( "pagecount", $this->pageNo );
 
 		$this->doCommonAssignments();
@@ -345,27 +376,18 @@ class PrintPage extends RunnerPage
 		$this->displayPrintPage();		
 	}
 	
-	/**
-	 *
-	 */
 	protected function wrapPageBody()
 	{
 		if( $this->pdfMode )
 			$this->pageBody["begin"] = "<div class=\"rp-page\">";
 		else
 			$this->pageBody["begin"] = "<div class=\"rp-presplitpage rp-page\">";
-		
 		$this->pageBody["end"] = "</div>";
 	}
-	
-	/**
-	 *
-	 */
 	protected function showTotals()
 	{
 		if( !$this->totalsFields )
 			return;
-			
 		$record = array();
 		$this->pageBody["totals_record"] = true;
 		foreach( $this->totalsFields as $tf )
@@ -380,55 +402,36 @@ class PrintPage extends RunnerPage
 			$this->pageBody[ GoodFieldName( $tf['fName'] ) . "_total" ] = $total;
 			$record[ GoodFieldName( $tf['fName'] ) . "_showtotal"] = true;
 		}
-		
 		$this->pageBody[ "totals_row" ] = array("data" => array(0 => $record));
 	}
 	
-	/**
-	 * @return Boolean
-	 */
 	protected function EOF()
 	{
-		$currentPageSize = $this->queryPageSize;
-		if ( !$this->allPagesMode && $this->pSet->getRecordsLimit() )
+		if( !$this->allPagesMode && $this->fetchedRecordCount >= $this->queryPageSize )
 		{
-			$currentPageSize = $this->pSet->getRecordsLimit() - ($this->queryPageSize * ($this->queryPageNo - 1));
-		}
-		else if ( $this->allPagesMode )
-		{
-			$currentPageSize = $this->limitRowCount($this->totalRowCount);
-		}
-
-		if ( $this->fetchedRecordCount >= $currentPageSize )
 			return true;
-		
+		}
 		$this->readNextRecordInternal();
 		if( $this->_eof )
 			return true;
-			
-		return false;	
+		
 	}
-	
-	/**
-	 * reads the next record and fills in $this->nextRecord
-	 */
+	//	reads the next record and fills in $this->nextRecord
 	protected function readNextRecordInternal()
 	{
 		//	no more data
-		if( $this->_eof )
+		if($this->_eof)
 			return;
-			
 		//	next record already read
 		if( $this->nextRecord )
 			return;
-			
 		//	read the record and store it in $this->nextRecord
 		while(true)
 		{
-			if( $this->eventsObject->exists("ListFetchArray") )
+			if($this->eventsObject->exists("ListFetchArray"))
 				$data = $this->eventsObject->ListFetchArray($this->recordset, $this);
 			else
-				$data = $this->cipherer->DecryptFetchedArray( $this->recordset->fetchAssoc() );
+				$data = $this->cipherer->DecryptFetchedArray( $this->connection->fetch_array( $this->recordset ) );
 			
 			if( !$data )
 			{
@@ -436,22 +439,18 @@ class PrintPage extends RunnerPage
 				return;
 			}
 				
-			if( $this->eventsObject->exists("BeforeProcessRowPrint") )
+			if($this->eventsObject->exists("BeforeProcessRowPrint"))
 			{
-				if( !$this->eventsObject->BeforeProcessRowPrint($data, $this) )
+				if(!$this->eventsObject->BeforeProcessRowPrint($data, $this))
 				{
 					continue;
 				}
 			}
-			
 			$this->nextRecord = $data;
 			return;
 		}
 	}
 	
-	/**
-	 * @return Mixed
-	 */
 	protected function readNextRecord()
 	{
 		if($this->EOF())
@@ -462,11 +461,6 @@ class PrintPage extends RunnerPage
 		return $data;
 	}
 	
-	/**
-	 * @param Array data
-	 * @param &Array row
-	 * @return Array
-	 */
 	protected function buildGridRecord( $data, &$row )
 	{
 		$this->genId();
@@ -479,36 +473,30 @@ class PrintPage extends RunnerPage
 		$keyFields = $this->pSet->getTableKeys();
 		$keylink = "";
 		for($i = 0; $i < count( $keyFields ); $i ++)
-		{
 			$keylink.= "&key".($i + 1) . "=" . runner_htmlspecialchars( rawurlencode( @$data[ $keyFields[$i] ] ) );
-		}
 
-		if( $this->eventsObject->exists("BeforeMoveNextPrint") )
+
+		if($this->eventsObject->exists("BeforeMoveNextPrint"))
 			$this->eventsObject->BeforeMoveNextPrint($data, $row, $record, $this);
 		
+
 		$printFields = &$this->pSet->getPrinterFields();
 		for($i = 0; $i < count($printFields); $i++) 
 		{
 			$record[GoodFieldName($printFields[$i])."_value"] = $this->showDBValue( $printFields[$i], $data, $keylink );
 			$this->setRowClassNames($record, $printFields[$i]);
 		}
-		
 		$this->spreadRowStyles($data, $row, $record);
 		$this->setRowCssRules($record);
-		
 		$record["grid_recordheader"] = true;
 		$record["grid_vrecord"] = true;
 		
 		return $record;
 	}
 	
-	/**
-	 * @param Array columns
-	 */
 	protected function showGridHeader( $columns )
 	{
-
-	foreach( $this->pSet->getPrinterFields() as $f )
+		foreach( $this->pSet->getPrinterFields() as $f )
 		{
 			$gf = GoodFieldName($f);
 			$this->pageBody[ $gf . "_fieldheadercolumn"] = true;
@@ -537,9 +525,6 @@ class PrintPage extends RunnerPage
 		$this->pageBody[ "grid_footer" ] = true;
 	}
 	
-	/**
-	 *
-	 */
 	protected function fillGridPage()
 	{
 
@@ -549,40 +534,31 @@ class PrintPage extends RunnerPage
 		
 		$recordsPrinted = 0;
 
-		$row = array();
+		$row = false;
 		$col = 0;
 		while( $data = $this->readNextRecord() )
 		{
-			$row["details"] = array();
-			if( !$col )
+			if(!$col)
 			{
 				//	create new row
 				$row = array();
 				$row["grid_record"] = array();
 				$row["grid_record"]["data"] = array();
-				$row["details_record"] = array();
-				$row["details_record"]["data"] = array();	
+				
 			}
 			else
 			{
 				//	update previous record in the row
 				$row["grid_record"]["data"][ $col - 1 ]["endrecord_block"] = true;
-				$row["details_record"]["data"][ $col - 1 ]["endrecord_block"] = true;
 				//	add two empty cells to the vertical layout grid
 				$row["grid_recordspace"]["data"][] = true;
 				$row["grid_recordspace"]["data"][] = true;
 			}
 
 			//	add the record to the row
-			if( $this->printGridLayout == gltVERTICAL || $this->recsPerRowPrint != 1 )
+			if($this->printGridLayout == gltVERTICAL || $this->recsPerRowPrint != 1)
 			{ 
 				$row["grid_record"]["data"][] = $this->buildGridRecord( $data, $row );
-				$builtDetails = $this->buildDetails( $data );
-				if( $builtDetails )
-				{					
-					$row["details_record"]["data"][] = array( "details_table" => array("data" => $builtDetails ) );
-					$row["details_row"] = true;
-				}
 			} 
 			else
 			{
@@ -593,14 +569,6 @@ class PrintPage extends RunnerPage
 					$row[ $index ] = $value;
 				}
 				$row["grid_record"] = true;
-
-				$builtDetails = $this->buildDetails( $data );
-				if( $builtDetails )
-				{
-					$row["details_record"] = true;
-					$row["details_table"] = array( "data" => $builtDetails );
-					$row["details_row"] = true;
-				}
 			}
 			
 			//	finalize row if needed
@@ -618,20 +586,17 @@ class PrintPage extends RunnerPage
 				break;
 		
 		}
-		
 		//	finalize grid
-		if( $col )
+		if($col)
 		{
-			if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT && $builtDetails && ($this->printGridLayout == gltVERTICAL || $this->recsPerRowPrint != 1) )
-			{		
-				$row["details_record"]["data"][0]["bs_clear_class"] = "bs-print-details-clear";
-			}
 			$this->pageBody["grid_row"]["data"][] = $row;
 		}
 		
 		$this->showGridHeader( $this->recsPerRowPrint < $recno ? $this->recsPerRowPrint : $recno);
 		$this->pageBody["pageno"] = $this->pageNo;
 	}
+
+	
 	
 	/**
 	 *
@@ -641,11 +606,13 @@ class PrintPage extends RunnerPage
 		$this->body['begin'].= GetBaseScriptsForPage( false );
 
 		// assign body end
-		$this->body['end'] = XTempl::create_method_assignment( "assignBodyEnd", $this );
+		$this->body['end'] = array();
+		AssignMethod($this->body['end'], "assignBodyEnd", $this);
 
 		$this->xt->assignbyref('body', $this->body);	
 		
 		$this->xt->assign("grid_block", true);
+
 		$this->xt->assign("page_number",true);
 		
 		if( !$this->splitByRecords )
@@ -658,72 +625,38 @@ class PrintPage extends RunnerPage
 		{
 			$this->xt->assign("printbuttons", true);
 		}
-		
-		$this->xt->assign("printheader",true);
-
-		if ( count($this->gridTabs) > 1 ) 
-		{
-			$curTabId = $this->getCurrentTabId();
-			$this->xt->assign("printtabheader",true);
-			$this->xt->assign("printtabheader_text", $this->getTabTitle($curTabId));
-		}	
 	}	
 	
-	/**
-	 *
-	 */
 	protected function prepareJsSettings()
 	{
-		if( isRTL() )
+		if (isRTL())
 			$this->jsSettings['tableSettings'][ $this->tName ]['isRTL'] = true;
 
-		if( $this->pSet->isPrinterPagePDF() )
+		if ($this->pSet->isPrinterPagePDF())
 			$this->jsSettings['tableSettings'][ $this->tName ]['printerPagePDF'] = true;
 
-		$this->jsSettings['tableSettings'][ $this->tName ]['printerPageOrientation'] = $this->pSet->getPrinterPageOrientation();
-		$this->jsSettings['tableSettings'][ $this->tName ]['printerPageScale'] = $this->pSet->getPrinterPageScale();
-		$this->jsSettings['tableSettings'][ $this->tName ]['isPrinterPageFitToPage'] = $this->pSet->isPrinterPageFitToPage();
-		$this->jsSettings['tableSettings'][ $this->tName ]['printerSplitRecords'] = $this->pSet->getPrinterSplitRecords();
-		$this->jsSettings['tableSettings'][ $this->tName ]['printerPDFSplitRecords'] = $this->pSet->getPrinterPDFSplitRecords();
 
-		if( $this->printGridLayout )
-			$this->jsSettings['tableSettings'][$this->tName]['printGridLayout'] = $this->printGridLayout;
-			
-		if( $this->pSet->isAllowShowHideFields() ) 
-			$this->jsSettings['tableSettings'][ $this->tName ]['isAllowShowHideFields'] = true;
-			
-		if( $this->pSet->isAllowFieldsReordering() && $this->printGridLayout == gltHORIZONTAL && $this->recsPerRowPrint == 1 )
-		{
-			$this->jsSettings['tableSettings'][ $this->tName ]['isAllowFieldsReordering'] = true;
-			
-			include_once getabspath("classes/paramsLogger.php");
-			$logger = new paramsLogger( $this->tName, FORDER_PARAMS_TYPE );
-			
-			$columnOrder = $logger->getData();
-			if( $columnOrder )
-				$this->jsSettings['tableSettings'][ $this->tName ]['columnOrder'] = $columnOrder;			
-		}
+		$this->jsSettings['tableSettings'][$this->tName]['printerPageOrientation'] = $this->pSet->getPrinterPageOrientation();
+		$this->jsSettings['tableSettings'][$this->tName]['printerPageScale'] = $this->pSet->getPrinterPageScale();
+		$this->jsSettings['tableSettings'][$this->tName]['isPrinterPageFitToPage'] = $this->pSet->isPrinterPageFitToPage();
+		$this->jsSettings['tableSettings'][$this->tName]['printerSplitRecords'] = $this->pSet->getPrinterSplitRecords();
+		$this->jsSettings['tableSettings'][$this->tName]['printerPDFSplitRecords'] = $this->pSet->getPrinterPDFSplitRecords();
+
+		$printGridLayout = $this->pSet->getPrintGridLayout();
+		if ( $printGridLayout )
+			$this->jsSettings['tableSettings'][$this->tName]['printGridLayout'] = $printGridLayout;
 	}
 	
-	/**
-	 *
-	 */
 	public function convertToPDF()
 	{
 		$this->preparePDFDimensions();
 		$this->buildPdf($this->pSet->isLandscapePrinterPagePDFOrientation(), $this->pdfWidth, $this->pdfContent);
 	}
-	
-	/**
-	 *
-	 */
 	public function preparePDFDisplay()
 	{
 		if( !$this->pdfMode )
 			return;
-		
 		$this->AddCSSFile("styles/defaultPDF.css");
-		
 		if( $this->pdfMode == "prepare")
 		{
 			$this->jsSettings['tableSettings'][ $this->tName ]['pdfPrinterPageOrientation'] = $this->pSet->isLandscapePrinterPagePDFOrientation();
@@ -732,16 +665,11 @@ class PrintPage extends RunnerPage
 			$this->jsSettings['tableSettings'][ $this->tName ]['pdfPrinterPageScale'] = $this->pSet->getPrinterPagePDFScale();
 		}
 	}
-	
-	/**
-	 *
-	 */
 	public function displayPrintPage()
 	{
 		$templateFile = $this->templatefile;
 		if($this->eventsObject->exists("BeforeShowPrint"))
 			$this->eventsObject->BeforeShowPrint($this->xt, $templateFile, $this);
-		
 		$this->preparePDFDisplay();
 
 		if( $this->pdfMode == "build" )
@@ -757,16 +685,13 @@ class PrintPage extends RunnerPage
 		{
 			$this->display($this->templatefile);
 		}
-	}
+		
+	}	
 
-	/**
-	 *
-	 */
 	protected function preparePDFDimensions()
 	{
 		if( $this->pSet->isPrinterPagePDFFitToPage() )
 			return;
-			
 		if( !$this->pSet->isLandscapePrinterPagePDFOrientation() )
 		{
 			$this->pdfWidth = PDF_PAGE_WIDTH * 100 / $this->pSet->getPrinterPagePDFScale();
@@ -776,16 +701,40 @@ class PrintPage extends RunnerPage
 			$this->pdfWidth = PDF_PAGE_HEIGHT * 100 / $this->pSet->getPrinterPagePDFScale();
 		}
 	}
-
+	
+	/**
+	 * Display master table info
+	 */
+	public function printMasterTableInfo() 
+	{
+		$masterTablesInfoArr = $this->pSet->getMasterTablesArr( $this->tName );
+		if( !count($masterTablesInfoArr)  )
+			return;
+			
+		foreach( $masterTablesInfoArr as $masterTableData )
+		{
+			if( $this->masterTable != $masterTableData['mDataSourceTable'] ) 
+				continue;
+				
+			if( $masterTableData['dispInfo'] ) 
+			{
+				include_once( getabspath("include/". $masterTableData['mShortTable']. "_masterprint.php" ) );
+				
+				$this->pageBody[ "showmasterfile" ] = array();
+				$params = array("detailtable" => $this->tName, "keys" => $this->masterKeys);
+				AssignFunction($this->pageBody[ "showmasterfile" ], "DisplayMasterTableInfoForPrint_".$masterTableData['mShortTable'], $params);
+				//	this is needed to prepare containers in XTempl
+				$this->xt->assign( "mastertable_block", true);
+			}
+		}		
+	}
+	
 	public function doFirstPageAssignments() 
 	{
 		if( $this->pSet->isPrinterPagePDF() && !$this->pdfMode )
 			$this->pageBody["pdflink_block"] = true;
 	}
 	
-	/**
-	 *
-	 */
 	protected function buildPdf($_landscape, $_pagewidth, $_page)
 	{
 		$landscape = $_landscape;
@@ -794,213 +743,6 @@ class PrintPage extends RunnerPage
 		include(getabspath("plugins/page2pdf.php"));
 	}
 
-	/**
-	 * Hide the field on the page
-	 * @param String fieldName
-	 */
-	function hideField($fieldName)
-	{
-		$gf = GoodFieldName($fieldName);
-		foreach ($this->body["data"] as $key => $value)
-		{
-			unset($this->body["data"][$key][ $gf . "_fieldheadercolumn"]);
-			unset($this->body["data"][$key][ $gf . "_fieldcolumn"]);
-			unset($this->body["data"][$key][ $gf . "_fieldfootercolumn"]);
-		}
-	}
-
-	/**
-	 * Show the field on the page
-	 * @param String fieldName
-	 */
-	function showField($fieldName)
-	{
-		$gf = GoodFieldName($fieldName);
-		foreach ($this->body["data"] as $key => $value) 
-		{
-			$this->body["data"][$key][ $gf . "_fieldheadercolumn"] = true;
-			$this->body["data"][$key][ $gf . "_fieldcolumn"] = true;
-			$this->body["data"][$key][ $gf . "_fieldfootercolumn"] = true;
-		}
-	}
-
-	/**
-	 * @param Array data
-	 * @return Array 
-	 */
-	protected function buildDetails( $data )
-	{
-		$details = array();
-		$multipleDetails = count($this->detailTables) > 1;
-		
-		foreach( $this->detailTables as $dt )
-		{
-			$dTable = GetTableByShort( $dt );
-			$mkeys = $this->pSet->getMasterKeysByDetailTable( $dTable );
-			if( !$mkeys )
-				continue;
-
-			$tSet = $this->pSet->getTable( $dTable );
-			$tType = $tSet->getTableType();
-
-			$dtableArrParams = array();
-//			$dtableArr["object"] = $this;
-			//$dtableArr["method"] = "showDetails";
-			$dtableArrParams = array();
-			$dtableArrParams["id"] = 1;	//	doesn't matter
-			$dtableArrParams["xt"] = new Xtempl();
-			$dtableArrParams["tName"] = $dTable;
-			$dtableArrParams["multipleDetails"] = $multipleDetails;
-
-			if ( $tType == PAGE_REPORT )
-			{
-				$dtableArrParams["pageType"] = PAGE_RPRINT;
-				$dtableArrParams["isDetail"] = true;
-				$dtableArrParams["masterTable"] = $this->tName;
-				$dtableArrParams["masterKeysReq"] = array();
-				$i = 0;
-				foreach( $mkeys as $mkey )
-				{
-					$i++;
-					$dtableArrParams["masterKeysReq"][$i] = $data[$mkey] ;
-				}
-			}
-			else
-			{
-				$dtableArrParams["pageType"] = PAGE_PRINT;
-				$dtableArrParams["printMasterTable"] = $this->tName;
-				$dtableArrParams["printMasterKeys"] = array();
-				foreach( $mkeys as $mkey )
-				{
-					$dtableArrParams["printMasterKeys"][] = $data[ $mkey ];
-				}
-			}
-			
-			$details[] = array( "details"=> XTempl::create_method_assignment( "showDetails", $this, $dtableArrParams ) );
-		}
-		
-		return $details;
-	}
-	
-	/**
-	 * @param Array params
-	 */
-	public function showDetails( $params ) 
-	{
-		if ( $params["pageType"] == PAGE_RPRINT )
-		{
-			$detailsObject = new ReportPrintPage( $params );
-			$detailsObject->init();
-			$detailsObject->processDetailPrint();
-		}
-		else
-		{
-			$detailsObject = new PrintPage_Details( $params );
-			$detailsObject->init();
-			$detailsObject->process();
-		}
-	}
-
-	protected function getColumnsToHide()  
-	{
-		return $this->getCombinedHiddenColumns();
-	}
-	
-	function fieldClass($f) {
-		$ret = parent::fieldClass($f);
-		if( array_search( GoodFieldname($f), $this->hideColumns ) !== FALSE )
-			$ret .= " bs-hidden-column";
-		return $ret;
-	}
-	
-	protected function getSubsetSQLComponents()
-	{
-		$sql = array();
-
-		$selectedRecords = $this->getSelectedRecords();
-		if( $selectedRecords !== null )
-		{
-			//	export selected mode. Export only selected records, ignore search & filter
-			$sql["sqlParts"] = $this->gQuery->getSqlComponents();
-			
-			$selectedWhereParts = array();
-			foreach( $selectedRecords as $keys )
-				$selectedWhereParts[] = KeyWhere( $keys );
-
-			$sql["mandatoryWhere"][] = implode(" or ", $selectedWhereParts );
-			if( 0 == count( $selectedRecords ) )
-				$sql["mandatoryWhere"][] = "1=0";
-		}
-		else
-		{
-			//	add search, filter and master clauses
-			$sql = parent::getSubsetSQLComponents();
-		}
-		
-		if( $this->connection->dbType == nDATABASE_DB2 ) 
-			$sql["sqlParts"]["head"] .= ", ROW_NUMBER() over () as DB2_ROW_NUMBER ";
-	
-		//	security
-		$sql["mandatoryWhere"][] = $this->SecuritySQL("Export", $this->tName);
-
-		return $sql;
-	}
-	
-	/**
-	 * Builds SQL query for retrieving data from DB
-	 * @return String
-	 */
-	protected function buildSQL()
-	{
-		$sql = $this->getSubsetSQLComponents();
-		$orderClause = $this->getOrderByClause();
-
-		//	build SQL
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-		$this->countSQL = $strSQL;
-		$strSQL.= $orderClause;
-
-		//	do Before SQL Query event
-		$strSQLbak = $strSQL;
-		$whereModifiedInEvent = false;
-		$orderbyModifiedInEvent = false;
-
-		if( $this->eventsObject->exists("BeforeQueryPrint") )
-		{
-			$tstrWhereClause = SQLQuery::combineCases( array(
-					SQLQuery::combineCases( $sql["mandatoryWhere"], "and" ),
-					SQLQuery::combineCases( $sql["optionalWhere"], "or" )
-				), "and" );
-
-			$strWhereBak = $tstrWhereClause;
-			$tstrOrderBy = $orderClause;
-
-			$this->eventsObject->BeforeQueryPrint($strSQL, $tstrWhereClause, $tstrOrderBy, $this);
-
-			$whereModifiedInEvent = $tstrWhereClause != $strWhereBak;
-			$orderbyModifiedInEvent = $tstrOrderBy != $orderClause;
-			$orderClause = $tstrOrderBy;
-
-
-			//	Rebuild SQL if needed
-			if( $whereModifiedInEvent )
-			{
-				$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], array( $tstrWhereClause ), $sql["mandatoryHaving"] );
-				$this->countSQL = $strSQL;
-				$strSQL .= $orderClause;
-			}
-			else if( $orderbyModifiedInEvent )
-			{
-				$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-				$this->countSQL = $strSQL;
-				$strSQL.= $orderClause;
-			}
-		}
-
-		LogInfo($strSQL);
-		$this->querySQL = $strSQL;
- 	}
-	
 	
 }
 ?>

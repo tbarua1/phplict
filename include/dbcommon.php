@@ -22,7 +22,7 @@ if(@$_SERVER["REQUEST_URI"])
 }
 
 //	isolate sessions for projects running on the same site
-@session_name(str_replace(" ", "", "s1506838807"));
+@session_name(str_replace(" ", "", "s1507115687"));
 
 // Setting the cache limiter to '' will turn off automatic sending of cache headers entirely
 @session_cache_limiter("");
@@ -30,7 +30,7 @@ if(@$_SERVER["REQUEST_URI"])
 
 
 //E_STRICT has become a part of E_ALL since php 5.4 only
-error_reporting( (E_ALL | E_STRICT) & ~E_STRICT & ~E_NOTICE & ~E_DEPRECATED);
+error_reporting( (E_ALL | E_STRICT) & ~E_STRICT & ~E_NOTICE );
 
 /// include php specific code
 include("phpfunctions.php");
@@ -67,16 +67,16 @@ if(!function_exists('json_encode') || !$useUTF8)
 {
 	include_once(getabspath("classes/json.php"));
 	$GLOBALS['JSON_OBJECT'] = new Services_JSON(SERVICES_JSON_LOOSE_TYPE, $useUTF8);
-
+               
     function my_json_encode($value, $json_unescaped_unicode = false){
     	return $GLOBALS['JSON_OBJECT']->encode($value);
     }
-
+   
     function my_json_decode($value){
         $result = $GLOBALS['JSON_OBJECT']->decode($value);
         if(is_null($result) || count($result) == 0)
     		return array();
-    	else
+    	else 
     		return $result;
 	}
 }
@@ -85,12 +85,12 @@ else
 	function my_json_encode($value){
 		return json_encode($value);
     }
-
+   
     function my_json_decode($value){
         $result = json_decode($value,true);
         if(is_null($result) || count($result) == 0)
     		return array();
-    	else
+    	else 
     		return $result;
 	}
 }
@@ -100,8 +100,5 @@ function my_json_encode_unescaped_unicode($value)
 	array_walk_recursive($value, 'json_mb_encode_numericentity');
 	return runner_decode_numeric_entity(my_json_encode($value), array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
 }
-
-	
-		;
 
 ?>

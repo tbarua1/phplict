@@ -6,12 +6,12 @@ require_once("include/dbcommon.php");
 add_nocache_headers();
 
 require_once('include/xtempl.php');
+require_once("include/batch_variables.php");
+require_once('classes/listpage.php');
 require_once("classes/searchpanel.php");
 require_once("classes/searchcontrol.php");
 require_once("classes/searchclause.php");
 require_once("classes/panelsearchcontrol.php");
-require_once("include/batch_variables.php");
-require_once('classes/listpage.php');
 require_once('include/lookuplinks.php');
 
 //	Check whether the page was called as a part of Lookup wizard - List page with search.
@@ -21,181 +21,131 @@ InitLookupLinks();
 if( !ListPage::processListPageSecurity( $strTableName ) )
 	return;
 
-if( ListPage::processSaveParams( $strTableName ) )
-	return;
 
 
 
-
-$layout = new TLayout("list_bootstrap1", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "batch_list";
+$layout = new TLayout("list2", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["center"] = array();
-$layout->containers["gridcontrols"] = array();
-$layout->container_properties["gridcontrols"] = array(  );
-$layout->containers["gridcontrols"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"add_delete" );
-$layout->containers["add_delete"] = array();
-$layout->container_properties["add_delete"] = array(  );
-$layout->containers["add_delete"][] = array("name"=>"add",
+$layout->containers["recordcontrols"] = array();
+$layout->container_properties["recordcontrols"] = array(  );
+$layout->containers["recordcontrols"][] = array("name"=>"recordcontrols_new", 
 	"block"=>"newrecord_controls_block", "substyle"=>1  );
 
-$layout->containers["add_delete"][] = array("name"=>"recordcontrol",
+$layout->containers["recordcontrols"][] = array("name"=>"recordcontrol", 
 	"block"=>"record_controls_block", "substyle"=>1  );
 
-$layout->skins["add_delete"] = "";
+$layout->skins["recordcontrols"] = "1";
 
-
-$layout->containers["gridcontrols"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"gridinfo" );
-$layout->containers["gridinfo"] = array();
-$layout->container_properties["gridinfo"] = array(  );
-$layout->containers["gridinfo"][] = array("name"=>"details_found",
-	"block"=>"details_found", "substyle"=>1  );
-
-$layout->containers["gridinfo"][] = array("name"=>"printpanel",
-	"block"=>"print_friendly", "substyle"=>1  );
-
-$layout->skins["gridinfo"] = "";
-
-
-$layout->skins["gridcontrols"] = "";
-
-$layout->blocks["center"][] = "gridcontrols";
-$layout->containers["tabs"] = array();
-$layout->container_properties["tabs"] = array(  );
-$layout->containers["tabs"][] = array("name"=>"bsgrid_tabs",
-	"block"=>"grid_tabs", "substyle"=>1  );
-
-$layout->skins["tabs"] = "";
-
-$layout->blocks["center"][] = "tabs";
-$layout->containers["messagerow"] = array();
-$layout->container_properties["messagerow"] = array(  );
-$layout->containers["messagerow"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"message" );
+$layout->blocks["center"][] = "recordcontrols";
 $layout->containers["message"] = array();
 $layout->container_properties["message"] = array(  );
-$layout->containers["message"][] = array("name"=>"message",
+$layout->containers["message"][] = array("name"=>"message", 
 	"block"=>"message_block", "substyle"=>1  );
 
-$layout->skins["message"] = "";
+$layout->skins["message"] = "2";
 
-
-$layout->skins["messagerow"] = "";
-
-$layout->blocks["center"][] = "messagerow";
-$layout->containers["center"] = array();
-$layout->container_properties["center"] = array(  );
-$layout->containers["center"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"grid" );
+$layout->blocks["center"][] = "message";
 $layout->containers["grid"] = array();
 $layout->container_properties["grid"] = array(  );
-$layout->containers["grid"][] = array("name"=>"grid",
+$layout->containers["grid"][] = array("name"=>"grid", 
 	"block"=>"grid_block", "substyle"=>1  );
 
-$layout->skins["grid"] = "";
+$layout->skins["grid"] = "grid";
 
-
-$layout->skins["center"] = "";
-
-$layout->blocks["center"][] = "center";
+$layout->blocks["center"][] = "grid";
 $layout->containers["pagination"] = array();
 $layout->container_properties["pagination"] = array(  );
-$layout->containers["pagination"][] = array("name"=>"pagination",
+$layout->containers["pagination"][] = array("name"=>"pagination", 
 	"block"=>"pagination_block", "substyle"=>1  );
 
-$layout->skins["pagination"] = "";
+$layout->skins["pagination"] = "2";
 
 $layout->blocks["center"][] = "pagination";
 $layout->blocks["left"] = array();
+$layout->skins["lang"] = "menu";
+
+$layout->blocks["left"][] = "lang";
+$layout->containers["logg"] = array();
+$layout->container_properties["logg"] = array(  );
+$layout->containers["logg"][] = array("name"=>"loggedas", 
+	"block"=>"security_block", "substyle"=>1  );
+
+$layout->skins["logg"] = "menu";
+
+$layout->blocks["left"][] = "logg";
 $layout->containers["left"] = array();
 $layout->container_properties["left"] = array(  );
-$layout->containers["left"][] = array("name"=>"searchpanel",
+$layout->containers["left"][] = array("name"=>"searchpanel", 
 	"block"=>"searchPanel", "substyle"=>1  );
 
-$layout->skins["left"] = "";
+$layout->containers["left"][] = array("name"=>"vmenu", 
+	"block"=>"menu_block", "substyle"=>1  );
+
+$layout->skins["left"] = "menu";
 
 $layout->blocks["left"][] = "left";
 $layout->blocks["top"] = array();
-$layout->containers["menu"] = array();
-$layout->container_properties["menu"] = array(  );
-$layout->containers["menu"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"hdr" );
-$layout->containers["hdr"] = array();
-$layout->container_properties["hdr"] = array(  );
-$layout->containers["hdr"][] = array("name"=>"logo",
-	"block"=>"logo_block", "substyle"=>1  );
-
-$layout->containers["hdr"][] = array("name"=>"bsnavbarcollapse",
-	"block"=>"collapse_block", "substyle"=>1  );
-
-$layout->skins["hdr"] = "";
-
-
-$layout->containers["menu"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"menu_1" );
-$layout->containers["menu_1"] = array();
-$layout->container_properties["menu_1"] = array(  );
-$layout->containers["menu_1"][] = array("name"=>"hmenu",
-	"block"=>"menu_block", "substyle"=>1  );
-
-$layout->containers["menu_1"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"more" );
-$layout->containers["more"] = array();
-$layout->container_properties["more"] = array(  );
-$layout->containers["more"][] = array("name"=>"morebutton",
-	"block"=>"more_list", "substyle"=>1  );
-
-$layout->containers["more"][] = array("name"=>"loggedas",
-	"block"=>"security_block", "substyle"=>1  );
-
-$layout->skins["more"] = "";
-
-
-$layout->containers["menu_1"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"more_1" );
-$layout->containers["more_1"] = array();
-$layout->container_properties["more_1"] = array(  );
-$layout->containers["more_1"][] = array("name"=>"search",
-	"block"=>"searchform_block", "substyle"=>1  );
-
-$layout->skins["more_1"] = "";
-
-
-$layout->skins["menu_1"] = "";
-
-
-$layout->skins["menu"] = "";
-
-$layout->blocks["top"][] = "menu";
-$layout->blocks["topmiddle"] = array();
-$layout->containers["breadcrumbs"] = array();
-$layout->container_properties["breadcrumbs"] = array(  );
-$layout->containers["breadcrumbs"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"bc" );
-$layout->containers["bc"] = array();
-$layout->container_properties["bc"] = array(  );
-$layout->containers["bc"][] = array("name"=>"breadcrumbs",
-	"block"=>"breadcrumbs", "substyle"=>1  );
-
-$layout->skins["bc"] = "";
-
-
-$layout->skins["breadcrumbs"] = "";
-
-$layout->blocks["topmiddle"][] = "breadcrumbs";
-$layout->containers["masterinfo"] = array();
-$layout->container_properties["masterinfo"] = array(  );
-$layout->containers["masterinfo"][] = array("name"=>"masterinfo",
+$layout->containers["master"] = array();
+$layout->container_properties["master"] = array(  );
+$layout->containers["master"][] = array("name"=>"masterinfo", 
 	"block"=>"mastertable_block", "substyle"=>1  );
 
-$layout->skins["masterinfo"] = "";
+$layout->skins["master"] = "empty";
 
-$layout->blocks["topmiddle"][] = "masterinfo";
+$layout->blocks["top"][] = "master";
+$layout->containers["toplinks"] = array();
+$layout->container_properties["toplinks"] = array(  );
+$layout->containers["toplinks"][] = array("name"=>"toplinks_print", 
+	"block"=>"prints_block", "substyle"=>1  );
+
+$layout->containers["toplinks"][] = array("name"=>"toplinks_advsearch", 
+	"block"=>"asearch_link", "substyle"=>1  );
+
+$layout->containers["toplinks"][] = array("name"=>"toplinks_import", 
+	"block"=>"import_link", "substyle"=>1  );
+
+$layout->containers["toplinks"][] = array("name"=>"toplinks_export", 
+	"block"=>"export_link", "substyle"=>1  );
+
+$layout->skins["toplinks"] = "empty";
+
+$layout->blocks["top"][] = "toplinks";
+$layout->containers["search"] = array();
+$layout->container_properties["search"] = array(  );
+$layout->containers["search"][] = array("name"=>"search", 
+	"block"=>"searchform_block", "substyle"=>1  );
+
+$layout->containers["search"][] = array("name"=>"search_buttons", 
+	"block"=>"searchformbuttons_block", "substyle"=>1  );
+
+$layout->containers["search"][] = array("name"=>"search_saving_buttons", 
+	"block"=>"searchsaving_block", "substyle"=>1  );
+
+$layout->containers["search"][] = array("name"=>"details_found", 
+	"block"=>"details_block", "substyle"=>1  );
+
+$layout->containers["search"][] = array("name"=>"page_of", 
+	"block"=>"pages_block", "substyle"=>1  );
+
+$layout->containers["search"][] = array("name"=>"recsperpage", 
+	"block"=>"recordspp_block", "substyle"=>1  );
+
+$layout->skins["search"] = "2";
+
+$layout->blocks["top"][] = "search";
 $page_layouts["batch_list"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 // add master layouts 
@@ -203,174 +153,222 @@ $page_layouts["batch_list"] = $layout;
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "consultant_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["consultant_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "courses_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["courses_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "department_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["department_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "division_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["division_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "employees_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["employees_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
 
 
 
-$layout = new TLayout("masterlist_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "university_masterlist";
+$layout = new TLayout("masterlist", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
-$layout->containers["column"] = array();
-$layout->container_properties["column"] = array(  );
-$layout->containers["column"][] = array("name"=>"masterlistheader",
-	"block"=>"masterlist_title", "substyle"=>1  );
-
-$layout->skins["column"] = "";
-
-$layout->blocks["bare"][] = "column";
-$layout->containers["mastergrid"] = array();
-$layout->container_properties["mastergrid"] = array(  );
-$layout->containers["mastergrid"][] = array("name"=>"masterlistgrid",
+$layout->containers["masterlistheader"] = array();
+$layout->container_properties["masterlistheader"] = array(  );
+$layout->containers["masterlistheader"][] = array("name"=>"masterlistheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["mastergrid"] = "";
+$layout->skins["masterlistheader"] = "empty";
+
+$layout->blocks["bare"][] = "masterlistheader";
+$layout->containers["mastergrid"] = array();
+$layout->container_properties["mastergrid"] = array(  );
+$layout->containers["mastergrid"][] = array("name"=>"masterlistfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->skins["mastergrid"] = "grid";
 
 $layout->blocks["bare"][] = "mastergrid";
 $page_layouts["university_masterlist"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
@@ -395,40 +393,24 @@ elseif( $mode == LIST_LOOKUP )
 	require_once('classes/listpage_embed.php');
 	require_once('classes/listpage_lookup.php');
 	require_once("classes/searchpanellookup.php");
-	
-	$options["mainTable"] = postvalue("table");
-	$options["mainField"] = postvalue("field");
-	$options["mainPageType"] = postvalue("pageType");
-
-	$options["mainRecordData"] = my_json_decode( postvalue('data') );
-	$options["mainRecordMasterTable"] = postvalue('mainRecordMasterTable');
-	
-	if( postvalue("parentsExist") )
-		$options["parentCtrlsData"] = my_json_decode( postvalue("parentCtrlsData") );
 }
 elseif( $mode == LIST_DETAILS )
 {	
 	require_once('classes/listpage_embed.php');
 	require_once('classes/listpage_dpinline.php');
-	require_once('classes/listpage_dplist.php');
 }
 elseif( $mode == LIST_DASHDETAILS )
 {
 	require_once('classes/listpage_embed.php');
-	require_once('classes/listpage_dashboard.php');
-	require_once('classes/listpage_dpdash.php');
+	require_once('classes/listpage_dpinline.php');
 }
 elseif( $mode == LIST_DASHBOARD )
 {
 	require_once('classes/listpage_embed.php');
 	require_once('classes/listpage_dashboard.php');
+	$options["dashElementName"] = postvalue("dashelement");
+	$options["dashTName"] = postvalue("table");
 }
-elseif( $mode == MAP_DASHBOARD )
-{
-	require_once('classes/listpage_embed.php');
-	require_once('classes/listpage_dashboard.php');
-	require_once('classes/map_dashboard.php');
-} 
 
 $xt = new Xtempl( $mode != LIST_SIMPLE ); //#9607 1. Temporary fix
 
@@ -437,27 +419,11 @@ $options["id"] = postvalue("id") ? postvalue("id") : 1;
 $options["flyId"] = postvalue("recordId") + 0;
 $options["mode"] = $mode;
 $options['xt'] = &$xt;
+$options['mainMasterPageType'] = postvalue("mainmasterpagetype");
 $options['masterPageType'] = postvalue("masterpagetype");
 $options["masterTable"] = postvalue("mastertable");
 $options["masterId"] = postvalue("masterid");
 $options["firstTime"] = postvalue("firsttime");
-$options["sortBy"] = postvalue("sortby");
-
-
-if( $mode == LIST_DASHBOARD && postvalue("nodata") && strlen($options["masterTable"]) )
-	$options["showNoData"] = true;
-
-if( $mode != LIST_LOOKUP )
-{
-	$options["dashElementName"] = postvalue("dashelement");
-	$options["dashTName"] = postvalue("table");
-} 
-
-if(	postvalue("mapRefresh") )
-{
-	$options["mapRefresh"] = true;
-	$options["vpCoordinates"] = my_json_decode( postvalue("vpCoordinates") );
-}	
 
 $i = 1;
 while(isset($_REQUEST["masterkey".$i])) 
@@ -472,14 +438,35 @@ while(isset($_REQUEST["masterkey".$i]))
 //	Create $pageObject
 $pageObject = ListPage::createListPage($strTableName, $options);
 
-if( $pageObject->processSaveSearch() )
+
+// Read Search parameters from the request
+
+if( postvalue("saveSearch") && postvalue("searchName") && !is_null($pageObject->searchLogger) ) 
+{
+	$searchName = postvalue("searchName");
+	$searchParams = $pageObject->getSearchParamsForSaving();
+	$pageObject->searchLogger->saveSearch( $searchName, $searchParams );
+	
+	$pageObject->searchClauseObj->savedSearchIsRun = true;
+	$_SESSION[$pageObject->sessionPrefix.'_advsearch'] = serialize( $pageObject->searchClauseObj );
+	
+	echo my_json_encode( $searchParams );
 	exit();
+}
+
+// Delete the saved search
+if( postvalue("deleteSearch") && postvalue("searchName") && !is_null($pageObject->searchLogger) ) 
+{
+	$searchName = postvalue("searchName");
+	$pageObject->searchLogger->deleteSearch( $searchName );
+	exit();
+}
+
 
 $gQuery->ReplaceFieldsWithDummies( $pageObject->getNotListBlobFieldsIndices() );
 
 
-if( $mode != LIST_DETAILS && $mode != MAP_DASHBOARD && $mode != LIST_DASHBOARD ) 
-{ 
+if ($mode != LIST_DETAILS) { 
 }
 
 unset($_SESSION["message_add"]);

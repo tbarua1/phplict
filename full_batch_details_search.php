@@ -5,14 +5,12 @@
 require_once("include/dbcommon.php");
 add_nocache_headers();
 
-require_once("classes/searchclause.php");
 require_once("include/full_batch_details_variables.php");
 require_once("classes/searchcontrol.php");
 require_once("classes/advancedsearchcontrol.php");
 require_once("classes/panelsearchcontrol.php");
+require_once("classes/searchclause.php");
 
-
-Security::processLogoutRequest();
 
 if( !isLogged() )
 { 
@@ -33,58 +31,45 @@ if(!$accessGranted)
 
 
 
-$layout = new TLayout("search_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "full_batch_details_search";
+$layout = new TLayout("search2", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["top"] = array();
-$layout->containers["searchpage"] = array();
-$layout->container_properties["searchpage"] = array(  );
-$layout->containers["searchpage"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"header" );
-$layout->containers["header"] = array();
-$layout->container_properties["header"] = array(  );
-$layout->containers["header"][] = array("name"=>"bssearchheader",
-	"block"=>"searchheader", "substyle"=>1  );
+$layout->containers["search"] = array();
+$layout->container_properties["search"] = array(  );
+$layout->containers["search"][] = array("name"=>"srchheader", 
+	"block"=>"searchheader", "substyle"=>2  );
 
-$layout->skins["header"] = "";
+$layout->containers["search"][] = array("name"=>"srchconditions", 
+	"block"=>"conditions_block", "substyle"=>1  );
 
-
-$layout->skins["searchpage"] = "";
-
-$layout->blocks["top"][] = "searchpage";
+$layout->containers["search"][] = array("name"=>"wrapper", 
+	"block"=>"", "substyle"=>1 , "container"=>"fields" );
 $layout->containers["fields"] = array();
 $layout->container_properties["fields"] = array(  );
-$layout->containers["fields"][] = array("name"=>"bssearchfields",
+$layout->containers["fields"][] = array("name"=>"srchfields", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["fields"] = "";
+$layout->containers["fields"][] = array("name"=>"srchbuttons", 
+	"block"=>"searchbuttons", "substyle"=>2  );
 
-$layout->blocks["top"][] = "fields";
-$layout->containers["bottombuttons"] = array();
-$layout->container_properties["bottombuttons"] = array(  );
-$layout->containers["bottombuttons"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"bbuttons" );
-$layout->containers["bbuttons"] = array();
-$layout->container_properties["bbuttons"] = array(  );
-$layout->containers["bbuttons"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"leftbuttons" );
-$layout->containers["leftbuttons"] = array();
-$layout->container_properties["leftbuttons"] = array(  );
-$layout->containers["leftbuttons"][] = array("name"=>"srchbuttons",
-	"block"=>"searchbuttons", "substyle"=>1  );
-
-$layout->skins["leftbuttons"] = "";
+$layout->skins["fields"] = "fields";
 
 
-$layout->skins["bbuttons"] = "";
+$layout->skins["search"] = "1";
 
-
-$layout->skins["bottombuttons"] = "";
-
-$layout->blocks["top"][] = "bottombuttons";
+$layout->blocks["top"][] = "search";
 $page_layouts["full_batch_details_search"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
@@ -104,7 +89,6 @@ else if( postvalue("mode") == "inlineLoadCtrl" )
 {
 	// load search panel control
 	$mode = SEARCH_LOAD_CONTROL;
-	$layoutVersion = postvalue("layoutVersion");
 }
 
 $params = array();
@@ -117,22 +101,21 @@ $params['tName'] = $strTableName;
 $params['pageType'] = PAGE_SEARCH;
 $params['templatefile'] = $templatefile;
 $params['shortTableName'] = 'full_batch_details';
-$params['layoutVersion'] = $layoutVersion;
 
 $params['searchControllerId'] = postvalue('searchControllerId') ? postvalue('searchControllerId') : $id;
 $params['ctrlField'] = postvalue('ctrlField');
 
-$params['needSettings'] = postvalue('isNeedSettings');
+//crosstab report params
+$params['axis_x'] = postvalue('axis_x');
+$params['axis_y'] = postvalue('axis_y');
+$params['field'] = postvalue('field');
+$params['group_func'] = postvalue('group_func');
 
 if( $mode == SEARCH_DASHBOARD )
 {
 	$params["dashTName"] = postvalue("table");
 	$params["dashElementName"] = postvalue("dashelement");
 }
-
-// e.g. crosstable params
-$params["extraPageParams"] = SearchPage::getExtraPageParams();
-
 
 $pageObject = new SearchPage($params);
 
@@ -144,4 +127,5 @@ if( $mode == SEARCH_LOAD_CONTROL )
 
 $pageObject->init();
 $pageObject->process();
+
 ?>

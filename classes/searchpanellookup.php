@@ -4,9 +4,9 @@
  */
 class SearchPanelLookup extends SearchPanel {
 
-	function __construct(&$params) 
+	function SearchPanelLookup(&$params) 
 	{
-		parent::__construct($params);
+		parent::SearchPanel($params);
 	}
 	
 	function searchAssign()

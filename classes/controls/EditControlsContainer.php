@@ -28,11 +28,8 @@ class EditControlsContainer
 	 */
 	protected $connection;
 	
-	public $classNamesForEdit = array();
-		
-	public $classNamesForSearch = array();
 	
-	public function __construct($pageObject, $pSetEdit, $pageType, $cipherer = "")
+	public function EditControlsContainer($pageObject, $pSetEdit, $pageType, $cipherer = "")
 	{
 		if($pageObject != null)
 		{
@@ -46,8 +43,6 @@ class EditControlsContainer
 			$this->tName = $pSetEdit->_table;
 			$this->cipherer	= $cipherer;
 		}
-		
-		$this->fillControlClassNames();
 
 		$this->setEditControlsConnection();
 		
@@ -141,17 +136,17 @@ class EditControlsContainer
 			$fields = array_merge($searchFields, $fields);
 			$fields = array_unique($fields);			
 		}
-		foreach( $fields as $i => $f )
+		for($i = 0; $i < count($fields); $i++)
 		{
 			$appear = false;
-			if($this->pageType == PAGE_REGISTER || $this->pageType == PAGE_SEARCH || in_array($f, $searchFields))
+			if($this->pageType == PAGE_REGISTER || $this->pageType == PAGE_SEARCH || in_array($fields[$i], $searchFields))
 				$appear = true;
 			else if($appearOnPageFunc) 
-				$appear = $this->pSetEdit->$appearOnPageFunc($f);
+				$appear = $this->pSetEdit->$appearOnPageFunc($fields[$i]);
 			if($appear)
 			{
-				$this->getControl($f)->addJSFiles();
-				$this->getControl($f)->addCSSFiles();
+				$this->getControl($fields[$i])->addJSFiles();
+				$this->getControl($fields[$i])->addCSSFiles();
 			}
 		}
 	}
@@ -167,7 +162,8 @@ class EditControlsContainer
 		if( count($extraParmas) && $extraParmas["getDetKeyReadOnlyCtrl"] ) 
 		{
 			include_once(getabspath("classes/controls/Control.php"));
-			$className = $this->classNamesForEdit[ EDIT_FORMAT_READONLY ];
+			$cTypes = new ControlTypes();
+			$className = $cTypes->forEdit[ EDIT_FORMAT_READONLY ];
 			
 			$ctrl = createControlClass($className, $field, $this->pageObject != null ? $this->pageObject : $this, $id, $this->connection);
 			$ctrl->container = $this;
@@ -178,7 +174,8 @@ class EditControlsContainer
 		if( count($extraParmas) && $extraParmas["getConrirmFieldCtrl"] ) 
 		{
 			include_once(getabspath("classes/controls/Control.php"));
-			$className = $this->classNamesForEdit[ EDIT_FORMAT_PASSWORD ];
+			$cTypes = new ControlTypes();
+			$className = $cTypes->forEdit[ EDIT_FORMAT_PASSWORD ];
 			
 			$ctrl = createControlClass($className, $field, $this->pageObject != null ? $this->pageObject : $this, $id, $this->connection);
 			if($extraParmas['isConfirm'])
@@ -194,6 +191,7 @@ class EditControlsContainer
 			include_once(getabspath("classes/controls/Control.php"));
 			
 			$userControl = false;
+			$cTypes = new ControlTypes();
 			
 			$editFormat = $this->pSetEdit->getEditFormat($field);
 			if($editFormat == EDIT_FORMAT_TEXT_FIELD && IsDateFieldType($this->pSetEdit->getFieldType($field)))
@@ -211,15 +209,15 @@ class EditControlsContainer
 					if( $localPSet->getLinkField($field) != $localPSet->getDisplayField($field) )
 						$className = "LookupTextField";
 					else 
-						$className = $this->classNamesForSearch[ $editFormat ];
+						$className = $cTypes->forSearch[ $editFormat ];
 				}
 				else
-					$className = $this->classNamesForSearch[ $editFormat ];
+					$className = $cTypes->forSearch[ $editFormat ];
 			}
 			else
-				$className = $this->classNamesForEdit[ $editFormat ];
+				$className = $cTypes->forEdit[ $editFormat ];
 			
-			if( $className == $this->classNamesForEdit[ EDIT_FORMAT_FILE ] && $this->pSetEdit->isBasicUploadUsed($field) )
+			if( $className == $cTypes->forEdit[ EDIT_FORMAT_FILE ] && $this->pSetEdit->isBasicUploadUsed($field) )
 				$className = "FileFieldSingle";
 			
 			if( !$className )
@@ -230,10 +228,10 @@ class EditControlsContainer
 					$userControl = true;
 					include_once(getabspath("classes/controls/UserControl.php"));
 					if( !is_null($this->pageObject) )
-						$this->pageObject->AddJSFile("include/runnerJS/controls/".$className.".js", "include/runnerJS/editControls/Control.js");
+						$this->pageObject->AddJSFile("include/runnerJS/controls/".$className.".js", "include/runnerJS/Control.js");
 				}
 				else
-					$className = $this->classNamesForEdit[ EDIT_FORMAT_TEXT_FIELD ];
+					$className = $cTypes->forEdit[ EDIT_FORMAT_TEXT_FIELD ];
 			}
 					
 			$this->controls[ $field ] = createControlClass($className, $field, $this->pageObject != null ? $this->pageObject : $this, $id, $this->connection);
@@ -257,10 +255,11 @@ class EditControlsContainer
 	function isSystemControl($className)
 	{
 		include_once(getabspath("classes/controls/Control.php"));
+		$cTypes = new ControlTypes();
 		if($this->pageType == PAGE_SEARCH || $this->pageType == PAGE_LIST)
-			return isset($this->classNamesForSearch[$className]);
+			return isset($cTypes->forSearch[$className]);
 		else
-			return isset($this->classNamesForEdit[$className]);
+			return isset($cTypes->forEdit[$className]);
 	}
 	
 	/**
@@ -274,41 +273,6 @@ class EditControlsContainer
 			return false;
 		}		
 		return true;
-	}
-	
-	function mobileTemplateMode() 
-	{
-		return false;
-	}
-	
-	protected function fillControlClassNames() 
-	{
-		$this->classNamesForEdit[EDIT_FORMAT_TEXT_FIELD] = "TextField";
-		$this->classNamesForEdit[EDIT_FORMAT_TIME] = "TimeField";
-		$this->classNamesForEdit[EDIT_FORMAT_TEXT_AREA] = "TextAreaField";
-		$this->classNamesForEdit[EDIT_FORMAT_PASSWORD] = "PasswordField";
-		$this->classNamesForEdit[EDIT_FORMAT_DATE] = "DateField";
-		$this->classNamesForEdit[EDIT_FORMAT_CHECKBOX] = "CheckboxField";
-		$this->classNamesForEdit[EDIT_FORMAT_DATABASE_IMAGE] = "DatabaseFileField";
-		$this->classNamesForEdit[EDIT_FORMAT_DATABASE_FILE] = "DatabaseFileField";
-		$this->classNamesForEdit[EDIT_FORMAT_HIDDEN] = "HiddenField";
-		$this->classNamesForEdit[EDIT_FORMAT_READONLY] = "ReadOnlyField";
-		$this->classNamesForEdit[EDIT_FORMAT_FILE] = "FileField";
-		$this->classNamesForEdit[EDIT_FORMAT_LOOKUP_WIZARD] = "LookupField";
-			
-		$this->classNamesForSearch[EDIT_FORMAT_TEXT_FIELD] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_TIME] = "TimeField";
-		$this->classNamesForSearch[EDIT_FORMAT_TEXT_AREA] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_PASSWORD] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_DATE] = "DateField";
-		$this->classNamesForSearch[EDIT_FORMAT_CHECKBOX] = "CheckboxField";
-		$this->classNamesForSearch[EDIT_FORMAT_DATABASE_IMAGE] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_DATABASE_FILE] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_HIDDEN] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_READONLY] = "TextField";
-		$this->classNamesForSearch[EDIT_FORMAT_FILE] = "FileField";
-		$this->classNamesForSearch[EDIT_FORMAT_LOOKUP_WIZARD] = "LookupField";
-	
 	}
 }
 ?>

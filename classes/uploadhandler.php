@@ -30,7 +30,7 @@ class UploadHandler
      */
     public $pSet = null;
 
-    function __construct($options=null) {
+    function UploadHandler($options=null) {
 		$this->formStamp = "";
 		$this->pageType = "";
 		$this->table = "";
@@ -132,7 +132,7 @@ class UploadHandler
 
     public function validate($uploadedFile, &$file, $error, $file_size, $index, $uploadDir) {
         if ($error) {
-            $file["error"] = $this->codeToMessage($error);
+            $file["error"] = $error;
             return false;
         }
         if (!$file["name"]) {
@@ -426,11 +426,11 @@ class UploadHandler
 		do{ 
 			$fileName = $prefix."_".generatePassword(8).'.'.$suffix;
 			$file = $path.$fileName; 
-			if( try_create_new_file( $file ) )
-				return $fileName;
-		} while( true ); 
+			$fp = @fopen($file, 'x'); 
+		}while(!$fp); 
 		
-		return ""; 
+		fclose($fp); 
+		return $fileName; 
 	} 
 	function create_scaled_image($file_path, $uploadDir, $new_file_name, $options, &$file, $isThumbnail, $uploadDirRelative, $uploadedFile) {
 		
@@ -489,36 +489,4 @@ class UploadHandler
 		}
 		return $ret;
 	}
-
-    function codeToMessage($code)
-    {
-        switch ($code) {
-            case 1 /*UPLOAD_ERR_INI_SIZE*/:
-                $message = "UPLOAD_ERR_INI_SIZE: The uploaded file exceeds the upload_max_filesize directive in php.ini";
-                break;
-            case 2 /*UPLOAD_ERR_FORM_SIZE*/:
-                $message = "UPLOAD_ERR_FORM_SIZE: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
-                break;
-            case 3 /*UPLOAD_ERR_PARTIAL*/:
-                $message = "UPLOAD_ERR_PARTIAL: The uploaded file was only partially uploaded";
-                break;
-            case 4 /*UPLOAD_ERR_NO_FILE*/:
-                $message = "UPLOAD_ERR_NO_FILE: No file was uploaded";
-                break;
-            case 6 /*UPLOAD_ERR_NO_TMP_DIR*/:
-                $message = "UPLOAD_ERR_NO_TMP_DIR: Missing a temporary folder";
-                break;
-            case 7 /*UPLOAD_ERR_CANT_WRITE*/:
-                $message = "UPLOAD_ERR_CANT_WRITE: Failed to write file to disk";
-                break;
-            case 8 /*UPLOAD_ERR_EXTENSION*/:
-                $message = "UPLOAD_ERR_EXTENSION: File upload stopped by extension";
-                break;
-
-            default:
-                $message = "Unknown upload error";
-                break;
-        }
-        return $message;
-    }
 }

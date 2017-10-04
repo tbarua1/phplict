@@ -15,23 +15,19 @@ class RunnerLdap
 	
 	var $ldap_useCustom = false;
 	
-	function __construct($aDomainName, $aServerIP, $useCustom)
+	function RunnerLdap($aDomainName, $aServerIP, $useCustom)
 	{
 		$this->ldap_domainName = $aDomainName;
 		$this->ldap_serverIP = $aServerIP;
 		$this->ldap_useCustom = $useCustom;
 	}
 	
-	/**
-	 *
-	 */
 	function runner_ldap_connect($aUsername, $aPassword)
 	{
 		// connect to ldap server
 		$this->ldapconn = ldap_connect("ldap://".$this->ldap_serverIP);
-		if ( !$this->ldapconn || ldap_errno($this->ldapconn) != 0 )
+		if (!$this->ldapconn || ldap_errno($this->ldapconn)!=0)
 			return false;
-			
 		@ldap_set_option($this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 		ldap_set_option($this->ldapconn, LDAP_OPT_REFERRALS, 0);
 		
@@ -40,13 +36,11 @@ class RunnerLdap
 		foreach($usernames as $u)
 		{
 			$this->ldapbind = @ldap_bind($this->ldapconn, $u , $aPassword);
-			if( $this->ldapbind )
+			if($this->ldapbind)
 				break;
 		}
-		
-		if( !$this->ldapbind )
+		if(!$this->ldapbind)
 			return false;
-			
 		return true;
 	}
 	
@@ -79,7 +73,7 @@ class RunnerLdap
 	 */
 	public function getProcessedPattern( $pattern, $userName )
 	{
-		return str_replace( array("%u", "%d", "%e"), array( $userName, $this->ldap_domainName, $this->ldap_DomainToDN($this->ldap_domainName) ), $pattern );
+		return str_replace( array("%u", "%d", "%e"), array( $userName, $this->ldap_domainName, $this->ldap_DomainToDN($this->ldap_domainName) ), $pattern);
 	}
 
 	/**
@@ -217,7 +211,7 @@ class RunnerLdap
 	function getGroupSid($userSid, $primaryGroupId)
 	{
 		$tgroup = bin2hex(substr($userSid,0, strlen($userSid)-4));
-		$group = "";
+		$group="";
 		for($i = 0; $i<strlen($tgroup); $i += 2)
 		{
 			$group .= '\\'.substr($tgroup,$i,2);
@@ -226,8 +220,6 @@ class RunnerLdap
 		$group .= sprintf("\\%02x",($primaryGroupId >>8) & 255);
 		$group .= sprintf("\\%02x",($primaryGroupId >>16) & 255);
 		$group .= sprintf("\\%02x",($primaryGroupId >>24) & 255);
-		
 		return $group;
 	}
 }
-?>

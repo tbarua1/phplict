@@ -19,12 +19,10 @@ class MSSQLWinConnection extends Connection
 	 */
 	protected $mssql_dmy;
 
-	protected $errExeprionMess = "";
 	
-	
-	function __construct( $params )
+	function MSSQLWinConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 
 	/**
@@ -97,7 +95,6 @@ class MSSQLWinConnection extends Connection
 					$this->mssql_dmy = "dmy";
 					
 				$_SESSION["MSSQLConnString"] = $connStr;
-				$this->conn->CommandTimeout = 120;
 				return $this->conn;
 			}
 			catch(com_exception $e)
@@ -105,7 +102,7 @@ class MSSQLWinConnection extends Connection
 				$errorString .= "<br>".$e->getMessage();
 			}
 		}
-		$this->triggerError($errorString);
+		trigger_error($errorString, E_USER_ERROR);
 	}
 	
 	/**
@@ -132,7 +129,7 @@ class MSSQLWinConnection extends Connection
 		} 
 		catch(com_exception $e)
 		{
-			$this->triggerError($e->getMessage());
+			trigger_error($e->getMessage(), E_USER_ERROR);
 			return FALSE;
 		}
 	}
@@ -157,14 +154,24 @@ class MSSQLWinConnection extends Connection
 	public function lastError()
 	{
 		if( $this->conn->Errors->Count )
-		{
-			$description = $this->errExeprionMess;
-			$this->errExeprionMess = "";
-				
-			return $description." ".$this->conn->Errors[ $this->conn->Errors->Count - 1 ]->Description;
-		}
+			return $this->conn->Errors[ $this->conn->Errors->Count - 1 ]->Description;
 		
 		return '';
+	}
+	
+	/**	
+	 * Get the auto generated id used in the last query
+	 * @return Number
+	 */
+	public function getInsertedId()
+	{
+		$qResult = $this->query( "select @@IDENTITY as indent" );
+		if( $qResult )
+		{
+			$row = $qResult->fetchAssoc();
+			return $row["indent"];
+		}
+		return 0;
 	}
 	
 	/**
@@ -173,22 +180,22 @@ class MSSQLWinConnection extends Connection
 	 * @param Number assoc (optional)
 	 * @return Array
 	 */
-	protected function _fetch_array($qHandle, $assoc = 1)
+	protected function _fetch_array($qHanle, $assoc = 1)
 	{
 		$ret = array();
 		
-		if( $qHandle->EOF() )
+		if( $qHanle->EOF() )
 			  return $ret;
 			   
 		try {		
-			for( $i = 0; $i < $this->num_fields($qHandle); $i++ )
+			for( $i = 0; $i < $this->num_fields($qHanle); $i++ )
 			{
-				if( IsBinaryType( $qHandle->Fields[$i]->Type ) && $qHandle->Fields[$i]->Type != 128 )
+				if( IsBinaryType( $qHanle->Fields[$i]->Type ) && $qHanle->Fields[$i]->Type != 128 )
 				{
 					$str = "";
-					if( $qHandle->Fields[$i]->ActualSize )
+					if( $qHanle->Fields[$i]->ActualSize )
 					{
-						$val = $qHandle->Fields[$i]->GetChunk( $qHandle->Fields[$i]->ActualSize );
+						$val = $qHanle->Fields[$i]->GetChunk( $qHanle->Fields[$i]->ActualSize );
 						$str = str_pad("", count($val));
 						$j = 0;
 						foreach($val as $byte)
@@ -198,35 +205,35 @@ class MSSQLWinConnection extends Connection
 					}
 					
 					if( $assoc )
-						$ret[ $qHandle->Fields[$i]->Name ] = $str;
+						$ret[ $qHanle->Fields[$i]->Name ] = $str;
 					else
 						$ret[ $i ] = $str;
 				}
 				else
 				{
-					$value = $qHandle->Fields[$i]->Value;
+					$value = $qHanle->Fields[$i]->Value;
 					if( is_null($value) )
 						$val = NULL;	
 					else
 					{
-						if( isdatefieldtype($qHandle->Fields[$i]->Type) )
-							$value = localdatetime2db( (string)$qHandle->Fields[$i]->Value, $this->mssql_dmy );
-						if( IsNumberType($qHandle->Fields[$i]->Type) )
+						if( isdatefieldtype($qHanle->Fields[$i]->Type) )
+							$value = localdatetime2db( (string)$qHanle->Fields[$i]->Value, $this->mssql_dmy );
+						if( IsNumberType($qHanle->Fields[$i]->Type) )
 							$val = floatval($value);
 						else
 							$val = strval($value);
 					}
 					if( $assoc )
-						$ret[ $qHandle->Fields[$i]->Name ] = $val;
+						$ret[ $qHanle->Fields[$i]->Name ] = $val;
 					else
 						$ret[ $i ] = $val;
 				}
 			}
-			$qHandle->MoveNext();
+			$qHanle->MoveNext();
 		} 
 		catch(com_exception $e)
 		{
-			$this->triggerError( $e->getMessage() );
+			trigger_error($e->getMessage(), E_USER_ERROR);
 		}
 
 		return $ret;
@@ -237,9 +244,9 @@ class MSSQLWinConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return $this->_fetch_array( $qHandle );
+		return $this->_fetch_array( $qHanle );
 	}
 	
 	/**	
@@ -247,18 +254,18 @@ class MSSQLWinConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return $this->_fetch_array( $qHandle, 0 );
+		return $this->_fetch_array( $qHanle, 0 );
 	}
 	
 	/**	
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		$qHandle->Close();
+		$qHanle->Close();
 	}
 
 	/**	
@@ -277,9 +284,9 @@ class MSSQLWinConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return $qHandle->Fields($offset)->Name;
+		return $qHanle->Fields($offset)->Name;
 	}
 	
 	/**
@@ -316,7 +323,6 @@ class MSSQLWinConnection extends Connection
 		} 
 		catch(com_exception $e)
 		{
-			$this->errExeprionMess = $e->getMessage();
 			return false;
 		}		
 	}

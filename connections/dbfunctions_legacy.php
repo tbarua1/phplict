@@ -17,7 +17,7 @@ function db_connect()
 
 }
 
-function db_close($conn = null )
+function db_close($conn)
 {
 } 
  
@@ -27,7 +27,7 @@ function db_close($conn = null )
  * @param Mixed conn (unused)
  * @return Mixed
  */ 
-function db_query($sql, $conn = null )
+function db_query($sql, $conn)
 {
 	$connection = getDefaultConnection();
 	return $connection->query( $sql )->getQueryHandle();
@@ -37,7 +37,7 @@ function db_query($sql, $conn = null )
  * @param String sql
  * @param Mixed conn (unused)
  */ 
-function db_exec($sql, $conn = null )
+function db_exec($sql, $conn)
 {
 	$connection = getDefaultConnection();
 	$connection->exec( $sql );

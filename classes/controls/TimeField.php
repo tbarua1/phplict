@@ -2,116 +2,51 @@
 require_once getabspath('classes/controls/DateTimeControl.php');
 class TimeField extends DateTimeControl
 {
-	protected $timeAttrs;
-	
-	function __construct($field, $pageObject, $id, $connection)
+	function TimeField($field, $pageObject, $id, $connection)
 	{
-		EditControl::__construct($field, $pageObject, $id, $connection);
-		
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = EDIT_FORMAT_TIME;
-		$this->timeAttrs = $this->pageObject->pSetEdit->getFormatTimeAttrs( $this->field );
 	}
-
-	function addJSFiles()
+	
+	function addJSFiles() 
 	{
-		if( !count( $this->timeAttrs ) || !$this->timeAttrs["useTimePicker"] )
-			return;
-		
-		if ( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-		}
-		else
-		{
-			$this->pageObject->AddJSFile("include/timepickr_jquery.timepickr.js");	
-		}	
+		$timeAttrs = $this->pageObject->pSetEdit->getFormatTimeAttrs($this->field);
+		if( count($timeAttrs) && $timeAttrs["useTimePicker"] ) 
+			$this->pageObject->AddJSFile("include/timepickr_jquery.timepickr.js");
 	}
-
+	
 	function buildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data)
 	{
 		if($this->container->pageType == PAGE_LIST || $this->container->pageType == PAGE_SEARCH)
 			$value = prepare_for_db($this->field, $value, "time");
-
 		parent::buildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data);
-		
 		echo '<input id="'.$this->ctype.'" '.$this->inputStyle.' type="hidden" name="'.$this->ctype.'" value="time">';
-		
-		$resultHtml = '';
-
-		if( count( $this->timeAttrs ) )
+		$arr_number=parsenumbers((string)$value);
+		if(count($arr_number) == 6)
 		{
-			$type = $this->pageObject->mobileTemplateMode() ? "time" : "text";
-
-			$classString = "";
-			if ( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-				$classString = 'class="form-control"';				
-				
-			$resultHtml = '<input '.$this->getPlaceholderAttr().' type="'.$type.'" '.$this->inputStyle.' name="'.$this->cfield.'" ' . $classString
+			$value = mysprintf("%d:%02d:%02d",array($arr_number[3],$arr_number[4],$arr_number[5]));
+		}
+		$timeAttrs = $this->pageObject->pSetEdit->getFormatTimeAttrs($this->field);	
+		if(count($timeAttrs))
+		{
+			$input = '<input type="text" '.$this->inputStyle.' name="'.$this->cfield.'" '
 					.(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508 == true ? 'alt="'.$this->strLabel.'" ' : '')
 					.'id="'.$this->cfield.'" '.$this->pageObject->pSetEdit->getEditParams($this->field);
-					
-			if( $this->timeAttrs["useTimePicker"] && !$this->pageObject->mobileTemplateMode() )
+			if($timeAttrs["useTimePicker"])
 			{
-				$convention = $this->timeAttrs["hours"];
+				$convention = $timeAttrs["hours"];
 				$loc = getLacaleAmPmForTimePicker($convention, true);
 				$tpVal = getValForTimePicker($this->type, $value, $loc['locale']);
-				
-				$resultHtml .= ' value="'.runner_htmlspecialchars($tpVal['val']).'">';
-
-				if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-					$resultHtml .= '<span class="input-group-addon" id="trigger-test-'.$this->cfield.'"><span class="glyphicon glyphicon-time"></span></span>';
-				else
-					$resultHtml .= '&nbsp;<a class="rnr-imgclock" data-icon="timepicker" title="Time" style="display:inline-block; margin:4px 0 0 6px; visibility: hidden;" id="trigger-test-'.$this->cfield.'" /></a>';
-			}
+				echo $input.' value="'.runner_htmlspecialchars($tpVal['val']).'">';
+				echo '&nbsp;';
+				echo '<a class="rnr-imgclock" data-icon="timepicker" title="Time" style="display:inline-block; margin:4px 0 0 6px; visibility: hidden;" id="trigger-test-'.$this->cfield.'" /></a>';
+			}	
 			else
-				$resultHtml .=' value="'.runner_htmlspecialchars( $this->getOutputValue( $value ) ).'">';
-
-			if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			{
-				if ( isRTL() )
-				{
-					$resultHtml .= "<span></span>"; // for bootstrap calend icon anomaly
-				}
-				$resultHtml = '<div class="input-group" '.$this->inputStyle.' >' . $resultHtml . '</div>';
-			}
-
-			echo $resultHtml;
+				echo $input.' value="'.runner_htmlspecialchars($value).'">';
 		}
-		
-		$this->buildControlEnd($validate, $mode);
-	}
-
-	/**
-	 * @param Mixed fieldValue
-	 * @return String
-	 */
-	protected function getOutputValue( $fieldValue )
-	{
-		if ( IsDateFieldType( $this->type ) )
-			return str_format_time( db2time( $fieldValue ) );
-
-		$numbers = parsenumbers( $fieldValue );
-		if( !count( $numbers ) )
-			return "";
-		
-		while( count( $numbers ) < 3 )
-		{
-			$numbers[] = 0;
-		}
-		
-		if( count( $numbers ) == 6 )
-			return str_format_time( array(0, 0, 0, $numbers[3], $numbers[4], $numbers[5]) );
-
-		if( !$this->pageObject->mobileTemplateMode() )
-			return str_format_time( array(0, 0, 0, $numbers[0], $numbers[1], $numbers[2]) );
-
-		return format_datetime_custom( array(0, 0, 0, $numbers[0], $numbers[1], $numbers[2]), "HH:mm:ss" );
+		$this->buildControlEnd($validate);
 	}
 	
-	function getFirstElementId()
-	{
-		return $this->cfield;
-	}
-
 	function SQLWhere($SearchFor, $strSearchOption, $SearchFor2, $etype, $isSuggest)
 	{
 		$hasDigits = false;
@@ -123,8 +58,7 @@ class TimeField extends DateTimeControl
 				break;
 			}
 		}
-		
-		if( !$hasDigits )
+		if(!$hasDigits)
 		{
 			for($i = 0; $i < strlen($SearchFor2); $i++)
 			{
@@ -135,22 +69,15 @@ class TimeField extends DateTimeControl
 				}
 			}
 		}
-		
-		if( !$hasDigits || $SearchFor == "" )
+		if(!$hasDigits)
 			return "";
-
+		//$SearchFor = $this->prepare_datetime_for_search($SearchFor);
+		if($SearchFor == "")
+			return "";
+		//$SearchFor2 = $this->prepare_datetime_for_search($SearchFor2);
 		$SearchFor = prepare_for_db($this->field, $SearchFor, "time");
 		$SearchFor2 = prepare_for_db($this->field, $SearchFor2, "time");
-		
 		return parent::SQLWhere($SearchFor, $strSearchOption, $SearchFor2, $etype, $isSuggest);
-	}
-
-	function addCSSFiles()
-	{
-		if ( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			$this->pageObject->AddCSSFile("include/bootstrap/css/bootstrap-datetimepicker.min.css");
-		}
 	}
 }
 ?>

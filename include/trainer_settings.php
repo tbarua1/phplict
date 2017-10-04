@@ -4,9 +4,9 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdatatrainer = array();
+$tdatatrainer = array();	
 	$tdatatrainer[".truncateText"] = true;
-	$tdatatrainer[".NumberOfChars"] = 80;
+	$tdatatrainer[".NumberOfChars"] = 80; 
 	$tdatatrainer[".ShortName"] = "trainer";
 	$tdatatrainer[".OwnerID"] = "";
 	$tdatatrainer[".OriginalTable"] = "trainer";
@@ -15,65 +15,46 @@ $tdatatrainer = array();
 $fieldLabelstrainer = array();
 $fieldToolTipstrainer = array();
 $pageTitlestrainer = array();
-$placeHolderstrainer = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelstrainer["English"] = array();
 	$fieldToolTipstrainer["English"] = array();
-	$placeHolderstrainer["English"] = array();
 	$pageTitlestrainer["English"] = array();
 	$fieldLabelstrainer["English"]["id"] = "Id";
 	$fieldToolTipstrainer["English"]["id"] = "";
-	$placeHolderstrainer["English"]["id"] = "";
-	$fieldLabelstrainer["English"]["cid"] = "Cid";
-	$fieldToolTipstrainer["English"]["cid"] = "";
-	$placeHolderstrainer["English"]["cid"] = "";
 	$fieldLabelstrainer["English"]["date"] = "Date";
 	$fieldToolTipstrainer["English"]["date"] = "";
-	$placeHolderstrainer["English"]["date"] = "";
 	$fieldLabelstrainer["English"]["emailid"] = "Emailid";
 	$fieldToolTipstrainer["English"]["emailid"] = "";
-	$placeHolderstrainer["English"]["emailid"] = "";
 	$fieldLabelstrainer["English"]["experience"] = "Experience";
 	$fieldToolTipstrainer["English"]["experience"] = "";
-	$placeHolderstrainer["English"]["experience"] = "";
 	$fieldLabelstrainer["English"]["mobile"] = "Mobile";
 	$fieldToolTipstrainer["English"]["mobile"] = "";
-	$placeHolderstrainer["English"]["mobile"] = "";
 	$fieldLabelstrainer["English"]["name"] = "Name";
 	$fieldToolTipstrainer["English"]["name"] = "";
-	$placeHolderstrainer["English"]["name"] = "";
 	$fieldLabelstrainer["English"]["natianality"] = "Natianality";
 	$fieldToolTipstrainer["English"]["natianality"] = "";
-	$placeHolderstrainer["English"]["natianality"] = "";
 	$fieldLabelstrainer["English"]["password"] = "Password";
 	$fieldToolTipstrainer["English"]["password"] = "";
-	$placeHolderstrainer["English"]["password"] = "";
 	$fieldLabelstrainer["English"]["qualification"] = "Qualification";
 	$fieldToolTipstrainer["English"]["qualification"] = "";
-	$placeHolderstrainer["English"]["qualification"] = "";
 	$fieldLabelstrainer["English"]["registeredDate"] = "Registered Date";
 	$fieldToolTipstrainer["English"]["registeredDate"] = "";
-	$placeHolderstrainer["English"]["registeredDate"] = "";
 	$fieldLabelstrainer["English"]["skillset"] = "Skillset";
 	$fieldToolTipstrainer["English"]["skillset"] = "";
-	$placeHolderstrainer["English"]["skillset"] = "";
 	$fieldLabelstrainer["English"]["skype"] = "Skype";
 	$fieldToolTipstrainer["English"]["skype"] = "";
-	$placeHolderstrainer["English"]["skype"] = "";
 	$fieldLabelstrainer["English"]["username"] = "Username";
 	$fieldToolTipstrainer["English"]["username"] = "";
-	$placeHolderstrainer["English"]["username"] = "";
 	$fieldLabelstrainer["English"]["usertype"] = "Usertype";
 	$fieldToolTipstrainer["English"]["usertype"] = "";
-	$placeHolderstrainer["English"]["usertype"] = "";
 	$fieldLabelstrainer["English"]["whatsapp"] = "Whatsapp";
 	$fieldToolTipstrainer["English"]["whatsapp"] = "";
-	$placeHolderstrainer["English"]["whatsapp"] = "";
 	$fieldLabelstrainer["English"]["photo"] = "Photo";
 	$fieldToolTipstrainer["English"]["photo"] = "";
-	$placeHolderstrainer["English"]["photo"] = "";
+	$fieldLabelstrainer["English"]["cid"] = "Cid";
+	$fieldToolTipstrainer["English"]["cid"] = "";
 	if (count($fieldToolTipstrainer["English"]))
 		$tdatatrainer[".isUseToolTips"] = true;
 }
@@ -81,27 +62,27 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelstrainer[""] = array();
 	$fieldToolTipstrainer[""] = array();
-	$placeHolderstrainer[""] = array();
 	$pageTitlestrainer[""] = array();
+	$fieldLabelstrainer[""]["id"] = "Id";
+	$fieldToolTipstrainer[""]["id"] = "";
 	if (count($fieldToolTipstrainer[""]))
 		$tdatatrainer[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdatatrainer[".NCSearch"] = true;
 
 
 
 $tdatatrainer[".shortTableName"] = "trainer";
 $tdatatrainer[".nSecOptions"] = 0;
-$tdatatrainer[".recsPerRowPrint"] = 1;
+$tdatatrainer[".recsPerRowList"] = 1;
 $tdatatrainer[".mainTableOwnerID"] = "";
 $tdatatrainer[".moveNext"] = 1;
-$tdatatrainer[".entityType"] = 0;
+$tdatatrainer[".nType"] = 0;
 
 $tdatatrainer[".strOriginalTableName"] = "trainer";
 
-	
 
 
 
@@ -125,25 +106,11 @@ $tdatatrainer[".listAjax"] = false;
 	$tdatatrainer[".locking"] = false;
 
 $tdatatrainer[".edit"] = true;
-$tdatatrainer[".afterEditAction"] = 1;
-$tdatatrainer[".closePopupAfterEdit"] = 1;
-$tdatatrainer[".afterEditActionDetTable"] = "";
-
-$tdatatrainer[".add"] = true;
-$tdatatrainer[".afterAddAction"] = 1;
-$tdatatrainer[".closePopupAfterAdd"] = 1;
-$tdatatrainer[".afterAddActionDetTable"] = "";
 
 $tdatatrainer[".list"] = true;
 
-
-
-$tdatatrainer[".reorderRecordsByHeader"] = true;
-
-
-$tdatatrainer[".exportFormatting"] = 2;
-$tdatatrainer[".exportDelimiter"] = ",";
-		
+$tdatatrainer[".inlineEdit"] = true;
+$tdatatrainer[".inlineAdd"] = true;
 $tdatatrainer[".view"] = true;
 
 $tdatatrainer[".import"] = true;
@@ -156,32 +123,21 @@ $tdatatrainer[".delete"] = true;
 
 $tdatatrainer[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdatatrainer[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdatatrainer[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdatatrainer[".searchSaving"] = false;
 //
 
 $tdatatrainer[".showSearchPanel"] = true;
-		$tdatatrainer[".flexibleSearch"] = true;
+		$tdatatrainer[".flexibleSearch"] = true;		
 
-$tdatatrainer[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdatatrainer[".isUseAjaxSuggest"] = false;
+else 
+	$tdatatrainer[".isUseAjaxSuggest"] = true;
 
 $tdatatrainer[".rowHighlite"] = true;
 
 
-
-
-
-$tdatatrainer[".ajaxCodeSnippetAdded"] = false;
-
-$tdatatrainer[".buttonsAdded"] = false;
 
 $tdatatrainer[".addPageEvents"] = false;
 
@@ -190,7 +146,6 @@ $tdatatrainer[".isUseTimeForSearch"] = false;
 
 
 
-$tdatatrainer[".badgeColor"] = "DC143C";
 
 
 $tdatatrainer[".allSearchFields"] = array();
@@ -198,7 +153,6 @@ $tdatatrainer[".filterFields"] = array();
 $tdatatrainer[".requiredSearchFields"] = array();
 
 $tdatatrainer[".allSearchFields"][] = "id";
-	$tdatatrainer[".allSearchFields"][] = "cid";
 	$tdatatrainer[".allSearchFields"][] = "date";
 	$tdatatrainer[".allSearchFields"][] = "emailid";
 	$tdatatrainer[".allSearchFields"][] = "experience";
@@ -214,11 +168,11 @@ $tdatatrainer[".allSearchFields"][] = "id";
 	$tdatatrainer[".allSearchFields"][] = "usertype";
 	$tdatatrainer[".allSearchFields"][] = "whatsapp";
 	$tdatatrainer[".allSearchFields"][] = "photo";
+	$tdatatrainer[".allSearchFields"][] = "cid";
 	
 
 $tdatatrainer[".googleLikeFields"] = array();
 $tdatatrainer[".googleLikeFields"][] = "id";
-$tdatatrainer[".googleLikeFields"][] = "cid";
 $tdatatrainer[".googleLikeFields"][] = "date";
 $tdatatrainer[".googleLikeFields"][] = "emailid";
 $tdatatrainer[".googleLikeFields"][] = "experience";
@@ -234,11 +188,11 @@ $tdatatrainer[".googleLikeFields"][] = "username";
 $tdatatrainer[".googleLikeFields"][] = "usertype";
 $tdatatrainer[".googleLikeFields"][] = "whatsapp";
 $tdatatrainer[".googleLikeFields"][] = "photo";
+$tdatatrainer[".googleLikeFields"][] = "cid";
 
 
 $tdatatrainer[".advSearchFields"] = array();
 $tdatatrainer[".advSearchFields"][] = "id";
-$tdatatrainer[".advSearchFields"][] = "cid";
 $tdatatrainer[".advSearchFields"][] = "date";
 $tdatatrainer[".advSearchFields"][] = "emailid";
 $tdatatrainer[".advSearchFields"][] = "experience";
@@ -254,6 +208,7 @@ $tdatatrainer[".advSearchFields"][] = "username";
 $tdatatrainer[".advSearchFields"][] = "usertype";
 $tdatatrainer[".advSearchFields"][] = "whatsapp";
 $tdatatrainer[".advSearchFields"][] = "photo";
+$tdatatrainer[".advSearchFields"][] = "cid";
 
 $tdatatrainer[".tableType"] = "list";
 
@@ -266,13 +221,9 @@ $tdatatrainer[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdatatrainer[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdatatrainer[".listGridLayout"] = 3;
+	
 
 
 
@@ -296,18 +247,10 @@ $tdatatrainer[".strOrderBy"] = $tstrOrderBy;
 
 $tdatatrainer[".orderindexes"] = array();
 
-$tdatatrainer[".sqlHead"] = "SELECT id,  	cid,  	`date`,  	emailid,  	experience,  	mobile,  	name,  	natianality,  	password,  	qualification,  	registeredDate,  	skillset,  	skype,  	username,  	usertype,  	whatsapp,  	photo";
+$tdatatrainer[".sqlHead"] = "SELECT id,  	`date`,  	emailid,  	experience,  	mobile,  	name,  	natianality,  	password,  	qualification,  	registeredDate,  	skillset,  	skype,  	username,  	usertype,  	whatsapp,  	photo,  	cid";
 $tdatatrainer[".sqlFrom"] = "FROM trainer";
 $tdatatrainer[".sqlWhereExpr"] = "";
 $tdatatrainer[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -342,7 +285,6 @@ $tdatatrainer[".Keys"] = $tableKeystrainer;
 
 $tdatatrainer[".listFields"] = array();
 $tdatatrainer[".listFields"][] = "id";
-$tdatatrainer[".listFields"][] = "cid";
 $tdatatrainer[".listFields"][] = "date";
 $tdatatrainer[".listFields"][] = "emailid";
 $tdatatrainer[".listFields"][] = "experience";
@@ -358,13 +300,13 @@ $tdatatrainer[".listFields"][] = "username";
 $tdatatrainer[".listFields"][] = "usertype";
 $tdatatrainer[".listFields"][] = "whatsapp";
 $tdatatrainer[".listFields"][] = "photo";
+$tdatatrainer[".listFields"][] = "cid";
 
 $tdatatrainer[".hideMobileList"] = array();
 
 
 $tdatatrainer[".viewFields"] = array();
 $tdatatrainer[".viewFields"][] = "id";
-$tdatatrainer[".viewFields"][] = "cid";
 $tdatatrainer[".viewFields"][] = "date";
 $tdatatrainer[".viewFields"][] = "emailid";
 $tdatatrainer[".viewFields"][] = "experience";
@@ -380,9 +322,9 @@ $tdatatrainer[".viewFields"][] = "username";
 $tdatatrainer[".viewFields"][] = "usertype";
 $tdatatrainer[".viewFields"][] = "whatsapp";
 $tdatatrainer[".viewFields"][] = "photo";
+$tdatatrainer[".viewFields"][] = "cid";
 
 $tdatatrainer[".addFields"] = array();
-$tdatatrainer[".addFields"][] = "cid";
 $tdatatrainer[".addFields"][] = "date";
 $tdatatrainer[".addFields"][] = "emailid";
 $tdatatrainer[".addFields"][] = "experience";
@@ -398,28 +340,9 @@ $tdatatrainer[".addFields"][] = "username";
 $tdatatrainer[".addFields"][] = "usertype";
 $tdatatrainer[".addFields"][] = "whatsapp";
 $tdatatrainer[".addFields"][] = "photo";
-
-$tdatatrainer[".masterListFields"] = array();
-$tdatatrainer[".masterListFields"][] = "id";
-$tdatatrainer[".masterListFields"][] = "cid";
-$tdatatrainer[".masterListFields"][] = "date";
-$tdatatrainer[".masterListFields"][] = "emailid";
-$tdatatrainer[".masterListFields"][] = "experience";
-$tdatatrainer[".masterListFields"][] = "mobile";
-$tdatatrainer[".masterListFields"][] = "name";
-$tdatatrainer[".masterListFields"][] = "natianality";
-$tdatatrainer[".masterListFields"][] = "password";
-$tdatatrainer[".masterListFields"][] = "qualification";
-$tdatatrainer[".masterListFields"][] = "registeredDate";
-$tdatatrainer[".masterListFields"][] = "skillset";
-$tdatatrainer[".masterListFields"][] = "skype";
-$tdatatrainer[".masterListFields"][] = "username";
-$tdatatrainer[".masterListFields"][] = "usertype";
-$tdatatrainer[".masterListFields"][] = "whatsapp";
-$tdatatrainer[".masterListFields"][] = "photo";
+$tdatatrainer[".addFields"][] = "cid";
 
 $tdatatrainer[".inlineAddFields"] = array();
-$tdatatrainer[".inlineAddFields"][] = "cid";
 $tdatatrainer[".inlineAddFields"][] = "date";
 $tdatatrainer[".inlineAddFields"][] = "emailid";
 $tdatatrainer[".inlineAddFields"][] = "experience";
@@ -435,9 +358,9 @@ $tdatatrainer[".inlineAddFields"][] = "username";
 $tdatatrainer[".inlineAddFields"][] = "usertype";
 $tdatatrainer[".inlineAddFields"][] = "whatsapp";
 $tdatatrainer[".inlineAddFields"][] = "photo";
+$tdatatrainer[".inlineAddFields"][] = "cid";
 
 $tdatatrainer[".editFields"] = array();
-$tdatatrainer[".editFields"][] = "cid";
 $tdatatrainer[".editFields"][] = "date";
 $tdatatrainer[".editFields"][] = "emailid";
 $tdatatrainer[".editFields"][] = "experience";
@@ -453,9 +376,9 @@ $tdatatrainer[".editFields"][] = "username";
 $tdatatrainer[".editFields"][] = "usertype";
 $tdatatrainer[".editFields"][] = "whatsapp";
 $tdatatrainer[".editFields"][] = "photo";
+$tdatatrainer[".editFields"][] = "cid";
 
 $tdatatrainer[".inlineEditFields"] = array();
-$tdatatrainer[".inlineEditFields"][] = "cid";
 $tdatatrainer[".inlineEditFields"][] = "date";
 $tdatatrainer[".inlineEditFields"][] = "emailid";
 $tdatatrainer[".inlineEditFields"][] = "experience";
@@ -471,29 +394,10 @@ $tdatatrainer[".inlineEditFields"][] = "username";
 $tdatatrainer[".inlineEditFields"][] = "usertype";
 $tdatatrainer[".inlineEditFields"][] = "whatsapp";
 $tdatatrainer[".inlineEditFields"][] = "photo";
-
-$tdatatrainer[".updateSelectedFields"] = array();
-$tdatatrainer[".updateSelectedFields"][] = "cid";
-$tdatatrainer[".updateSelectedFields"][] = "date";
-$tdatatrainer[".updateSelectedFields"][] = "emailid";
-$tdatatrainer[".updateSelectedFields"][] = "experience";
-$tdatatrainer[".updateSelectedFields"][] = "mobile";
-$tdatatrainer[".updateSelectedFields"][] = "name";
-$tdatatrainer[".updateSelectedFields"][] = "natianality";
-$tdatatrainer[".updateSelectedFields"][] = "password";
-$tdatatrainer[".updateSelectedFields"][] = "qualification";
-$tdatatrainer[".updateSelectedFields"][] = "registeredDate";
-$tdatatrainer[".updateSelectedFields"][] = "skillset";
-$tdatatrainer[".updateSelectedFields"][] = "skype";
-$tdatatrainer[".updateSelectedFields"][] = "username";
-$tdatatrainer[".updateSelectedFields"][] = "usertype";
-$tdatatrainer[".updateSelectedFields"][] = "whatsapp";
-$tdatatrainer[".updateSelectedFields"][] = "photo";
-
+$tdatatrainer[".inlineEditFields"][] = "cid";
 
 $tdatatrainer[".exportFields"] = array();
 $tdatatrainer[".exportFields"][] = "id";
-$tdatatrainer[".exportFields"][] = "cid";
 $tdatatrainer[".exportFields"][] = "date";
 $tdatatrainer[".exportFields"][] = "emailid";
 $tdatatrainer[".exportFields"][] = "experience";
@@ -509,10 +413,10 @@ $tdatatrainer[".exportFields"][] = "username";
 $tdatatrainer[".exportFields"][] = "usertype";
 $tdatatrainer[".exportFields"][] = "whatsapp";
 $tdatatrainer[".exportFields"][] = "photo";
+$tdatatrainer[".exportFields"][] = "cid";
 
 $tdatatrainer[".importFields"] = array();
 $tdatatrainer[".importFields"][] = "id";
-$tdatatrainer[".importFields"][] = "cid";
 $tdatatrainer[".importFields"][] = "date";
 $tdatatrainer[".importFields"][] = "emailid";
 $tdatatrainer[".importFields"][] = "experience";
@@ -528,10 +432,10 @@ $tdatatrainer[".importFields"][] = "username";
 $tdatatrainer[".importFields"][] = "usertype";
 $tdatatrainer[".importFields"][] = "whatsapp";
 $tdatatrainer[".importFields"][] = "photo";
+$tdatatrainer[".importFields"][] = "cid";
 
 $tdatatrainer[".printFields"] = array();
 $tdatatrainer[".printFields"][] = "id";
-$tdatatrainer[".printFields"][] = "cid";
 $tdatatrainer[".printFields"][] = "date";
 $tdatatrainer[".printFields"][] = "emailid";
 $tdatatrainer[".printFields"][] = "experience";
@@ -547,7 +451,7 @@ $tdatatrainer[".printFields"][] = "username";
 $tdatatrainer[".printFields"][] = "usertype";
 $tdatatrainer[".printFields"][] = "whatsapp";
 $tdatatrainer[".printFields"][] = "photo";
-
+$tdatatrainer[".printFields"][] = "cid";
 
 //	id
 //	Custom field settings
@@ -556,207 +460,2069 @@ $tdatatrainer[".printFields"][] = "photo";
 	$fdata["strName"] = "id";
 	$fdata["GoodName"] = "id";
 	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","id");
+	$fdata["Label"] = GetFieldLabel("trainer","id"); 
 	$fdata["FieldType"] = 20;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "id";
-
+		$fdata["strField"] = "id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
 	
+			
+	
+	
+
+
+		$edata["IsRequired"] = true; 
 	
 		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
 		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
 						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
 		
 	
-	//	End validation
-
-	
-			
-	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatatrainer["id"] = $fdata;
-//	cid
+//	date
 //	Custom field settings
 	$fdata = array();
 	$fdata["Index"] = 2;
-	$fdata["strName"] = "cid";
-	$fdata["GoodName"] = "cid";
+	$fdata["strName"] = "date";
+	$fdata["GoodName"] = "date";
 	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","cid");
-	$fdata["FieldType"] = 3;
-
+	$fdata["Label"] = GetFieldLabel("trainer","date"); 
+	$fdata["FieldType"] = 7;
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "cid";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "date"; 
+	
 		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "cid";
-
+	$fdata["FullName"] = "`date`";
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
 	
+	$vdata = array("ViewFormat" => "Short Date");
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+	$edata = array("EditFormat" => "Date");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
 	
 		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["date"] = $fdata;
+//	emailid
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 3;
+	$fdata["strName"] = "emailid";
+	$fdata["GoodName"] = "emailid";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","emailid"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "emailid"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "emailid";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["emailid"] = $fdata;
+//	experience
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 4;
+	$fdata["strName"] = "experience";
+	$fdata["GoodName"] = "experience";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","experience"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "experience"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "experience";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["experience"] = $fdata;
+//	mobile
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 5;
+	$fdata["strName"] = "mobile";
+	$fdata["GoodName"] = "mobile";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","mobile"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "mobile"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "mobile";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["mobile"] = $fdata;
+//	name
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 6;
+	$fdata["strName"] = "name";
+	$fdata["GoodName"] = "name";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","name"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "name"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "name";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["name"] = $fdata;
+//	natianality
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 7;
+	$fdata["strName"] = "natianality";
+	$fdata["GoodName"] = "natianality";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","natianality"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "natianality"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "natianality";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["natianality"] = $fdata;
+//	password
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 8;
+	$fdata["strName"] = "password";
+	$fdata["GoodName"] = "password";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","password"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "password"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "password";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["password"] = $fdata;
+//	qualification
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 9;
+	$fdata["strName"] = "qualification";
+	$fdata["GoodName"] = "qualification";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","qualification"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "qualification"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "qualification";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["qualification"] = $fdata;
+//	registeredDate
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 10;
+	$fdata["strName"] = "registeredDate";
+	$fdata["GoodName"] = "registeredDate";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","registeredDate"); 
+	$fdata["FieldType"] = 7;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "registeredDate"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "registeredDate";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "Short Date");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Date");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["registeredDate"] = $fdata;
+//	skillset
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 11;
+	$fdata["strName"] = "skillset";
+	$fdata["GoodName"] = "skillset";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","skillset"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "skillset"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "skillset";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["skillset"] = $fdata;
+//	skype
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 12;
+	$fdata["strName"] = "skype";
+	$fdata["GoodName"] = "skype";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","skype"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "skype"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "skype";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["skype"] = $fdata;
+//	username
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 13;
+	$fdata["strName"] = "username";
+	$fdata["GoodName"] = "username";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","username"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "username"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "username";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["username"] = $fdata;
+//	usertype
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 14;
+	$fdata["strName"] = "usertype";
+	$fdata["GoodName"] = "usertype";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","usertype"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "usertype"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "usertype";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["usertype"] = $fdata;
+//	whatsapp
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 15;
+	$fdata["strName"] = "whatsapp";
+	$fdata["GoodName"] = "whatsapp";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","whatsapp"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "whatsapp"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "whatsapp";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["whatsapp"] = $fdata;
+//	photo
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 16;
+	$fdata["strName"] = "photo";
+	$fdata["GoodName"] = "photo";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","photo"); 
+	$fdata["FieldType"] = 200;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "photo"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "photo";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Text field");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=255";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
+
+	
+
+	
+	$tdatatrainer["photo"] = $fdata;
+//	cid
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 17;
+	$fdata["strName"] = "cid";
+	$fdata["GoodName"] = "cid";
+	$fdata["ownerTable"] = "trainer";
+	$fdata["Label"] = GetFieldLabel("trainer","cid"); 
+	$fdata["FieldType"] = 3;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "cid"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "cid";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Lookup wizard");
+	
+			
+	
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -764,2070 +2530,87 @@ $tdatatrainer[".printFields"][] = "photo";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "cid";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "cid";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-	
-	
-	
+		
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-							
-	
+								
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatatrainer["cid"] = $fdata;
-//	date
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 3;
-	$fdata["strName"] = "date";
-	$fdata["GoodName"] = "date";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","date");
-	$fdata["FieldType"] = 7;
 
 	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "date";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "`date`";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "Short Date");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["date"] = $fdata;
-//	emailid
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 4;
-	$fdata["strName"] = "emailid";
-	$fdata["GoodName"] = "emailid";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","emailid");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "emailid";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "emailid";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["emailid"] = $fdata;
-//	experience
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 5;
-	$fdata["strName"] = "experience";
-	$fdata["GoodName"] = "experience";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","experience");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "experience";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "experience";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["experience"] = $fdata;
-//	mobile
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 6;
-	$fdata["strName"] = "mobile";
-	$fdata["GoodName"] = "mobile";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","mobile");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "mobile";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "mobile";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["mobile"] = $fdata;
-//	name
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 7;
-	$fdata["strName"] = "name";
-	$fdata["GoodName"] = "name";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","name");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "name";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "name";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["name"] = $fdata;
-//	natianality
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 8;
-	$fdata["strName"] = "natianality";
-	$fdata["GoodName"] = "natianality";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","natianality");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "natianality";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "natianality";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["natianality"] = $fdata;
-//	password
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 9;
-	$fdata["strName"] = "password";
-	$fdata["GoodName"] = "password";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","password");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "password";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "password";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["password"] = $fdata;
-//	qualification
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 10;
-	$fdata["strName"] = "qualification";
-	$fdata["GoodName"] = "qualification";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","qualification");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "qualification";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "qualification";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["qualification"] = $fdata;
-//	registeredDate
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 11;
-	$fdata["strName"] = "registeredDate";
-	$fdata["GoodName"] = "registeredDate";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","registeredDate");
-	$fdata["FieldType"] = 7;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "registeredDate";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "registeredDate";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "Short Date");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["registeredDate"] = $fdata;
-//	skillset
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 12;
-	$fdata["strName"] = "skillset";
-	$fdata["GoodName"] = "skillset";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","skillset");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "skillset";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "skillset";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["skillset"] = $fdata;
-//	skype
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 13;
-	$fdata["strName"] = "skype";
-	$fdata["GoodName"] = "skype";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","skype");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "skype";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "skype";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["skype"] = $fdata;
-//	username
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 14;
-	$fdata["strName"] = "username";
-	$fdata["GoodName"] = "username";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","username");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "username";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "username";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["username"] = $fdata;
-//	usertype
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 15;
-	$fdata["strName"] = "usertype";
-	$fdata["GoodName"] = "usertype";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","usertype");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "usertype";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "usertype";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["usertype"] = $fdata;
-//	whatsapp
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 16;
-	$fdata["strName"] = "whatsapp";
-	$fdata["GoodName"] = "whatsapp";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","whatsapp");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "whatsapp";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "whatsapp";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["whatsapp"] = $fdata;
-//	photo
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 17;
-	$fdata["strName"] = "photo";
-	$fdata["GoodName"] = "photo";
-	$fdata["ownerTable"] = "trainer";
-	$fdata["Label"] = GetFieldLabel("trainer","photo");
-	$fdata["FieldType"] = 200;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "photo";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "photo";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=255";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-	
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
-
-
-
-
-	$tdatatrainer["photo"] = $fdata;
-
-
 $tables_data["trainer"]=&$tdatatrainer;
 $field_labels["trainer"] = &$fieldLabelstrainer;
 $fieldToolTips["trainer"] = &$fieldToolTipstrainer;
-$placeHolders["trainer"] = &$placeHolderstrainer;
 $page_titles["trainer"] = &$pageTitlestrainer;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
 // tables which are detail tables for current table (master)
 $detailsTablesData["trainer"] = array();
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["trainer"] = array();
 
@@ -2840,21 +2623,15 @@ $masterTablesData["trainer"] = array();
 	$masterParams["mShortTable"]= "courses";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["trainer"][0] = $masterParams;
+					$masterTablesData["trainer"][0] = $masterParams;	
 				$masterTablesData["trainer"][0]["masterKeys"] = array();
 	$masterTablesData["trainer"][0]["masterKeys"][]="cid";
 				$masterTablesData["trainer"][0]["detailKeys"] = array();
@@ -2877,331 +2654,330 @@ function createSqlQuery_trainer()
 {
 $proto0=array();
 $proto0["m_strHead"] = "SELECT";
-$proto0["m_strFieldList"] = "id,  	cid,  	`date`,  	emailid,  	experience,  	mobile,  	name,  	natianality,  	password,  	qualification,  	registeredDate,  	skillset,  	skype,  	username,  	usertype,  	whatsapp,  	photo";
+$proto0["m_strFieldList"] = "id,  	`date`,  	emailid,  	experience,  	mobile,  	name,  	natianality,  	password,  	qualification,  	registeredDate,  	skillset,  	skype,  	username,  	usertype,  	whatsapp,  	photo,  	cid";
 $proto0["m_strFrom"] = "FROM trainer";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "id",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto6["m_sql"] = "id";
-$proto6["m_srcTableName"] = "trainer";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "id";
+$proto5["m_srcTableName"] = "trainer";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
-			$obj = new SQLField(array(
-	"m_strName" => "cid",
-	"m_strTable" => "trainer",
-	"m_srcTableName" => "trainer"
-));
-
-$proto8["m_sql"] = "cid";
-$proto8["m_srcTableName"] = "trainer";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
-
-$proto0["m_fieldlist"][]=$obj;
-						$proto10=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "date",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto10["m_sql"] = "`date`";
-$proto10["m_srcTableName"] = "trainer";
-$proto10["m_expr"]=$obj;
-$proto10["m_alias"] = "";
-$obj = new SQLFieldListItem($proto10);
+$proto7["m_sql"] = "`date`";
+$proto7["m_srcTableName"] = "trainer";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto12=array();
+						$proto9=array();
 			$obj = new SQLField(array(
 	"m_strName" => "emailid",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto12["m_sql"] = "emailid";
-$proto12["m_srcTableName"] = "trainer";
-$proto12["m_expr"]=$obj;
-$proto12["m_alias"] = "";
-$obj = new SQLFieldListItem($proto12);
+$proto9["m_sql"] = "emailid";
+$proto9["m_srcTableName"] = "trainer";
+$proto9["m_expr"]=$obj;
+$proto9["m_alias"] = "";
+$obj = new SQLFieldListItem($proto9);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto14=array();
+						$proto11=array();
 			$obj = new SQLField(array(
 	"m_strName" => "experience",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto14["m_sql"] = "experience";
-$proto14["m_srcTableName"] = "trainer";
-$proto14["m_expr"]=$obj;
-$proto14["m_alias"] = "";
-$obj = new SQLFieldListItem($proto14);
+$proto11["m_sql"] = "experience";
+$proto11["m_srcTableName"] = "trainer";
+$proto11["m_expr"]=$obj;
+$proto11["m_alias"] = "";
+$obj = new SQLFieldListItem($proto11);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto16=array();
+						$proto13=array();
 			$obj = new SQLField(array(
 	"m_strName" => "mobile",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto16["m_sql"] = "mobile";
-$proto16["m_srcTableName"] = "trainer";
-$proto16["m_expr"]=$obj;
-$proto16["m_alias"] = "";
-$obj = new SQLFieldListItem($proto16);
+$proto13["m_sql"] = "mobile";
+$proto13["m_srcTableName"] = "trainer";
+$proto13["m_expr"]=$obj;
+$proto13["m_alias"] = "";
+$obj = new SQLFieldListItem($proto13);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto18=array();
+						$proto15=array();
 			$obj = new SQLField(array(
 	"m_strName" => "name",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto18["m_sql"] = "name";
-$proto18["m_srcTableName"] = "trainer";
-$proto18["m_expr"]=$obj;
-$proto18["m_alias"] = "";
-$obj = new SQLFieldListItem($proto18);
+$proto15["m_sql"] = "name";
+$proto15["m_srcTableName"] = "trainer";
+$proto15["m_expr"]=$obj;
+$proto15["m_alias"] = "";
+$obj = new SQLFieldListItem($proto15);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto20=array();
+						$proto17=array();
 			$obj = new SQLField(array(
 	"m_strName" => "natianality",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto20["m_sql"] = "natianality";
-$proto20["m_srcTableName"] = "trainer";
-$proto20["m_expr"]=$obj;
-$proto20["m_alias"] = "";
-$obj = new SQLFieldListItem($proto20);
+$proto17["m_sql"] = "natianality";
+$proto17["m_srcTableName"] = "trainer";
+$proto17["m_expr"]=$obj;
+$proto17["m_alias"] = "";
+$obj = new SQLFieldListItem($proto17);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto22=array();
+						$proto19=array();
 			$obj = new SQLField(array(
 	"m_strName" => "password",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto22["m_sql"] = "password";
-$proto22["m_srcTableName"] = "trainer";
-$proto22["m_expr"]=$obj;
-$proto22["m_alias"] = "";
-$obj = new SQLFieldListItem($proto22);
+$proto19["m_sql"] = "password";
+$proto19["m_srcTableName"] = "trainer";
+$proto19["m_expr"]=$obj;
+$proto19["m_alias"] = "";
+$obj = new SQLFieldListItem($proto19);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto24=array();
+						$proto21=array();
 			$obj = new SQLField(array(
 	"m_strName" => "qualification",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto24["m_sql"] = "qualification";
-$proto24["m_srcTableName"] = "trainer";
-$proto24["m_expr"]=$obj;
-$proto24["m_alias"] = "";
-$obj = new SQLFieldListItem($proto24);
+$proto21["m_sql"] = "qualification";
+$proto21["m_srcTableName"] = "trainer";
+$proto21["m_expr"]=$obj;
+$proto21["m_alias"] = "";
+$obj = new SQLFieldListItem($proto21);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto26=array();
+						$proto23=array();
 			$obj = new SQLField(array(
 	"m_strName" => "registeredDate",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto26["m_sql"] = "registeredDate";
-$proto26["m_srcTableName"] = "trainer";
-$proto26["m_expr"]=$obj;
-$proto26["m_alias"] = "";
-$obj = new SQLFieldListItem($proto26);
+$proto23["m_sql"] = "registeredDate";
+$proto23["m_srcTableName"] = "trainer";
+$proto23["m_expr"]=$obj;
+$proto23["m_alias"] = "";
+$obj = new SQLFieldListItem($proto23);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto28=array();
+						$proto25=array();
 			$obj = new SQLField(array(
 	"m_strName" => "skillset",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto28["m_sql"] = "skillset";
-$proto28["m_srcTableName"] = "trainer";
-$proto28["m_expr"]=$obj;
-$proto28["m_alias"] = "";
-$obj = new SQLFieldListItem($proto28);
+$proto25["m_sql"] = "skillset";
+$proto25["m_srcTableName"] = "trainer";
+$proto25["m_expr"]=$obj;
+$proto25["m_alias"] = "";
+$obj = new SQLFieldListItem($proto25);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto30=array();
+						$proto27=array();
 			$obj = new SQLField(array(
 	"m_strName" => "skype",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto30["m_sql"] = "skype";
-$proto30["m_srcTableName"] = "trainer";
-$proto30["m_expr"]=$obj;
-$proto30["m_alias"] = "";
-$obj = new SQLFieldListItem($proto30);
+$proto27["m_sql"] = "skype";
+$proto27["m_srcTableName"] = "trainer";
+$proto27["m_expr"]=$obj;
+$proto27["m_alias"] = "";
+$obj = new SQLFieldListItem($proto27);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto32=array();
+						$proto29=array();
 			$obj = new SQLField(array(
 	"m_strName" => "username",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto32["m_sql"] = "username";
-$proto32["m_srcTableName"] = "trainer";
-$proto32["m_expr"]=$obj;
-$proto32["m_alias"] = "";
-$obj = new SQLFieldListItem($proto32);
+$proto29["m_sql"] = "username";
+$proto29["m_srcTableName"] = "trainer";
+$proto29["m_expr"]=$obj;
+$proto29["m_alias"] = "";
+$obj = new SQLFieldListItem($proto29);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto34=array();
+						$proto31=array();
 			$obj = new SQLField(array(
 	"m_strName" => "usertype",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto34["m_sql"] = "usertype";
-$proto34["m_srcTableName"] = "trainer";
-$proto34["m_expr"]=$obj;
-$proto34["m_alias"] = "";
-$obj = new SQLFieldListItem($proto34);
+$proto31["m_sql"] = "usertype";
+$proto31["m_srcTableName"] = "trainer";
+$proto31["m_expr"]=$obj;
+$proto31["m_alias"] = "";
+$obj = new SQLFieldListItem($proto31);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto36=array();
+						$proto33=array();
 			$obj = new SQLField(array(
 	"m_strName" => "whatsapp",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto36["m_sql"] = "whatsapp";
-$proto36["m_srcTableName"] = "trainer";
-$proto36["m_expr"]=$obj;
-$proto36["m_alias"] = "";
-$obj = new SQLFieldListItem($proto36);
+$proto33["m_sql"] = "whatsapp";
+$proto33["m_srcTableName"] = "trainer";
+$proto33["m_expr"]=$obj;
+$proto33["m_alias"] = "";
+$obj = new SQLFieldListItem($proto33);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto38=array();
+						$proto35=array();
 			$obj = new SQLField(array(
 	"m_strName" => "photo",
 	"m_strTable" => "trainer",
 	"m_srcTableName" => "trainer"
 ));
 
-$proto38["m_sql"] = "photo";
-$proto38["m_srcTableName"] = "trainer";
-$proto38["m_expr"]=$obj;
-$proto38["m_alias"] = "";
-$obj = new SQLFieldListItem($proto38);
+$proto35["m_sql"] = "photo";
+$proto35["m_srcTableName"] = "trainer";
+$proto35["m_expr"]=$obj;
+$proto35["m_alias"] = "";
+$obj = new SQLFieldListItem($proto35);
+
+$proto0["m_fieldlist"][]=$obj;
+						$proto37=array();
+			$obj = new SQLField(array(
+	"m_strName" => "cid",
+	"m_strTable" => "trainer",
+	"m_srcTableName" => "trainer"
+));
+
+$proto37["m_sql"] = "cid";
+$proto37["m_srcTableName"] = "trainer";
+$proto37["m_expr"]=$obj;
+$proto37["m_alias"] = "";
+$obj = new SQLFieldListItem($proto37);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto40=array();
-$proto40["m_link"] = "SQLL_MAIN";
-			$proto41=array();
-$proto41["m_strName"] = "trainer";
-$proto41["m_srcTableName"] = "trainer";
-$proto41["m_columns"] = array();
-$proto41["m_columns"][] = "id";
-$proto41["m_columns"][] = "cid";
-$proto41["m_columns"][] = "date";
-$proto41["m_columns"][] = "emailid";
-$proto41["m_columns"][] = "experience";
-$proto41["m_columns"][] = "mobile";
-$proto41["m_columns"][] = "name";
-$proto41["m_columns"][] = "natianality";
-$proto41["m_columns"][] = "password";
-$proto41["m_columns"][] = "qualification";
-$proto41["m_columns"][] = "registeredDate";
-$proto41["m_columns"][] = "skillset";
-$proto41["m_columns"][] = "skype";
-$proto41["m_columns"][] = "username";
-$proto41["m_columns"][] = "usertype";
-$proto41["m_columns"][] = "whatsapp";
-$proto41["m_columns"][] = "photo";
-$obj = new SQLTable($proto41);
-
-$proto40["m_table"] = $obj;
-$proto40["m_sql"] = "trainer";
-$proto40["m_alias"] = "";
+												$proto39=array();
+$proto39["m_link"] = "SQLL_MAIN";
+			$proto40=array();
+$proto40["m_strName"] = "trainer";
 $proto40["m_srcTableName"] = "trainer";
-$proto42=array();
-$proto42["m_sql"] = "";
-$proto42["m_uniontype"] = "SQLL_UNKNOWN";
+$proto40["m_columns"] = array();
+$proto40["m_columns"][] = "id";
+$proto40["m_columns"][] = "date";
+$proto40["m_columns"][] = "emailid";
+$proto40["m_columns"][] = "experience";
+$proto40["m_columns"][] = "mobile";
+$proto40["m_columns"][] = "name";
+$proto40["m_columns"][] = "natianality";
+$proto40["m_columns"][] = "password";
+$proto40["m_columns"][] = "qualification";
+$proto40["m_columns"][] = "registeredDate";
+$proto40["m_columns"][] = "skillset";
+$proto40["m_columns"][] = "skype";
+$proto40["m_columns"][] = "username";
+$proto40["m_columns"][] = "usertype";
+$proto40["m_columns"][] = "whatsapp";
+$proto40["m_columns"][] = "photo";
+$proto40["m_columns"][] = "cid";
+$obj = new SQLTable($proto40);
+
+$proto39["m_table"] = $obj;
+$proto39["m_sql"] = "trainer";
+$proto39["m_alias"] = "";
+$proto39["m_srcTableName"] = "trainer";
+$proto41=array();
+$proto41["m_sql"] = "";
+$proto41["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto42["m_column"]=$obj;
-$proto42["m_contained"] = array();
-$proto42["m_strCase"] = "";
-$proto42["m_havingmode"] = false;
-$proto42["m_inBrackets"] = false;
-$proto42["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto42);
+$proto41["m_column"]=$obj;
+$proto41["m_contained"] = array();
+$proto41["m_strCase"] = "";
+$proto41["m_havingmode"] = false;
+$proto41["m_inBrackets"] = false;
+$proto41["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto41);
 
-$proto40["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto40);
+$proto39["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto39);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -3215,10 +2991,8 @@ $queryData_trainer = createSqlQuery_trainer();
 
 
 	
-		;
-
 																	
-
+	
 $tdatatrainer[".sqlquery"] = $queryData_trainer;
 
 $tableEvents["trainer"] = new eventsBase;

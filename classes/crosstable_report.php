@@ -1,118 +1,164 @@
 <?php
 $group_sort_y = array();
 class CrossTableReport
-{	
-	/**
-	 * the report table name
+{
+	var $tableName;
+	var $shortTableName;
+	var $col_summary = array();
+	var $group_header = array();
+	var $rowinfo = array();
+	var $total_summary;
+	var $xml_array;
+	var $is_value_empty;
+	
+	/*
+	 *	@type Array
+	 *	The list of field aliases from webreports
 	 */
-	protected $tableName;
+	var $arrDBFieldsList = array();
+	
+	/*
+	 *	@type Boolean
+	 *	Webreports - true if the report is database table based.
+	 */
+	var $wrdb = false;
+	
+	var $index_field_x;
+	var $index_field_y;
 	
 	/**
-	 * the current teport page type ( report, print )
+	 * @type String
+	 * The possible values are: "project", "db", "custom"
 	 */
-	protected $pageType;
+	protected $table_type = "project";
 	
 	/**
 	 * An instance of the 'ViewControlsContainer' class 
 	 * @type Object
 	 */
 	protected $viewControls;
-
+	
+	/**
+	 * A flag indicating if the report is run from project pages (not a web-report)
+	 * @type Boolean
+	 */
+	protected $fromWizard = false;
 	
 	/**
 	 * An Instance of the 'ProjectSettings' class
 	 * @type Object
 	 */
 	protected $pSet = null;
-
-	/**
-	 * @type Connection
-	 */
-	protected $connection;
 	
-
-	protected $group_header = array();
-	protected $col_summary = array();
-	protected $rowinfo = array();
-	protected $total_summary;
-
-	protected $showXSummary;
-	protected $showYSummary;
-	protected $showTotalSummary;	
-	protected $groupFieldsData;
-	protected $fieldsTotalsData;
-	
-	protected $xFName;
-	protected $yFName;	
-		
-	protected $xIntervalType;
-	protected $yIntervalType;	
-	
-	/**
-	 * The report current data field name
-	 */
-	protected $dataField = "";
-
 	/**
 	 * The selected data field settings packed in an array.
 	 * @type Array
 	 */
 	protected $dataFieldSettings = null;
+
+	/**
+	 * The report current data field name
+	 */
+	protected $dataField = "";
 	
 	/**
 	 * The report current aggregate function
 	 */
 	protected $dataGroupFunction = "";
 	
+	/**
+	 * An array of table keys
+	 * @type Array	 
+	 */
+	protected $tableKeys = null;
+	
+	/**
+	 * @type Connection
+	 */
+	protected $connection;
+	
+	protected $sessionPrefix;
+	
+	/**
+	 * The flag indicating if the report
+	 * is show on a dashboard
+	 */
+	protected $dashBased = false;
+	
+	/**
+	 * The dashboard table name
+	 */	
+	protected $dashTName = "";
+	
 	
 	/**
 	 * @constructor
-	 * @param Array params
+	 * @param Array rpt_array
 	 * @param String strSQL
 	 */
-	function __construct( $params, $strSQL )
+	function CrossTableReport($rpt_array, $strSQL)
 	{
-		$this->pageType	= $params["pageType"];	
-		$this->tableName = $params["tableName"];
-		$this->setDbConnection();		
+		$this->xml_array = $rpt_array;
+
+		if( $rpt_array["table_type"] )
+			$this->table_type = $rpt_array["table_type"];
+		
+		if( $rpt_array["fromWizard"] )
+			$this->fromWizard = true;
+			
+		$this->wrdb = $rpt_array["wrdb"];
+		$this->arrDBFieldsList = $rpt_array["arrDBFieldsList"];
+		
+		$this->tableName = $this->xml_array["tables"][0];
+		$this->setDbConnection();
+		
+		$this->shortTableName = GetTableURL($this->tableName);
+		if( strlen($this->shortTableName) == 0 )
+			$this->shortTableName = $this->tableName;
 			
 		$this->pSet = new ProjectSettings($this->tableName, PAGE_REPORT);
-		include_once getabspath("classes/controls/ViewControlsContainer.php");
-		$this->viewControls = new ViewControlsContainer( $this->pSet, PAGE_REPORT );
+		if( $this->fromWizard )
+		{
+			include_once getabspath("classes/controls/ViewControlsContainer.php");
+			$this->viewControls = new ViewControlsContainer($this->pSet, PAGE_REPORT);
+			$this->tableKeys = $this->pSet->getTableKeys();
+			
+			if( $rpt_array["dashBased"] )
+			{
+				$this->dashBased = true;
+				$this->dashTName = $rpt_array["dashTName"];
+			}
+		}
 		
-		$this->groupFieldsData = $params["groupFields"];
-		$this->fieldsTotalsData = $params["totals"];
+		$this->setSessionPrefix( $rpt_array["sessionPrefix"] );
+		$this->fillSessionVariables();
+
+
+		$this->dataField = $this->getDataField( $_SESSION[$this->sessionPrefix."_field"] );
+		if( !strlen($this->dataField) )
+			$this->dataField = $_SESSION['webreports']['group_fields'][0]["name"];
 		
-		$this->showXSummary = $params["xSummary"];
-		$this->showYSummary = $params["ySummary"];
-		$this->showTotalSummary = $params["totalSummary"];
-	
-		$this->xFName = $params["x"];
-		$this->yFName = $params["y"];
-		$this->dataField = $params["data"];
-	
-		$this->dataFieldSettings = $params["totals"][ $this->dataField ];	
-		$this->dataGroupFunction = $this->getDataGroupFunction( $params["operation"] );
-	
-		$this->xIntervalType = $this->getIntervalTypeByParam( "x", $this->xFName, $params["xType"] );
-		$this->yIntervalType = $this->getIntervalTypeByParam( "y", $this->yFName, $params["yType"] );
+		$this->initDataFieldSettings();
+		$this->initDataGroupFunction($_SESSION[$this->sessionPrefix."_group_func"]);
 		
-		$this->fillGridData( $strSQL, $params["headerClass"], $params["dataClass"] );
-	}
-	
-	/**
-	 * @param String tableSQL
-	 * @param String headerClass
-	 * @param String dataClass
-	 */
-	protected function fillGridData( $tableSQL, $headerClass, $dataClass )
-	{
-		$SQL = $this->getstrSQL( $tableSQL );
-		$qResult = $this->connection->query( $SQL );
+				
+		// assign index_field_x, index_field_y properties
+		$this->setAxisFieldsIndices();
+
+		if( $this->fromWizard )
+			$fName = $this->CrossGoodFieldName( $this->dataField );		
+		else
+			$fName = $this->getDBFieldName($this->CrossGoodFieldName( $this->dataField ));
+
+		if( $fName != " " )
+			$ftype = $this->getFieldType($fName);
+
+		$crtableSQL = $this->getstrSQL( $strSQL );
+		$qResult = $this->connection->query( $crtableSQL );
 		
 		$group_y = array();
 		$group_x = array();
-		$sort_y = array(); // sorted array of group_y indices
+		$sort_y = array();
 		
 		$arrdata = array();
 		$arravgsum = array();
@@ -121,16 +167,15 @@ class CrossTableReport
 		$avgsumx = array();
 		$avgcountx = array();
 		
-		// data 1 y value; //data 2 x value; //data 0 data field value // data 3 avg_sum//data 4 avg count
 		while( $data = $qResult->fetchNumeric() )
 		{
-			if( !in_array( $data[1], $group_y ) )
+			if( !in_array($data[1], $group_y) )
 			{
 				$group_y[] = $data[1];
 				$sort_y[] = count($sort_y);
 			}
 			
-			if( !in_array( $data[2], $group_x ) )
+			if( !in_array($data[2], $group_x) )
 			{
 				$group_x[] = $data[2];
 				$this->col_summary["data"][ count($group_x) - 1 ]["col_summary"] = "&nbsp;";
@@ -144,9 +189,14 @@ class CrossTableReport
 			$avgsumx[ $key_x ] = 0;
 			$avgcountx[ $key_x ] = 0;
 
-			$arrdata[ $key_y ][ $key_x ] = $data[0];
-			$arravgsum[ $key_y ][ $key_x ] = $data[3];
-			$arravgcount[ $key_y ][ $key_x ] = $data[4];
+			if( !$this->is_value_empty )
+			{
+				$arrdata[ $key_y ][ $key_x ] = $data[0];
+				$arravgsum[ $key_y ][ $key_x ] = $data[3];
+				$arravgcount[ $key_y ][ $key_x ] = $data[4];
+			}
+			else
+				$arrdata[ $key_y ][ $key_x ] = "&nbsp;";
 		}
 		
 		//	sort y groups
@@ -154,181 +204,146 @@ class CrossTableReport
 		$group_sort_y = $group_y;
 		SortForCrosstable($sort_y);
 		
-		$this->rowinfo = $this->getBasicRowsData( $sort_y, $group_y, $group_x, $arrdata, $dataClass );
 		
-		foreach( $group_x as $key_x => $value_x )
-		{
-			if( $value_x != "" )
-				$this->group_header["data"][ $key_x ]["gr_value"] = $this->getAxisDisplayValue( $this->xFName, $this->xIntervalType, $value_x );
-			else
-				$this->group_header["data"][ $key_x ]["gr_value"]="&nbsp;";
-				
-			$this->group_header["data"][ $key_x ]["gr_x_class"] = $headerClass; 
-		}
-		
-		$this->setSummariesData( $arravgsum, $arravgcount, $avgsumx, $avgcountx );
-			
-		$this->updateRecordsDisplayedFields();	
-	}	
-	
-	/**
-	 * @return Array
-	 */
-	protected function getBasicRowsData( $sort_y, $group_y, $group_x, $arrdata, $dataClass )
-	{
-		$crossRowsData = array();
-		$ftype = $this->pSet->getFieldType( $this->dataField );
-		
-		foreach( $sort_y as $key_y )
+		foreach($sort_y as $key_y)
 		{
 			$value_y = $group_y[ $key_y ];
+			$this->rowinfo[ $key_y ]["row_summary"] = "&nbsp;";
+			$this->rowinfo[ $key_y ]["group_y"] = $this->getAxisDisplayValue($this->index_field_y, $value_y);
 			
-			$crossRowsData[ $key_y ]["row_summary"] = "&nbsp;";
-			$crossRowsData[ $key_y ]["group_y"] = $this->getAxisDisplayValue( $this->yFName, $this->yIntervalType, $value_y );
-			$crossRowsData[ $key_y ]["id_row_summary"] = "total_y_".$key_y;
-			$crossRowsData[ $key_y ]["summary_class"] = $dataClass;
-			//$crossRowsData[ $key_y ]["gr_y_class"] = ""; 
-			
-			if( !array_key_exists( $key_y, $arrdata ) )
-				continue;			
-			
-			foreach( $group_x as $key_x => $value_x)
+			foreach($group_x as $key_x => $value_x)
 			{
-				$rowValue = "&nbsp;";
-				
-				if( array_key_exists( $key_x, $arrdata[ $key_y ] ) && !is_null( $arrdata[ $key_y ][ $key_x ] ) )
+				if( array_key_exists($key_y, $arrdata) )
 				{
-					$rowValue = $arrdata[ $key_y ][ $key_x ];
-					if( $this->dataGroupFunction == "avg" && !IsTimeType( $ftype ) )
-						$rowValue = round($rowValue, 2);
+					$rowValue = "&nbsp;";
+					
+					if( array_key_exists($key_x, $arrdata[ $key_y ]) && !$this->is_value_empty && !is_null($arrdata[ $key_y ][ $key_x ]) )
+					{
+						$rowValue = $arrdata[ $key_y ][ $key_x ];
+						if( $this->dataGroupFunction == "avg" && !IsTimeType($ftype))
+							$rowValue = round($rowValue, 2);
+					}
+					
+					$this->rowinfo[ $key_y ]["row_record"]["data"][ $key_x ]["row_value"] = $rowValue;	
+					$this->rowinfo[ $key_y ]["row_record"]["data"][ $key_x ]["id_data"] = $key_y."_".$key_x;
 				}
-				
-				$crossRowsData[ $key_y ]["row_record"]["data"][ $key_x ]["row_value"] = $rowValue;	
-				$crossRowsData[ $key_y ]["row_record"]["data"][ $key_x ]["row_value_class"] = $dataClass;
-				$crossRowsData[ $key_y ]["row_record"]["data"][ $key_x ]["id_data"] = $key_y."_".$key_x;	
-			}	
-		}
-		
-		return $crossRowsData;
-	}
-	
-	/**
-	 * ???
-	 */
-	protected function setSummariesData( $arravgsum, $arravgcount, $avgsumx, $avgcountx )
-	{
-		$this->total_summary = "&nbsp;";
-		
-		$xSummaty = array();
-		$ySummary = array();
-		$totaxSummary = array();
-		
-		foreach( $this->rowinfo as $key_y => $yData )
-		{
-			foreach( $yData["row_record"]["data"] as $key_x => $value )
-			{
-				if( $value["row_value"] == "&nbsp;" )
-					continue;
-					
-				switch( $this->dataGroupFunction )
-				{
-					case "sum":
-						$this->rowinfo[ $key_y ]["row_summary"] += $value["row_value"];
-						$this->col_summary["data"][ $key_x ]["col_summary"] += $value["row_value"];
-						$this->total_summary += $value["row_value"];
-					break;
-					
-					case "min":
-						if( $this->rowinfo[ $key_y ]["row_summary"] === "&nbsp;" || $value["row_value"] < $this->rowinfo[ $key_y ]["row_summary"] )
-							$this->rowinfo[ $key_y ]["row_summary"] = $value["row_value"];
-							
-						if( $this->col_summary["data"][ $key_x ]["col_summary"] === "&nbsp;" || $this->col_summary["data"][ $key_x ]["col_summary"] > $value["row_value"] )
-							$this->col_summary["data"][ $key_x ]["col_summary"] = $value["row_value"];
-							
-						if( $this->total_summary === "&nbsp;" || $this->total_summary > $value["row_value"] )
-							$this->total_summary = $value["row_value"];	
-					break;
-					
-					case "max":
-						if( $this->rowinfo[ $key_y ]["row_summary"] === "&nbsp;" || $value["row_value"] > $this->rowinfo[ $key_y ]["row_summary"] )
-							$this->rowinfo[ $key_y ]["row_summary"] = $value["row_value"];
-						
-						if( $this->col_summary["data"][ $key_x ]["col_summary"] === "&nbsp;" || $this->col_summary["data"][ $key_x ]["col_summary"] < $value["row_value"] )								
-							$this->col_summary["data"][ $key_x ]["col_summary"] = $value["row_value"];
-						
-						if( $this->total_summary === "&nbsp;" || $this->total_summary < $value["row_value"] )
-							$this->total_summary = $value["row_value"];
-					break;
-					
-					case "avg":
-						$this->rowinfo[ $key_y ]["avgsumy"] += $arravgsum[ $key_y ][ $key_x ];
-						$this->rowinfo[ $key_y ]["avgcounty"] += $arravgcount[ $key_y ][ $key_x ];
-						$this->rowinfo[ $key_y] ["row_record"]["data"][ $key_x ]["avgsumx"] += $arravgsum[ $key_y ][ $key_x ];
-						$this->rowinfo[ $key_y ]["row_record"]["data"][ $key_x ]["avgcountx"] += $arravgcount[ $key_y ][ $key_x ];
-					break;
-				}
-				
-				if( $this->showXSummary && !is_null( $this->col_summary["data"][ $key_x ]["col_summary"] ) )
-				{
-					if( is_numeric( $this->col_summary["data"][ $key_x ]["col_summary"] ) )
-						$this->col_summary["data"][ $key_x ]["col_summary"] = round( $this->col_summary["data"][ $key_x ]["col_summary"], 2);
-				}
-				else
-					$this->col_summary["data"][ $key_x ]["col_summary"] = "&nbsp;";
 			}
-			
-			if( $this->showYSummary && !is_null( $this->rowinfo[ $key_y ]["row_summary"] ) )
+			$this->rowinfo[ $key_y ]["id_row_summary"] = "total_y_".$key_y;
+		}
+
+		foreach($group_x as $key_x => $value_x)
+		{
+			if($value_x != "")
+				$this->group_header["data"][ $key_x ]["gr_value"] = $this->getAxisDisplayValue($this->index_field_x, $value_x);
+			else
+				$this->group_header["data"][ $key_x ]["gr_value"]="&nbsp;";
+		}
+
+		$sum_x = $this->xml_array["group_fields"][ count($this->xml_array["group_fields"]) - 1 ]["sum_x"];
+		$sum_y = $this->xml_array["group_fields"][ count($this->xml_array["group_fields"]) - 1 ]["sum_y"];
+		$sum_total = $this->xml_array["group_fields"][ count($this->xml_array["group_fields"]) - 1 ]["sum_total"];
+		
+		$this->total_summary = "&nbsp;";
+		foreach($this->rowinfo as $key_y => $obj_y)
+		{
+			$obj_x = $obj_y["row_record"]["data"];
+			foreach($obj_x as $key_x => $value)
 			{
-				if( is_numeric( $this->rowinfo[ $key_y ]["row_summary"] ) )
-					$this->rowinfo[ $key_y ]["row_summary"] = round( $this->rowinfo[ $key_y ]["row_summary"], 2 );
+				if($value["row_value"] !== "&nbsp;")
+				{
+					switch($this->dataGroupFunction)
+					{
+						case "sum":
+							if(!is_null($value["row_value"]))
+							{
+								$this->rowinfo[$key_y]["row_summary"] += $value["row_value"];
+								$this->col_summary["data"][$key_x]["col_summary"] += $value["row_value"];
+								$this->total_summary += $value["row_value"];
+							}
+						break;
+						case "min":
+							if(($this->rowinfo[$key_y]["row_summary"] === "&nbsp;" || $value["row_value"]<$this->rowinfo[$key_y]["row_summary"]) && !is_null($value["row_value"]))
+								$this->rowinfo[$key_y]["row_summary"] = $value["row_value"];
+							if(($this->col_summary["data"][$key_x]["col_summary"] === "&nbsp;" || $this->col_summary["data"][$key_x]["col_summary"]>$value["row_value"]) && !is_null($value["row_value"]))
+								$this->col_summary["data"][$key_x]["col_summary"] = $value["row_value"];
+							if(($this->total_summary === "&nbsp;" || $this->total_summary>$value["row_value"]) && !is_null($value["row_value"]))
+								$this->total_summary = $value["row_value"];
+								
+						break;
+						case "max":
+							if($this->rowinfo[$key_y]["row_summary"] === "&nbsp;" || $value["row_value"]>$this->rowinfo[$key_y]["row_summary"])
+								$this->rowinfo[$key_y]["row_summary"] = $value["row_value"];
+							if($this->col_summary["data"][$key_x]["col_summary"] === "&nbsp;" || $this->col_summary["data"][$key_x]["col_summary"]<$value["row_value"])								
+								$this->col_summary["data"][$key_x]["col_summary"] = $value["row_value"];
+							if($this->total_summary === "&nbsp;" || $this->total_summary<$value["row_value"])
+								$this->total_summary = $value["row_value"];
+						break;
+						case "avg":
+							$this->rowinfo[$key_y]["avgsumy"] += $arravgsum[$key_y][$key_x];
+							$this->rowinfo[$key_y]["avgcounty"] += $arravgcount[$key_y][$key_x];
+							$this->rowinfo[$key_y]["row_record"]["data"][$key_x]["avgsumx"] += $arravgsum[$key_y][$key_x];
+							$this->rowinfo[$key_y]["row_record"]["data"][$key_x]["avgcountx"] += $arravgcount[$key_y][$key_x];
+						break;
+					}
+					if($sum_x == true && !$this->is_value_empty && !is_null($this->col_summary["data"][$key_x]["col_summary"]))
+					{
+						if(is_numeric($this->col_summary["data"][$key_x]["col_summary"]))
+							$this->col_summary["data"][$key_x]["col_summary"] = round($this->col_summary["data"][$key_x]["col_summary"],2);
+					}
+					else
+						$this->col_summary["data"][$key_x]["col_summary"] = "&nbsp;";
+				}
+			}
+			if($sum_y == true && !$this->is_value_empty && !is_null($this->rowinfo[$key_y]["row_summary"]))
+			{
+				if(is_numeric($this->rowinfo[$key_y]["row_summary"]))
+					$this->rowinfo[$key_y]["row_summary"] = round($this->rowinfo[$key_y]["row_summary"],2);
 			}
 			else
-				$this->rowinfo[ $key_y ]["row_summary"] = "&nbsp;";
+				$this->rowinfo[$key_y]["row_summary"] = "&nbsp;";
 		}
 		
-		
-		if( $this->dataGroupFunction == "avg" )
+		if($this->dataGroupFunction == "avg")
 		{
 			$total_sum = 0;
 			$total_count = 0;
 			
-			foreach( $this->rowinfo as $key_y => $valuey )
+			foreach($this->rowinfo as $key_y => $valuey)
 			{
-				if( $valuey["avgcounty"] )
+				if($valuey["avgcounty"])
 				{
-					$this->rowinfo[ $key_y ]["row_summary"] = round( $valuey["avgsumy"] / $valuey["avgcounty"], 2 );
+					$this->rowinfo[$key_y]["row_summary"] = round($valuey["avgsumy"]/$valuey["avgcounty"],2);
 					$total_sum += $valuey["avgsumy"];
 					$total_count += $valuey["avgcounty"];
 				}
-				
-				foreach( $valuey["row_record"]["data"] as $key_x => $valuex )
+				foreach($valuey["row_record"]["data"] as $key_x => $valuex)
 				{
-					if( $valuex["avgcountx"] )
+					if($valuex["avgcountx"])
 					{
-						$avgsumx[ $key_x ] += $valuex["avgsumx"];
-						$avgcountx[ $key_x ] += $valuex["avgcountx"];
+						$avgsumx[$key_x] += $valuex["avgsumx"];
+						$avgcountx[$key_x] += $valuex["avgcountx"];
 						$total_sum += $valuex["avgsumx"];
 						$total_count += $valuex["avgcountx"];
 					}
 				}
 			}
-			
-			foreach( $avgsumx as $key => $value )
+			foreach($avgsumx as $key => $value)
 			{
-				if( $avgcountx[ $key ] )
-					$this->col_summary["data"][ $key ]["col_summary"] = round( $value / $avgcountx[$key], 2 );
+				if($avgcountx[$key])
+					$this->col_summary["data"][$key]["col_summary"] = round($value/$avgcountx[$key],2);
 			}
-			
-			if( $total_count )
-				$this->total_summary = $total_sum / $total_count;
+			if($total_count)
+				$this->total_summary = $total_sum/$total_count;
 		}
 		
-		if( !$this->showTotalSummary )
+		if( $sum_total != true || $this->is_value_empty )
 			$this->total_summary = "&nbsp;";
 		elseif( is_numeric($this->total_summary) )
-			$this->total_summary = round( $this->total_summary, 2 );			
+			$this->total_summary = round($this->total_summary,2);
+		
+		$this->updateRecordsDisplayedFields();
 	}
-	
+
 	/**
 	 * Get view value basing on 'view as'
 	 */
@@ -370,6 +385,12 @@ class CrossTableReport
 		if( !count($this->rowinfo) )
 			return;
 		
+		if( !$this->fromWizard )
+		{
+			$this->updateWebReportRecordsDisplayedFields( );
+			return;
+		}
+		
 		foreach($this->rowinfo as $key_y => $data)
 		{
 			foreach($data["row_record"]["data"] as $key_x => $fieldData)
@@ -377,7 +398,7 @@ class CrossTableReport
 				if( $fieldData["row_value"] == "&nbsp;" )
 					continue;
 
-				$this->rowinfo[ $key_y ]["row_record"]["data"][ $key_x ]["row_value"] = $this->getViewValue( $fieldData["row_value"] );
+				$this->rowinfo[ $key_y ]["row_record"]["data"][$key_x]["row_value"] = $this->getViewValue($fieldData["row_value"]);
 			}
 
 			if( $data["row_summary"] != "&nbsp;" ) 
@@ -396,21 +417,75 @@ class CrossTableReport
 			if( $summaryData["col_summary"] == "&nbsp;" )
 				continue;
 
-			$this->col_summary["data"][ $key ]["col_summary"] = $this->getViewValue( $summaryData["col_summary"], false );
+			$this->col_summary["data"][$key]["col_summary"] = $this->getViewValue($summaryData["col_summary"], false);
 		}		
+	}
+	
+	/**
+	 * Apply currency formatting to the data field values and totals (for Web reports only)
+	 */
+	protected function updateWebReportRecordsDisplayedFields()
+	{
+		if( $this->dataFieldSettings['curr'] != true )
+			return;
+			
+		foreach($this->rowinfo as $arrkey => $arrfield)
+		{
+			foreach($arrfield["row_record"]["data"] as $fieldkey => $fieldvalue)
+			{
+				if( is_numeric($fieldvalue["row_value"]) )
+					$this->rowinfo[$arrkey]["row_record"]["data"][$fieldkey]["row_value"] = str_format_currency($fieldvalue["row_value"]);
+			}
+			
+			if( is_numeric($arrfield["row_summary"]) )
+				$this->rowinfo[$arrkey]["row_summary"] = str_format_currency($arrfield["row_summary"]);
+		}
+		
+		if( is_numeric($this->total_summary) )
+			$this->total_summary = str_format_currency($this->total_summary);
+		
+		foreach( $this->col_summary["data"] as $arrkey => $arrvalue )
+		{
+			if(is_numeric($arrvalue["col_summary"]))
+				$this->col_summary["data"][$arrkey]["col_summary"] = str_format_currency($arrvalue["col_summary"]);
+		}	
+	}
+	
+	/**
+	 *
+	 */
+	protected function setSessionPrefix( $sessionPrefix = "")
+	{
+		if( $sessionPrefix )
+			$this->sessionPrefix = $sessionPrefix;
+		else
+			$this->sessionPrefix = $this->shortTableName;
+	}
+	
+	/**
+	 * Fill a cross-table report's session variable
+	 */
+	protected function fillSessionVariables()
+	{
+		if( postvalue("group_func") != "" )
+			$_SESSION[$this->sessionPrefix."_group_func"] = postvalue("group_func");
+			
+		if( postvalue("field") != "" )
+			$_SESSION[$this->sessionPrefix."_field"] = postvalue("field");
+			
+		if( postvalue("axis_x") != "" )
+			$_SESSION[$this->sessionPrefix."_gr_x"] = postvalue("axis_x");
+			
+		if( postvalue("axis_y") != "" )
+			$_SESSION[$this->sessionPrefix."_gr_y"] = postvalue("axis_y");
+			
+		if( postvalue("rname") != "" )
+			$_SESSION[$this->sessionPrefix."_rname"] = postvalue("rname");		
 	}
 	
 	public function getCrossTableData()
 	{
 		return $this->rowinfo;
-	}
-	
-	/**
-	 * @return Boolean
-	 */
-	public function isEmpty()
-	{
-		return !count( $this->rowinfo );
 	}
 	
 	public function getCrossTableHeader()
@@ -427,252 +502,248 @@ class CrossTableReport
 	{
 		return $this->total_summary;
 	}
+	
+	/**
+	 * Assign index_field_x, index_field_y properties
+	 */
+	protected function setAxisFieldsIndices()
+	{
+		$gr_x = $_SESSION[$this->sessionPrefix."_gr_x"];
+		$gr_y = $_SESSION[$this->sessionPrefix."_gr_y"];
 		
+		if( $gr_x == "" )
+			$this->index_field_x = $this->getFirstGroupField("x");
+		else 
+			$this->index_field_x = $gr_x;
+		
+		if( $gr_y == "" )
+			$this->index_field_y = $this->getFirstGroupField("y");
+		else
+			$this->index_field_y = $gr_y;		
+	}	
+	
 	/**
 	 * Assign 'connection' property 
 	 */
+	 
 	protected function setDbConnection()
 	{
 		global $cman;
-		$this->connection = $cman->byTable( $this->tableName ); //#9875
+		if($this->isProjectDB())
+			$this->connection = $cman->byTable( $this->tableName ); //#9875
+		else
+			$this->connection = $cman->getDefault();
 	}	
 
 	/**
-	 * @param String axis
-	 * @param String crossName
-	 * @param String userIntType
-	 * @return Number
-	 */
-	protected function getIntervalTypeByParam( $axis, $crossName, $userIntType )
-	{
-		$iType = $this->getRefineIntervalType( $userIntType, $crossName );
-	
-		$int_type = -1;
-		$intTypes = array();
-		foreach( $this->groupFieldsData as $fData )
-		{
-			if( $fData["name"] == $crossName && ( $fData["group_type"] == "all" || $fData["group_type"] == $axis ) )
-			{
-				if( !strlen( $userIntType ) || $iType == $fData["int_type"] )
-				{
-					$int_type = $fData["int_type"];
-					break;
-				}
-				
-				$intTypes[] = $fData["int_type"];
-			}			
-		}
-
-		if( $int_type != -1 )
-			return $int_type;
-			
-		if( count( $intTypes ) > 0 )
-			return $intTypes[0];
-		
-		// something went wrong
-		return -1;
-	}
-	
-	
-	/**
 	 * Get a report's SQL query string
-	 * @param String tableSQL		The report table's SQL query
+	 * @param String strSQL		The report table's SQL query
 	 * @return String	
 	 */
-	protected function getstrSQL( $tableSQL )
-	{		
-		$group_x = $this->_getIntervalTypeData( $this->xFName, $this->xIntervalType );
-		$group_y = $this->_getIntervalTypeData( $this->yFName, $this->yIntervalType );	
-	
-		$ftype = $this->pSet->getFieldType( $this->dataField );
-		$isTime = $this->pSet->getViewFormat( $this->dataField ) == FORMAT_TIME || IsTimeType($ftype);
-		
-		if ( $isTime )
-			$select_field = $this->dataGroupFunction."(".$this->connection->timeToSecWrapper( $this->dataField )."), ";
+	protected function getstrSQL( $strSQL )
+	{
+		global $strTableName;
+			
+		$group_x = $this->getIntervalType( $this->index_field_x );
+		$group_y = $this->getIntervalType( $this->index_field_y );
+		if( $this->fromWizard )
+			$fName = $this->CrossGoodFieldName( $this->dataField );		
 		else
-			$select_field = $this->dataGroupFunction."(".$this->connection->addFieldWrappers( $this->dataField )."), ";
-
-		if( $this->dataGroupFunction == "avg" && !IsDateFieldType($ftype) )
-		{
-			$sum_for_avg = !$isTime ? "sum(".$this->connection->addFieldWrappers( $this->dataField ).")" : "sum(".$this->connection->timeToSecWrapper( $this->dataField ).")";
-			$avg_func = ", " . $sum_for_avg . " as ".$this->connection->addFieldWrappers("avg_sum")
-				.", count(".$this->connection->addFieldWrappers( $this->dataField ).") as ".$this->connection->addFieldWrappers("avg_count");
-		}
-		else
-			$avg_func = ", 1 as ".$this->connection->addFieldWrappers("avg_sum").", 1 as ".$this->connection->addFieldWrappers("avg_count");	
+			$fName = $this->getDBFieldName($this->CrossGoodFieldName( $this->dataField ));		
 		
-		
-		$whereClause = "";
-
-		if( $this->pageType == PAGE_REPORT ) 
-		{
-			if( tableEventExists("BeforeQueryReport", $this->tableName) ) 
+		$select_field = "' ', ";
+		$avg_func = "";
+		if( $fName != " " )
+		{	
+			$strViewFormat = $this->pSet->getViewFormat( $this->dataField );
+			$ftype = $this->getFieldType($fName);
+			$isTime = $strViewFormat == FORMAT_TIME || IsTimeType($ftype);
+			
+			if ( $isTime )
 			{
-				$eventObj = getEventObject($this->tableName);
-				$eventObj->BeforeQueryReport($whereClause);
-				if( $whereClause )
-					$whereClause = " where ".$whereClause;
+				$select_field = $this->dataGroupFunction."(".$this->connection->timeToSecWrapper($fName)."), ";
 			}
-		}
-		else {
-			if( tableEventExists("BeforeQueryReportPrint", $this->tableName) ) 
+			else
 			{
-				$eventObj = getEventObject($this->tableName);
-				$eventObj->BeforeQueryReportPrint($whereClause);
-				if( $whereClause )
-					$whereClause = " where ".$whereClause;
+				$select_field = $this->dataGroupFunction."(".$this->connection->addFieldWrappers($fName)."), ";
 			}
 			
+			$this->is_value_empty = false;
+
+			if( $this->dataGroupFunction == "avg" && !IsDateFieldType($ftype) )
+			{
+				$sum_for_avg = !$isTime ? "sum(".$this->connection->addFieldWrappers($fName).")" : "sum(".$this->connection->timeToSecWrapper($fName).")";
+				$avg_func = ", " . $sum_for_avg . " as ".$this->connection->addFieldWrappers("avg_sum")
+					.", count(".$this->connection->addFieldWrappers($fName).") as ".$this->connection->addFieldWrappers("avg_count");
+			}
+			else
+				$avg_func = ", 1 as ".$this->connection->addFieldWrappers("avg_sum").", 1 as ".$this->connection->addFieldWrappers("avg_count");	
 		}
 		
-		$gx0 = $group_x[0];
-		$gx1 = $group_x[1];
-		$gy0 = $group_y[0];
-		$gy1 = $group_y[1];
-		 
+		$whereClause = "";
+		if( tableEventExists("BeforeQueryReport", $strTableName) ) 
+		{
+			$eventObj = getEventObject($strTableName);
+			$eventObj->BeforeQueryReport($whereClause);
+			if( $whereClause )
+				$whereClause = " where ".$whereClause;
+		}
+		if( $this->fromWizard ) {
+			$gx0 = $group_x[0];
+			$gx1 = $group_x[1];
+			$gy0 = $group_y[0];
+			$gy1 = $group_y[1];
+		} else {
+			$gx0 = $this->getDBFieldName($group_x[0]);
+			$gx1 = $this->getDBFieldName($group_x[1]);
+			$gy0 = $this->getDBFieldName($group_y[0]);
+			$gy1 = $this->getDBFieldName($group_y[1]);
+		}
 		$selectClause = "select ".$select_field.$gy0.", ".$gx0. $avg_func;
 		$groupByClause = "group by ".$gx1.", ".$gy1;
 		$orderByClause = "order by ".$gx1.",".$gy1;
 		
-		if( $this->connection->dbType == nDATABASE_Oracle )
-			return $selectClause." from (".$tableSQL.")".$whereClause." ".$groupByClause." ".$orderByClause;
-		
-		if( $this->connection->dbType == nDATABASE_MSSQLServer )
+		if( $this->connection->dbType != nDATABASE_Oracle )
 		{
-			$pos = strrpos(strtoupper($tableSQL), "ORDER BY");
-			if( $pos )
-				$tableSQL = substr($tableSQL, 0, $pos);
+			if( $this->connection->dbType == nDATABASE_MSSQLServer )
+			{
+				$pos = strrpos(strtoupper($strSQL), "ORDER BY");
+				if( $pos )
+					$strSQL = substr($strSQL, 0, $pos);
+			}
+			return $selectClause." from (".$strSQL.") as cross_table".$whereClause." ".$groupByClause." ".$orderByClause;
 		}
-		return $selectClause." from (".$tableSQL.") as cross_table".$whereClause." ".$groupByClause." ".$orderByClause;
+
+		return $selectClause." from (".$strSQL.")".$whereClause." ".$groupByClause." ".$orderByClause;
 	}
 	
 	/**
-	 * FIx the name
 	 * @param Number index
 	 * @return Array
 	 */
-	protected function _getIntervalTypeData( $fName, $int_type )
+	protected function getIntervalType($index)
 	{
-		// no $int_type case ??
-		//if( $int_type == -1 )
-		//	return array("", "");
-
+		$field = $this->xml_array["group_fields"][$index]["name"];
+		$ftype = $this->getFieldType($field);
+		
+		$arr = $this->xml_array["group_fields"];
+		for($i = 0; $i < count($arr) - 1; $i++)
+		{
+			if($field == $arr[$i]["name"] && $index == $i)
+			{
+				$int_type = $arr[$i]["int_type"];
+				break;
+			}
+		}
+		
 		if( $int_type == 0 ) 
 		{
-			$wrappedGoodFieldName = $this->connection->addFieldWrappers( $fName );
+			$wrappedGoodFieldName = $this->connection->addFieldWrappers($this->CrossGoodFieldName($field));
 			return array( $wrappedGoodFieldName, $wrappedGoodFieldName );
 		}
-
-		$ftype = $this->pSet->getFieldType( $fName );
 		
 		if( IsNumberType($ftype) )
-			return $this->getNumberTypeInterval($fName, $int_type);
+			return $this->getNumberTypeInterval($field, $int_type);
 		
 		if( IsCharType( $ftype ) )
-			return $this->getCharTypeInterval($fName, $int_type);
+			return $this->getCharTypeInterval($field, $int_type);
 		
 		if( IsDateFieldType( $ftype ) )
-			return $this->getDateTypeInterval($fName, $int_type);
+			return $this->getDateTypeInterval($field, $int_type);
 	}
 	
-	/**
-	 * @param String fName
-	 * @param Number int_type
-	 * @return array
-	 */
-	protected function getDateTypeInterval( $fName, $int_type )
+	protected function getDateTypeInterval($field, $int_type)
 	{
-		$field = $this->connection->addFieldWrappers( $fName );
-		
+		$field = $this->connection->addFieldWrappers( $this->CrossGoodFieldName($field) );
 		switch( $this->connection->dbType )
 		{
 			case nDATABASE_MySQL:
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("year(".$field.")*10000+0101","YEAR(".$field.")");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("year(".$field.")*10000+QUARTER(".$field.")*100+1","year(".$field."),QUARTER(".$field.")");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("year(".$field.")*10000+month(".$field.")*100+1","year(".$field."),month(".$field.")");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("year(".$field.")*10000+week(".$field.")*100+01","year(".$field."),WEEK(".$field.")");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("year(".$field.")*10000+month(".$field.")*100+day(".$field.")","year(".$field."),month(".$field."),day(".$field.")");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("year(".$field.")*1000000+month(".$field.")*10000+day(".$field.")*100+HOUR(".$field.")","year(".$field."),month(".$field."),day(".$field."),hour(".$field.")");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("year(".$field.")*1000000+month(".$field.")*1000000+day(".$field.")*10000+HOUR(".$field.")*100+minute(".$field.")","year(".$field."),month(".$field."),day(".$field."),hour(".$field."),minute(".$field.")");
-			break;
+				break;
 
 			case nDATABASE_Oracle:
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("TO_CHAR(".$field.", 'YYYY')*10000+0101","TO_CHAR(".$field.", 'YYYY')");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("TO_CHAR(".$field.", 'YYYY')*10000+TO_CHAR(".$field.",'Q')*100+1","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.",'Q')");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("TO_CHAR(".$field.", 'YYYY')*10000+TO_CHAR(".$field.".'MM')*100+1","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.".'MM')");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("TO_CHAR(".$field.", 'YYYY')*10000+TO_CHAR(".$field.",'W')*100+01","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.",'W')");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("TO_CHAR(".$field.", 'YYYY')*10000+TO_CHAR(".$field.",'MM')*100+TO_CHAR(".$field.",'DD')","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.",'MM'),TO_CHAR(".$field.",'DD')");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("TO_CHAR(".$field.", 'YYYY')*1000000+TO_CHAR(".$field.",'MM')*10000+TO_CHAR(".$field.",'DD')*100+TO_CHAR(".$field.",'HH')","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.",'MM'),TO_CHAR(".$field.",'DD'),TO_CHAR(".$field.",'HH')");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("TO_CHAR(".$field.", 'YYYY')*1000000+TO_CHAR(".$field.",'MM')*1000000+TO_CHAR(".$field.",'DD')*10000+TO_CHAR(".$field.",'HH')*100+TO_CHAR(".$field.",'MI')","TO_CHAR(".$field.", 'YYYY'),TO_CHAR(".$field.",'MM'),TO_CHAR(".$field.",'DD'),TO_CHAR(".$field.",'HH'),TO_CHAR(".$field.",'MI')");
-			break;
+				break;
 
 			case nDATABASE_MSSQLServer:
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("datepart(yyyy,".$field.")*10000+0101","datepart(yyyy,".$field.")");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("datepart(yyyy,".$field.")*10000+datepart(qq,".$field.")*100+1","datepart(yyyy,".$field."),datepart(qq,".$field.")");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("datepart(yyyy,".$field.")*10000+datepart(mm,".$field.")*100+1","datepart(yyyy,".$field."),datepart(mm,".$field.")");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("datepart(yyyy,".$field.")*10000+(datepart(ww,".$field.")-1)*100+01","datepart(yyyy,".$field."),datepart(ww,".$field.")");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("datepart(yyyy,".$field.")*10000+datepart(mm,".$field.")*100+datepart(dd,".$field.")","datepart(yyyy,".$field."),datepart(mm,".$field."),datepart(dd,".$field.")");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("datepart(yyyy,".$field.")*1000000+datepart(mm,".$field.")*10000+datepart(dd,".$field.")*100+datepart(hh,".$field.")","datepart(yyyy,".$field."),datepart(mm,".$field."),datepart(dd,".$field."),datepart(hh,".$field.")");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("datepart(yyyy,".$field.")*1000000+datepart(mm,".$field.")*1000000+datepart(dd,".$field.")*10000+datepart(hh,".$field.")*100+datepart(mi,".$field.")","datepart(yyyy,".$field."),datepart(mm,".$field."),datepart(dd,".$field."),datepart(hh,".$field."),datepart(mi,".$field.")");
-			break;
+				break;
 
 			case nDATABASE_Access:
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("datepart('yyyy',".$field.")*10000+0101","datepart('yyyy',".$field.")");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("datepart('yyyy',".$field.")*10000+datepart('q',".$field.")*100+1","datepart('yyyy',".$field."),datepart('q',".$field.")");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("datepart('yyyy',".$field.")*10000+datepart('m',".$field.")*100+1","datepart('yyyy',".$field."),datepart('m',".$field.")");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("datepart('yyyy',".$field.")*10000+(datepart('ww',".$field.")-1)*100+01","datepart('yyyy',".$field."),datepart('ww',".$field.")");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("datepart('yyyy',".$field.")*10000+datepart('m',".$field.")*100+datepart('d',".$field.")","datepart('yyyy',".$field."),datepart('m',".$field."),datepart('d',".$field.")");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("datepart('yyyy',".$field.")*1000000+datepart('m',".$field.")*10000+datepart('d',".$field.")*100+datepart('h',".$field.")","datepart('yyyy',".$field."),datepart('m',".$field."),datepart('d',".$field."),datepart('h',".$field.")");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("datepart('yyyy',".$field.")*1000000+datepart('m',".$field.")*1000000+datepart('d',".$field.")*10000+datepart('h',".$field.")*100+datepart('n',".$field.")","datepart('yyyy',".$field."),datepart('m',".$field."),datepart('d',".$field."),datepart('h',".$field."),datepart('n',".$field.")");
-			break;
+				break;
 
 			case nDATABASE_PostgreSQL: 
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("date_part('year',".$field.")*10000+0101","date_part('year',".$field.")");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("date_part('year',".$field.")*10000+date_part('quarter',".$field.")*100+1","date_part('year',".$field."),date_part('quarter',".$field.")");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("date_part('year',".$field.")*10000+date_part('month',".$field.")*100+1","date_part('year',".$field."),date_part('month',".$field.")");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("date_part('year',".$field.")*10000+(date_part('week',".$field.")-1)*100+01","date_part('year',".$field."),date_part('week',".$field.")");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("date_part('year',".$field.")*10000+date_part('month',".$field.")*100+date_part('days',".$field.")","date_part('year',".$field."),date_part('month',".$field."),date_part('days',".$field.")");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("date_part('year',".$field.")*1000000+date_part('month',".$field.")*10000+date_part('days',".$field.")*100+date_part('hour',".$field.")","date_part('year',".$field."),date_part('month',".$field."),date_part('days',".$field."),date_part('hour',".$field.")");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("date_part('year',".$field.")*1000000+date_part('month',".$field.")*1000000+date_part('days',".$field.")*10000+date_part('hour',".$field.")*100+date_part('minute',".$field.")","date_part('year',".$field."),date_part('month',".$field."),date_part('days',".$field."),date_part('hour',".$field."),date_part('minute',".$field.")");
-			break;
+				break;
 
 			case nDATABASE_Informix:
-				return "substring(".$field." from 1 for ".$int_type.")";
+				return "substring(".$field." from 1 for ".$int_type.")"; //fix it!
 
 			case nDATABASE_SQLite3:
 				return array($field, $field);
@@ -680,33 +751,26 @@ class CrossTableReport
 			case nDATABASE_DB2: 
 				if($int_type == 1) // DATE_INTERVAL_YEAR
 					return array("year(".$field.")*10000+0101","YEAR(".$field.")");
-				if($int_type == 2) // DATE_INTERVAL_QUARTER
+				elseif($int_type == 2) // DATE_INTERVAL_QUARTER
 					return array("year(".$field.")*10000+QUARTER(".$field.")*100+1","year(".$field."),QUARTER(".$field.")");
-				if($int_type == 3) // DATE_INTERVAL_MONTH
+				elseif($int_type == 3) // DATE_INTERVAL_MONTH
 					return array("year(".$field.")*10000+month(".$field.")*100+1","year(".$field."),month(".$field.")");
-				if($int_type == 4) // DATE_INTERVAL_WEEK
+				elseif($int_type == 4) // DATE_INTERVAL_WEEK
 					return array("year(".$field.")*10000+week(".$field.")*100+01","year(".$field."),WEEK(".$field.")");
-				if($int_type == 5) // DATE_INTERVAL_DAY
+				elseif($int_type == 5) // DATE_INTERVAL_DAY
 					return array("year(".$field.")*10000+month(".$field.")*100+day(".$field.")","year(".$field."),month(".$field."),day(".$field.")");
-				if($int_type == 6) // DATE_INTERVAL_HOUR
+				elseif($int_type == 6) // DATE_INTERVAL_HOUR
 					return array("year(".$field.")*1000000+month(".$field.")*10000+day(".$field.")*100+HOUR(".$field.")","year(".$field."),month(".$field."),day(".$field."),hour(".$field.")");
-				if($int_type == 7) // DATE_INTERVAL_MINUTE
+				elseif($int_type == 7) // DATE_INTERVAL_MINUTE
 					return array("year(".$field.")*1000000+month(".$field.")*1000000+day(".$field.")*10000+HOUR(".$field.")*100+minute(".$field.")","year(".$field."),month(".$field."),day(".$field."),hour(".$field."),minute(".$field.")");
-			break;
+				break;
 		}
-		
-		return array("", "");
 	}
 	
-	/**
-	 * @param String fName
-	 * @param Number int_type
-	 * @return array
-	 */
-	protected function getNumberTypeInterval( $fName, $int_type )
+	protected function getNumberTypeInterval($field, $int_type)
 	{
-		$field = $this->connection->addFieldWrappers( $fName );
-		return array( "floor(".$field."/".$int_type.")*".$int_type, "floor(".$field."/".$int_type.")*".$int_type );
+		return array("floor(".$this->connection->addFieldWrappers( $this->CrossGoodFieldName($field) )."/".$int_type.")*".$int_type,
+			 "floor(".$this->connection->addFieldWrappers( $this->CrossGoodFieldName($field) )."/".$int_type.")*".$int_type);
 	}
 	
 	/**
@@ -716,7 +780,7 @@ class CrossTableReport
 	 */
 	protected function getCharTypeInterval($field, $int_type)
 	{
-		$field = $this->connection->addFieldWrappers( $field );
+		$field = $this->connection->addFieldWrappers( $this->CrossGoodFieldName($field) );
 		switch( $this->connection->dbType )
 		{
 			case nDATABASE_MySQL:
@@ -742,14 +806,13 @@ class CrossTableReport
 	{
 		$arr = array();
 		$firstarr = array();
-		foreach( $this->fieldsTotalsData as $key => $value )
+		foreach($this->xml_array["totals"] as $key => $value)
 		{
 			if(count($firstarr) == 0)
-				$firstarr[] = $value["name"];
-				
+				$firstarr[] = $this->FullFieldName($value["name"],$value["table"]);
 			if($value["min"] == true || $value["max"] == true || $value["sum"] == true || $value["avg"] == true)
 			{
-				$arr[] = $value["name"];
+				$arr[] = $this->FullFieldName($value["name"],$value["table"]);
 			}
 		}
 		if(count($arr) == 0)
@@ -758,191 +821,213 @@ class CrossTableReport
 	}
 	
 	/**
-	 * @return Array
+	 * 
+	 * @param {String} hostPageLocation	(optional)
+	 * @param {String} hostPageId (optional)
 	 */
-	public function getCurrentOperationList()
+	public function getRadioGroupFunctions( $hostPageLocation = "", $hostPageId = "" )
 	{
-		$names = array();
-		$names["sum"] = "Sum";
-		$names["min"] = "Min";
-		$names["max"] = "Max";
-		$names["avg"] = "Avg";
-		
-		$opData = array();
-		
-		foreach( $names as $o => $n )
+		$arr = array();
+		$arrDisplay = array();
+		$res = "";
+		if($this->dataFieldSettings["sum"] == true)
 		{
-			if( !$this->dataFieldSettings[$o] )
-				continue;
-			
-			$opData[] = array( "value" => $o, "selected" => ( $this->dataGroupFunction == $o ? "selected" : "" ), "label" => $n );
+			$arrDisplay[] = "Sum";
+			$arr[] = "sum";
+		}
+		if($this->dataFieldSettings["max"] == true)
+		{
+			$arrDisplay[] = "Max";
+			$arr[] = "max";
+		}
+		if($this->dataFieldSettings["min"] == true)
+		{
+			$arrDisplay[] = "Min";
+			$arr[] = "min";
+		}
+		if($this->dataFieldSettings["avg"] == true)
+		{
+			$arrDisplay[] = "Average";
+			$arr[] = "avg";
+		}
+
+		if(!count($arr))
+		{
+				$arr[] = "sum";
+				$arrDisplay[] = "Sum";
 		}
 		
-		return $opData;
-	}
-	
-	/**
-	 * @param String $axis
-	 * @return Array
-	 */
-	public function getCrossFieldsData( $axis )
-	{
-		$dataList = array();
-
-		foreach( $this->groupFieldsData as $data )
+		$res = "";	
+		$onclick = "onclick='refresh_crosstable(\"".$hostPageLocation."\", \"".$hostPageId."\", \"".$this->dashBased."\", \"".$this->dashTName."\");'";
+		for($j = 0; $j < count($arr); $j++)
 		{
-			if( ( $axis != "x" || $data["group_type"] != "x" ) && ( $axis != "y" || $data["group_type"] != "y" ) && $data["group_type"] != "all" )
-				continue;
+			$s = "";
+			if($res == "" || $this->dataGroupFunction == $arr[$j])
+				$s = "checked";
 				
-
-			$selected = "";
-			if( $axis == "x" && $data["name"] == $this->xFName && $data["int_type"] == $this->xIntervalType 
-			 || $axis == "y" && $data["name"] == $this->yFName && $data["int_type"] == $this->yIntervalType )
-				$selected =  "selected";
-			
-			$intervalType =	$data["uniqueName"]	? "" : $this->getIntervalParam( $data["int_type"], $data["name"] );	
-			
-			$dataList[] = array("value" => $data["name"], "selected" => $selected, "label" => $data["label"], "intervalType" => $intervalType );	
+			$res.= "<input type=radio value='".$arr[$j]."' name=\"group_func".$hostPageId."\" ".$s." ".$onclick."> "
+				.$arrDisplay[$j]."&nbsp;&nbsp;";
 		}
-		
-		return $dataList;
+		return $res;
 	}
 	
-	/**
-	 *
-	 */
-	protected function getRefineIntervalType( $intType, $fName )
+	public function ajax_refresh_crosstable( $hostPageLocation = "", $hostPageId = "" )
 	{
-		if( $intType === 0 )
-			return "normal";
+		$reportData = array(
+			$this->rowinfo,
+			$this->col_summary,
+			$this->total_summary,
+			$this->getTotalsName( $this->dataGroupFunction ),
+			$this->getRadioGroupFunctions( $hostPageLocation, $hostPageId )
+		);
 	
-		$ftype = $this->pSet->getFieldType( $fName );
-		
-		if( IsNumberType( $ftype ) )
-			return substr( $intType, 1 );
-			
-		if( IsCharType( $ftype ) )
-			return substr( $intType, strlen("first") );			
-		
-		if( IsDateFieldType( $ftype ) )
-		{
-			switch( $intType )
-			{
-				case "year":
-					return 1;
-				case "quarter":
-					return 2;
-				case "month":
-					return 3;
-				case "week":
-					return 4;
-				case "day":
-					return 5;
-				case "hour":
-					return 6;
-				case "minute":
-					return 7;		
-			}		
-		}
-		
-		return -1;
+		echo my_json_encode( $reportData );
 	}
 	
-	/**
-	 * @param Number intType
-	 * @return String
-	 */
-	protected function getIntervalParam( $intType, $fName ) 
+	public function getGroupFields($axis)
 	{
-		if( $intType == 0 )
-			return "normal";
-		
-		$ftype = $this->pSet->getFieldType( $fName );
-		
-		if( IsNumberType( $ftype ) )
-			return "n".$intType;
-		
-		if( IsCharType( $ftype ) )
-			return "first".$intType;
-		
-		if( IsDateFieldType( $ftype ) )
+		$res = "";
+		$label = $this->xml_array["totals"];
+		$arr = $this->xml_array["group_fields"];
+		for($i = 0; $i < count($arr) - 1; $i++)
 		{
-			switch( $intType )
+			$s = "";
+			if($axis == "x" && $arr[$i]["group_type"] == "x" || $axis == "y" && $arr[$i]["group_type"] == "y" || $arr[$i]["group_type"] == "all")
 			{
-				case 1:
-					return "year";
-				case 2:
-					return "quarter";
-				case 3:
-					return "month";
-				case 4:
-					return "week";
-				case 5:
-					return "day";
-				case 6:
-					return "hour";
-				case 7:
-					return "minute";
-				default: 
-					return "";			
-			}	
+				if($axis == "x" && $this->index_field_y != $i || $axis == "y" && $this->index_field_x != $i)
+				{
+					if($this->index_field_x == $i && $axis == "x" || $this->index_field_y == $i && $axis == "y")
+						$s = "selected";
+					$strlabel = "";
+					foreach($label as $val)
+					{
+						if($arr[$i]["name"] == $this->FullFieldName($val["name"],$val["table"]))
+						{
+							$strlabel = $val["label"];
+							break;
+						}
+					}
+					$res.= "<option value='".$i."' ".$s.">".$strlabel."</option>";
+				}
+			}
 		}
-
-		return "";
+		return $res;
+	}
+	
+	protected function getFirstGroupField($axis)
+	{
+		$arr = $this->xml_array["group_fields"];
+		$arrX = array();
+		$arrY = array();
+		$arrAll = array();
+		
+		for($i = 0; $i < count($arr) - 1; $i++)
+		{
+			if($arr[$i]["group_type"] == "x")
+				$arrX[] = $i;
+			if($arr[$i]["group_type"] == "y")
+				$arrY[] = $i;
+			if($arr[$i]["group_type"] == "all")
+				$arrAll[] = $i;
+		}	
+		if(count($arrX) > 0 && $axis == "x")
+			return $arrX[0];
+		if(count($arrY) > 0 && $axis == "y")
+			return $arrY[0];
+		if(count($arrX) == 0 && $axis == "x")
+			return $arrAll[0];
+		if(count($arrY) == 0 && $axis == "y")
+		{
+			if(count($arrX) == 0)
+				return $arrAll[1];
+			else
+				return $arrAll[0];
+		}
 	}
 	
 	/**
 	 * Get axes displyed values
-	 * @param String fName
-	 * @param Number intervalType
+	 * @param Number index
 	 * @param String value
 	 * @return String
 	 */
-	protected function getAxisDisplayValue( $fName, $intervalType, $value)
+	protected function getAxisDisplayValue($index, $value)
 	{
 		global $locale_info;
 		
-		if( $value == "" || is_null( $value ) )
+		if( $value == "" || is_null($value) )
 			return "";
-
-		$control = $this->viewControls->getControl( $fName );
-	
-		if( $intervalType == 0 ) 
+				
+		$groupFieldsData = $this->xml_array["group_fields"];
+		$field = $groupFieldsData[ $index ]["name"];
+		$int_type = $groupFieldsData[ $index ]["int_type"];
+		if( $this->fromWizard )
+			$control = $this->viewControls->getControl( $field );
+		
+		if ( $int_type == 0 ) 
 		{	
 			// The 'Normal' interval is set
-			$data = array( $fName => $value );
-			return $control->showDBValue( $data, "" );		
+			if( $this->fromWizard )
+			{
+				$data = array( $field => $value );
+				return $control->showDBValue( $data, "" );		
+			}
+			
+			if ( $this->table_type != "db" )
+				$fieldIdentifier = $this->xml_array["tables"][0]."_".$field;
+			else
+				$fieldIdentifier = $this->CrossGoodFieldName($field);
+			
+			if( $this->xml_array['totals'][ $fieldIdentifier ]['curr'] == true )
+				return str_format_currency($value);
+			
+			return xmlencode($value);
 		}
 		
-		$ftype = $this->pSet->getFieldType( $fName );		
+		$ftype = $this->getFieldType($field);		
 		
-		if( IsNumberType( $ftype ) ) 
+		if ( IsNumberType( $ftype ) ) 
 		{
-			$start = $value - ($value % $intervalType);
-			$end = $start + $intervalType;
+			$start = $value - ($value % $int_type);
+			$end = $start + $int_type;
+			
+			if( $this->fromWizard ) 
+			{
+				$dataStart = array( $field => $start );
+				$dataEnd = array( $field => $end );
+				return $control->showDBValue( $dataStart, "" )." - ".$control->showDBValue( $dataEnd, "");
+			}
 
-			$dataStart = array( $fName => $start );
-			$dataEnd = array( $fName => $end );
-			return $control->showDBValue( $dataStart, "" )." - ".$control->showDBValue( $dataEnd, "");
+			if( $this->table_type != "db" )
+				$fieldIdentifier = $this->xml_array["tables"][0]."_".$field;
+			else
+				$fieldIdentifier = $this->CrossGoodFieldName($field);
+			
+			if( $this->xml_array['totals'][ $fieldIdentifier ]['curr'] == true )
+				return str_format_currency($start)." - ".str_format_currency($end);
+			
+			return $start." - ".$end;
 		} 
 		
-		if( IsCharType( $ftype ) ) 
-			return xmlencode( substr( $value, 0, $intervalType ) );
+		if ( IsCharType( $ftype ) ) 
+		{
+			return xmlencode(substr($value,0,$int_type));
+		} 
 		
-		if( IsDateFieldType( $ftype ) ) 
+		if ( IsDateFieldType( $ftype ) ) 
 		{
 			$dvalue = substr($value, 0, 4).'-'.substr($value, 4, 2).'-'.substr($value, 6, 2);
 			
-			if( strlen( $value ) == 10 )
-				$dvalue.= " ".substr($value, 8, 2)."00:00";
-			elseif( strlen( $value ) == 12 )
-				$dvalue.= " ".substr($value, 8, 2).":".substr($value, 10, 2).":00";
+			if( strlen($value) == 10 )
+				$dvalue.=" ".substr($value, 8, 2)."00:00";
+			elseif( strlen($value) == 12 )
+				$dvalue.=" ".substr($value, 8, 2).":".substr($value, 10, 2).":00";
 			
-			$tm = db2time( $dvalue );
-			if( !count( $tm ) )
+			$tm = db2time($dvalue);
+			if( !count($tm) )
 				return "";
 		
-			switch( $intervalType )
+			switch( $int_type )
 			{
 				case 1: // DATE_INTERVAL_YEAR
 					return $tm[0];
@@ -951,29 +1036,26 @@ class CrossTableReport
 				case 3: // DATE_INTERVAL_MONTH
 					return @$locale_info[ "LOCALE_SABBREVMONTHNAME".$tm[1] ]." ".$tm[0];
 				case 4: // DATE_INTERVAL_WEEK
-					$dates = $this->getDatesByWeek( $tm[1] + 1, $tm[0] );
-					return format_shortdate( db2time( $dates[0] ) ) . ' - ' . format_shortdate( db2time( $dates[1] ) );				
+					$dates = $this->getDatesByWeek($tm[1] + 1, $tm[0]);
+					return format_shortdate( db2time($dates[0]) ) . ' - ' . format_shortdate( db2time($dates[1]) );				
 				case 5: // DATE_INTERVAL_DAY
-					return format_shortdate( $tm );
+					return format_shortdate($tm);
 				case 6: // DATE_INTERVAL_HOUR
 					$tm[4] = 0;
 					$tm[5] = 0;
-					return str_format_datetime( $tm );
+					return str_format_datetime($tm);
 				case 7: // DATE_INTERVAL_MINUTE
 					$tm[5] = 0;
-					return str_format_datetime( $tm );
+					return str_format_datetime($tm);
 				default:
-					return str_format_datetime( $tm );
+					return str_format_datetime($tm);
 			}
 		}
 		
 		return "";
 	}
 	
-	/**
-	 *
-	 */
-	protected function getDatesByWeek( $week, $year ) 
+	protected function getDatesByWeek($week, $year) 
 	{
 		global $locale_info;
 		$startweekday = 0;
@@ -1000,27 +1082,60 @@ class CrossTableReport
 		$dates = array();
 		$dates[0] = getYMDdate(mktime(0,0,0, $month, $day, $year));
 		$dates[1] = getYMDdate(mktime(1,1,1, $month, $day+6, $year));
-		
 		return $dates;
 	}
 	
-	/**
-	 * @return Array
-	 */
-	public function getDataFieldsList()
+	public function getValuesControl()
 	{
-		$listData = array();
-	
-		foreach( $this->fieldsTotalsData as $key => $value )
-		{		
-			if($value["min"] == true || $value["max"] == true || $value["sum"] == true || $value["avg"] == true)
+		$arr_list = $this->getSelectedValue();
+		$arr_label = $this->xml_array["totals"];
+		$res = "";
+		$first_field = 0;
+		$i = 0;
+		if(count($arr_list) != 0 )
+		{
+			foreach($arr_list as $value)
 			{
-				$selected = $value["name"] == $this->dataField ? "selected" : "";
-				$listData[] = array( "value" => $value["name"], "selected" => $selected, "label" => $value["label"] );
+				$s = "";
+				if($i == 0 || $i == $_SESSION[$this->sessionPrefix."_field"])
+				{
+					$first_field = $i;
+					$s = "selected";
+				}
+				$strlabel = "";
+				foreach($arr_label as $val)
+					if($value == $this->FullFieldName($val["name"],$val["table"]))
+					{
+						$strlabel = $val["label"];
+						break;
+					}
+				$res.= "<option value=".$i." ".$s.">".runner_htmlspecialchars($strlabel)."</option>";
+				$i++;
 			}
 		}
-		
-		return $listData;
+		return array($res,$first_field);
+	}
+	
+	protected function FullFieldName($field, $table = "")
+	{
+		if(!$table)
+			$table = $this->tableName;
+		if($this->table_type == "db")
+			if(strpos($field,".") === false)
+				$res = $table.".".$field;
+			else
+				$res = $field;
+		else
+			$res = $field;
+		return $res;
+	}
+	
+	protected function CrossGoodFieldName($field)
+	{
+		if($this->table_type == "db")
+			return GoodFieldName($field);
+		else 
+			return $field;
 	}
 	
 	/**
@@ -1028,60 +1143,109 @@ class CrossTableReport
 	 * @return String
 	 */
 	public function getPrintCrossHeader()
-	{				
+	{					
+		$fieldNameX = $this->xml_array["group_fields"][ $this->index_field_x ]["name"];
+		$fieldNameY = $this->xml_array["group_fields"][ $this->index_field_y ]["name"];
+		$fieldName = $this->dataField;
+		
+		if(!$this->fromWizard)
+		{
+			$prefix = "";
+			if( $this->table_type != "db" )
+				$prefix = $this->xml_array["tables"][0]."_";			
+			
+			$fieldNameX = $prefix.GoodFieldName($fieldNameX);
+			$fieldNameY = $prefix.GoodFieldName($fieldNameY);
+			$fieldName = $prefix.GoodFieldName($fieldName);
+		}
+		
 		return "Group X"
-			.":<b>".$this->fieldsTotalsData[ $this->xFName ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Group Y"
-			.":<b>".$this->fieldsTotalsData[ $this->yFName ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Field"
-			.":<b>".$this->fieldsTotalsData[ $this->dataField ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Group function"
+			.":<b>".$this->xml_array["totals"][ $fieldNameX ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Group Y"
+			.":<b>".$this->xml_array["totals"][ $fieldNameY ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Field"
+			.":<b>".$this->xml_array["totals"][ $fieldName ]["label"]."</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"."Group function"
 			.":<b>".$this->dataGroupFunction."</b>";
 	}
 	
-	/**
-	 * @param String operation
-	 * @return String
-	 */
-	public function getTotalsName()
+	public function getTotalsName($grfunc)
 	{
-		switch( $this->dataGroupFunction )
+		switch($grfunc)
 		{
 			case "sum":
 				return "Sum";
-			break;
+				break;
 			case "min":
 				return "Min";
-			break;
+				break;
 			case "max":
 				return "Max";
-			break;
+				break;
 			case "avg":
 				return "Average";
-			break;
-			default:
-				return "";
+				break;
 		}
 	}
 	
+	protected function getFieldType($field)
+	{
+		if($this->table_type == "db")
+			$ftype = WRGetFieldType($this->FullFieldName($field));
+		elseif($this->table_type == "project")
+			$ftype = $this->pSet->getFieldType($field);
+		else
+		{ 
+			$fields_type = WRGetAllCustomFieldType();
+			$ftype = $fields_type[$field];
+		}
+		return $ftype;
+	}
+	
+	protected function getDataField($idx)
+	{
+		$idx = 0+$idx;
+		$arr_value = $this->getSelectedValue();	
+		if($idx >= count($arr_value))
+			return "";
+		return $arr_value[$idx];
+	}
+	
+	protected function initDataFieldSettings()
+	{
+		foreach($this->xml_array["totals"] as $key => $value)
+		{
+			if($this->FullFieldName($value["name"],$value["table"]) == $this->dataField)
+			{
+				$this->dataFieldSettings = $this->xml_array["totals"][$key];
+				break; 
+			}
+		}
+	}
+
 	/**
 	 * Checks whether passed function name is valid
-	 * @param String operation
-	 * @return String
+	 * @param String func
 	 */
-	protected function getDataGroupFunction( $operation )
+	protected function initDataGroupFunction($func)
 	{
 		//	good
-		if( $this->dataFieldSettings[ $operation ] == true )
-			return $operation;
+		if( $this->dataFieldSettings[$func] == true )
+		{
+			$this->dataGroupFunction = $func;
+			return;
+		}
 
 		//	bad, set first possible
 		$gfuncs = array("sum", "max", "min", "avg");
 		foreach($gfuncs as $gf)
 		{
-			if( $this->dataFieldSettings[ $gf ] == true )
-				return $gf;
+			if( $this->dataFieldSettings[$gf] == true )
+			{
+				$this->dataGroupFunction = $gf;
+				return;
+			}
 		}
 		
 		// default
-		return "sum";
+		$this->dataGroupFunction = "sum";
 	}
 	
 	/**
@@ -1092,31 +1256,48 @@ class CrossTableReport
 	{
 		return $this->dataGroupFunction;
 	}
-	
-	/**
-	 *
-	 */
-	public static function getCrossIntervalName( $ftype, $int_type )
+	public function isProjectDB()
 	{
-		if( IsDateFieldType( $ftype ) )
-		{
-			if($int_type == 1) // DATE_INTERVAL_YEAR
-				return "year";
-			if($int_type == 2) // DATE_INTERVAL_QUARTER
-				return "quarter";
-			if($int_type == 3) // DATE_INTERVAL_MONTH
-				return "month";
-			if($int_type == 4) // DATE_INTERVAL_WEEK
-				return "week";
-			if($int_type == 5) // DATE_INTERVAL_DAY
-				return "day";
-			if($int_type == 6) // DATE_INTERVAL_HOUR
-				return "hour";
-			if($int_type == 7) // DATE_INTERVAL_MINUTE
-				return "minute";
-		}
-		return $int_type;
+		if($this->fromWizard)
+			return true;
+			
+		$isDB = false;
+		if("batch" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("batchschedule" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("consultant" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("courses" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("department" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("district" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("division" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("emp_status" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("employees" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("full_batch_details" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("trainer" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("university" == $this->xml_array['tables'][0])
+			$isDB = true;
+		if("university_view" == $this->xml_array['tables'][0])
+			$isDB = true;
+		return $isDB;
 	}
-
+	
+	protected function getDBFieldName($name)
+	{
+		if( !$this->wrdb )
+			return $name;
+		else
+			return $this->arrDBFieldsList[ GoodFieldName($name) ];
+	}
+	
 }
 ?>

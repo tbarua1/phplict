@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,308 +12,227 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-list" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		{BEGIN container_menu}<nav {$menu_chiddenattr} data-pageid="{$pageid}" data-container="menu" class="navbar navbar-default ">					
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
+
+{BEGIN container_master}
+<div class="rnr-c rnr-ch rnr-c-master">
+
+{BEGIN mastertable_block}
+<div  class="style1 rnr-bl rnr-b-masterinfo {$brickclass_masterinfo}">{$showmasterfile}
+<a class="runner-link" {$backtomasterlink_attrs}>
+	<b>Back to {$backtomasterlink_caption}</b>
+</a></div>
+{END mastertable_block}
+
+<div class="rnr-hfiller"></div>
+</div>
+{END container_master}
 
 
 
-{BEGIN container_hdr}
-<div {$hdr_chiddenattr} data-pageid="{$pageid}" data-container="hdr" class=" navbar-header   "> 
+{BEGIN container_toplinks}
+<div class="rnr-c rnr-ch rnr-c-toplinks">
+<div class="rnr-hfiller"></div>
+{BEGIN prints_block}
+<div  class="style1 rnr-br rnr-b-toplinks_print {$brickclass_toplinks_print}">{BEGIN print_link}
+	<a target=_blank href="batch_print.php" class="rnr-button" {$printlink_attrs}>Print this page</a>
+{END print_link}
 
-{BEGIN logo_block}
-<a href="{$home_link}" {$logo_hiddenattr} data-pageid="{$pageid}" data-brick="logo" class="navbar-brand" >{$logo}</a>
-{END logo_block}
+{BEGIN printall_link}
+	<a target=_blank href="batch_print.php?all=1" class="rnr-button" {$printalllink_attrs}>Print all pages</a>
+{END printall_link}
 
-
-{BEGIN collapse_block}
-<button {$bsnavbarcollapse_hiddenattr} data-pageid="{$pageid}" data-brick="bsnavbarcollapse" type="button" class="navbar-toggle collapsed" data-runner-toggle="collapse" data-target=".bs-navcontrolled">	
-	<span class="sr-only">Toggle navigation</span>	
-	<span class="icon-bar"></span>					
-</button>												
-
-{END collapse_block}
 
 
 
 </div>
-{END container_hdr}
+{END prints_block}
 
 
-
-
-
-
-{BEGIN container_menu_1}<div {$menu_1_chiddenattr} data-pageid="{$pageid}" data-container="menu_1" class="bs-navform navbar-collapse bs-navcontrolled bs-hidden-xs" aria-expanded="false" >												   
-{BEGIN menu_block}
-{$menu main horizontal}
-
-{END menu_block}
-
-
-
-
-
-{BEGIN container_more}
-<div {$more_chiddenattr} data-pageid="{$pageid}" data-container="more" class=" navbar-right navbar-form   "> 
-
-{BEGIN more_list}
-<div {$morebutton_hiddenattr} data-pageid="{$pageid}" data-brick="morebutton" class="btn-group bs-navsection">
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<span class="glyphicon glyphicon-cog"></span>
-		<span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu">
-		
-				{BEGIN exportselected_link}
-		<li class="massButton{$id} disabled"><a href="#" {$exportselectedlink_attrs} {$exportselectedlink_span} >Export selected</a></li>
-		{END exportselected_link}
-		
-				{BEGIN deleteselected_link}
-		<li class="massButton{$id} disabled"><a href="#" {$deleteselectedlink_attrs} {$deleteselectedlink_span}>Delete selected</a></li>
-		{END deleteselected_link}
-		
-				<li role="separator" class="divider"></li>	
-
-				{BEGIN asearch_link}
-		<li><a href="batch_search.php" {$advsearchlink_attrs}>Advanced search</a></li>
-		{END asearch_link}
-
-				{BEGIN searchPanelTopButtons}
-		<li><a href=# id="showOptPanel{$id}">Show search panel</a></li>
-		{END searchPanelTopButtons}	
-		
-				
-				<li role="separator" class="divider"></li>	
-		
-				
-				{BEGIN export_link}
-		<li><a target="_blank" href="batch_export.php"  {$exportlink_attrs}>Export results</a></li>
-		{END export_link}
-
-				{BEGIN import_link}
-		<li><a href="batch_import.php?{$crosstable_attrs}"  {$importlink_attrs}>Import</a></li>
-		{END import_link}
-
-				
-	</ul>  
+{BEGIN asearch_link}
+<div  class="style1 rnr-br rnr-b-toplinks_advsearch {$brickclass_toplinks_advsearch}">	<a href="batch_search.php" class="rnr-button" {$advsearchlink_attrs}>Advanced search</a>
 </div>
+{END asearch_link}
 
-{END more_list}
+
+{BEGIN import_link}
+<div  class="style1 rnr-br rnr-b-toplinks_import {$brickclass_toplinks_import}">	<a href="batch_import.php?{$crosstable_attrs}" class="rnr-button" {$importlink_attrs}>Import</a>
+</div>
+{END import_link}
 
 
-{BEGIN security_block}
-<span {$loggedas_hiddenattr} data-pageid="{$pageid}" data-brick="loggedas" id="login_block{$id}" class="bs-navsection">
-	{BEGIN guestloginbutton}
-		<button class="btn btn-info" type="button" {$guestloginlink_attrs}>Login</button>
-	{END guestloginbutton}
-	{BEGIN loggedas_message} 
-		<span class="dropdown">
-			<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span class="glyphicon glyphicon-user"></span>	{$username}</button>
-			<ul class="dropdown-menu">
-		{BEGIN logoutbutton}
-				<li><a href="#" {$logoutlink_attrs}>Log out</a></li>
-		{END logoutbutton}
-		
-
-	{BEGIN changepwd_link}
-				<li><a href="#" {$changepwdlink_attrs}>Change password</a></li>
-	{END changepwd_link}
-			</ul>
-		</span>
-	{END loggedas_message}
-</span>
-{END security_block}
+{BEGIN export_link}
+<div  class="style1 rnr-br rnr-b-toplinks_export {$brickclass_toplinks_export}">	<a target="_blank" href="batch_export.php" class="rnr-button" {$exportlink_attrs}>Export results</a>
+</div>
+{END export_link}
 
 
 
 </div>
-{END container_more}
+{END container_toplinks}
 
 
 
-
-
-
-
-
-{BEGIN container_more_1}
-<div {$more_1_chiddenattr} data-pageid="{$pageid}" data-container="more_1" class=" navbar-right navbar-form   "> 
+{BEGIN container_search}
+<div class="rnr-c rnr-ch rnr-c-search">
 
 {BEGIN searchform_block}
-<span {$search_hiddenattr} data-pageid="{$pageid}" data-brick="search" class="form-group">
-
- <div  class="input-group">
-{BEGIN searchform_text}
-	<input type="search" class="form-control" {$searchfor_attrs} size="25">
-{END searchform_text}
-	<span class="input-group-btn">
-	{BEGIN searchform_showall}
-		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs} title="Show all">
-			<span class="glyphicon glyphicon-remove"></span>
-		</button>
-	{END searchform_showall}
-	{BEGIN searchform_search}
-	<button {$searchbutton_attrs} class="btn btn-primary" >
-		<span class="glyphicon glyphicon-search"></span>
-	</button>
-	{END searchform_search}
+<div  class="style1 rnr-bl rnr-b-search {$brickclass_search}">	<span>
+		{BEGIN searchform_text}
+		<input type="text" {$searchfor_attrs} size="25">
+		{END searchform_text}
+		{BEGIN searchform_search}
+			<a href="#" class="rnr-button img" data-icon="search" {$searchbutton_attrs}></a>
+		{END searchform_search}
+		{BEGIN searchform_showall}	
+		<a href="#" class="rnr-button" {$showAllCont_attrs} {$showallbutton_attrs}>Show all</a>
+		{END searchform_showall}
 	</span>
 </div>
-		
-</span>
 {END searchform_block}
 
 
+{BEGIN searchformbuttons_block}
+<div  class="style1 rnr-bl rnr-b-search_buttons {$brickclass_search_buttons}">{BEGIN searchPanelTopButtons}
+<span>
+	<a href="#" class="rnr-button img" id="showSrchWin{$id}" data-icon="panelfloat" {$showHideSearchWin_attrs}></a>
+	<a href="#" class="rnr-button img" id="showOptPanel{$id}" data-icon="paneldown" {$showHideSearchPanel_attrs}></a>
+</span>
+{END searchPanelTopButtons}
+</div>
+{END searchformbuttons_block}
+
+
+{BEGIN searchsaving_block}
+<div  class="style1 rnr-bl rnr-b-search_saving_buttons {$brickclass_search_saving_buttons}"></div>
+{END searchsaving_block}
+
+<div class="rnr-hfiller"></div>
+{BEGIN details_block}
+<div  class="style1 rnr-br rnr-b-details_found {$brickclass_details_found}">	<span {$details_attrs}>
+			Details found: <b><span class="rnr-details_found_count">{$records_found}</span></b>
+	</span>
+</div>
+{END details_block}
+
+
+{BEGIN pages_block}
+<div  class="style1 rnr-br rnr-b-page_of {$brickclass_page_of}">	<span {$pages_attrs}>
+		Page <b>{$page}</b> of <b>{$maxpages}</b>
+	</span>
 
 </div>
-{END container_more_1}
+{END pages_block}
 
 
+{BEGIN recordspp_block}
+<div  class="style1 rnr-br rnr-b-recsperpage {$brickclass_recsperpage}">	<span id="recordspp_block{$id}" name="recordspp_block{$id}">
+			Records Per Page:&nbsp;{$recsPerPage}
+	</span>	
+</div>
+{END recordspp_block}
 
 
-												</div>						{END container_menu_1}
+</div>
+{END container_search}
 
 
-									</nav>{END container_menu}
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		</div>
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 
-{BEGIN container_breadcrumbs}
-<div {$breadcrumbs_chiddenattr} data-pageid="{$pageid}" data-container="breadcrumbs" class="    "> 
 
 
+{BEGIN container_logg}
+<div class="rnr-c rnr-cv rnr-c-logg">
 
-
-{BEGIN container_bc}
-<div {$bc_chiddenattr} data-pageid="{$pageid}" data-container="bc" class="    "> 
-
-{BEGIN breadcrumbs}
-<ol class="breadcrumb">
-<li ><a href="{$home_link}"><span class="glyphicon glyphicon-home"></span></a>{$crumb_dropdown}</li>
-{BEGIN crumb}
-  <li class="{$crumb_item_class}">
-{BEGIN crumb_title_link}
-	<a {$crumb_attrs}>{$crumb_title}</a>
-{END crumb_title_link}
-{BEGIN crumb_title_span}
-	<span {$crumb_attrs}>{$crumb_title}</span>
-{END crumb_title_span}	
-	{$crumb_dropdown}
-  </li>
-{END crumb}
-</ol>
-{END breadcrumbs}
-
+{BEGIN security_block}
+<div  class="rnr-brickcontents style1 rnr-b-loggedas {$brickclass_loggedas}"><div id="login_block{$id}">
+	{BEGIN loggedas_message}
+	<span>Logged on as&nbsp;<b>{$username}</b><br><br>
+	</span>
+	{END loggedas_message}
+	{BEGIN guestloginbutton}
+	<span>
+	<a href="#" class="rnr-button" {$guestloginlink_attrs}>Login</a>
+	</span>
+	{END guestloginbutton}
+	{BEGIN logoutbutton}
+	<a class="rnr-button" href="login.php?a=logout" {$logoutlink_attrs}>Log out</a>
+	{END logoutbutton}
+<!-- Permissions -->
+</div>
+</div>{END security_block}
 
 
 </div>
-{END container_bc}
+{END container_logg}
 
 
-
-
-
-
-</div>
-{END container_breadcrumbs}
-
-
-
-{BEGIN container_masterinfo}
-<div {$masterinfo_chiddenattr} data-pageid="{$pageid}" data-container="masterinfo" class="    "> 
-
-{BEGIN mastertable_block}
-<div class="panel panel-info table-panel">
-	<div class="panel-heading">
-		{$master_heading}
-	</div>
-	<div class="panel-body">
-		{$showmasterfile}
-		
-	</div>
-</div>
-
-{END mastertable_block}
-
-
-
-</div>
-{END container_masterinfo}
-
-
-			</div>
-			<div class="bs-left" {$blockattr_left}>
-				
 
 {BEGIN container_left}
-<div {$left_chiddenattr} data-pageid="{$pageid}" data-container="left" class="    "> 
+<div class="rnr-c rnr-cv rnr-c-left">
 
 {BEGIN searchPanel}
-<div {$searchpanel_hiddenattr} data-pageid="{$pageid}" data-brick="searchpanel" class="searchOptions panel panel-primary searchPanelContainer " {$srchOpt_attrs} >
+<div  class="rnr-brickcontents style1 rnr-b-searchpanel {$brickclass_searchpanel}"><div class="searchPanelContainer">
+<div class="searchOptions bottomPanelBorder" {$srchOpt_attrs}>
+	
 	<!-- Search panel content -->
-	
-	<div class="panel-heading">
-		<div class="btn-group" id="addSearchFieldButton{$id}">
-			<button id="showHideControlChooseMenu{$id}" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Search in
-			<span class="caret"></span>
-			</button>
-		</div>
-
-		
-		<div class="btn-group searchpanel-options" id="searchPanelOptions{$id}">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span class="glyphicon glyphicon glyphicon-option-vertical"></span>
-			</button>
-			<ul class="dropdown-menu dropdown-left">
-				<li id="showHideSearchType{$id}" {$showHideCtrlsOpt_attrs}><a>Show options</a></li>
-				<li role="separator" class="divider"></li>
-				<li class="srchCritTop" style="display: none;"><a><input type="radio" name="srchType{$id}" id="radioAll" {$all_checkbox}><label for="radioAll"><span class="glyphicon">&nbsp;</span>all conditions</label></a></li>
-				<li class="srchCritTop" style="display: none;"><a><input type="radio" name="srchType{$id}" id="radioAny" {$any_checkbox}><label for="radioAny"><span class="glyphicon">&nbsp;</span>any condition</label></a></li>
-				<li role="separator" class="divider"></li>
-				<li><a class="close-button"><span class="glyphicon glyphicon-remove">&nbsp;</span>hide</a></li>
-			</ul>
-		</div>
-	
-		
-		</div>
-	<div class="panel-body controlsBlock" {$bottomSearchButt_attrs} >
-
-
-		
-		{BEGIN searchCtrlBlock}
-		<div class="srchPanelRow form-group" {$filterRow_attrs}>
-			<label>{$fLabel}</label>	{$delCtrlButt}
-				<span class="rnr-searchtype">{$searchtype}</span>
-				<span class="rnr-searchcontrol">{$searchcontrol}</span>
-				<span class="rnr-searchcontrol">{$searchcontrol1}</span>
-		</div>
-		{END searchCtrlBlock}
-
-
+	<div class="srchCritTop" style="display: none;">
+		Criteria:&nbsp;
+		<input type="radio" name="srchType{$id}" class="rnr-radio-button" {$all_checkbox}>&nbsp;{BEGIN all_checkbox_label}<span>all</span>{END all_checkbox_label}
+		&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="srchType{$id}" class="rnr-radio-button" {$any_checkbox}>&nbsp;{BEGIN any_checkbox_label}<span>any</span>{END any_checkbox_label}
 	</div>
 	
-	<div class="panel-footer bottomSearchButt" {$bottomSearchButt_attrs}>
-		<button class="btn btn-primary" id="searchButton{$id}" {$searchbutton_attrs}>Search</button>
-		<button class="btn btn-default" {$showAllCont_attrs} {$showallbutton_attrs}>
-		Show all
-		</button>
+	<div class="addOption">
+		<span class="rnr-buttons-group">
+			<a href="#" id="showHideControlChooseMenu{$id}" class="rnr-button" {$showHideCtrls_attrs}>Add field</a>
+		</span>
+		
+		<a href="#" id="showHideSearchType{$id}" class="rnr-button" {$showHideCtrlsOpt_attrs}>{$showHideOpt_mess}</a>
+	</div>
+	
+
+	<table class="controlsBlock {$controls_block_class}">
+				{BEGIN searchCtrlBlock}
+		<tr class="srchPanelRow" {$filterRow_attrs}>
+			<td class="srchPanelCell">{$delCtrlButt}</td>	
+			<td class="srchPanelCell">{$fLabel}:&nbsp;</td>
+			<td class="srchPanelCell srchPanelCell2">
+				<div class="rnr-searchtype">{$searchtype}</div>
+				<div class="rnr-searchcontrol">{$searchcontrol}</div>
+				<div class="rnr-searchcontrol">{$searchcontrol1}</div>
+			</td>	
+		</tr>
+		{END searchCtrlBlock}
+	</table>	
+
+
+	
+	<div class="bottomSearchButt" align="left" {$bottomSearchButt_attrs}>
+		<a href="#" class="rnr-button" id="searchButton{$id}" {$searchbutton_attrs}>Search</a>
 	</div>
 </div>
 
+</div></div>{END searchPanel}
 
-{END searchPanel}
 
 
+{BEGIN menu_block}
+{$menu main}
+{END menu_block}
 
 
 </div>
@@ -323,192 +240,65 @@
 
 
 			</div>
-			<div class="bs-center bs-screenwidth bs-minwidth">
+			<div class="rnr-center {$blockclass_center}">
 				
 
-{BEGIN container_gridcontrols}
-<div {$gridcontrols_chiddenattr} data-pageid="{$pageid}" data-container="gridcontrols" class="row rnr-rowcontainer bs-navcontrolled bs-hidden-xs">
-
-
-
-
-{BEGIN container_add_delete}
-<div {$add_delete_chiddenattr} data-pageid="{$pageid}" data-container="add_delete" class=" bottom-margin  col-md-6 "> 
+{BEGIN container_recordcontrols}
+<div class="rnr-c rnr-ch rnr-c-recordcontrols">
 
 {BEGIN newrecord_controls_block}
-		{BEGIN add_link}
-		<a {$add_hiddenattr} data-pageid="{$pageid}" data-brick="add" type="button" class="btn btn-primary" {$addlink_attrs}>Add new</a>
+<div  class="style1 rnr-bl rnr-b-recordcontrols_new {$brickclass_recordcontrols_new}">		{BEGIN add_link}
+		<a href="batch_add.php" class="rnr-button" {$addlink_attrs}>Add new</a>
 	{END add_link}
 
-	
+		{BEGIN inlineadd_link}
+		<a href="#" class="rnr-button" {$inlineaddlink_attrs}>Inline Add</a>
+	{END inlineadd_link}
+
+
+</div>
 {END newrecord_controls_block}
 
 
 {BEGIN record_controls_block}
-<span {$recordcontrol_hiddenattr} data-pageid="{$pageid}" data-brick="recordcontrol">
-		{BEGIN deleteselected_link}
-	<button type="button" class="btn btn-default" {$deleteselectedlink_attrs} {$deleteselectedlink_span} disabled>Delete</button>
-	{END deleteselected_link}
-		</span>
+<div  class="style1 rnr-bl rnr-b-recordcontrol {$brickclass_recordcontrol}">	
+			{BEGIN editselected_link}
+		<a href="#" class="rnr-button" {$editselectedlink_attrs} {$editselectedlink_span}>Edit selected</a>
+	{END editselected_link}
+	{BEGIN saveall_link}
+		<a href="#" class="rnr-button" {$savealllink_attrs} {$savealllink_span}>Save all</a>
+	{END saveall_link}
+	{BEGIN cancelall_link}
+		<a href="#" class="rnr-button" {$cancelalllink_attrs} {$cancelalllink_span}>Cancel</a>
+	{END cancelall_link}
 
+		{BEGIN deleteselected_link}
+		<a href="#" class="rnr-button" {$deleteselectedlink_attrs} {$deleteselectedlink_span}>Delete selected</a>
+	{END deleteselected_link}
+
+		{BEGIN exportselected_link}
+		<a href="#" class="rnr-button" {$exportselectedlink_attrs} {$exportselectedlink_span}>Export selected</a>
+	{END exportselected_link}
+
+		{BEGIN printselected_link}
+		<a href="#" class="rnr-button" {$printselectedlink_attrs} {$printselectedlink_span}>Print selected</a>
+	{END printselected_link}
+
+</div>
 {END record_controls_block}
 
-
-
+<div class="rnr-hfiller"></div>
 </div>
-{END container_add_delete}
-
-
-
-
-
-
-
-
-{BEGIN container_gridinfo}
-<div {$gridinfo_chiddenattr} data-pageid="{$pageid}" data-container="gridinfo" class=" bottom-margin pull-right text-right col-md-6 "> 
-
-{BEGIN details_found}
-<span {$details_found_hiddenattr} data-pageid="{$pageid}" data-brick="details_found" class="form-inline form-inline-always">
-	{$records_indicator}
-	<span>
-	{BEGIN recordspp_block}
-			{$recsPerPage}
-	{END recordspp_block}
-	</span>
-</span>
-{END details_found}
-
-
-{BEGIN print_friendly}
-<span {$printpanel_hiddenattr} data-pageid="{$pageid}" data-brick="printpanel" class="bs-printpanel" id="printpanelblock{$id}">
-	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Print-friendly page">
-		<span class="glyphicon glyphicon-print" ></span>
-		<span class="caret"></span>
-    </button>
-	<ul class="dropdown-menu pull-right" >
-		<li>
-			<div class="container-fluid" id="print_friendly_scope{$id}">
-				<div class="row">
-					<div class="col-md-4">Scope:</div>
-										{BEGIN print_friendly_all}
-					<div class="col-md-8">
-						<label for="printAll{$id}">
-							<input type="radio" id="printAll{$id}" data-href="batch_print.php?all=1&amp;{$crosstable_attrs}" name="printScope">
-							Print all pages
-						</label>
-					</div>
-					{END print_friendly_all}
-				</div>
-				<div class="row">
-					<div class="col-md-4">&nbsp;</div>
-					<div class="col-md-8">
-						<label for="printPage{$id}">
-							<input type="radio" id="printPage{$id}" data-href="batch_print.php?{$crosstable_attrs}" name="printScope" checked>
-							Print this page
-						</label>
-					</div>
-				</div>
-								<div class="row">
-					<div class="col-md-4">&nbsp;</div>
-					<div class="col-md-8">
-						<label for="printSelection{$id}" style="color: gray;">
-							<input type="radio" id="printSelection{$id}" name="printScope" disabled="disabled">
-							Print selected
-						</label>
-					</div>
-				</div>
-			</div>
-		</li>
-		<li class="divider" role="separator"></li>
-
-				<li>			
-		{BEGIN print_details}
-			<div class="rnr-printdetails">
-				<label for="printDetailsToggler{$id}">
-					<input type="checkbox" id="printDetailsToggler{$id}">
-					Print details
-				</label>
-				<div class="rnr-printdetailstables"  id="printdetailstables{$id}" style="display:none;">
-					{BEGIN print_details_batchschedule}
-						
-							<div class="rnr-printdetialstable">
-								<label for="printDetailsbatchschedule{$id}">
-									<input type="checkbox" value="batchschedule" id="printDetailsbatchschedule{$id}" checked>
-									Batchschedule
-								</label>
-							</div>
-					{END print_details_batchschedule}
-				</div>
-			</div>
-		{END print_details}
-		</li>
-		<li class="divider" role="separator"></li>
-
-				<li>	
-			<div class="rnr-printdetails">
-				<label for="printPerPage{$id}">
-											Records Per Page:
-				</label>
-				<input type="number" id="printPerPage{$id}" value="{$print_recspp}" class="rnr-printrecspp">		
-			</div>
-		</li>
-		<li class="divider" role="separator"></li>
-		<li class="rnr-printbutton">				
-			<button type="button" class="btn btn-primary" id="print_friendly_button{$id}" >Print</button>			
-		</li>
-	</ul>	
-</span>
-
-{END print_friendly}
-
-
-
-
-</div>
-{END container_gridinfo}
-
-
-
-
-
-
-
-</div>{END container_gridcontrols}
-
-
-
-{BEGIN container_tabs}
-<div {$tabs_chiddenattr} data-pageid="{$pageid}" data-container="tabs" class="    "> 
-
-{BEGIN grid_tabs}
-<div {$bsgrid_tabs_hiddenattr} data-pageid="{$pageid}" data-brick="bsgrid_tabs">
-<ul class="nav nav-tabs">
-{$grid_tabs_content}
-</ul>
-</div>
-{END grid_tabs}
-
-
-
-</div>
-{END container_tabs}
-
-
-
-{BEGIN container_messagerow}
-<div {$messagerow_chiddenattr} data-pageid="{$pageid}" data-container="messagerow" class="row rnr-rowcontainer ">
-
+{END container_recordcontrols}
 
 
 
 {BEGIN container_message}
-<div {$message_chiddenattr} data-pageid="{$pageid}" data-container="message" class="   col-md-12 "> 
+<div class="rnr-c rnr-ch rnr-c-message">
 
 {BEGIN message_block}
-<div {$message_hiddenattr} data-pageid="{$pageid}" data-brick="message" class="alert {$message_class}" role="alert">{$message}</div>
+<div  class="style1 rnr-bc rnr-b-message {$brickclass_message}"><div class="rnr-message">{$message}</div></div>
 {END message_block}
-
 
 
 </div>
@@ -516,94 +306,37 @@
 
 
 
-
-
-
-</div>{END container_messagerow}
-
-
-
-{BEGIN container_center}
-<div {$center_chiddenattr} data-pageid="{$pageid}" data-container="center" class="    "> 
-
-
-
-
 {BEGIN container_grid}
-<div {$grid_chiddenattr} data-pageid="{$pageid}" data-container="grid" class="bs-grid    "> 
+
 
 {BEGIN grid_block}
-	<style>
-	.bs-gridcell[data-field=Batchcode]:before {
-		content: "{$label batch Batchcode}";
-	}
-	.bs-gridcell[data-field=fbgroup]:before {
-		content: "{$label batch fbgroup}";
-	}
-	.bs-gridcell[data-field=division_id]:before {
-		content: "{$label batch division_id}";
-	}
-	.bs-gridcell[data-field=university_id]:before {
-		content: "{$label batch university_id}";
-	}
-	.bs-gridcell[data-field=department_id]:before {
-		content: "{$label batch department_id}";
-	}
-	.bs-gridcell[data-field=starting_Date]:before {
-		content: "{$label batch starting_Date}";
-	}
-	.bs-gridcell[data-field=Track]:before {
-		content: "{$label batch Track}";
-	}
-	.bs-gridcell[data-field=cid]:before {
-		content: "{$label batch cid}";
-	}
-	.bs-gridcell[data-field=status]:before {
-		content: "{$label batch status}";
-	}
-	.bs-gridcell[data-field=uni_spoc_name]:before {
-		content: "{$label batch uni_spoc_name}";
-	}
-	.bs-gridcell[data-field=uni_spoc_contact]:before {
-		content: "{$label batch uni_spoc_contact}";
-	}
-	.bs-gridcell[data-field=ey_spoc]:before {
-		content: "{$label batch ey_spoc}";
-	}
-	.bs-gridcell[data-field=local_spoc]:before {
-		content: "{$label batch local_spoc}";
-	}
-	.bs-gridcell[data-field=schedule]:before {
-		content: "{$label batch schedule}";
-	}
-	.bs-gridcell[data-field=tech_trainer]:before {
-		content: "{$label batch tech_trainer}";
-	}
-	.bs-gridcell[data-field=soft_skill_trainer]:before {
-		content: "{$label batch soft_skill_trainer}";
-	}
-</style>
-<table {$grid_hiddenattr} data-pageid="{$pageid}" data-brick="grid" class="table {$grid_classes} bs-flexgrid rnr-b-grid rnr-gridtable" cellpadding="0" >
-	<thead>
-										{BEGIN grid_header}
-								<tr class="rnr-toprow {$gridHeader_class}" >
+						<table class="rnr-c rnr-cont rnr-c-grid rnr-b-grid rnr-gridtable  hoverable " cellpadding="0" >
+						<thead>
+															{BEGIN grid_header}
+								<tr class="rnr-toprow style1 {$gridHeader_class}" >
 									{BEGIN record_header}
 									{BEGIN listIcons_column}
 									<th iEditCont="all">&nbsp;</th>
 									{END listIcons_column}	
 
 																		{BEGIN checkbox_column}
-									<th class="">
+									<th class="rnr-bc">
 										<input type="checkbox" {$checkboxheader_attrs}>
 									</th>
 									{END checkbox_column}
 
-																		{BEGIN batch_dtable_column}
-									<th >&nbsp;</th>
-									{END batch_dtable_column}
-									
-									{BEGIN Batchcode_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$Batchcode_class}" data-field=Batchcode>
+																																			{BEGIN batch_id_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$batch_id_class}">
+									{BEGIN batch_id_fieldheader}
+																				<span {$batch_id_orderlinkattrs}>
+											{$label batch batch_id}
+										</span>
+									{END batch_id_fieldheader}
+									</th>
+									{END batch_id_fieldheadercolumn}
+
+																	{BEGIN Batchcode_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$Batchcode_class}">
 									{BEGIN Batchcode_fieldheader}
 																				<span {$Batchcode_orderlinkattrs}>
 											{$label batch Batchcode}
@@ -611,12 +344,9 @@
 									{END Batchcode_fieldheader}
 									</th>
 									{END Batchcode_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN fbgroup_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$fbgroup_class}" data-field=fbgroup>
+
+																	{BEGIN fbgroup_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$fbgroup_class}">
 									{BEGIN fbgroup_fieldheader}
 																				<span {$fbgroup_orderlinkattrs}>
 											{$label batch fbgroup}
@@ -624,12 +354,9 @@
 									{END fbgroup_fieldheader}
 									</th>
 									{END fbgroup_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN division_id_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$division_id_class}" data-field=division_id>
+
+																	{BEGIN division_id_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$division_id_class}">
 									{BEGIN division_id_fieldheader}
 																				<span {$division_id_orderlinkattrs}>
 											{$label batch division_id}
@@ -637,12 +364,9 @@
 									{END division_id_fieldheader}
 									</th>
 									{END division_id_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN university_id_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$university_id_class}" data-field=university_id>
+
+																	{BEGIN university_id_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$university_id_class}">
 									{BEGIN university_id_fieldheader}
 																				<span {$university_id_orderlinkattrs}>
 											{$label batch university_id}
@@ -650,12 +374,9 @@
 									{END university_id_fieldheader}
 									</th>
 									{END university_id_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN department_id_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$department_id_class}" data-field=department_id>
+
+																	{BEGIN department_id_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$department_id_class}">
 									{BEGIN department_id_fieldheader}
 																				<span {$department_id_orderlinkattrs}>
 											{$label batch department_id}
@@ -663,12 +384,9 @@
 									{END department_id_fieldheader}
 									</th>
 									{END department_id_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN starting_Date_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$starting_Date_class}" data-field=starting_Date>
+
+																	{BEGIN starting_Date_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$starting_Date_class}">
 									{BEGIN starting_Date_fieldheader}
 																				<span {$starting_Date_orderlinkattrs}>
 											{$label batch starting_Date}
@@ -676,12 +394,9 @@
 									{END starting_Date_fieldheader}
 									</th>
 									{END starting_Date_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN Track_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$Track_class}" data-field=Track>
+
+																	{BEGIN Track_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$Track_class}">
 									{BEGIN Track_fieldheader}
 																				<span {$Track_orderlinkattrs}>
 											{$label batch Track}
@@ -689,12 +404,9 @@
 									{END Track_fieldheader}
 									</th>
 									{END Track_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN cid_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$cid_class}" data-field=cid>
+
+																	{BEGIN cid_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$cid_class}">
 									{BEGIN cid_fieldheader}
 																				<span {$cid_orderlinkattrs}>
 											{$label batch cid}
@@ -702,12 +414,9 @@
 									{END cid_fieldheader}
 									</th>
 									{END cid_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN status_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$status_class}" data-field=status>
+
+																	{BEGIN status_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$status_class}">
 									{BEGIN status_fieldheader}
 																				<span {$status_orderlinkattrs}>
 											{$label batch status}
@@ -715,12 +424,9 @@
 									{END status_fieldheader}
 									</th>
 									{END status_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN uni_spoc_name_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$uni_spoc_name_class}" data-field=uni_spoc_name>
+
+																	{BEGIN uni_spoc_name_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$uni_spoc_name_class}">
 									{BEGIN uni_spoc_name_fieldheader}
 																				<span {$uni_spoc_name_orderlinkattrs}>
 											{$label batch uni_spoc_name}
@@ -728,12 +434,9 @@
 									{END uni_spoc_name_fieldheader}
 									</th>
 									{END uni_spoc_name_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN uni_spoc_contact_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$uni_spoc_contact_class}" data-field=uni_spoc_contact>
+
+																	{BEGIN uni_spoc_contact_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$uni_spoc_contact_class}">
 									{BEGIN uni_spoc_contact_fieldheader}
 																				<span {$uni_spoc_contact_orderlinkattrs}>
 											{$label batch uni_spoc_contact}
@@ -741,12 +444,9 @@
 									{END uni_spoc_contact_fieldheader}
 									</th>
 									{END uni_spoc_contact_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN ey_spoc_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$ey_spoc_class}" data-field=ey_spoc>
+
+																	{BEGIN ey_spoc_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$ey_spoc_class}">
 									{BEGIN ey_spoc_fieldheader}
 																				<span {$ey_spoc_orderlinkattrs}>
 											{$label batch ey_spoc}
@@ -754,12 +454,9 @@
 									{END ey_spoc_fieldheader}
 									</th>
 									{END ey_spoc_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN local_spoc_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$local_spoc_class}" data-field=local_spoc>
+
+																	{BEGIN local_spoc_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$local_spoc_class}">
 									{BEGIN local_spoc_fieldheader}
 																				<span {$local_spoc_orderlinkattrs}>
 											{$label batch local_spoc}
@@ -767,12 +464,9 @@
 									{END local_spoc_fieldheader}
 									</th>
 									{END local_spoc_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN schedule_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$schedule_class}" data-field=schedule>
+
+																	{BEGIN schedule_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$schedule_class}">
 									{BEGIN schedule_fieldheader}
 																				<span {$schedule_orderlinkattrs}>
 											{$label batch schedule}
@@ -780,12 +474,9 @@
 									{END schedule_fieldheader}
 									</th>
 									{END schedule_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN tech_trainer_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$tech_trainer_class}" data-field=tech_trainer>
+
+																	{BEGIN tech_trainer_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$tech_trainer_class}">
 									{BEGIN tech_trainer_fieldheader}
 																				<span {$tech_trainer_orderlinkattrs}>
 											{$label batch tech_trainer}
@@ -793,12 +484,9 @@
 									{END tech_trainer_fieldheader}
 									</th>
 									{END tech_trainer_fieldheadercolumn}
-									
-									
-									
-									
-									{BEGIN soft_skill_trainer_fieldheadercolumn}
-									<th class="rnr-gridfieldlabel {$soft_skill_trainer_class}" data-field=soft_skill_trainer>
+
+																	{BEGIN soft_skill_trainer_fieldheadercolumn}
+									<th class="rnr-gridfieldlabel {$soft_skill_trainer_class}">
 									{BEGIN soft_skill_trainer_fieldheader}
 																				<span {$soft_skill_trainer_orderlinkattrs}>
 											{$label batch soft_skill_trainer}
@@ -806,10 +494,10 @@
 									{END soft_skill_trainer_fieldheader}
 									</th>
 									{END soft_skill_trainer_fieldheadercolumn}
+
+
 									
-									
-									
-									
+									<th class="rnr-edge">&nbsp;</th>
 									{BEGIN endrecordheader_block}
 									<th class="rnr-cs">&nbsp;</th>
 									
@@ -820,211 +508,174 @@
 								</tr>
 								{END grid_header}
 
-	</thead>
-	<tbody>	
-		{BEGIN grid_row}
-<tr class="{$rowclass} bs-gridrow" {$rowattrs} {$rowstyle}>
-	{BEGIN grid_record}
-	{BEGIN listIcons_column}
-	<td class="bs-gridicons" iEditCont="all" {$rowstyle} {$recordattrs}>
-		{BEGIN edit_column}
-	{BEGIN edit_link}
-			<a class="glyphicon glyphicon-pencil" {$editlink_attrs} title="Edit"></a>
-	{END edit_link}
-	{END edit_column}
+						</thead>
+						<tbody>	
+															{BEGIN grid_row}
+								<tr class="rnr-row style1 {$rowclass}" {$rowattrs} {$rowstyle}>
+									{BEGIN grid_record}
+									{BEGIN listIcons_column}
+									<td class="rnr-cc rnr-bc rnr-icons" iEditCont="all" {$rowstyle} {$recordattrs}>
+																		{BEGIN edit_column}
+									{BEGIN edit_link}
+																			<a class="rnr-button-img" {$editlink_attrs} data-icon="edit" title="Edit"></a>
+									{END edit_link}
+									{END edit_column}
 
-		
-	<span data-hidden {$ieditbuttonsholder_attrs}></span>
+																		{BEGIN inlineedit_column}
+									{BEGIN inlineedit_link}
+																			<a class="rnr-button-img" {$inlineeditlink_attrs} data-icon="inlineedit" title="Inline Edit"></a>
+									{END inlineedit_link}
+									{END inlineedit_column}
 
-	
-		{BEGIN view_column}
-	{BEGIN view_link}
-			<a class="glyphicon glyphicon-search" {$viewlink_attrs} title="View"></a>
-	{END view_link}
-	{END view_column}
-	</td>	
-	{END listIcons_column}	
+									
+																		{BEGIN view_column}
+									{BEGIN view_link}
+																			<a class="rnr-button-img" {$viewlink_attrs} data-icon="view" title="View"></a>
+									{END view_link}
+									{END view_column}
+									</td>	
+									{END listIcons_column}	
 
-		{BEGIN checkbox_column}
-	<td  iEditCont="checkBox" class="bs-gridcheckbox" {$rowstyle} {$recordattrs}>
-	{BEGIN checkbox}
-	<input type="checkbox" {$checkbox_attrs}>
-	{END checkbox}
+																		{BEGIN checkbox_column}
+									<td class="rnr-bc" iEditCont="checkBox" {$rowstyle} {$recordattrs}>
+									{BEGIN checkbox}
+									<input type="checkbox" {$checkbox_attrs}>
+									{END checkbox}
+									</td>
+									{END checkbox_column}
+
+
+										{BEGIN batch_id_fieldcolumn}
+	<td class="{$batch_id_class}" {$batch_id_style} {$recordattrs}>
+		{$batch_id_value}
 	</td>
-	{END checkbox_column}
-
-		{BEGIN batch_dtable_column}
-	<td class="rnr-nowrap bs-griddetails" {$rowstyle} {$recordattrs}>
-	
-			{BEGIN dtables_link}
-		
-							
-				
-					<a {$dtables_link_attrs}  title="Show details">
-				<span class="badge batchschedule_badge" {$batchschedule_childnumber_attr}>
-					<span class="glyphicon glyphicon-th-list"></span> 
-					<span class="{$batchschedule_cntspan_class}" >{$batchschedule_childnumber}</span>
-				</span></a>
-		{END dtables_link}
-	
-	
-	</td>
-	{END batch_dtable_column}
-
+{END batch_id_fieldcolumn}
 
 	{BEGIN Batchcode_fieldcolumn}
-	<td class="bs-gridcell {$Batchcode_class}"  data-field=Batchcode {$rowstyle} {$recordattrs}>
+	<td class="{$Batchcode_class}" {$Batchcode_style} {$recordattrs}>
 		{$Batchcode_value}
 	</td>
 {END Batchcode_fieldcolumn}
 
-
 	{BEGIN fbgroup_fieldcolumn}
-	<td class="bs-gridcell {$fbgroup_class}"  data-field=fbgroup {$rowstyle} {$recordattrs}>
+	<td class="{$fbgroup_class}" {$fbgroup_style} {$recordattrs}>
 		{$fbgroup_value}
 	</td>
 {END fbgroup_fieldcolumn}
 
-
 	{BEGIN division_id_fieldcolumn}
-	<td class="bs-gridcell {$division_id_class}"  data-field=division_id {$rowstyle} {$recordattrs}>
+	<td class="{$division_id_class}" {$division_id_style} {$recordattrs}>
 		{$division_id_value}
 	</td>
 {END division_id_fieldcolumn}
 
-
 	{BEGIN university_id_fieldcolumn}
-	<td class="bs-gridcell {$university_id_class}"  data-field=university_id {$rowstyle} {$recordattrs}>
+	<td class="{$university_id_class}" {$university_id_style} {$recordattrs}>
 		{$university_id_value}
 	</td>
 {END university_id_fieldcolumn}
 
-
 	{BEGIN department_id_fieldcolumn}
-	<td class="bs-gridcell {$department_id_class}"  data-field=department_id {$rowstyle} {$recordattrs}>
+	<td class="{$department_id_class}" {$department_id_style} {$recordattrs}>
 		{$department_id_value}
 	</td>
 {END department_id_fieldcolumn}
 
-
 	{BEGIN starting_Date_fieldcolumn}
-	<td class="bs-gridcell {$starting_Date_class}"  data-field=starting_Date {$rowstyle} {$recordattrs}>
+	<td class="{$starting_Date_class}" {$starting_Date_style} {$recordattrs}>
 		{$starting_Date_value}
 	</td>
 {END starting_Date_fieldcolumn}
 
-
 	{BEGIN Track_fieldcolumn}
-	<td class="bs-gridcell {$Track_class}"  data-field=Track {$rowstyle} {$recordattrs}>
+	<td class="{$Track_class}" {$Track_style} {$recordattrs}>
 		{$Track_value}
 	</td>
 {END Track_fieldcolumn}
 
-
 	{BEGIN cid_fieldcolumn}
-	<td class="bs-gridcell {$cid_class}"  data-field=cid {$rowstyle} {$recordattrs}>
+	<td class="{$cid_class}" {$cid_style} {$recordattrs}>
 		{$cid_value}
 	</td>
 {END cid_fieldcolumn}
 
-
 	{BEGIN status_fieldcolumn}
-	<td class="bs-gridcell {$status_class}"  data-field=status {$rowstyle} {$recordattrs}>
+	<td class="{$status_class}" {$status_style} {$recordattrs}>
 		{$status_value}
 	</td>
 {END status_fieldcolumn}
 
-
 	{BEGIN uni_spoc_name_fieldcolumn}
-	<td class="bs-gridcell {$uni_spoc_name_class}"  data-field=uni_spoc_name {$rowstyle} {$recordattrs}>
+	<td class="{$uni_spoc_name_class}" {$uni_spoc_name_style} {$recordattrs}>
 		{$uni_spoc_name_value}
 	</td>
 {END uni_spoc_name_fieldcolumn}
 
-
 	{BEGIN uni_spoc_contact_fieldcolumn}
-	<td class="bs-gridcell {$uni_spoc_contact_class}"  data-field=uni_spoc_contact {$rowstyle} {$recordattrs}>
+	<td class="{$uni_spoc_contact_class}" {$uni_spoc_contact_style} {$recordattrs}>
 		{$uni_spoc_contact_value}
 	</td>
 {END uni_spoc_contact_fieldcolumn}
 
-
 	{BEGIN ey_spoc_fieldcolumn}
-	<td class="bs-gridcell {$ey_spoc_class}"  data-field=ey_spoc {$rowstyle} {$recordattrs}>
+	<td class="{$ey_spoc_class}" {$ey_spoc_style} {$recordattrs}>
 		{$ey_spoc_value}
 	</td>
 {END ey_spoc_fieldcolumn}
 
-
 	{BEGIN local_spoc_fieldcolumn}
-	<td class="bs-gridcell {$local_spoc_class}"  data-field=local_spoc {$rowstyle} {$recordattrs}>
+	<td class="{$local_spoc_class}" {$local_spoc_style} {$recordattrs}>
 		{$local_spoc_value}
 	</td>
 {END local_spoc_fieldcolumn}
 
-
 	{BEGIN schedule_fieldcolumn}
-	<td class="bs-gridcell {$schedule_class}"  data-field=schedule {$rowstyle} {$recordattrs}>
+	<td class="{$schedule_class}" {$schedule_style} {$recordattrs}>
 		{$schedule_value}
 	</td>
 {END schedule_fieldcolumn}
 
-
 	{BEGIN tech_trainer_fieldcolumn}
-	<td class="bs-gridcell {$tech_trainer_class}"  data-field=tech_trainer {$rowstyle} {$recordattrs}>
+	<td class="{$tech_trainer_class}" {$tech_trainer_style} {$recordattrs}>
 		{$tech_trainer_value}
 	</td>
 {END tech_trainer_fieldcolumn}
 
-
 	{BEGIN soft_skill_trainer_fieldcolumn}
-	<td class="bs-gridcell {$soft_skill_trainer_class}"  data-field=soft_skill_trainer {$rowstyle} {$recordattrs}>
+	<td class="{$soft_skill_trainer_class}" {$soft_skill_trainer_style} {$recordattrs}>
 		{$soft_skill_trainer_value}
 	</td>
 {END soft_skill_trainer_fieldcolumn}
 
-	{BEGIN endrecord_block}
-	<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
-	{END endrecord_block}
-									
-	{END grid_record}
 
-</tr>
-{END grid_row}
-	</tbody>
-	<tfoot>
-										
-	</tfoot>
-</table>
+									<td class="rnr-edge" {$recordattrs}>&nbsp;</td>
+									{BEGIN endrecord_block}
+									<td class="rnr-cs" {$endrecordblock_attrs}>&nbsp;</td>
+									{END endrecord_block}
+																	
+									{END grid_record}
 
-
+								</tr>
+								{END grid_row}
+															
+						</tbody>
+					</table>
+					
 
 {END grid_block}
 
 
 
-</div>
 {END container_grid}
 
 
 
-
-
-
-</div>
-{END container_center}
-
-
-
 {BEGIN container_pagination}
-<div {$pagination_chiddenattr} data-pageid="{$pageid}" data-container="pagination" class="  text-center col-md-12 "> 
+<div class="rnr-c rnr-ch rnr-c-pagination">
 
 {BEGIN pagination_block}
-<div {$pagination_hiddenattr} data-pageid="{$pageid}" data-brick="pagination">
-{$pagination}
-</div>
+<div  class="style1 rnr-bc rnr-b-pagination {$brickclass_pagination}">{$pagination}</div>
 {END pagination_block}
-
 
 
 </div>
@@ -1032,10 +683,14 @@
 
 
 			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
+		</div>
+	</div>
 		
 		{$footer}
 	{END body}

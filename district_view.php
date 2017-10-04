@@ -10,85 +10,76 @@ require_once("classes/searchclause.php");
 
 add_nocache_headers();
 
-if( !ViewPage::processEditPageSecurity( $strTableName ) )
-	return;	
-
-
-
-
-$layout = new TLayout("view_bootstrap_2col", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "district_view";
-$layout->blocks["top"] = array();
-$layout->containers["viewpage"] = array();
-$layout->container_properties["viewpage"] = array(  );
-$layout->containers["viewpage"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"header" );
-$layout->containers["header"] = array();
-$layout->container_properties["header"] = array(  );
-$layout->containers["header"][] = array("name"=>"viewheader",
-	"block"=>"viewheader", "substyle"=>1  );
-
-$layout->skins["header"] = "";
-
-
-$layout->skins["viewpage"] = "";
-
-$layout->blocks["top"][] = "viewpage";
-$layout->containers["fields"] = array();
-$layout->container_properties["fields"] = array(  );
-$layout->containers["fields"][] = array("name"=>"viewfields",
-	"block"=>"", "substyle"=>1  );
-
-$layout->skins["fields"] = "";
-
-$layout->blocks["top"][] = "fields";
-$layout->containers["bottombuttons"] = array();
-$layout->container_properties["bottombuttons"] = array(  );
-$layout->containers["bottombuttons"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"buttons" );
-$layout->containers["buttons"] = array();
-$layout->container_properties["buttons"] = array(  );
-$layout->containers["buttons"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"leftbuttons" );
-$layout->containers["leftbuttons"] = array();
-$layout->container_properties["leftbuttons"] = array(  );
-$layout->containers["leftbuttons"][] = array("name"=>"viewbuttons",
-	"block"=>"viewbuttons", "substyle"=>1  );
-
-$layout->skins["leftbuttons"] = "";
-
-
-$layout->containers["buttons"][] = array("name"=>"wrapper",
-	"block"=>"", "substyle"=>1 , "container"=>"leftbuttons_1" );
-$layout->containers["leftbuttons_1"] = array();
-$layout->container_properties["leftbuttons_1"] = array(  );
-$layout->containers["leftbuttons_1"][] = array("name"=>"rightviewbuttons",
-	"block"=>"rightviewbuttons", "substyle"=>1  );
-
-$layout->skins["leftbuttons_1"] = "";
-
-
-$layout->skins["buttons"] = "";
-
-
-$layout->skins["bottombuttons"] = "";
-
-$layout->blocks["top"][] = "bottombuttons";
-$page_layouts["district_view"] = $layout;
-
-
-
-
-// add master layouts 
-
-
-
-
 $pageMode = ViewPage::readViewModeFromRequest();
 
+if( !Security::processPageSecurity( $strTableName, "S", $pageMode != VIEW_SIMPLE ) )
+	return;
+
+
+
+
+$layout = new TLayout("view2", "BoldOrange", "MobileOrange");
+$layout->version = 2;
+$layout->blocks["top"] = array();
+$layout->containers["all"] = array();
+$layout->container_properties["all"] = array(  );
+$layout->containers["all"][] = array("name"=>"wrapper", 
+	"block"=>"", "substyle"=>1 , "container"=>"main" );
+$layout->containers["main"] = array();
+$layout->container_properties["main"] = array(  );
+$layout->containers["main"][] = array("name"=>"wrapper", 
+	"block"=>"", "substyle"=>1 , "container"=>"view" );
+$layout->containers["view"] = array();
+$layout->container_properties["view"] = array(  );
+$layout->containers["view"][] = array("name"=>"viewheader", 
+	"block"=>"viewheader", "substyle"=>2  );
+
+$layout->containers["view"][] = array("name"=>"wrapper", 
+	"block"=>"", "substyle"=>1 , "container"=>"fields" );
+$layout->containers["fields"] = array();
+$layout->container_properties["fields"] = array(  );
+$layout->containers["fields"][] = array("name"=>"viewfields", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->containers["fields"][] = array("name"=>"viewbuttons", 
+	"block"=>"viewbuttons", "substyle"=>2  );
+
+$layout->skins["fields"] = "fields";
+
+
+$layout->skins["view"] = "1";
+
+
+$layout->skins["main"] = "empty";
+
+
+$layout->skins["all"] = "empty";
+
+$layout->blocks["top"][] = "all";
+$page_layouts["district_view"] = $layout;
+
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
+
+
+
+
+
+
+
 $xt = new Xtempl();
+
+//Set page id
+$id = postvalue("id");
+$id = intval($id) == 0 ? 1 : $id;
 
 // $keys could not be set properly if editid params were no passed
 $keys = array();
@@ -96,36 +87,22 @@ $keys["did"] = postvalue("editid1");
 
 //array of params for classes
 $params = array();
-$params["id"] = postvalue("id");
+$params["id"] = $id;
 $params["xt"] = &$xt;
 $params["keys"] = $keys;
 $params["mode"] = $pageMode;
 $params["pageType"] = PAGE_VIEW;
 $params["tName"] = $strTableName;
-
 $params["pdfMode"] = postvalue("pdf") !== "";
-
-$params["masterTable"] = postvalue("mastertable");
 
 if( $pageMode == VIEW_DASHBOARD ) 
 {
 	$params["dashElementName"] = postvalue("dashelement");
 	$params["dashTName"] = postvalue("table");
-	if(	postvalue("mapRefresh") )
-	{
-		$params["mapRefresh"] = true;
-		$params["vpCoordinates"] = my_json_decode( postvalue("vpCoordinates") );
-	}		
 } 
 if( $pageMode == VIEW_POPUP )
 {
-	$params["dashElementName"] = postvalue("dashelement");
 	$params["dashTName"] = postvalue("dashTName");
-}
-
-if( $params["masterTable"] )
-{
-	$params["masterKeysReq"] = ViewPage::processMasterKeys();
 }
 
 $pageObject = new ViewPage($params);

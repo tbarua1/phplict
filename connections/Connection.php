@@ -5,7 +5,7 @@ class Connection
 	 * The db connection link identifier
 	 * @type Mixed
 	 */
-	public $conn = null;
+	public $conn = null; // TODO: make it protected
 	
 	/**
 	 * The database type identifier
@@ -18,11 +18,6 @@ class Connection
 	 * @type Number
 	 */
 	public $connId;
-
-	/**
-	 * @type DBInfo
-	 */
-	public $_encryptInfo;
 	
 	/**
 	 * @type DBFunctions
@@ -32,19 +27,15 @@ class Connection
 	/**
 	 * @type DBInfo
 	 */
-	protected $_info;
+	protected $_info;	
 	
 	/**
 	 * asp compatibility
 	 */
 	public $SQLUpdateMode;
 	
-	/**
-	 * @type boolean 
-	 */
-	protected $silentMode;
 	
-	function __construct( $params )
+	function Connection( $params )
 	{
 		include_once getabspath("connections/QueryResult.php");
 		
@@ -53,29 +44,9 @@ class Connection
 		// set the db connection
 		$this->connect();
 		
-		$this->setDbFunctions( $params );
+		$this->setDbFunctions( $params["leftWrap"], $params["rightWrap"] );
 		$this->setDbInfo( $params["ODBCString"] );
-
-		$this->_encryptInfo = $params["EncryptInfo"];
 	}
-
-	/**
-	 * @return Boolean
-	 */
-	function isEncryptionByPHPEnabled() 
-	{
-		return isset( $this->_encryptInfo["mode"] ) && $this->_encryptInfo["mode"] == ENCRYPTION_PHP;
-	}
-
-	/**
-	 * @param String sql
-	 */
-	function setInitializingSQL( $sql ) 
-	{
-		//	in PHP just exec the initialization SQL right away.
-		$this->exec( $sql );
-	}
-
 	
 	/**
 	 * Set db connection's properties
@@ -92,50 +63,50 @@ class Connection
 	 * @param String leftWrapper
 	 * @param String rightWrapper
 	 */	 
-	protected function setDbFunctions( $params )
+	protected function setDbFunctions( $leftWrapper, $rightWrapper )
 	{
 		include_once getabspath("connections/dbfunctions/DBFunctions.php");
 		
-		$extraParams = array_merge($this->getDbFunctionsExtraParams(), $params);
+		$extraParams = $this->getDbFunctionsExtraParams();
 		
 		switch( $this->dbType )
 		{
 			case nDATABASE_MySQL:
 				include_once getabspath("connections/dbfunctions/MySQLFunctions.php");
-				$this->_functions = new MySQLFunctions( $extraParams );
+				$this->_functions = new MySQLFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_Oracle:
 				include_once getabspath("connections/dbfunctions/OracleFunctions.php");
-				$this->_functions = new OracleFunctions( $extraParams );
+				$this->_functions = new OracleFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_MSSQLServer:
 				include_once getabspath("connections/dbfunctions/MSSQLFunctions.php");
-				$this->_functions = new MSSQLFunctions( $extraParams );
+				$this->_functions = new MSSQLFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_Access:
 				include_once getabspath("connections/dbfunctions/ODBCFunctions.php");
-				$this->_functions = new ODBCFunctions( $extraParams );
+				$this->_functions = new ODBCFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_PostgreSQL:
 				include_once getabspath("connections/dbfunctions/PostgreFunctions.php");
-				$this->_functions = new PostgreFunctions( $extraParams );
+				$this->_functions = new PostgreFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_Informix:
 				include_once getabspath("connections/dbfunctions/InformixFunctions.php");
-				$this->_functions = new InformixFunctions( $extraParams );
+				$this->_functions = new InformixFunctions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_SQLite3:
 				include_once getabspath("connections/dbfunctions/SQLite3Functions.php");
-				$this->_functions = new SQLite3Functions( $extraParams );
+				$this->_functions = new SQLite3Functions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			case nDATABASE_DB2:
 			case 18:	//	iSeries
 				include_once getabspath("connections/dbfunctions/DB2Functions.php");
-				$this->_functions = new DB2Functions( $extraParams );
+				$this->_functions = new DB2Functions( $leftWrapper, $rightWrapper, $extraParams );
 			break;
 			default:
 				include_once getabspath("connections/dbfunctions/GenericFunctions.php");
-				$this->_functions = new GenericFunctions( $extraParams );
+				$this->_functions = new GenericFunctions( $leftWrapper, $rightWrapper, $extraParams );
 		}
 	}
 	
@@ -257,29 +228,15 @@ class Connection
 	{
 		//db_error
 	}
-
-	/**	
+	
+	/**
+	 * An interface stub	
 	 * Get the auto generated id used in the last query
-	 * @param String key (optional)	
-	 * @param String table (optional)	
-	 * @param String oraSequenceName (optional)	
 	 * @return Number
-	 */	
-	public function getInsertedId( $key = null, $table = null , $oraSequenceName = false )
-	{	
-		$insertedIdSQL = $this->_functions->getInsertedIdSQL( $key, $table, $oraSequenceName );
-
-		if ( $insertedIdSQL )
-		{
-			$qResult = $this->query( $insertedIdSQL );
-			if( $qResult )
-			{
-				$lastId = $qResult->fetchNumeric();
-				return $lastId[0];
-			}
-		}
-
-		return 0;
+	 */
+	public function getInsertedId()
+	{
+		//db_insertid
 	}
 	
 	/**
@@ -298,7 +255,7 @@ class Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array | Boolean
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
 		//db_fetch_array
 	}
@@ -309,7 +266,7 @@ class Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array | Boolean
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
 		//db_fetch_numarray
 	}
@@ -319,7 +276,7 @@ class Connection
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
 		//db_closequery
 	}
@@ -342,7 +299,7 @@ class Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
 		//db_fieldname
 	}
@@ -366,19 +323,6 @@ class Connection
 	{
 		return $this->_functions->escapeLIKEpattern( $str );
 	}
-
-	/**
-	 *	Checks if character at position $pos in SQL string is inside quotes.
-	 * 	Example:
-	 *  select 'aaa\' 1', ' ' 2
-	 *  Character 1 is on quotes, 2 - not
-	 *  @return Boolean
-	 */
-	public function positionQuoted( $sql, $pos ) 
-	{
-		return $this->_functions->positionQuoted( $sql, $pos );
-	}
-
 	
 	/**
 	 * @param String str
@@ -432,16 +376,6 @@ class Connection
 	public function addTableWrappers( $tName )
 	{
 		return $this->_functions->addTableWrappers( $tName );
-	}
-
-	/**
-     * Resolves the table name and schema name (if any).
-     * @param string $name the table name
-     * @return Array
-     */
-    public function getTableNameComponents( $name )
-	{
-		return $this->_functions->getTableNameComponents( $name );
 	}
 	
 	/**
@@ -510,7 +444,6 @@ class Connection
 		return $this->_info->db_getfieldslist( $sql );
 	}
 	
-	
 	/**
 	 * Check if the db supports subqueries
 	 * @return Boolean
@@ -522,7 +455,7 @@ class Connection
 	
 	/**
 	 * @param String sql
-	 * @param Number pageStart 1-based page number
+	 * @param Number pageStart
 	 * @param Number pageSize
 	 * @param Boolean applyLimit
 	 */
@@ -533,7 +466,7 @@ class Connection
 			if( $applyLimit ) 
 				$strSQL.= " limit ".(($pageStart - 1) * $pageSize).",".$pageSize;
 			
-			return $this->query( $strSQL );
+			return $this->query( $strSQL )->getQueryHandle();
 		} 
 		
 		if( $this->dbType == nDATABASE_MSSQLServer || $this->dbType == nDATABASE_Access ) 
@@ -544,7 +477,7 @@ class Connection
 			$qResult = $this->query( $strSQL );
 			$qResult->seekPage( $pageSize, $pageStart );
 			
-			return $qResult;
+			return $qResult->getQueryHandle();
 		} 
 		
 		if( $this->dbType == nDATABASE_Oracle ) 
@@ -555,7 +488,7 @@ class Connection
 			$qResult =  $this->query( $strSQL );
 			$qResult->seekPage( $pageSize, $pageStart );
 			
-			return $qResult;
+			return $qResult->getQueryHandle();
 		} 
 		
 		if( $this->dbType == nDATABASE_PostgreSQL ) 
@@ -563,7 +496,7 @@ class Connection
 			if( $applyLimit )
 				$strSQL.= " limit ".$pageSize." offset ".(($pageStart - 1) * $pageSize);
 			
-			return $this->query( $strSQL );
+			return $this->query( $strSQL )->getQueryHandle();
 		}
 		
 		if( $this->dbType == nDATABASE_DB2 ) 
@@ -574,7 +507,7 @@ class Connection
 					.(($pageStart - 1) * $pageSize + 1)." and ".($pageStart * $pageSize);
 			}
 			
-			return $this->query( $strSQL );
+			return $this->query( $strSQL )->getQueryHandle();
 		} 
 		
 		if( $this->dbType == nDATABASE_Informix ) 
@@ -585,7 +518,7 @@ class Connection
 			$qResult =  $this->query( $strSQL );
 			$qResult->seekPage( $pageSize, $pageStart );
 			
-			return $qResult;
+			return $qResult->getQueryHandle();
 		} 
 		
 		if( $this->dbType == nDATABASE_SQLite3 ) 
@@ -593,13 +526,13 @@ class Connection
 			if( $applyLimit ) 
 				$strSQL.= " limit ".(($pageStart - 1) * $pageSize).",".$pageSize;
 			
-			return $this->query( $strSQL );
+			return $this->query( $strSQL )->getQueryHandle();
 		} 
 		
 		$qResult =  $this->query( $strSQL );
 		$qResult->seekPage( $pageSize, $pageStart );
 		
-		return $qResult;
+		return $qResult->getQueryHandle();
 	}
 	
 	/**
@@ -621,9 +554,12 @@ class Connection
 	 * @param Boolean  		The flag indicating if the full SQL query (that can be used as a subquery) 
 	 * or the part of an sql query ( from + where clauses ) is passed as the first param
 	 */
-	public function getFetchedRowsNumber( $sql )
+	public function getFetchedRowsNumber( $sql, $useAsSubquery )
 	{
-		$countSql = "select count(*) from (".$sql.") a";
+		if( $useAsSubquery )
+			$countSql = "select count(*) from (".$sql.") a";
+		else
+			$countSql = "select count(*) ".$sql;
 			
 		$countdata = $this->query( $countSql )->fetchNumeric();
 		return $countdata[0];	
@@ -651,67 +587,5 @@ class Connection
 		if( $dDebug === true )
 			echo $sql."<br>";	
 	}
-	
-	/**
-	 * @param String message
-	 */
-	function triggerError( $message ) 
-	{
-		if( !$this->silentMode )
-			trigger_error( $message, E_USER_ERROR );
-	}
-
-	/**
-	 *	Enables or disables Silent Mode, when no SQL errors are displayed.
-	 *	@param 	Boolean silent
-	 *  @return Boolean - previous Silent mode
-	 */
-	public function setSilentMode( $silent ) 
-	{
-		$oldMode = $this->silentMode;
-		$this->silentMode = $silent;
-		return $oldMode;
-	}
-	
-	/**
-	 *	query, silent mode
-	 *	@param 	String sql
-	 *  @return QueryResult
-	 */
-	public function querySilent( $sql ) 
-	{
-		$silent = $this->setSilentMode( true );
-		$ret = $this->query( $sql );
-		$this->setSilentMode( $silent );
-		return $ret;
-	}
-	
-	/**
-	 *	exec, silent mode
-	 *	@param 	String sql
-	 *  @return Mixed
-	 */
-	public function execSilent( $sql ) 
-	{
-		$silent = $this->setSilentMode( true );
-		$ret = $this->exec( $sql );
-		$this->setSilentMode( $silent );
-		return $ret;
-	}
-
-	/**
-	 *	Execute an SQL query with blob fields processing, silent mode
-	 *  @param String sql
-	 *  @param Array blobs
-	 *  @param Array blobTypes
-	 *  @return Mixed
-	 */
-	public function execSilentWithBlobProcessing( $sql, $blobs, $blobTypes = array() )
-	{
-		$silent = $this->setSilentMode( true );
-		$ret = $this->execWithBlobProcessing( $sql, $blobs, $blobTypes );
-		$this->setSilentMode( $silent );
-		return $ret;
-	}	
 }
 ?>

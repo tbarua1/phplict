@@ -6,12 +6,11 @@ class OracleConnection extends Connection
 	protected $pwd; 
 	
 	protected $sid;	 
-
-	protected $error;	 
 	
-	function __construct( $params )
+	
+	function OracleConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 
 	/**
@@ -33,17 +32,15 @@ class OracleConnection extends Connection
 	public function connect()
 	{
 		$this->conn = @ociplogon($this->user, $this->pwd, $this->sid);
-		if( !$this->conn ) {
-			$this->setError( ocierror() );
-			$this->triggerError($this->lastError());
-		}
+		if( !$this->conn )
+			trigger_error($this->lastError(), E_USER_ERROR);
 			
 		$stmt = ociparse($this->conn, "alter session set nls_date_format='YYYY-MM-DD HH24:MI:SS'");
 		ociexecute($stmt);
-		$this->closeQuery( $stmt );
+		ocifreestatement($stmt);
 		$stmt = ociparse($this->conn, "alter session set nls_timestamp_format='YYYY-MM-DD HH24:MI:SS'");
 		ociexecute($stmt);
-		$this->closeQuery( $stmt );
+		ocifreestatement($stmt);
 		return $this->conn;
 	}
 	
@@ -65,18 +62,10 @@ class OracleConnection extends Connection
 		$this->debugInfo($sql);
 		
 		$stmt = ociparse($this->conn, $sql);
-		if( !$stmt )
-		{
-			$this->setError( oci_error( $this->conn ) );
-			$this->triggerError($this->lastError());
-			return FALSE;
-		}
 		$stmt_type = ocistatementtype($stmt);
 		if( !ociexecute($stmt) )
 		{
-			$this->setError( oci_error( $stmt ) );
-			$this->closeQuery( $stmt );
-			$this->triggerError($this->lastError());
+			trigger_error($this->lastError(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -86,26 +75,17 @@ class OracleConnection extends Connection
 	/**	
 	 * Execute an SQL query
 	 * @param String sql
-	 * @return Mixed
 	 */
 	public function exec( $sql )
 	{
 		$this->debugInfo($sql);
 		
 		$stmt = ociparse($this->conn, $sql);
-		if( !$stmt )
-		{
-			$this->setError( oci_error( $this->conn ) );
-			$this->triggerError($this->lastError());
-			return FALSE;
-		}
 		$stmt_type = ocistatementtype($stmt);
 		if( !ociexecute($stmt) )
 		{
-			$this->setError( oci_error( $stmt ) );
-			$this->closeQuery( $stmt );
-			$this->triggerError($this->lastError());
-			return FALSE;
+			trigger_error( $this->lastError(), E_USER_ERROR );
+			return 0;
 		}
 		
 		return 1;
@@ -117,10 +97,20 @@ class OracleConnection extends Connection
 	 */
 	public function lastError()
 	{
-		if( count($this->error) > 1 )
-			return $this->error["message"];
+		$arr = ocierror();
+		if( count($arr) > 1 )
+			return $arr["code"]." - ".$arr["message"];
 		
 		return "";
+	}
+	
+	/**	
+	 * Get the auto generated id used in the last query
+	 * @return Number
+	 */
+	public function getInsertedId()
+	{
+		return 0;
 	}
 
 	/**
@@ -129,13 +119,13 @@ class OracleConnection extends Connection
 	 * @param Number flags
 	 * @return Array
 	 */
-	protected function myoci_fetch_array($qHandle, $flags)
+	protected function myoci_fetch_array($qHanle, $flags)
 	{
 		if( function_exists("oci_fetch_array") )
-			return oci_fetch_array($qHandle, $flags);
+			return oci_fetch_array($qHanle, $flags);
 			
 		$data = array();
-		if( ocifetchinto($qHandle, $data, $flags) )
+		if( ocifetchinto($qHanle, $data, $flags) )
 			return $data;
 			
 		return array();
@@ -146,9 +136,9 @@ class OracleConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return $this->myoci_fetch_array($qHandle, OCI_ASSOC + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
+		return $this->myoci_fetch_array($qHanle, OCI_ASSOC + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
 	}
 	
 	/**	
@@ -156,21 +146,21 @@ class OracleConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return $this->myoci_fetch_array($qHandle, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
+		return $this->myoci_fetch_array($qHanle, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
 	}
 	
 	/**	
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
 		if( function_exists("oci_free_statement") )
-			oci_free_statement($qHandle);
+			oci_free_statement($qHanle);
 		else
-			ocifreestatement($qHandle);
+			ocifreestatement($qHanle);
 	}
 
 	/**
@@ -189,9 +179,9 @@ class OracleConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return OCIColumnName($qHandle, $offset + 1);
+		return OCIColumnName($qHanle, $offset + 1);
 	}
 
 	/**
@@ -246,12 +236,6 @@ class OracleConnection extends Connection
 		}
 		
 		$stmt = OCIParse($this->conn, $sql);
-		if( !$stmt )
-		{
-			$this->setError( oci_error( $this->conn ) );
-			return FALSE;
-		}
-	
 		
 		$idx = 1;
 		foreach($locs as $ekey => $value)
@@ -261,13 +245,7 @@ class OracleConnection extends Connection
 		}
 
 		$result = OCIExecute($stmt, OCI_DEFAULT) !== false;
-		if( !$result )
-		{
-			$this->setError( oci_error( $stmt ) );
-			$this->closeQuery( $stmt );
-			return FALSE;
-		}
-	
+		
 		foreach($locs as $ekey => $value)
 		{
 			$locs[ $ekey ]->save( $blobs[ $ekey ] );
@@ -276,15 +254,10 @@ class OracleConnection extends Connection
 		
 		OCICommit($this->conn);
 		
-		$this->closeQuery( $stmt );
+		OCIFreeStatement( $stmt );
 		
 		set_error_handler("runner_error_handler");
 		return $result;
-	}
-	
-	protected function setError( $err )
-	{
-		$this->error = $err;
 	}
 }
 ?>

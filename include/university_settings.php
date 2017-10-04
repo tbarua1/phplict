@@ -4,9 +4,9 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdatauniversity = array();
+$tdatauniversity = array();	
 	$tdatauniversity[".truncateText"] = true;
-	$tdatauniversity[".NumberOfChars"] = 80;
+	$tdatauniversity[".NumberOfChars"] = 80; 
 	$tdatauniversity[".ShortName"] = "university";
 	$tdatauniversity[".OwnerID"] = "";
 	$tdatauniversity[".OriginalTable"] = "university";
@@ -15,41 +15,30 @@ $tdatauniversity = array();
 $fieldLabelsuniversity = array();
 $fieldToolTipsuniversity = array();
 $pageTitlesuniversity = array();
-$placeHoldersuniversity = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelsuniversity["English"] = array();
 	$fieldToolTipsuniversity["English"] = array();
-	$placeHoldersuniversity["English"] = array();
 	$pageTitlesuniversity["English"] = array();
 	$fieldLabelsuniversity["English"]["university_id"] = "University Id";
 	$fieldToolTipsuniversity["English"]["university_id"] = "";
-	$placeHoldersuniversity["English"]["university_id"] = "";
 	$fieldLabelsuniversity["English"]["University_name"] = "University Name";
 	$fieldToolTipsuniversity["English"]["University_name"] = "";
-	$placeHoldersuniversity["English"]["University_name"] = "";
 	$fieldLabelsuniversity["English"]["MOU_date"] = "MOU Date";
 	$fieldToolTipsuniversity["English"]["MOU_date"] = "";
-	$placeHoldersuniversity["English"]["MOU_date"] = "";
 	$fieldLabelsuniversity["English"]["TUP"] = "TUP";
 	$fieldToolTipsuniversity["English"]["TUP"] = "";
-	$placeHoldersuniversity["English"]["TUP"] = "";
 	$fieldLabelsuniversity["English"]["FS"] = "FS";
 	$fieldToolTipsuniversity["English"]["FS"] = "";
-	$placeHoldersuniversity["English"]["FS"] = "";
 	$fieldLabelsuniversity["English"]["TYPE"] = "TYPE";
 	$fieldToolTipsuniversity["English"]["TYPE"] = "";
-	$placeHoldersuniversity["English"]["TYPE"] = "";
 	$fieldLabelsuniversity["English"]["division_id"] = "Division Id";
 	$fieldToolTipsuniversity["English"]["division_id"] = "";
-	$placeHoldersuniversity["English"]["division_id"] = "";
 	$fieldLabelsuniversity["English"]["Lat"] = "Lat";
 	$fieldToolTipsuniversity["English"]["Lat"] = "";
-	$placeHoldersuniversity["English"]["Lat"] = "";
 	$fieldLabelsuniversity["English"]["Lng"] = "Lng";
 	$fieldToolTipsuniversity["English"]["Lng"] = "";
-	$placeHoldersuniversity["English"]["Lng"] = "";
 	if (count($fieldToolTipsuniversity["English"]))
 		$tdatauniversity[".isUseToolTips"] = true;
 }
@@ -57,27 +46,25 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelsuniversity[""] = array();
 	$fieldToolTipsuniversity[""] = array();
-	$placeHoldersuniversity[""] = array();
 	$pageTitlesuniversity[""] = array();
 	if (count($fieldToolTipsuniversity[""]))
 		$tdatauniversity[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdatauniversity[".NCSearch"] = true;
 
 
 
 $tdatauniversity[".shortTableName"] = "university";
 $tdatauniversity[".nSecOptions"] = 0;
-$tdatauniversity[".recsPerRowPrint"] = 1;
+$tdatauniversity[".recsPerRowList"] = 1;
 $tdatauniversity[".mainTableOwnerID"] = "";
 $tdatauniversity[".moveNext"] = 1;
-$tdatauniversity[".entityType"] = 0;
+$tdatauniversity[".nType"] = 0;
 
 $tdatauniversity[".strOriginalTableName"] = "university";
 
-	
 
 
 
@@ -101,25 +88,11 @@ $tdatauniversity[".listAjax"] = false;
 	$tdatauniversity[".locking"] = false;
 
 $tdatauniversity[".edit"] = true;
-$tdatauniversity[".afterEditAction"] = 1;
-$tdatauniversity[".closePopupAfterEdit"] = 1;
-$tdatauniversity[".afterEditActionDetTable"] = "";
-
-$tdatauniversity[".add"] = true;
-$tdatauniversity[".afterAddAction"] = 1;
-$tdatauniversity[".closePopupAfterAdd"] = 1;
-$tdatauniversity[".afterAddActionDetTable"] = "";
 
 $tdatauniversity[".list"] = true;
 
-
-
-$tdatauniversity[".reorderRecordsByHeader"] = true;
-
-
-$tdatauniversity[".exportFormatting"] = 2;
-$tdatauniversity[".exportDelimiter"] = ",";
-		
+$tdatauniversity[".inlineEdit"] = true;
+$tdatauniversity[".inlineAdd"] = true;
 $tdatauniversity[".view"] = true;
 
 $tdatauniversity[".import"] = true;
@@ -132,32 +105,21 @@ $tdatauniversity[".delete"] = true;
 
 $tdatauniversity[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdatauniversity[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdatauniversity[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdatauniversity[".searchSaving"] = false;
 //
 
 $tdatauniversity[".showSearchPanel"] = true;
-		$tdatauniversity[".flexibleSearch"] = true;
+		$tdatauniversity[".flexibleSearch"] = true;		
 
-$tdatauniversity[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdatauniversity[".isUseAjaxSuggest"] = false;
+else 
+	$tdatauniversity[".isUseAjaxSuggest"] = true;
 
 $tdatauniversity[".rowHighlite"] = true;
 
 
-
-
-
-$tdatauniversity[".ajaxCodeSnippetAdded"] = false;
-
-$tdatauniversity[".buttonsAdded"] = false;
 
 $tdatauniversity[".addPageEvents"] = false;
 
@@ -166,7 +128,7 @@ $tdatauniversity[".isUseTimeForSearch"] = false;
 
 
 
-$tdatauniversity[".badgeColor"] = "CD5C5C";
+$tdatauniversity[".useDetailsPreview"] = true;
 
 
 $tdatauniversity[".allSearchFields"] = array();
@@ -218,13 +180,9 @@ $tdatauniversity[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdatauniversity[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdatauniversity[".listGridLayout"] = 3;
+	
 
 
 
@@ -252,14 +210,6 @@ $tdatauniversity[".sqlHead"] = "SELECT university_id,  	University_name,  	MOU_d
 $tdatauniversity[".sqlFrom"] = "FROM university";
 $tdatauniversity[".sqlWhereExpr"] = "";
 $tdatauniversity[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -327,17 +277,6 @@ $tdatauniversity[".addFields"][] = "division_id";
 $tdatauniversity[".addFields"][] = "Lat";
 $tdatauniversity[".addFields"][] = "Lng";
 
-$tdatauniversity[".masterListFields"] = array();
-$tdatauniversity[".masterListFields"][] = "university_id";
-$tdatauniversity[".masterListFields"][] = "University_name";
-$tdatauniversity[".masterListFields"][] = "MOU_date";
-$tdatauniversity[".masterListFields"][] = "TUP";
-$tdatauniversity[".masterListFields"][] = "FS";
-$tdatauniversity[".masterListFields"][] = "TYPE";
-$tdatauniversity[".masterListFields"][] = "division_id";
-$tdatauniversity[".masterListFields"][] = "Lat";
-$tdatauniversity[".masterListFields"][] = "Lng";
-
 $tdatauniversity[".inlineAddFields"] = array();
 $tdatauniversity[".inlineAddFields"][] = "University_name";
 $tdatauniversity[".inlineAddFields"][] = "MOU_date";
@@ -367,17 +306,6 @@ $tdatauniversity[".inlineEditFields"][] = "TYPE";
 $tdatauniversity[".inlineEditFields"][] = "division_id";
 $tdatauniversity[".inlineEditFields"][] = "Lat";
 $tdatauniversity[".inlineEditFields"][] = "Lng";
-
-$tdatauniversity[".updateSelectedFields"] = array();
-$tdatauniversity[".updateSelectedFields"][] = "University_name";
-$tdatauniversity[".updateSelectedFields"][] = "MOU_date";
-$tdatauniversity[".updateSelectedFields"][] = "TUP";
-$tdatauniversity[".updateSelectedFields"][] = "FS";
-$tdatauniversity[".updateSelectedFields"][] = "TYPE";
-$tdatauniversity[".updateSelectedFields"][] = "division_id";
-$tdatauniversity[".updateSelectedFields"][] = "Lat";
-$tdatauniversity[".updateSelectedFields"][] = "Lng";
-
 
 $tdatauniversity[".exportFields"] = array();
 $tdatauniversity[".exportFields"][] = "university_id";
@@ -412,7 +340,6 @@ $tdatauniversity[".printFields"][] = "division_id";
 $tdatauniversity[".printFields"][] = "Lat";
 $tdatauniversity[".printFields"][] = "Lng";
 
-
 //	university_id
 //	Custom field settings
 	$fdata = array();
@@ -420,128 +347,122 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "university_id";
 	$fdata["GoodName"] = "university_id";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","university_id");
+	$fdata["Label"] = GetFieldLabel("university","university_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "university_id";
-
+		$fdata["strField"] = "university_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "university_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["university_id"] = $fdata;
 //	University_name
 //	Custom field settings
@@ -550,130 +471,123 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "University_name";
 	$fdata["GoodName"] = "University_name";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","University_name");
+	$fdata["Label"] = GetFieldLabel("university","University_name"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "University_name";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "University_name"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "University_name";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["University_name"] = $fdata;
 //	MOU_date
 //	Custom field settings
@@ -682,130 +596,123 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "MOU_date";
 	$fdata["GoodName"] = "MOU_date";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","MOU_date");
+	$fdata["Label"] = GetFieldLabel("university","MOU_date"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "MOU_date";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "MOU_date"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "MOU_date";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["MOU_date"] = $fdata;
 //	TUP
 //	Custom field settings
@@ -814,130 +721,119 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "TUP";
 	$fdata["GoodName"] = "TUP";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","TUP");
+	$fdata["Label"] = GetFieldLabel("university","TUP"); 
 	$fdata["FieldType"] = 16;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "TUP";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "TUP"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "TUP";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
 	
+	$vdata = array("ViewFormat" => "Checkbox");
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
 	
+	$edata = array("EditFormat" => "Checkbox");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
 	
 		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
+		
+		
+		
+		
 		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
+		
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["TUP"] = $fdata;
 //	FS
 //	Custom field settings
@@ -946,130 +842,119 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "FS";
 	$fdata["GoodName"] = "FS";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","FS");
+	$fdata["Label"] = GetFieldLabel("university","FS"); 
 	$fdata["FieldType"] = 16;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "FS";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "FS"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "FS";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "");
-
 	
+	$vdata = array("ViewFormat" => "Checkbox");
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Text field");
-
 	
+	$edata = array("EditFormat" => "Checkbox");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
 	
 		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
+		
+		
+		
+		
 		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
+		
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["FS"] = $fdata;
 //	TYPE
 //	Custom field settings
@@ -1078,130 +963,123 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "TYPE";
 	$fdata["GoodName"] = "TYPE";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","TYPE");
+	$fdata["Label"] = GetFieldLabel("university","TYPE"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "TYPE";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "TYPE"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "`TYPE`";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["TYPE"] = $fdata;
 //	division_id
 //	Custom field settings
@@ -1210,77 +1088,70 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "division_id";
 	$fdata["GoodName"] = "division_id";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","division_id");
+	$fdata["Label"] = GetFieldLabel("university","division_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "division_id";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "division_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "division_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+			
 	
-		
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -1288,79 +1159,77 @@ $tdatauniversity[".printFields"][] = "Lng";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "division_id";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-		$edata["IsRequired"] = true;
-
+		$edata["IsRequired"] = true; 
 	
-	
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
 						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
 		
 	
-	//	End validation
-
-	
-			
-	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["division_id"] = $fdata;
 //	Lat
 //	Custom field settings
@@ -1369,131 +1238,124 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "Lat";
 	$fdata["GoodName"] = "Lat";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","Lat");
+	$fdata["Label"] = GetFieldLabel("university","Lat"); 
 	$fdata["FieldType"] = 14;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "Lat";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "Lat"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "Lat";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Number");
-
 	
-	
-	
-	
-	
-	
-		$vdata["DecimalDigits"] = 2;
-
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		$vdata["DecimalDigits"] = 2;
+	
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+								
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["Lat"] = $fdata;
 //	Lng
 //	Custom field settings
@@ -1502,138 +1364,130 @@ $tdatauniversity[".printFields"][] = "Lng";
 	$fdata["strName"] = "Lng";
 	$fdata["GoodName"] = "Lng";
 	$fdata["ownerTable"] = "university";
-	$fdata["Label"] = GetFieldLabel("university","Lng");
+	$fdata["Label"] = GetFieldLabel("university","Lng"); 
 	$fdata["FieldType"] = 14;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "Lng";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "Lng"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "Lng";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Number");
-
 	
-	
-	
-	
-	
-	
-		$vdata["DecimalDigits"] = 2;
-
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		$vdata["DecimalDigits"] = 2;
+	
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+								
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatauniversity["Lng"] = $fdata;
 
-
+	
 $tables_data["university"]=&$tdatauniversity;
 $field_labels["university"] = &$fieldLabelsuniversity;
 $fieldToolTips["university"] = &$fieldToolTipsuniversity;
-$placeHolders["university"] = &$placeHoldersuniversity;
 $page_titles["university"] = &$pageTitlesuniversity;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
@@ -1647,24 +1501,21 @@ $detailsTablesData["university"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="batch";
 		$detailsParam["dOriginalTable"] = "batch";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "batch";
 	$detailsParam["dCaptionTable"] = GetTableCaption("batch");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
 	$detailsParam["dispChildCount"] = "1";
-
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["university"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["university"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["university"][$dIndex]["masterKeys"][]="university_id";
@@ -1672,7 +1523,7 @@ $detailsTablesData["university"] = array();
 				$detailsTablesData["university"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["university"][$dIndex]["detailKeys"][]="university_id";
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["university"] = array();
 
@@ -1685,21 +1536,15 @@ $masterTablesData["university"] = array();
 	$masterParams["mShortTable"]= "division";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["university"][0] = $masterParams;
+					$masterTablesData["university"][0] = $masterParams;	
 				$masterTablesData["university"][0]["masterKeys"] = array();
 	$masterTablesData["university"][0]["masterKeys"][]="division_id";
 				$masterTablesData["university"][0]["detailKeys"] = array();
@@ -1726,207 +1571,206 @@ $proto0["m_strFieldList"] = "university_id,  	University_name,  	MOU_date,  	TUP
 $proto0["m_strFrom"] = "FROM university";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "university_id",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto6["m_sql"] = "university_id";
-$proto6["m_srcTableName"] = "university";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "university_id";
+$proto5["m_srcTableName"] = "university";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "University_name",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto8["m_sql"] = "University_name";
-$proto8["m_srcTableName"] = "university";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
+$proto7["m_sql"] = "University_name";
+$proto7["m_srcTableName"] = "university";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto10=array();
+						$proto9=array();
 			$obj = new SQLField(array(
 	"m_strName" => "MOU_date",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto10["m_sql"] = "MOU_date";
-$proto10["m_srcTableName"] = "university";
-$proto10["m_expr"]=$obj;
-$proto10["m_alias"] = "";
-$obj = new SQLFieldListItem($proto10);
+$proto9["m_sql"] = "MOU_date";
+$proto9["m_srcTableName"] = "university";
+$proto9["m_expr"]=$obj;
+$proto9["m_alias"] = "";
+$obj = new SQLFieldListItem($proto9);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto12=array();
+						$proto11=array();
 			$obj = new SQLField(array(
 	"m_strName" => "TUP",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto12["m_sql"] = "TUP";
-$proto12["m_srcTableName"] = "university";
-$proto12["m_expr"]=$obj;
-$proto12["m_alias"] = "";
-$obj = new SQLFieldListItem($proto12);
+$proto11["m_sql"] = "TUP";
+$proto11["m_srcTableName"] = "university";
+$proto11["m_expr"]=$obj;
+$proto11["m_alias"] = "";
+$obj = new SQLFieldListItem($proto11);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto14=array();
+						$proto13=array();
 			$obj = new SQLField(array(
 	"m_strName" => "FS",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto14["m_sql"] = "FS";
-$proto14["m_srcTableName"] = "university";
-$proto14["m_expr"]=$obj;
-$proto14["m_alias"] = "";
-$obj = new SQLFieldListItem($proto14);
+$proto13["m_sql"] = "FS";
+$proto13["m_srcTableName"] = "university";
+$proto13["m_expr"]=$obj;
+$proto13["m_alias"] = "";
+$obj = new SQLFieldListItem($proto13);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto16=array();
+						$proto15=array();
 			$obj = new SQLField(array(
 	"m_strName" => "TYPE",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto16["m_sql"] = "`TYPE`";
-$proto16["m_srcTableName"] = "university";
-$proto16["m_expr"]=$obj;
-$proto16["m_alias"] = "";
-$obj = new SQLFieldListItem($proto16);
+$proto15["m_sql"] = "`TYPE`";
+$proto15["m_srcTableName"] = "university";
+$proto15["m_expr"]=$obj;
+$proto15["m_alias"] = "";
+$obj = new SQLFieldListItem($proto15);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto18=array();
+						$proto17=array();
 			$obj = new SQLField(array(
 	"m_strName" => "division_id",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto18["m_sql"] = "division_id";
-$proto18["m_srcTableName"] = "university";
-$proto18["m_expr"]=$obj;
-$proto18["m_alias"] = "";
-$obj = new SQLFieldListItem($proto18);
+$proto17["m_sql"] = "division_id";
+$proto17["m_srcTableName"] = "university";
+$proto17["m_expr"]=$obj;
+$proto17["m_alias"] = "";
+$obj = new SQLFieldListItem($proto17);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto20=array();
+						$proto19=array();
 			$obj = new SQLField(array(
 	"m_strName" => "Lat",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto20["m_sql"] = "Lat";
-$proto20["m_srcTableName"] = "university";
-$proto20["m_expr"]=$obj;
-$proto20["m_alias"] = "";
-$obj = new SQLFieldListItem($proto20);
+$proto19["m_sql"] = "Lat";
+$proto19["m_srcTableName"] = "university";
+$proto19["m_expr"]=$obj;
+$proto19["m_alias"] = "";
+$obj = new SQLFieldListItem($proto19);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto22=array();
+						$proto21=array();
 			$obj = new SQLField(array(
 	"m_strName" => "Lng",
 	"m_strTable" => "university",
 	"m_srcTableName" => "university"
 ));
 
-$proto22["m_sql"] = "Lng";
-$proto22["m_srcTableName"] = "university";
-$proto22["m_expr"]=$obj;
-$proto22["m_alias"] = "";
-$obj = new SQLFieldListItem($proto22);
+$proto21["m_sql"] = "Lng";
+$proto21["m_srcTableName"] = "university";
+$proto21["m_expr"]=$obj;
+$proto21["m_alias"] = "";
+$obj = new SQLFieldListItem($proto21);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto24=array();
-$proto24["m_link"] = "SQLL_MAIN";
-			$proto25=array();
-$proto25["m_strName"] = "university";
-$proto25["m_srcTableName"] = "university";
-$proto25["m_columns"] = array();
-$proto25["m_columns"][] = "university_id";
-$proto25["m_columns"][] = "University_name";
-$proto25["m_columns"][] = "MOU_date";
-$proto25["m_columns"][] = "TUP";
-$proto25["m_columns"][] = "FS";
-$proto25["m_columns"][] = "TYPE";
-$proto25["m_columns"][] = "division_id";
-$proto25["m_columns"][] = "Lat";
-$proto25["m_columns"][] = "Lng";
-$obj = new SQLTable($proto25);
-
-$proto24["m_table"] = $obj;
-$proto24["m_sql"] = "university";
-$proto24["m_alias"] = "";
+												$proto23=array();
+$proto23["m_link"] = "SQLL_MAIN";
+			$proto24=array();
+$proto24["m_strName"] = "university";
 $proto24["m_srcTableName"] = "university";
-$proto26=array();
-$proto26["m_sql"] = "";
-$proto26["m_uniontype"] = "SQLL_UNKNOWN";
+$proto24["m_columns"] = array();
+$proto24["m_columns"][] = "university_id";
+$proto24["m_columns"][] = "University_name";
+$proto24["m_columns"][] = "MOU_date";
+$proto24["m_columns"][] = "TUP";
+$proto24["m_columns"][] = "FS";
+$proto24["m_columns"][] = "TYPE";
+$proto24["m_columns"][] = "division_id";
+$proto24["m_columns"][] = "Lat";
+$proto24["m_columns"][] = "Lng";
+$obj = new SQLTable($proto24);
+
+$proto23["m_table"] = $obj;
+$proto23["m_sql"] = "university";
+$proto23["m_alias"] = "";
+$proto23["m_srcTableName"] = "university";
+$proto25=array();
+$proto25["m_sql"] = "";
+$proto25["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto26["m_column"]=$obj;
-$proto26["m_contained"] = array();
-$proto26["m_strCase"] = "";
-$proto26["m_havingmode"] = false;
-$proto26["m_inBrackets"] = false;
-$proto26["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto26);
+$proto25["m_column"]=$obj;
+$proto25["m_contained"] = array();
+$proto25["m_strCase"] = "";
+$proto25["m_havingmode"] = false;
+$proto25["m_inBrackets"] = false;
+$proto25["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto25);
 
-$proto24["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto24);
+$proto23["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto23);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -1940,10 +1784,8 @@ $queryData_university = createSqlQuery_university();
 
 
 	
-		;
-
 									
-
+	
 $tdatauniversity[".sqlquery"] = $queryData_university;
 
 $tableEvents["university"] = new eventsBase;

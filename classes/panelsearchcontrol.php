@@ -21,13 +21,16 @@ class PanelSearchControl extends SearchControl
 		
 		$control = array();
 		
+		$parameters["additionalCtrlParams"]['skipDependencies'] = true;
 		$parameters["additionalCtrlParams"]["searchPanelControl"] = true;
-		$parameters["additionalCtrlParams"]["style"] = $this->pageObj->mobileTemplateMode() ? 'width: 35%;' :'width: 115px;';
+		$parameters["additionalCtrlParams"]["style"] = isMobile() ? 'width: 35%;' :'width: 115px;';
 		
 		$ctrlsMap = $this->getExtraControlMap();
 		$this->pageObj->fillControlsMap($ctrlsMap,true);
 		
-		return XTempl::create_function_assignment( "xt_buildeditcontrol", $parameters );
+		AssignFunction($control, "xt_buildeditcontrol", $parameters);
+		
+		return $control;
 	}
 	
 	/**
@@ -59,7 +62,7 @@ class PanelSearchControl extends SearchControl
 	/**
 	 * @return String
 	 */
-	function getCtrlSearchTypeOptions($fName, $selOpt, $not, $flexible = false, $both = false) 
+	function getCtrlSearchTypeOptions($fName, $selOpt, $not, $flexible, $both = false) 
 	{	
 		if( !$flexible && ($selOpt == EMPTY_SEARCH || $selOpt == NOT_EMPTY) ) 
 			return $this->getControl($fName)->buildSearchOptions(array(EMPTY_SEARCH, NOT_EMPTY), $selOpt, $not, true);

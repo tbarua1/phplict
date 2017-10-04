@@ -13,9 +13,10 @@ class PostgreConnection extends Connection
 	 */
 	public $postgreDbVersion = 8;
 	
-	function __construct( $params )
+	
+	function PostgreConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -57,7 +58,7 @@ class PostgreConnection extends Connection
 	{
 		$this->conn = pg_connect( $this->connstr );
 		if( !$this->conn )
-			$this->triggerError("Unable to connect");
+			trigger_error("Unable to connect", E_USER_ERROR);
 		
 		$ret = pg_query("SELECT version()");
 		$row = $this->fetch_numarray($ret);
@@ -94,7 +95,7 @@ class PostgreConnection extends Connection
 		
 		if( !$ret )
 		{
-			$this->triggerError($this->lastError());
+			trigger_error($this->lastError(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -130,7 +131,7 @@ class PostgreConnection extends Connection
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
 		$qResult = $this->query( "select LASTVAL() as \"lv\"" );
 		if( $qResult )
@@ -146,9 +147,9 @@ class PostgreConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		$ret = pg_fetch_array($qHandle);
+		$ret = pg_fetch_array($qHanle);
 		//	remove numeric indexes
 		if( !$ret )
 			return array();
@@ -161,7 +162,7 @@ class PostgreConnection extends Connection
 				$fieldNum = $key;
 				unset($ret[ $key ]);
 			}
-			elseif( $this->postgreDbVersion >= 9 && pg_field_type($qHandle, $fieldNum) == "bytea" && $value == "\x" )
+			elseif( $this->postgreDbVersion >= 9 && pg_field_type($qHanle, $fieldNum) == "bytea" && $value == "\x" )
 			{
 				$ret[ $key ] = '';             
 			}       
@@ -174,18 +175,18 @@ class PostgreConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return @pg_fetch_row($qHandle);
+		return @pg_fetch_row($qHanle);
 	}
 	
 	/**
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@pg_free_result($qHandle);
+		@pg_free_result($qHanle);
 	}
 
 	/**	
@@ -204,9 +205,9 @@ class PostgreConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		 return @pg_field_name($qHandle, $offset);
+		 return @pg_field_name($qHanle, $offset);
 	}
 
 	/**

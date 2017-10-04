@@ -12,9 +12,9 @@ class DB2Connection extends Connection
 	protected $dbname;
 	
 	
-	function __construct( $params )
+	function DB2Connection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -41,7 +41,7 @@ class DB2Connection extends Connection
 		$this->conn = db2_connect($conn_string, '', '');
 		
 		if( !$this->conn ) 
-			$this->triggerError( db2_conn_errormsg() );
+			trigger_error( db2_conn_errormsg(), E_USER_ERROR );
 		
 		return $this->conn;
 	}
@@ -66,7 +66,7 @@ class DB2Connection extends Connection
 		$ret = db2_exec( $this->conn, $sql );
 		if( !$ret )
 		{
-			$this->triggerError(db2_stmt_errormsg());
+			trigger_error(db2_stmt_errormsg(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -96,7 +96,7 @@ class DB2Connection extends Connection
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
 		db2_last_insert_id( $this->conn );
 	}
@@ -106,9 +106,9 @@ class DB2Connection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return db2_fetch_assoc($qHandle);
+		return db2_fetch_assoc($qHanle);
 	}
 	
 	/**	
@@ -116,18 +116,18 @@ class DB2Connection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return db2_fetch_array($qHandle);
+		return db2_fetch_array($qHanle);
 	}
 	
 	/**	
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@db2_free_result($qHandle);
+		@db2_free_result($qHanle);
 	}
 
 	/**	
@@ -146,9 +146,9 @@ class DB2Connection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return db2_field_name($qHandle, $offset);
+		return db2_field_name($qHanle, $offset);
 	}
 
 	/**

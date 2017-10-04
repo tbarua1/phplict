@@ -15,9 +15,10 @@ class MySQLConnection extends Connection
 	
 	protected $subqueriesSupported = true;
 	
-	function __construct( $params )
+	
+	function MySQLConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 
 	/**
@@ -71,8 +72,7 @@ class MySQLConnection extends Connection
 			$this->conn = @mysql_connect($h.":".$this->port, $this->user, $this->pwd);
 			if( $this->conn )
 			{
-				if( $this->host == "localhost" )
-					$_SESSION["myqsladdress"] = $h;
+				$_SESSION["myqsladdress"] = $h;
 				break;
 			}
 		}
@@ -80,7 +80,7 @@ class MySQLConnection extends Connection
 		if (!$this->conn || !mysql_select_db($this->sys_dbname, $this->conn)) 
 		{
 			unset( $_SESSION["myqsladdress"] );
-			$this->triggerError( mysql_error() );
+			trigger_error( mysql_error(), E_USER_ERROR );
 		}
 		
 		if( $cMySQLNames != "" )
@@ -90,26 +90,9 @@ class MySQLConnection extends Connection
 		$res = @mysql_query("SHOW VARIABLES LIKE 'version'", $this->conn);
 		if( $row = @mysql_fetch_array($res, MYSQL_ASSOC) )
 			$this->mysqlVersion = $row["Value"];
-		
-		if( preg_match("/^[0-4]\./", $this->mysqlVersion, $matches) && strpos($this->mysqlVersion, "MariaDB") === FALSE ) //#10818 2		
+			
+		if( substr($this->mysqlVersion, 0, 1) <= "4")
 			$this->subqueriesSupported = false;
-		
-		$res = @mysql_query("SELECT @@SESSION.sql_mode as mode", $this->conn);
-		if( $row = @mysql_fetch_array($res, MYSQL_ASSOC) ){
-			$sql_mode = $row["mode"];
-			$arr = array();
-			$arr = explode(",",$sql_mode);
-			$sql_mode = "";
-			for( $i=0; $i<count($arr); $i++){
-				if($arr[$i]!="STRICT_ALL_TABLES" && $arr[$i]!="STRICT_TRANS_TABLES"){
-					if( $sql_mode )
-						$sql_mode.=",";
-					$sql_mode.=$arr[$i];
-				}
-			}
-			if($sql_mode)
-				@mysql_query("set SESSION sql_mode='".$sql_mode."'", $this->conn);
-		}
 		
 		return $this->conn;
 	}
@@ -134,7 +117,7 @@ class MySQLConnection extends Connection
 		$ret = mysql_query($sql, $this->conn);
 		if( !$ret )
 		{
-			$this->triggerError(mysql_error());
+			trigger_error(mysql_error(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -167,7 +150,7 @@ class MySQLConnection extends Connection
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
 		return @mysql_insert_id( $this->conn );
 	}
@@ -177,9 +160,9 @@ class MySQLConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return @mysql_fetch_array($qHandle, MYSQL_ASSOC);
+		return @mysql_fetch_array($qHanle, MYSQL_ASSOC);
 	}
 	
 	/**	
@@ -187,18 +170,18 @@ class MySQLConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return @mysql_fetch_array($qHandle, MYSQL_NUM);
+		return @mysql_fetch_array($qHanle, MYSQL_NUM);
 	}
 	
 	/**	
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@mysql_free_result($qHandle);
+		@mysql_free_result($qHanle);
 	}
 
 	/**
@@ -217,9 +200,9 @@ class MySQLConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return @mysql_field_name($qHandle, $offset);
+		return @mysql_field_name($qHanle, $offset);
 	}
 	
 	/**
@@ -239,6 +222,20 @@ class MySQLConnection extends Connection
 	public function checkDBSubqueriesSupport()
 	{
 		return $this->subqueriesSupported;
+	}
+
+	/**
+	 * Get the number of rows fetched by an SQL query	
+	 * @param String sql	A part of an SQL query or a full SQL query
+	 * @param Boolean  		The flag indicating if the full SQL query (that can be used as a subquery) 
+	 * or the part of an sql query ( from + where clauses ) is passed as the first param
+	 */
+	public function getFetchedRowsNumber( $sql, $useAsSubquery )
+	{
+		if( $this->subqueriesSupported || !$useAsSubquery )
+			return parent::getFetchedRowsNumber( $sql, $useAsSubquery );
+		
+		return @mysql_num_rows( $this->query( $sql )->getQueryHandle() );
 	}
 
 	/**

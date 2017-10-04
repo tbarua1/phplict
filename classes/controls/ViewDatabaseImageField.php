@@ -6,9 +6,9 @@ class ViewDatabaseImageField extends ViewControl
 	protected $thumbWidth;
 	protected $thumbHeight;
 	
-	function __construct($field, $container, $pageobject)
+	function ViewDatabaseImageField($field, $container, $pageobject)
 	{
-		parent::__construct($field, $container, $pageobject);
+		parent::ViewControl($field, $container, $pageobject);
 		$this->showThumbnails = $container->pSet->showThumbnail( $this->field );
 		
 		if( $this->showThumbnails )
@@ -22,7 +22,7 @@ class ViewDatabaseImageField extends ViewControl
 	 * addJSFiles
 	 * Add control JS files to page object
 	 */
-	public function addJSFiles()
+	function addJSFiles()
 	{
 				$this->AddJSFile("include/zoombox/zoombox.js");
 		$this->getJSControl();	
@@ -65,7 +65,7 @@ class ViewDatabaseImageField extends ViewControl
 			
 			$value.= "<a target=_blank href='".$hrefBegin."&field=".rawurlencode($this->field).$hrefEnd."' class='".$linkClass."' ".$smallThumbnailStyle.">";
 			
-			$value.= "<img border=0 ";
+			$value.= "<img border=0";
 			if($this->is508)
 				$value.= " alt=\"Image from DB\"";
 			$value.= " src='".$hrefBegin."&field=".rawurlencode($thumbPref).$hrefEnd."'>";
@@ -74,7 +74,7 @@ class ViewDatabaseImageField extends ViewControl
 		} 
 		else 
 		{
-			$value = "<img class=\"bs-dbimage\" ";
+			$value = "<img";
 			if($this->is508)
 				$value.= " alt=\"Image from DB\"";
 			

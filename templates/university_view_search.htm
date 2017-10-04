@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,208 +12,167 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-search" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_searchpage}
-<div {$searchpage_chiddenattr} data-pageid="{$pageid}" data-container="searchpage" class="container    "> 
-
-
-
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-6 col-md-offset-3"> 
+{BEGIN container_search}
+<div class="rnr-c rnr-cv rnr-c-search">
 
 {BEGIN searchheader}
-	<h2 {$bssearchheader_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchheader" >{$pagetitlelabel university_view search}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END searchheader}
+<div  class="rnr-brickcontents style2 rnr-b-srchheader {$brickclass_srchheader}"><span>	<h1>{$pagetitlelabel university_view search}</h1>
+</span></div>{END searchheader}
 
 
-
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_searchpage}
+{BEGIN conditions_block}
+<div  class="rnr-brickcontents style1 rnr-b-srchconditions {$brickclass_srchconditions}">	<center>
+	<span class=fieldname>Criteria:&nbsp;</span>	
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$all_checkbox}><label for="all_checkbox"> All conditions</label>
+	&nbsp;&nbsp;&nbsp;
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$any_checkbox}><label for="any_checkbox"> Any condition</label>
+	</center></div>{END conditions_block}
 
 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$bssearchfields_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchfields" class="form-horizontal" role="form">
-<div class="container">
-	<div class="form-group">
-		<div class="col-md-12" >
-			&nbsp;
-		</div>
-	</div>
-</div>
+<div  class="rnr-brickcontents style1 rnr-b-srchfields {$brickclass_srchfields}"><table class="fieldGrid">
+	<tr>
+		<td>&nbsp;</td>
+		<td>NOT</td>
+		<td colspan=3>&nbsp; </td>
+	</tr>
+	<tr class="{$fielddispclass_university_id}">
 	{BEGIN university_id_fieldblock}		
-	<div class="container {$fielddispclass_university_id}" data-fieldname="university_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_university_id}">
-				{$label university_view university_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_university_id}
-			</div>
-			<div class="col-md-4" >
-				{$university_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$university_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label university_view university_id}
+	</td>
+	<td>
+		<input type="checkbox" {$university_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_university_id}
+	</td>
+	<td>
+		{$university_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$university_id_editcontrol1}&nbsp;
+	</td>
 {END university_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_University_name}">
 	{BEGIN University_name_fieldblock}		
-	<div class="container {$fielddispclass_University_name}" data-fieldname="University_name">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_University_name}">
-				{$label university_view University_name}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_University_name}
-			</div>
-			<div class="col-md-4" >
-				{$University_name_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$University_name_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label university_view University_name}
+	</td>
+	<td>
+		<input type="checkbox" {$University_name_notbox}>
+	</td>
+	<td>
+		{$searchtype_University_name}
+	</td>
+	<td>
+		{$University_name_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$University_name_editcontrol1}&nbsp;
+	</td>
 {END University_name_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_division_id}">
 	{BEGIN division_id_fieldblock}		
-	<div class="container {$fielddispclass_division_id}" data-fieldname="division_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_division_id}">
-				{$label university_view division_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_division_id}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label university_view division_id}
+	</td>
+	<td>
+		<input type="checkbox" {$division_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_division_id}
+	</td>
+	<td>
+		{$division_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$division_id_editcontrol1}&nbsp;
+	</td>
 {END division_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_dname}">
 	{BEGIN dname_fieldblock}		
-	<div class="container {$fielddispclass_dname}" data-fieldname="dname">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_dname}">
-				{$label university_view dname}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_dname}
-			</div>
-			<div class="col-md-4" >
-				{$dname_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$dname_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label university_view dname}
+	</td>
+	<td>
+		<input type="checkbox" {$dname_notbox}>
+	</td>
+	<td>
+		{$searchtype_dname}
+	</td>
+	<td>
+		{$dname_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$dname_editcontrol1}&nbsp;
+	</td>
 {END dname_fieldblock}
-</div>
+	</tr>
+
+</table></div>
 
 
+{BEGIN searchbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-srchbuttons {$brickclass_srchbuttons}">{BEGIN search_button}
+<a href="#" class="rnr-button main" {$searchbutton_attrs}>Search</a>
+{END search_button} 
+{BEGIN reset_button}
+<a href="#" class="rnr-button" {$resetbutton_attrs}>Reset</a>
+{END reset_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}</div>{END searchbuttons}
 
 
 </div>
 {END container_fields}
 
-
-
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container form-horizontal   "> 
-
-
-
-
-{BEGIN container_bbuttons}
-<div {$bbuttons_chiddenattr} data-pageid="{$pageid}" data-container="bbuttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-10 col-md-offset-2"> 
-
-{BEGIN searchbuttons}
-{BEGIN search_button}
-<button class="btn btn-primary" {$searchbutton_attrs}>Search</button>
-{END search_button} 
-{BEGIN reset_button}
-<button class="btn btn-default" {$resetbutton_attrs}>Reset</button>
-{END reset_button}
-{BEGIN back_button}
-<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{END searchbuttons}
-
+</div>
 
 
 </div>
-{END container_leftbuttons}
-
-
-
-
-
-
-</div>
-{END container_bbuttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
+{END container_search}
 
 
 		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 			</div>
-			<div class="bs-left" {$blockattr_left}>
+			<div class="rnr-center {$blockclass_center}">
 				
 			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
-		<DIV class="bs-bottom">
-        
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
 		</div>
+	</div>
+		
 		{$footer}
 	{END body}
 	</body>

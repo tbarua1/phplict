@@ -10,18 +10,18 @@ class RunnerCiphererDES
 	
 	var $mcryptModule = null;
 	
-	function __construct($key){
+	function RunnerCiphererDES($key){
 		$this->mcryptModule = mcrypt_module_open(MCRYPT_DES, '', MCRYPT_MODE_CBC, '');
 		$this->key = substr($key, 0, mcrypt_enc_get_key_size($this->mcryptModule));
 	}
 	
 	/**
-	 * Encrypt
-	 * Encrypt string with algorythm
+	 * DESEncrypt
+	 * Encrypt string with DES algorythm
 	 * @param {string} plain value
 	 * @return {string} encrypted value
 	 */
-	function Encrypt($source) {
+	function DESEncrypt($source) {
 		$result = '';
 		if($source != '' && mcrypt_generic_init($this->mcryptModule, $this->key, $this->INITIALISATION_VECTOR) != -1) {
 			$result = bin2hex (mcrypt_generic($this->mcryptModule, $source));
@@ -30,12 +30,12 @@ class RunnerCiphererDES
 	}
 	
 	/**
-	 * Decrypt
-	 * Decrypt string, ecncrypted with  algorythm
+	 * DESDecrypt
+	 * Decrypt string, ecncrypted with DES algorythm
 	 * @param {string} encrypted value
 	 * @return {string} decrypted value
 	 */
-	function Decrypt($source) {
+	function DESDecrypt($source) {
 		if(!is_string($source) || strlen($source) == 0 || strlen($source) % 2 > 0 || preg_match ("/[^0-9a-f]/", $source) == 1)
 			return $source;
 		$result = '';

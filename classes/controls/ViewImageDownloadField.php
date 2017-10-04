@@ -2,7 +2,6 @@
 include_once getabspath("classes/controls/ViewFileField.php");
 class ViewImageDownloadField extends ViewFileField
 {
-	protected $isImageURL = false;
 	protected $showThumbnails = false;
 	
 	protected $setOfThumbnails = false;
@@ -16,12 +15,11 @@ class ViewImageDownloadField extends ViewFileField
 	protected $thumbHeight;
 	
 	
-	function __construct($field, $container, $pageobject)
+	function ViewImageDownloadField($field, $container, $pageobject)
 	{
-		parent::__construct($field, $container, $pageobject);
-		$this->isImageURL = $container->pSet->isImageURL( $this->field );
-
-		$this->showThumbnails = $container->pSet->showThumbnail( $this->field ) && !$this->isImageURL;
+		parent::ViewFileField($field, $container, $pageobject);
+		
+		$this->showThumbnails = $container->pSet->showThumbnail( $this->field );
 		$this->setOfThumbnails = $container->pSet->showListOfThumbnails( $this->field );
 		$this->useAbsolutePath = $container->pSet->isAbsolute( $this->field );
 		
@@ -39,14 +37,11 @@ class ViewImageDownloadField extends ViewFileField
 	 * addJSFiles
 	 * Add control JS files to page object
 	 */
-	public function addJSFiles()
+	function addJSFiles()
 	{
-		if ( !$this->isImageURL )
-		{
-						$this->AddJSFile("include/sudo/jquery.sudoSlider.js");
-			$this->AddJSFile("include/zoombox/zoombox.js");
-			$this->getJSControl();
-		}
+				$this->AddJSFile("include/sudo/jquery.sudoSlider.js");
+		$this->AddJSFile("include/zoombox/zoombox.js");
+		$this->getJSControl();
 	}
 	
 	/**
@@ -55,11 +50,8 @@ class ViewImageDownloadField extends ViewFileField
 	 */ 
 	function addCSSFiles()
 	{
-		if ( !$this->isImageURL )
-		{
-			$this->AddCSSFile("include/sudo/style.css");
-			$this->AddCSSFile("include/zoombox/zoombox.css");
-		}
+		$this->AddCSSFile("include/sudo/style.css");
+		$this->AddCSSFile("include/zoombox/zoombox.css");
 	}
 	
 	public function showDBValue(&$data, $keylink)
@@ -67,179 +59,165 @@ class ViewImageDownloadField extends ViewFileField
 		if($data[$this->field] == '')
 			return '';
 		
-		if ( !$this->isImageURL )
+		$this->upload_handler->tkeys = $keylink;
+		
+		$resultValues = array();
+		$arBigThumbnails = array();
+		$zoomboxRand = rand(11111, 99999);
+		
+		$filesArray = $this->getFilesArray($data[$this->field]);
+		
+		foreach ($filesArray as $imageFile)
 		{
-			$this->upload_handler->tkeys = $keylink;
-			
-			$resultValues = array();
-			$arBigThumbnails = array();
-			$zoomboxRand = rand(11111, 99999);
-			
-			$filesArray = $this->getFilesArray($data[$this->field]);
-			
-			foreach ($filesArray as $imageFile)
+			$userFile = $this->upload_handler->buildUserFile($imageFile);
+			if($this->container->pageType == PAGE_EXPORT 
+				|| $this->container->forExport != '')
 			{
-				$userFile = $this->upload_handler->buildUserFile($imageFile);
-				if($this->container->pageType == PAGE_EXPORT 
-					|| $this->container->forExport != '')
+				$resultValues[] = $userFile["name"];
+				continue;
+			}
+			
+			if( !CheckImageExtension($imageFile["name"]) ) 
+			{
+				$resultValues[] = '<a href="'.runner_htmlspecialchars($userFile["url"]).'">'.$userFile["name"].'</a>';
+				continue;
+			}
+			
+			$userFile["url"] .= "&nodisp=1";
+			if($userFile["thumbnail_url"] != "")
+				$userFile["thumbnail_url"] .= "&nodisp=1";
+			$imageValue = '';
+			$divSize = '';
+			$divBigThumbnailsSize = '';
+			
+			$hasThumbnail = false;
+			$imagePath = $this->getImagePath( $imageFile["name"] ) ;
+			$hasBigImage = myfile_exists($imagePath);
+			if($this->showThumbnails)
+			{
+				$thumbPath = $this->getImagePath( $imageFile["thumbnail"] ); 
+				$hasThumbnail = myfile_exists($thumbPath);
+			}
+			
+			if($this->showThumbnails) 
+			{
+				if($hasThumbnail)
 				{
-					$resultValues[] = $userFile["name"];
-					continue;
-				}
-				
-				if( !CheckImageExtension($imageFile["name"]) ) 
-				{
-					$resultValues[] = '<a href="'.runner_htmlspecialchars($userFile["url"]).'">'.$userFile["name"].'</a>';
-					continue;
-				}
-				
-				$userFile["url"] .= "&nodisp=1";
-				if($userFile["thumbnail_url"] != "")
-					$userFile["thumbnail_url"] .= "&nodisp=1";
-				$imageValue = '';
-				$divSize = '';
-				$divBigThumbnailsSize = '';
-				
-				$hasThumbnail = false;
-				$imagePath = $this->getImagePath( $imageFile["name"] ) ;
-				$hasBigImage = myfile_exists($imagePath);
-				if($this->showThumbnails)
-				{
-					$thumbPath = $this->getImagePath( $imageFile["thumbnail"] ); 
-					$hasThumbnail = myfile_exists($thumbPath);
-				}
-				
-				if($this->showThumbnails) 
-				{
-					if($hasThumbnail)
-					{
-						$imageValue.= '<img class="bs-dbimage" border="0"';
-						
-						if( $this->is508 )
-							$imageValue.= ' alt="'.runner_htmlspecialchars($userFile["name"]).'"';
-						
-						$src = $userFile["thumbnail_url"] != "" ? $userFile["thumbnail_url"] : $userFile["url"];
-
-						if( $this->thumbWidth || $this->thumbHeight )
-							$imageValue.= $this->getSmallThumbnailStyle();
-							
-						$imageValue.= ' src="'.runner_htmlspecialchars($src).'" />';
-					}
-					else if($hasBigImage)
-					{
-						$imageValue.= '<img class="bs-dbimage" '.$this->getImageSizeStyle(true).' border="0"';
-						if($this->is508)
-							$imageValue.= ' alt="'.runner_htmlspecialchars($userFile["name"]).'"';
-						$imageValue.= ' src="'.runner_htmlspecialchars($userFile["url"]).'">';
-					}
+					$imageValue.= '<img border="0"';
 					
-					if($hasBigImage && $imageValue != '')
-					{
-						$href = runner_htmlspecialchars( $userFile["url"] );
+					if( $this->is508 )
+						$imageValue.= ' alt="'.runner_htmlspecialchars($userFile["name"]).'"';
+					
+					$src = $userFile["thumbnail_url"] != "" ? $userFile["thumbnail_url"] : $userFile["url"];
+
+					if( $this->thumbWidth || $this->thumbHeight )
+						$imageValue.= $this->getSmallThumbnailStyle();
 						
-						$smallThumbnailStyle = '';
-						$linkClass = !$this->setOfThumbnails ? "zoombox zgallery".$zoomboxRand : '';	
-						if( $this->thumbWidth && $this->thumbHeight )
-						{
-							$thumbFileUrl = $hasThumbnail ? $userFile["thumbnail_url"] :  $userFile["url"];
-							$smallThumbnailStyle = $this->getSmallThumbnailStyle( $thumbFileUrl, $hasThumbnail );
-							$linkClass.= " background-picture";
-						}
-						
-						if( $linkClass )
-							$linkClass = "class='".$linkClass."'";
-						
-						$imageValue = '<a target="_blank" href="'.$href.'"'. $linkClass . $smallThumbnailStyle .'>'
-							.$imageValue.'</a>';
-						
-						if( $this->setOfThumbnails ) 
-						{					
-							$bigThumbnailLinkStyle = $this->getBigThumbnailSizeStyles();
-							$bigThumbnailLink = '<a style="display: none;" href="'.$href.'" '. ($bigThumbnailLinkStyle ? 'class="zoombox"' : '') .'>';
-							$bigThumbnailLink.= '<img src="'.$href.'" border="0"';
-										
-							$bigThumbnailLink .= $this->getImageSizeStyle(true);
-								
-							$bigThumbnailLink.= '/></a>';
-							
-							if( !$divBigThumbnailsSize )
-								$divBigThumbnailsSize = 'style="'.$bigThumbnailLinkStyle.'"';
-							
-							$arBigThumbnails[] = $bigThumbnailLink;
-						}
-					}
-				} 
+					$imageValue.= ' src="'.runner_htmlspecialchars($src).'" />';
+				}
 				else if($hasBigImage)
 				{
-					$imageValue .= "<img";
-					
-					if($this->imageWidth)
-					{
-						$divSize = "width: ".$this->imageWidth."px;";
-					}
-
-					if($this->imageHeight)
-					{
-						$divSize .= "height: ".$this->imageHeight."px;";
-					}
-					
-					if($divSize != "")
-						$divSize = 'style="'.$divSize.'"';
-					
-					$imageValue .= " border=0";
+					$imageValue.= '<img '.$this->getImageSizeStyle(true).' border="0"';
 					if($this->is508)
-						$imageValue.= " alt=\"".runner_htmlspecialchars($userFile["name"])."\"";
-					$imageValue .= $this->getImageSizeStyle(true).' src="'.runner_htmlspecialchars($userFile["url"]).'">';
+						$imageValue.= ' alt="'.runner_htmlspecialchars($userFile["name"]).'"';
+					$imageValue.= ' src="'.runner_htmlspecialchars($userFile["url"]).'">';
 				}
 				
-				if($imageValue != '')
-					$resultValues[] = $imageValue;
-			}
-			
-			if(count($resultValues) > 1 || count($resultValues) == 1 && $this->setOfThumbnails)
-			{
-				if($this->container->pageType == PAGE_EXPORT || $this->container->forExport != '')
-					return implode(', ', $resultValues);
-
-				if($this->container->pageType == PAGE_PRINT)
-					return implode('<br />', $resultValues);
-					
-				for($i = 0; $i < count($resultValues); $i++)
+				if($hasBigImage && $imageValue != '')
 				{
-					if($i == 0)
-						$resultValues[$i] = '<li>'.$resultValues[$i].'</li>';
-					else 
-						$resultValues[$i] = '<li style="display:none;">'.$resultValues[$i].'</li>';
+					$href = runner_htmlspecialchars( $userFile["url"] );
+					
+					$smallThumbnailStyle = '';
+					$linkClass = !$this->setOfThumbnails ? "zoombox zgallery".$zoomboxRand : '';	
+					if( $this->thumbWidth && $this->thumbHeight )
+					{
+						$thumbFileUrl = $hasThumbnail ? $userFile["thumbnail_url"] :  $userFile["url"];
+						$smallThumbnailStyle = $this->getSmallThumbnailStyle( $thumbFileUrl, $hasThumbnail );
+						$linkClass.= " background-picture";
+					}
+					
+					if( $linkClass )
+						$linkClass = "class='".$linkClass."'";
+					
+					$imageValue = '<a target="_blank" href="'.$href.'"'. $linkClass . $smallThumbnailStyle .'>'
+						.$imageValue.'</a>';
+					
+					if( $this->setOfThumbnails ) 
+					{					
+						$bigThumbnailLinkStyle = $this->getBigThumbnailSizeStyles();
+						$bigThumbnailLink = '<a style="display: none;" href="'.$href.'" '. ($bigThumbnailLinkStyle ? 'class="zoombox"' : '') .'>';
+						$bigThumbnailLink.= '<img src="'.$href.'" border="0"';
+									
+						$bigThumbnailLink .= $this->getImageSizeStyle(true);
+							
+						$bigThumbnailLink.= '/></a>';
+						
+						if( !$divBigThumbnailsSize )
+							$divBigThumbnailsSize = 'style="'.$bigThumbnailLinkStyle.'"';
+						
+						$arBigThumbnails[] = $bigThumbnailLink;
+					}
+				}
+			} 
+			else if($hasBigImage)
+			{
+				$imageValue .= "<img";
+				
+				if($this->imageWidth)
+				{
+					$divSize = "width: ".$this->imageWidth."px;";
 				}
 
-				$divBigThumbnails = '';
-				if( count($arBigThumbnails) )	
-					$divBigThumbnails = '<div class="big-thumbnails" '.$divBigThumbnailsSize.'>'.implode('', $arBigThumbnails).'</div>';
+				if($this->imageHeight)
+				{
+					$divSize .= "height: ".$this->imageHeight."px;";
+				}
 				
-				if( !$divSize && !$this->setOfThumbnails )
-					$divSize = 'style="'.$this->getBigThumbnailSizeStyles( true ).'"';
+				if($divSize != "")
+					$divSize = 'style="'.$divSize.'"';
 				
-				$presudoSlider = '<div class="presudoslider" '.$divSize.'>'.$divBigThumbnails.'<ul class="viewimage-thumblist" style="list-style: none;">'.implode("",$resultValues).'</ul>'.$hiddenFields.'</div>';
-				
-				return '<div style="position:relative;" class="viewImage">'.$presudoSlider.'</div>';
+				$imageValue .= " border=0";
+				if($this->is508)
+					$imageValue.= " alt=\"".runner_htmlspecialchars($userFile["name"])."\"";
+				$imageValue .= $this->getImageSizeStyle(true).' src="'.runner_htmlspecialchars($userFile["url"]).'">';
 			}
 			
-			if(count($resultValues) == 1)
-				return $resultValues[0];
-
-			return '<img src="'.GetRootPathForResources("images/no_image.gif").'" />';
+			if($imageValue != '')
+				$resultValues[] = $imageValue;
 		}
-		else {
-			if ( strlen($data[ $this->field ]) > 0 )
+		
+		if(count($resultValues) > 1 || count($resultValues) == 1 && $this->setOfThumbnails)
+		{
+			if($this->container->pageType == PAGE_EXPORT || $this->container->forExport != '')
+				return implode(', ', $resultValues);
+
+			if($this->container->pageType == PAGE_PRINT)
+				return implode('<br />', $resultValues);
+				
+			for($i = 0; $i < count($resultValues); $i++)
 			{
-				$value = '<img class="bs-dbimage"';		
-				$value.= " border=0";
-				$value.= $this->getImageSizeStyle(true)." src='".$data[ $this->field ]."'>";
-				return $value;
-			}			
-		}
+				if($i == 0)
+					$resultValues[$i] = '<li>'.$resultValues[$i].'</li>';
+				else 
+					$resultValues[$i] = '<li style="display:none;">'.$resultValues[$i].'</li>';
+			}
 
-		return "";
+			$divBigThumbnails = '';
+			if( count($arBigThumbnails) )	
+				$divBigThumbnails = '<div class="big-thumbnails" '.$divBigThumbnailsSize.'>'.implode('', $arBigThumbnails).'</div>';
+			
+			if( !$divSize && !$this->setOfThumbnails )
+				$divSize = 'style="'.$this->getBigThumbnailSizeStyles( true ).'"';
+			
+			$presudoSlider = '<div class="presudoslider" '.$divSize.'>'.$divBigThumbnails.'<ul class="viewimage-thumblist" style="list-style: none;">'.implode("",$resultValues).'</ul>'.$hiddenFields.'</div>';
+			
+			return '<div style="position:relative;" class="viewImage">'.$presudoSlider.'</div>';
+		}
+		
+		if(count($resultValues) == 1)
+			return $resultValues[0];
+		
+		return '<img src="'.GetRootPathForResources("images/no_image.gif").'" />';
 	}
 
 	/**
@@ -250,24 +228,17 @@ class ViewImageDownloadField extends ViewFileField
 	{		
 		if( !strlen( $data[ $this->field ] ) )
 			return "";
+					
+		$fileNames = array();
 		
-		if ( !$this->isImageURL )
-		{			
-			$fileNames = array();
-			
-			$filesData = $this->getFilesArray( $data[ $this->field ] );		
-			foreach($filesData as $imageFile)
-			{	
-				$userFile = $this->upload_handler->buildUserFile($imageFile);
-				$fileNames[] = $userFile["name"] ;
-			}		
-			
-			return implode(", ", $fileNames);
-		}
-		else
-		{
-			return $data[ $this->field ];
-		}
+		$filesData = $this->getFilesArray( $data[ $this->field ] );		
+		foreach($filesData as $imageFile)
+		{	
+			$userFile = $this->upload_handler->buildUserFile($imageFile);
+			$fileNames[] = $userFile["name"] ;
+		}		
+		
+		return implode(", ", $fileNames);
 	}
 	
 	/**

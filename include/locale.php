@@ -7,8 +7,6 @@ require_once(getabspath("include/LocaleFunctions.php"));
 
 $locale_info = array();
 
-$locale_info["LOCALE_LANGNAME"]="en";
-$locale_info["LOCALE_CTRYNAME"]="IN";
 //	date settings
 $locale_info["LOCALE_ICENTURY"]="1";
 $locale_info["LOCALE_IDATE"]="1";
@@ -196,5 +194,5 @@ function db2time($str)
 //	return mktime($h,$mi,$s,$mo,$d,$y);
 	return array((integer)$y,(integer)$mo,(integer)$d,(integer)$h,(integer)$mi,(integer)$s);
 }
-
+ 
 ?>

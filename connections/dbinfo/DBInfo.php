@@ -11,7 +11,7 @@ class DBInfo
 	protected $connectionObj;
 	
 	
-	function __construct( $connObj )
+	function DBInfo( $connObj )
 	{
 		$this->connectionObj = $connObj;
 	}

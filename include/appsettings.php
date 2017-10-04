@@ -2,27 +2,13 @@
 $dDebug = false;
 $dSQL = "";
 
+$bUseMobileStyleOnly = false;
+
 $tables_data = array();
 $page_layouts = array();
 $field_labels = array();
 $fieldToolTips = array();
 $page_titles = array();
-$placeHolders = array();
-/**
- * Breadcrumb label templates
- 
- *	Label without master table
- *	$breadcrumb_titles[<language>][<table>][<page>]["."] = "..."
- 
- *	Label with master active
- *	$breadcrumb_titles[<language>][<table>][<page>][<master>] = "..."
-
- *	Label for the page with no table
- *	$breadcrumb_titles[<language>]["."][<page>]["."] = "..."
- */
-$breadcrumb_labels = array();
-
-
 $lookupTableLinks = array();
 
 $_gmdays = array(0=>31,1=>31,2=>28,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
@@ -37,10 +23,9 @@ $custom_labels["English"] = array();
 define('NOT_TABLE_BASED_TNAME', ".global");
 
 /**
- *  Define constants of page name
+ *  Define constants of page name 
  */
 define('PAGE_LIST',"list");
-define('PAGE_MASTER_INFO_LIST',"masterlist");
 define('PAGE_ADD',"add");
 define('PAGE_EDIT',"edit");
 define('PAGE_VIEW',"view");
@@ -51,12 +36,9 @@ define('PAGE_REMIND',"remind");
 define('PAGE_CHANGEPASS',"changepwd");
 define('PAGE_SEARCH',"search");
 define('PAGE_REPORT',"report");
-define('PAGE_MASTER_INFO_REPORT',"masterreport");
 define('PAGE_CHART',"chart");
 define('PAGE_PRINT',"print");
-define('PAGE_MASTER_INFO_PRINT',"masterprint");
 define('PAGE_RPRINT',"rprint");
-define('PAGE_MASTER_INFO_RPRINT',"masterrprint");
 define('PAGE_EXPORT',"export");
 define('PAGE_IMPORT',"import");
 define('PAGE_ADMIN_MEMBERS',"admin_members");
@@ -64,7 +46,6 @@ define('PAGE_ADMIN_RIGHTS',"admin_rights");
 define('PAGE_INLINEADD',"inlineadd");
 define('PAGE_INLINEEDIT',"inlineedit");
 define('PAGE_DASHBOARD',"dashboard");
-define('PAGE_DASHMAP', "map");
 
 define('ADMIN_USERS',"admin_users");
 
@@ -170,49 +151,25 @@ define("ADD_MASTER",3);
 define("ADD_POPUP",4);
 define("ADD_DASHBOARD",5);
 define("ADD_MASTER_POPUP",6);
-define("ADD_MASTER_DASH",7);
 
 //	Edit page modes
 define("EDIT_SIMPLE",0); 	//	standalone Edit page
 define("EDIT_INLINE",1);	//	inlineEdit
 define("EDIT_POPUP",3);		//	edit page in popup
 define("EDIT_DASHBOARD",4);	//	edit page in dashboard
-define("EDIT_SELECTED_SIMPLE",5);
-define("EDIT_SELECTED_POPUP",6);
-
 
 //	View page modes
 define("VIEW_SIMPLE",0); 	//	standalone View page
 define("VIEW_POPUP",1); 	//	View page in popup
 define("VIEW_DASHBOARD",2); 	//	View page in dashboard
 
-define("LOGIN_SIMPLE", 0);
-define("LOGIN_POPUP", 1);
-define("LOGIN_EMBEDED", 2);
-
-define("REGISTER_SIMPLE", 0);
-define("REGISTER_POPUP", 1);
-
-define("REMIND_SIMPLE", 0);
-define("REMIND_POPUP", 1);
-
-define("EXPORT_SIMPLE", 0);
-define("EXPORT_POPUP", 1);
-
-define("EXPORT_RAW", 0);
-define("EXPORT_FORMATTED", 1);
-define("EXPORT_BOTH", 2);
-
 
 define("titTABLE",0);
 define("titVIEW",1);
 define("titREPORT",2);
 define("titCHART",3);
-define("titDASHBOARD",4);
 
-define("TAB_TYPE_TAB", 0);
 define("TAB_TYPE_SECTION", 1);
-define("TAB_TYPE_STEP", 2);
 
 // for report lib
 define("REPORT_STEPPED", 0);
@@ -235,9 +192,6 @@ define("RIGHTS_PAGE", 5);
 define("MEMBERS_PAGE", 6);
 define("LIST_DASHBOARD", 7);
 define("LIST_DASHDETAILS", 8);
-define("MAP_DASHBOARD", 9);
-define("LIST_MASTER",10);
-define("PRINT_MASTER",11);
 
 define("REPORT_SIMPLE", 0);
 define("REPORT_POPUPDETAILS", 1);
@@ -254,10 +208,6 @@ define("CHART_DASHDETAILS", 4);
 define("DP_POPUP",0);
 define("DP_INLINE",1);
 define("DP_NONE",2);
-
-define("DL_SINGLE",0);
-define("DL_INDIVIDUAL",1);
-define("DL_NONE",2);
 
 define("SEARCH_SIMPLE", 0);
 define("SEARCH_LOAD_CONTROL", 1);
@@ -277,8 +227,6 @@ define("LT_QUERY", 2);
 define("ENCRYPTION_NONE", 0);
 define("ENCRYPTION_DB", 1);
 define("ENCRYPTION_PHP", 2);
-define("ENCRYPTION_ALG_DES", 1);
-define("ENCRYPTION_ALG_AES", 128);
 
 define("SETTING_TYPE_GLOBAL", "global");
 define("SETTING_TYPE_VIEW", "view");
@@ -342,7 +290,7 @@ define("FSST_HOURS", 2);
 define("FSST_DAYS", 3);
 define("FSST_MONTHS", 4);
 define("FSST_YEARS", 5);
-//sorting constants
+//sorting constants 
 define('SORT_BY_DISP_VALUE', 0);
 define('SORT_BY_DB_VALUE', 1);
 define('SORT_BY_GR_VALUE', 2);
@@ -352,7 +300,6 @@ define('SORT_BY_GR_VALUE', 2);
 define("gltHORIZONTAL", 0);
 define("gltVERTICAL", 1);
 define("gltCOLUMNS", 2);
-define("gltFLEXIBLE", 3);
 
 /* Define comstamts for hidden columns devices*/
 define("DESKTOP", 1);
@@ -369,8 +316,6 @@ define("DASHBOARD_REPORT", 2);
 define("DASHBOARD_RECORD", 3);
 define("DASHBOARD_SEARCH", 4);
 define("DASHBOARD_DETAILS", 5);
-define("DASHBOARD_MAP", 6);
-define("DASHBOARD_SNIPPET", 7);
 /**/
 
 /* Define message type constants */
@@ -383,127 +328,39 @@ define("PRINT_PAGE_HEIGHT", 900);
 define("PDF_PAGE_WIDTH", 750);
 define("PDF_PAGE_HEIGHT", 1060);
 
-/* Defined maps type */
-define("GOOGLE_MAPS", 0);
-define("OPEN_STREET_MAPS", 1);
-define("BING_MAPS", 2);
-
-/* Defined captcha type */
-define("FLASH_CAPTCHA", 0);
-define("RE_CAPTCHA", 1);
-
-/* Define 'after record added/edited actions' constants*/
-define("AA_TO_LIST", 0);
-define("AA_TO_ADD", 1);
-define("AA_TO_VIEW", 2);
-define("AA_TO_EDIT", 3);
-define("AA_TO_DETAIL_ADD", 4);
-define("AA_TO_DETAIL_LIST", 5);
-
-define("AE_TO_LIST", 0);
-define("AE_TO_EDIT", 1);
-define("AE_TO_VIEW", 2);
-define("AE_TO_NEXT_EDIT", 3);
-define("AE_TO_PREV_EDIT", 4);
-define("AE_TO_DETAIL_LIST", 5);
-/**/
-
-define('BOOTSTRAP_LAYOUT', 3);
-
-define('ICON_NONE', 0);
-define('ICON_FILE', 1);
-define('ICON_BOOTSTRAP_GLYPH', 2);
-
-
-
-define('WELCOME_MENU', "welcome_page");
-
-define('MENU_VERTICAL', "v");
-define('MENU_HORIZONTAL', "h");
-define('MENU_QUICKJUMP', "q");
-
-// paramsLogger types
-define('SSEARCH_PARAMS_TYPE', 1);
-define('CRESIZE_PARAMS_TYPE', 2);
-define('SHFIELDS_PARAMS_TYPE', 3);
-define('FORDER_PARAMS_TYPE', 4);
-
-// remind password method
-define('RPM_SEND', 'SEND');
-define('RPM_RESET', 'RESET');
-
-define('CONTEXT_GLOBAL', 0);	//	global context
-define('CONTEXT_PAGE', 1);		//	page where pageObject is available
-define('CONTEXT_BUTTON', 2);	// 	button or other AJAX event
-define('CONTEXT_LOOKUP', 3);	//	dependent lookup
-define('CONTEXT_ROW', 4);		// 	processing grid row on multiple-records page (list)
-
-define('BOTH_RECORDS', 0);
-define('NEXT_RECORD', 1);
-define('PREV_RECORD', 2);
-
 $globalSettings = array();
 $globalSettings["nLoginForm"] = 0;
-
 $globalSettings["nLoginMethod"] = 1;
 
-$twilioSID = "";
-$twilioAuth = "";
-$twilioNumber = "";
-$globalSettings["bTwoFactorAuth"] = false;
-
-
-
-
-
 $globalSettings["popupPagesLayoutNames"] = array();
+if(!isMobile())
+{
 						
 	;
-$globalSettings["popupPagesLayoutNames"]["login"] = "login_bootstrap";
-
-//mail settings
-$globalSettings["useBuiltInMailer"] = false;
-
-$globalSettings["useCustomSMTPSettings"] = false;
-
-$globalSettings["strSMTPUser"] = "";
-$globalSettings["strSMTPServer"] = "localhost";
-$globalSettings["strSMTPPort"] = "25";
-$globalSettings["strSMTPPassword"] = "";
-$globalSettings["strFromEmail"] = "";
-
-//
-
-
-$ajaxSearchStartsWith = true;
+$globalSettings["popupPagesLayoutNames"]["login"] = "login2";
+}
 
 
 
-
-$globalSettings["LandingPageType"] = 0;
-$globalSettings["LandingTable"] = "";
-$globalSettings["LandingPage"] = "";
-$globalSettings["LandingURL"] = "";
-
-$globalSettings["ProjectLogo"] = array();
-$globalSettings["ProjectLogo"]["English"] = "LICT";
 
 $globalSettings["createLoginPage"] = true;
+$globalSettings["isUseEncryption"] = 0;
+$globalSettings["encryptionKey"] = "";
 
 $globalSettings["apiGoogleMapsCode"] = "";
 
 
-
+$globalSettings["useBuiltInMailer"] = false;
 
 
 /**
- * If true then detail table name will be printed before detail table on the view page
+ * If true then detail table name will be printed before detail table on the view page 
  * @var {bool}
  */
 $globalSettings["printDetailTableName"] = true;
 
 /**
- * Alias for custom expression in display field in ListPage_Lookup
+ * Alias for custom expression in display field in ListPage_Lookup  
  * @var {string}
  */
 $globalSettings["dispFieldAlias"] = "rrdf1";
@@ -521,26 +378,20 @@ $globalSettings["handleSearchSuggestInLookup"] = true;
 $globalSettings["suggestStringSize"] = 40;
 
 /**
- * The number of seach suggests displayed
+ * The number of seach suggests displayed 
  */
 $globalSettings["searchSuggestsNumber"] = 10;
+
+/**
+ * If true then search suggest result will be handled in Lookup control
+ * @var {bool}
+ */
+$globalSettings["openPDFFileDirectly"] = true;
 
 $globalSettings["override"] = array();
 
 
-$globalSettings["mapProvider"]=0;
-
-$globalSettings["CaptchaSettings"] = array();
-$globalSettings["CaptchaSettings"]["type"] = 0;
-$globalSettings["CaptchaSettings"]["siteKey"] = "";
-$globalSettings["CaptchaSettings"]["secretKey"] = "";
-$globalSettings["CaptchaSettings"]["captchaPassesCount"] = "5";
-
-$globalSettings["CaptchaSettings"]["isEnabledOnLogin"] = false;
-$globalSettings["CaptchaSettings"]["isEnabledOnRegister"] = false;
-$globalSettings["CaptchaSettings"]["isEnabledOnRemind"] = false;
-
-$wr_pagestylepath = "OfficeOffice";
+$wr_pagestylepath = "BoldOrange";
 $wr_is_standalone = false;
 $WRAdminPagePassword = "";
 
@@ -548,7 +399,7 @@ $cLoginTable = "employees";
 $cDisplayNameField = "ename";
 $cUserNameField	= "email";
 $cPasswordField	= "password";
-$cUserGroupField = "email";
+$cUserGroupField = "";
 $cEmailField = "email";
 
 if ($cDisplayNameField == ''){
@@ -559,6 +410,7 @@ $cDisplayNameFieldType	= 200;
 $cUserNameFieldType	= 200;
 $cPasswordFieldType	= 200;
 $cEmailFieldType = 200;
+$useFlashChartLibrary = true;
 
 																																																																											$cUserNameFieldType	= 200;
 						$cEmailFieldType = 200;
@@ -569,34 +421,15 @@ $useAJAX = true;
 $suggestAllContent = true;
 
 $strLastSQL = "";
-$showCustomMarkerOnPrint = false;
+
 
 $mlang_messages = array();
 $mlang_charsets = array();
 
 
-
-
 $menuAssignments = array();
-$menuSelector = array();
-$menuSelector["page"] = "welcome_page";
-$menuSelector["id"] = "mainmenu";
-$menuSelector["name"] = "welcome_page";
-$menuSelector["horizontal"] = "0";
-$menuAssignments[] = $menuSelector;
 
 $menuStyles = array();
-
-$menuTreelikeFlags = array();
-$menuTreelikeFlags["main"] = 1;
-
-$menuDrillDownFlags = array();
-$menuDrillDownFlags["main"] = 0;
-
-$menuTreelikeFlags["welcome_page"] = 0;
-$menuDrillDownFlags["welcome_page"] = 0;
-
-
 
 // table captions
 $tableCaptions = array();
@@ -612,39 +445,26 @@ $tableCaptions["English"]["division"] = "Division";
 $tableCaptions["English"]["emp_status"] = "Emp Status";
 $tableCaptions["English"]["employees"] = "Employees";
 $tableCaptions["English"]["full_batch_details"] = "Full Batch Details";
-$tableCaptions["English"]["schedule_map"] = "Schedule Map";
 $tableCaptions["English"]["trainer"] = "Trainer";
 $tableCaptions["English"]["university"] = "University";
 $tableCaptions["English"]["university_view"] = "University View";
 $tableCaptions["English"][""] = "";
 $tableCaptions[""] = array();
 $tableCaptions[""][""] = "";
+$tableCaptions[""]["trainer"] = "Trainer";
 $tableCaptions[""]["batch"] = "Batch";
 
 
 $globalEvents = new class_GlobalEvents;
 $tableEvents = array();
-$dalTables = array();
-$tableinfo_cache = array();
 
-require_once( getabspath('classes/labels.php') );
-require_once( getabspath('classes/security.php') );
-require_once( getabspath("connections/dbfunctions_legacy.php") );
-require_once( getabspath("connections/ConnectionManager.php") );
-include(getabspath('classes/searchclause.php'));
-include(getabspath('classes/projectsettings.php'));
-include_once(getabspath('classes/runnerpage.php'));
-include_once(getabspath("classes/controls/ViewControl.php"));
-require_once( getabspath('classes/db.php') );
-require_once( getabspath('classes/context.php') );
-
-$contextStack = new RunnerContext;
-
+include(getabspath('classes/security.php'));
+include( getabspath("connections/dbfunctions_legacy.php") ); 
+include( getabspath("connections/ConnectionManager.php") ); 
 $cman = new ConnectionManager();
 
-$currentConnection = null;
 
-$mlang_defaultlang = getDefaultLanguage();
+$mlang_defaultlang = "English";
 
 
 
@@ -656,26 +476,19 @@ if(mlang_getcurrentlang()=="")
 {
 }
 
-$globalSettings["showDetailedError"] = true;
-
-
-// SearchClause::getSearchObject
-$_cachedSeachClauses = array();
-
-
 // default connection link #9875
 $conn = $cman->getDefault()->conn;
 
 $logoutPerformed = false;
 $scriptname = getFileNameFromURL();
-	if(!isLogged() && $scriptname!="login.php" && $scriptname!="remind.php" && $scriptname!="register.php" && $scriptname!="checkduplicates.php")
+	if(!isLogged() && $scriptname!="login.php" && $scriptname!="remind.php" && $scriptname!="register.php")
 {
 	Security::doGuestLogin();
 }
 
 
 
-$isGroupSecurity = true;
+$isGroupSecurity = false;
 
 $isUseRTEBasic = false;
 
@@ -685,18 +498,9 @@ $isUseRTEInnova = false;
 
 $caseInsensitiveUsername = 0;
 
-$menuNodesIndex=0;
-
-/**
- *	Sundry data the page classes want pass to their JS counterparts
- * 	TODO: Move proxy here
- *	
- *	$pagesData[<pageid>] = array( 	<key> => <value> 
- *									<key> => <value> ... )
- *					)
- */
-$pagesData = array();
-
+include(getabspath('classes/projectsettings.php'));
+include_once(getabspath('classes/runnerpage.php'));
+include_once(getabspath("classes/controls/ViewControl.php"));
 
 
 ?>

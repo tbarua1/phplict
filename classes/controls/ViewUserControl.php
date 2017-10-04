@@ -6,21 +6,20 @@ class ViewUserControl extends ViewControl
 	 * @var boolean
 	 */
 	public $userControl;
-	
-	public function initUserControl()
+	function initUserControl()
 	{		
 	}
 	
 	/**
 	 * Control settings filling
 	 */
-	public function init()
+	function init()
 	{
 		$this->userControl = true;
 		
 		// We need to add this dependencies ViewControl.js - for debug.
 		// For build we need to add RunnerAll.js
-		//$this->AddJSFile("include/runnerJS/controls/".$this->viewFormat.".js", 'include/runnerJS/viewControls/ViewControl.js');
+		//$this->AddJSFile("include/runnerJS/controls/".$this->viewFormat.".js", 'include/runnerJS/ViewControl.js');
 		
 	}
 

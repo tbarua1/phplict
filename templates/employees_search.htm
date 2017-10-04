@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,604 +12,585 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-search" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_searchpage}
-<div {$searchpage_chiddenattr} data-pageid="{$pageid}" data-container="searchpage" class="container    "> 
-
-
-
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-6 col-md-offset-3"> 
+{BEGIN container_search}
+<div class="rnr-c rnr-cv rnr-c-search">
 
 {BEGIN searchheader}
-	<h2 {$bssearchheader_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchheader" >{$pagetitlelabel employees search}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END searchheader}
+<div  class="rnr-brickcontents style2 rnr-b-srchheader {$brickclass_srchheader}"><span>	<h1>{$pagetitlelabel employees search}</h1>
+</span></div>{END searchheader}
 
 
-
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_searchpage}
+{BEGIN conditions_block}
+<div  class="rnr-brickcontents style1 rnr-b-srchconditions {$brickclass_srchconditions}">	<center>
+	<span class=fieldname>Criteria:&nbsp;</span>	
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$all_checkbox}><label for="all_checkbox"> All conditions</label>
+	&nbsp;&nbsp;&nbsp;
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$any_checkbox}><label for="any_checkbox"> Any condition</label>
+	</center></div>{END conditions_block}
 
 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$bssearchfields_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchfields" class="form-horizontal" role="form">
-<div class="container">
-	<div class="form-group">
-		<div class="col-md-12" >
-			&nbsp;
-		</div>
-	</div>
-</div>
+<div  class="rnr-brickcontents style1 rnr-b-srchfields {$brickclass_srchfields}"><table class="fieldGrid">
+	<tr>
+		<td>&nbsp;</td>
+		<td>NOT</td>
+		<td colspan=3>&nbsp; </td>
+	</tr>
+	<tr class="{$fielddispclass_eid}">
 	{BEGIN eid_fieldblock}		
-	<div class="container {$fielddispclass_eid}" data-fieldname="eid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_eid}">
-				{$label employees eid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_eid}
-			</div>
-			<div class="col-md-4" >
-				{$eid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$eid_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees eid}
+	</td>
+	<td>
+		<input type="checkbox" {$eid_notbox}>
+	</td>
+	<td>
+		{$searchtype_eid}
+	</td>
+	<td>
+		{$eid_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$eid_editcontrol1}&nbsp;
+	</td>
 {END eid_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_ename}">
 	{BEGIN ename_fieldblock}		
-	<div class="container {$fielddispclass_ename}" data-fieldname="ename">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_ename}">
-				{$label employees ename}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_ename}
-			</div>
-			<div class="col-md-4" >
-				{$ename_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$ename_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees ename}
+	</td>
+	<td>
+		<input type="checkbox" {$ename_notbox}>
+	</td>
+	<td>
+		{$searchtype_ename}
+	</td>
+	<td>
+		{$ename_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$ename_editcontrol1}&nbsp;
+	</td>
 {END ename_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_emppic}">
 	{BEGIN emppic_fieldblock}		
-	<div class="container {$fielddispclass_emppic}" data-fieldname="emppic">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_emppic}">
-				{$label employees emppic}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_emppic}
-			</div>
-			<div class="col-md-4" >
-				{$emppic_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$emppic_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees emppic}
+	</td>
+	<td>
+		<input type="checkbox" {$emppic_notbox}>
+	</td>
+	<td>
+		{$searchtype_emppic}
+	</td>
+	<td>
+		{$emppic_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$emppic_editcontrol1}&nbsp;
+	</td>
 {END emppic_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_designation}">
 	{BEGIN designation_fieldblock}		
-	<div class="container {$fielddispclass_designation}" data-fieldname="designation">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_designation}">
-				{$label employees designation}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_designation}
-			</div>
-			<div class="col-md-4" >
-				{$designation_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$designation_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees designation}
+	</td>
+	<td>
+		<input type="checkbox" {$designation_notbox}>
+	</td>
+	<td>
+		{$searchtype_designation}
+	</td>
+	<td>
+		{$designation_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$designation_editcontrol1}&nbsp;
+	</td>
 {END designation_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_whtasapp}">
 	{BEGIN whtasapp_fieldblock}		
-	<div class="container {$fielddispclass_whtasapp}" data-fieldname="whtasapp">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_whtasapp}">
-				{$label employees whtasapp}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_whtasapp}
-			</div>
-			<div class="col-md-4" >
-				{$whtasapp_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$whtasapp_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees whtasapp}
+	</td>
+	<td>
+		<input type="checkbox" {$whtasapp_notbox}>
+	</td>
+	<td>
+		{$searchtype_whtasapp}
+	</td>
+	<td>
+		{$whtasapp_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$whtasapp_editcontrol1}&nbsp;
+	</td>
 {END whtasapp_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_localnum}">
 	{BEGIN localnum_fieldblock}		
-	<div class="container {$fielddispclass_localnum}" data-fieldname="localnum">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_localnum}">
-				{$label employees localnum}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_localnum}
-			</div>
-			<div class="col-md-4" >
-				{$localnum_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$localnum_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees localnum}
+	</td>
+	<td>
+		<input type="checkbox" {$localnum_notbox}>
+	</td>
+	<td>
+		{$searchtype_localnum}
+	</td>
+	<td>
+		{$localnum_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$localnum_editcontrol1}&nbsp;
+	</td>
 {END localnum_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_skype}">
 	{BEGIN skype_fieldblock}		
-	<div class="container {$fielddispclass_skype}" data-fieldname="skype">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_skype}">
-				{$label employees skype}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_skype}
-			</div>
-			<div class="col-md-4" >
-				{$skype_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$skype_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees skype}
+	</td>
+	<td>
+		<input type="checkbox" {$skype_notbox}>
+	</td>
+	<td>
+		{$searchtype_skype}
+	</td>
+	<td>
+		{$skype_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$skype_editcontrol1}&nbsp;
+	</td>
 {END skype_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_dropbox}">
 	{BEGIN dropbox_fieldblock}		
-	<div class="container {$fielddispclass_dropbox}" data-fieldname="dropbox">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_dropbox}">
-				{$label employees dropbox}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_dropbox}
-			</div>
-			<div class="col-md-4" >
-				{$dropbox_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$dropbox_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees dropbox}
+	</td>
+	<td>
+		<input type="checkbox" {$dropbox_notbox}>
+	</td>
+	<td>
+		{$searchtype_dropbox}
+	</td>
+	<td>
+		{$dropbox_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$dropbox_editcontrol1}&nbsp;
+	</td>
 {END dropbox_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_email}">
 	{BEGIN email_fieldblock}		
-	<div class="container {$fielddispclass_email}" data-fieldname="email">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_email}">
-				{$label employees email}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_email}
-			</div>
-			<div class="col-md-4" >
-				{$email_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$email_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees email}
+	</td>
+	<td>
+		<input type="checkbox" {$email_notbox}>
+	</td>
+	<td>
+		{$searchtype_email}
+	</td>
+	<td>
+		{$email_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$email_editcontrol1}&nbsp;
+	</td>
 {END email_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_dob}">
 	{BEGIN dob_fieldblock}		
-	<div class="container {$fielddispclass_dob}" data-fieldname="dob">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_dob}">
-				{$label employees dob}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_dob}
-			</div>
-			<div class="col-md-4" >
-				{$dob_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$dob_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees dob}
+	</td>
+	<td>
+		<input type="checkbox" {$dob_notbox}>
+	</td>
+	<td>
+		{$searchtype_dob}
+	</td>
+	<td>
+		{$dob_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$dob_editcontrol1}&nbsp;
+	</td>
 {END dob_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_password}">
 	{BEGIN password_fieldblock}		
-	<div class="container {$fielddispclass_password}" data-fieldname="password">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_password}">
-				{$label employees password}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_password}
-			</div>
-			<div class="col-md-4" >
-				{$password_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$password_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees password}
+	</td>
+	<td>
+		<input type="checkbox" {$password_notbox}>
+	</td>
+	<td>
+		{$searchtype_password}
+	</td>
+	<td>
+		{$password_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$password_editcontrol1}&nbsp;
+	</td>
 {END password_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_passportno}">
 	{BEGIN passportno_fieldblock}		
-	<div class="container {$fielddispclass_passportno}" data-fieldname="passportno">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_passportno}">
-				{$label employees passportno}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_passportno}
-			</div>
-			<div class="col-md-4" >
-				{$passportno_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$passportno_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees passportno}
+	</td>
+	<td>
+		<input type="checkbox" {$passportno_notbox}>
+	</td>
+	<td>
+		{$searchtype_passportno}
+	</td>
+	<td>
+		{$passportno_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$passportno_editcontrol1}&nbsp;
+	</td>
 {END passportno_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_passport_expiry}">
 	{BEGIN passport_expiry_fieldblock}		
-	<div class="container {$fielddispclass_passport_expiry}" data-fieldname="passport_expiry">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_passport_expiry}">
-				{$label employees passport_expiry}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_passport_expiry}
-			</div>
-			<div class="col-md-4" >
-				{$passport_expiry_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$passport_expiry_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees passport_expiry}
+	</td>
+	<td>
+		<input type="checkbox" {$passport_expiry_notbox}>
+	</td>
+	<td>
+		{$searchtype_passport_expiry}
+	</td>
+	<td>
+		{$passport_expiry_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$passport_expiry_editcontrol1}&nbsp;
+	</td>
 {END passport_expiry_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_visa_no}">
 	{BEGIN visa_no_fieldblock}		
-	<div class="container {$fielddispclass_visa_no}" data-fieldname="visa_no">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_visa_no}">
-				{$label employees visa_no}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_visa_no}
-			</div>
-			<div class="col-md-4" >
-				{$visa_no_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$visa_no_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees visa_no}
+	</td>
+	<td>
+		<input type="checkbox" {$visa_no_notbox}>
+	</td>
+	<td>
+		{$searchtype_visa_no}
+	</td>
+	<td>
+		{$visa_no_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$visa_no_editcontrol1}&nbsp;
+	</td>
 {END visa_no_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_visa_expiry}">
 	{BEGIN visa_expiry_fieldblock}		
-	<div class="container {$fielddispclass_visa_expiry}" data-fieldname="visa_expiry">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_visa_expiry}">
-				{$label employees visa_expiry}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_visa_expiry}
-			</div>
-			<div class="col-md-4" >
-				{$visa_expiry_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$visa_expiry_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees visa_expiry}
+	</td>
+	<td>
+		<input type="checkbox" {$visa_expiry_notbox}>
+	</td>
+	<td>
+		{$searchtype_visa_expiry}
+	</td>
+	<td>
+		{$visa_expiry_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$visa_expiry_editcontrol1}&nbsp;
+	</td>
 {END visa_expiry_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_division_id}">
 	{BEGIN division_id_fieldblock}		
-	<div class="container {$fielddispclass_division_id}" data-fieldname="division_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_division_id}">
-				{$label employees division_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_division_id}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees division_id}
+	</td>
+	<td>
+		<input type="checkbox" {$division_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_division_id}
+	</td>
+	<td>
+		{$division_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$division_id_editcontrol1}&nbsp;
+	</td>
 {END division_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_doj}">
 	{BEGIN doj_fieldblock}		
-	<div class="container {$fielddispclass_doj}" data-fieldname="doj">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_doj}">
-				{$label employees doj}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_doj}
-			</div>
-			<div class="col-md-4" >
-				{$doj_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$doj_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees doj}
+	</td>
+	<td>
+		<input type="checkbox" {$doj_notbox}>
+	</td>
+	<td>
+		{$searchtype_doj}
+	</td>
+	<td>
+		{$doj_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$doj_editcontrol1}&nbsp;
+	</td>
 {END doj_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_dor}">
 	{BEGIN dor_fieldblock}		
-	<div class="container {$fielddispclass_dor}" data-fieldname="dor">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_dor}">
-				{$label employees dor}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_dor}
-			</div>
-			<div class="col-md-4" >
-				{$dor_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$dor_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees dor}
+	</td>
+	<td>
+		<input type="checkbox" {$dor_notbox}>
+	</td>
+	<td>
+		{$searchtype_dor}
+	</td>
+	<td>
+		{$dor_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$dor_editcontrol1}&nbsp;
+	</td>
 {END dor_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_status_id}">
 	{BEGIN status_id_fieldblock}		
-	<div class="container {$fielddispclass_status_id}" data-fieldname="status_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_status_id}">
-				{$label employees status_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_status_id}
-			</div>
-			<div class="col-md-4" >
-				{$status_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$status_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees status_id}
+	</td>
+	<td>
+		<input type="checkbox" {$status_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_status_id}
+	</td>
+	<td>
+		{$status_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$status_id_editcontrol1}&nbsp;
+	</td>
 {END status_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_experence}">
 	{BEGIN experence_fieldblock}		
-	<div class="container {$fielddispclass_experence}" data-fieldname="experence">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_experence}">
-				{$label employees experence}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_experence}
-			</div>
-			<div class="col-md-4" >
-				{$experence_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$experence_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees experence}
+	</td>
+	<td>
+		<input type="checkbox" {$experence_notbox}>
+	</td>
+	<td>
+		{$searchtype_experence}
+	</td>
+	<td>
+		{$experence_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$experence_editcontrol1}&nbsp;
+	</td>
 {END experence_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_nationality}">
 	{BEGIN nationality_fieldblock}		
-	<div class="container {$fielddispclass_nationality}" data-fieldname="nationality">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_nationality}">
-				{$label employees nationality}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_nationality}
-			</div>
-			<div class="col-md-4" >
-				{$nationality_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$nationality_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees nationality}
+	</td>
+	<td>
+		<input type="checkbox" {$nationality_notbox}>
+	</td>
+	<td>
+		{$searchtype_nationality}
+	</td>
+	<td>
+		{$nationality_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$nationality_editcontrol1}&nbsp;
+	</td>
 {END nationality_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_qulification}">
 	{BEGIN qulification_fieldblock}		
-	<div class="container {$fielddispclass_qulification}" data-fieldname="qulification">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_qulification}">
-				{$label employees qulification}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_qulification}
-			</div>
-			<div class="col-md-4" >
-				{$qulification_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$qulification_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees qulification}
+	</td>
+	<td>
+		<input type="checkbox" {$qulification_notbox}>
+	</td>
+	<td>
+		{$searchtype_qulification}
+	</td>
+	<td>
+		{$qulification_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$qulification_editcontrol1}&nbsp;
+	</td>
 {END qulification_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_skillset}">
 	{BEGIN skillset_fieldblock}		
-	<div class="container {$fielddispclass_skillset}" data-fieldname="skillset">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_skillset}">
-				{$label employees skillset}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_skillset}
-			</div>
-			<div class="col-md-4" >
-				{$skillset_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$skillset_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees skillset}
+	</td>
+	<td>
+		<input type="checkbox" {$skillset_notbox}>
+	</td>
+	<td>
+		{$searchtype_skillset}
+	</td>
+	<td>
+		{$skillset_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$skillset_editcontrol1}&nbsp;
+	</td>
 {END skillset_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_cid}">
 	{BEGIN cid_fieldblock}		
-	<div class="container {$fielddispclass_cid}" data-fieldname="cid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_cid}">
-				{$label employees cid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_cid}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees cid}
+	</td>
+	<td>
+		<input type="checkbox" {$cid_notbox}>
+	</td>
+	<td>
+		{$searchtype_cid}
+	</td>
+	<td>
+		{$cid_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$cid_editcontrol1}&nbsp;
+	</td>
 {END cid_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_reset_token}">
 	{BEGIN reset_token_fieldblock}		
-	<div class="container {$fielddispclass_reset_token}" data-fieldname="reset_token">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_reset_token}">
-				{$label employees reset_token}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_reset_token}
-			</div>
-			<div class="col-md-4" >
-				{$reset_token_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$reset_token_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees reset_token}
+	</td>
+	<td>
+		<input type="checkbox" {$reset_token_notbox}>
+	</td>
+	<td>
+		{$searchtype_reset_token}
+	</td>
+	<td>
+		{$reset_token_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$reset_token_editcontrol1}&nbsp;
+	</td>
 {END reset_token_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_reset_date}">
 	{BEGIN reset_date_fieldblock}		
-	<div class="container {$fielddispclass_reset_date}" data-fieldname="reset_date">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_reset_date}">
-				{$label employees reset_date}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_reset_date}
-			</div>
-			<div class="col-md-4" >
-				{$reset_date_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$reset_date_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label employees reset_date}
+	</td>
+	<td>
+		<input type="checkbox" {$reset_date_notbox}>
+	</td>
+	<td>
+		{$searchtype_reset_date}
+	</td>
+	<td>
+		{$reset_date_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$reset_date_editcontrol1}&nbsp;
+	</td>
 {END reset_date_fieldblock}
-</div>
+	</tr>
+
+</table></div>
 
 
+{BEGIN searchbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-srchbuttons {$brickclass_srchbuttons}">{BEGIN search_button}
+<a href="#" class="rnr-button main" {$searchbutton_attrs}>Search</a>
+{END search_button} 
+{BEGIN reset_button}
+<a href="#" class="rnr-button" {$resetbutton_attrs}>Reset</a>
+{END reset_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}</div>{END searchbuttons}
 
 
 </div>
 {END container_fields}
 
-
-
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container form-horizontal   "> 
-
-
-
-
-{BEGIN container_bbuttons}
-<div {$bbuttons_chiddenattr} data-pageid="{$pageid}" data-container="bbuttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-10 col-md-offset-2"> 
-
-{BEGIN searchbuttons}
-{BEGIN search_button}
-<button class="btn btn-primary" {$searchbutton_attrs}>Search</button>
-{END search_button} 
-{BEGIN reset_button}
-<button class="btn btn-default" {$resetbutton_attrs}>Reset</button>
-{END reset_button}
-{BEGIN back_button}
-<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{END searchbuttons}
-
+</div>
 
 
 </div>
-{END container_leftbuttons}
-
-
-
-
-
-
-</div>
-{END container_bbuttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
+{END container_search}
 
 
 		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 			</div>
-			<div class="bs-left" {$blockattr_left}>
+			<div class="rnr-center {$blockclass_center}">
 				
 			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
-		<DIV class="bs-bottom">
-        
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
 		</div>
+	</div>
+		
 		{$footer}
 	{END body}
 	</body>

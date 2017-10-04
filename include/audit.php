@@ -1,7 +1,7 @@
 <?php
 class AuditTrailTable
 {
-	var $logTableName="project1_audit";
+	var $logTableName="";
 	var $params;
 	
 	var $strLogin="login";
@@ -33,7 +33,7 @@ class AuditTrailTable
 	 */
 	protected $connection;
 	
-	function __construct()
+	function AuditTrailTable()
 	{
 		global $cman;
 		
@@ -343,10 +343,6 @@ class AuditTrailTable
 		{
 			return false;
 		}
-		if($table=="schedule_map")
-		{
-			return false;
-		}
 		if($table=="trainer")
 		{
 			return false;
@@ -408,7 +404,7 @@ class AuditTrailFile
 	var $params;
 	var $maxFieldLength = 300;
 	
-	function __construct()
+	function AuditTrailFile()
 	{
 		$userid="";
 		if(@$_SESSION["UserID"])
@@ -454,6 +450,7 @@ class AuditTrailFile
 				}
 			}
 
+			$fp=$this->CreateLogFile();
 			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strAdd.chr(9).$key;
 			$str_add="";
 			if($this->logValueEnable($str_table))
@@ -478,7 +475,11 @@ class AuditTrailFile
 			else
 				$str_add.=$str."\r\n";
 			
-			$this->writeToLogFile( $str_add );
+			if($fp)
+			{
+				fputs($fp,$str_add);
+				fclose($fp);
+			}
 		}
 		return $retval;
     }
@@ -504,6 +505,7 @@ class AuditTrailFile
 				}
 			}
 
+			$fp=$this->CreateLogFile();
 			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strEdit.chr(9).$key;
 			$putsValue=true;
 			$str_add="";
@@ -551,7 +553,11 @@ class AuditTrailFile
 			}
 			else
 				$str_add.=$str."\r\n";
-			$this->writeToLogFile( $str_add );
+			if($fp)
+			{
+				fputs($fp,$str_add);
+				fclose($fp);
+			}
 		}
 		return $retval;
     }
@@ -577,6 +583,7 @@ class AuditTrailFile
 					$key.=$val;
 				}
 			}
+			$fp=$this->CreateLogFile();
 			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$this->params[0].chr(9).$this->params[1].chr(9).$table.chr(9).$this->strDelete.chr(9).$key;
 			$str_add="";
 			if($this->logValueEnable($str_table))
@@ -592,37 +599,46 @@ class AuditTrailFile
 						if(strlen($v)>$this->maxFieldLength)
 							$v=runner_substr($v,0,$this->maxFieldLength);
 					}
-					$str_add.=$str.chr(9).$idx.chr(9).$v."\r\n";
+					if($fp)
+						$str_add.=$str.chr(9).$idx.chr(9).$v."\r\n";
 				}
 			}
 			else
 				$str_add=$str."\r\n";
 				
-			$this->writeToLogFile( $str_add );
+			if($fp)
+			{
+				fputs($fp,$str_add);
+				fclose($fp);
+			}
 		}
 		return $retval;
     }
 	
-	function writeToLogFile( $str )
+	function CreateLogFile()
 	{
 		$p=strrpos($this->logfile,".");
 		$logfileName=runner_substr($this->logfile,0,$p);
 		$logfileExt=runner_substr($this->logfile,$p+1, strlen($this->logfile)-1);
 		$tn=$logfileName."_".format_datetime_custom(db2time(now()),"yyyyMMdd").".".$logfileExt;
 		
-		$fullname = getabspath($tn);
+		$fulname = getabspath($tn);
 		$fsize = 0;
-		if (file_exists($fullname)){
-			$fsize = filesize($fullname);
+		if (file_exists($fulname)){
+			$fsize = filesize($fulname);
 		}
-		$str_to_append = "";
-		if( !$fsize )
-		{
-			$str_to_append = $this->columnDate.chr(9).$this->columnTime.chr(9).$this->columnIP.chr(9).$this->columnUser.chr(9).$this->columnTable.chr(9).$this->columnAction.chr(9).$this->columnKey.chr(9).$this->columnField.chr(9).$this->columnOldValue.chr(9).$this->columnNewValue."\r\n";
-		}
-		$str_to_append .= $str;
-		append_to_file( $fullname, $str_to_append );
 		
+		$fp=@fopen($fulname,"a");
+		if($fp)
+		{
+			if(!filesize($fulname))
+			{
+				$str=$this->columnDate.chr(9).$this->columnTime.chr(9).$this->columnIP.chr(9).$this->columnUser.chr(9).$this->columnTable.chr(9).$this->columnAction.chr(9).$this->columnKey.chr(9).$this->columnField.chr(9).$this->columnOldValue.chr(9).$this->columnNewValue."\r\n";
+				if($fp)
+					fputs($fp,$str);
+			}			
+		}
+		return $fp;
 	}
 	
 	function LogAddEvent($message,$description="",$str_table="")
@@ -635,8 +651,13 @@ class AuditTrailFile
 			$retval=$globalEvents->OnAuditLog($message, $this->params, $table, $arr, $arr, $arr);
 		if($retval)
 		{
+			$fp=$this->CreateLogFile();
 			$str=format_datetime_custom(db2time(now()),"MMM dd,yyyy").chr(9).format_datetime_custom(db2time(now()),"HH:mm:ss").chr(9).$params[0].chr(9).$params[1].chr(9).$table.chr(9).$message.chr(9).$description."\r\n";
-			$this->writeToLogFile( $str );
+			if($fp)
+			{
+				fputs($fp,$str);
+				fclose($fp);
+			}
 		}
 		return $retval;
     }
@@ -695,10 +716,6 @@ class AuditTrailFile
 			return false;
 		}
 		if($table=="full_batch_details")
-		{
-			return false;
-		}
-		if($table=="schedule_map")
 		{
 			return false;
 		}

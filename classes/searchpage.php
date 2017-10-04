@@ -4,33 +4,39 @@ class SearchPage extends RunnerPage
 	public $searchControllerId;
 	public $searchControlBuilder;
 	public $tableSettings = array();
-	
 	public $reportName;
 	public $chartName;
-	public $layoutVersion;
-	
-	public $needSettings = false;
+	public $axis_x;
+	public $axis_y;
+	public $field;
+	public $group_func;
 	
 	/**
 	 * The field that is to be loaded in the SEARCH_LOAD_CONTROL mode
 	 */
 	public $ctrlField;
 
-	public $extraPageParams;
+	/**
+	 * The name of the dashboard the List is displayed on
+	 * It's set up correctly in dash mode only
+	 */
+	public $dashElementName = "";	
 	
+	/**
+	 * The corresponding dashboard name
+	 * It's set up correctly in dash mode only	 
+	 */
+	public $dashTName = "";
 	
 	/**
 	 * @constructor
 	 */
-	function __construct(&$params)
+	function SearchPage(&$params)
 	{
-		parent::__construct($params);
+		parent::RunnerPage($params);
 		
 		$this->formBricks["header"] = "searchheader";
 		$this->formBricks["footer"] = "searchbuttons";
-		
-		if( count( $this->extraPageParams ) )
-			$this->jsSettings["tableSettings"][ $this->tName ]["extraSearchPageParams"] = $this->extraPageParams;
 	}
 		
 	public function init() 
@@ -63,12 +69,12 @@ class SearchPage extends RunnerPage
 		$resArr['control2'] = trim($this->xt->call_func($ctrlBlockArr['searchcontrol1']));
 		$resArr['comboHtml'] = trim($ctrlBlockArr['searchtype']);
 		$resArr['delButt'] = trim($ctrlBlockArr['delCtrlButt']);
-		$resArr['delButtId'] = trim( $this->searchControlBuilder->getDelButtonId( $this->ctrlField, $this->id ) );
+		$resArr['delButtId'] = trim($this->searchControlBuilder->getDelButtonId($this->ctrlField, $this->id));
 		$resArr['divInd'] = trim($this->id);	
-		$resArr['fLabel'] = GetFieldLabel( GoodFieldName($this->tName), GoodFieldName( $this->ctrlField ) );
+		$resArr['fLabel'] = GetFieldLabel(GoodFieldName($this->tName),GoodFieldName($this->ctrlField));
 		$resArr['ctrlMap'] = $this->controlsMap['controls'];
 		
-		if( $this->needSettings == 'true' )
+		if (postvalue('isNeedSettings') == 'true')
 		{
 			$this->fillSettings();
 			$resArr['settings'] = $this->jsSettings;
@@ -102,10 +108,10 @@ class SearchPage extends RunnerPage
 		$searchRadio = $this->searchControlBuilder->getSearchRadio();
 		$this->xt->assign_section("all_checkbox_label", $searchRadio['all_checkbox_label'][0], $searchRadio['all_checkbox_label'][1]);
 		$this->xt->assign_section("any_checkbox_label", $searchRadio['any_checkbox_label'][0], $searchRadio['any_checkbox_label'][1]);
-		$this->xt->assignbyref("all_checkbox", $searchRadio['all_checkbox']);
-		$this->xt->assignbyref("any_checkbox", $searchRadio['any_checkbox']);
+		$this->xt->assignbyref("all_checkbox",$searchRadio['all_checkbox']);
+		$this->xt->assignbyref("any_checkbox",$searchRadio['any_checkbox']);
 	}	
-
+	
 	protected function prepareFields()
 	{
 		foreach( $this->pSet->getAdvSearchFields() as $field )
@@ -119,7 +125,7 @@ class SearchPage extends RunnerPage
 	
 			$srchFields = $this->searchClauseObj->getSearchCtrlParams( $field );
 			$firstFieldParams = array();
-			if( count( $srchFields ) )
+			if (count($srchFields))
 			{
 				$firstFieldParams = $srchFields[0];
 			}
@@ -128,15 +134,9 @@ class SearchPage extends RunnerPage
 				$firstFieldParams['fName'] = $field;
 				$firstFieldParams['eType'] = '';
 				$firstFieldParams['value1'] = $this->pSet->getDefaultValue( $field );
+				$firstFieldParams['opt'] = '';
 				$firstFieldParams['value2'] = '';
 				$firstFieldParams['not'] = false;
-				$firstFieldParams['opt'] = $this->pSet->getDefaultSearchOption( $field );
-				$firstFieldParams['not'] = false;
-				if ( substr($firstFieldParams['opt'], 0, 4) == 'NOT ' )
-				{
-					$firstFieldParams['opt'] = substr($firstFieldParams['opt'], 4);
-					$firstFieldParams['not'] = true;
-				}
 			}
 	// create control	
 			$ctrlBlockArr = $this->searchControlBuilder->buildSearchCtrlBlockArr($this->id, $firstFieldParams['fName'], 0, $firstFieldParams['opt'], $firstFieldParams['not'], false, $firstFieldParams['value1'], $firstFieldParams['value2']);	
@@ -146,19 +146,10 @@ class SearchPage extends RunnerPage
 			}
 			$srchTypeFull = $this->searchControlBuilder->getCtrlSearchType($firstFieldParams['fName'], $this->id, 0, $firstFieldParams['opt'], $firstFieldParams['not'], true, true);
 			
-			if( $this->is508 )
-				$this->xt->assign_section( $gfield . "_label", "<label for=\"". $this->getInputElementId( $field, $this->pSet )."\">", "</label>");
+			if(isEnableSection508())
+				$this->xt->assign_section( $gfield . "_label","<label for=\"". $this->getInputElementId( $field, $this->pSet )."\">","</label>");
 			else 
 				$this->xt->assign( $gfield . "_label", true);
-
-			if ( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			{			
-				$firstElementId = $this->getControl($field, $this->id)->getFirstElementId();
-				if ( $firstElementId )
-				{
-					$this->xt->assign("labelfor_" . $gfield, $firstElementId);
-				}
-			}
 			
 			$this->xt->assign( $gfield . "_fieldblock", true);
 			$this->xt->assignbyref( $gfield . "_editcontrol", $ctrlBlockArr['searchcontrol']);
@@ -168,58 +159,44 @@ class SearchPage extends RunnerPage
 			// create search type select
 			$this->xt->assign("searchtype_" . $gfield, $ctrlBlockArr['searchtype']);
 			$this->xt->assign("searchtypefull_" . $gfield, $srchTypeFull);
-			
-			$isFieldNeedSecCtrl = $this->searchControlBuilder->isNeedSecondCtrl( $field );
+			$isFieldNeedSecCtrl = $this->searchControlBuilder->isNeedSecondCtrl($field);
 			$ctrlInd = 0;
-			if( $isFieldNeedSecCtrl )
+			if ($isFieldNeedSecCtrl)
 			{
-				$this->controlsMap["search"]["searchBlocks"][] = array( 'fName'=> $field , 'recId'=> $this->id, 'ctrlsMap'=> array(0=> $ctrlInd, 1=> ($ctrlInd + 1)) );
+				$this->controlsMap["search"]["searchBlocks"][] = array('fName'=> $field , 'recId'=>$this->id, 'ctrlsMap'=>array(0=>$ctrlInd, 1=>($ctrlInd+1)));
 				$ctrlInd+=2;
 			}
 			else
 			{
-				$this->controlsMap["search"]["searchBlocks"][] = array( 'fName'=> $field , 'recId'=> $this->id, 'ctrlsMap'=> array(0=> $ctrlInd) );			
+				$this->controlsMap["search"]["searchBlocks"][] = array('fName'=> $field , 'recId'=>$this->id, 'ctrlsMap'=>array(0=>$ctrlInd));			
 				$ctrlInd++;
 			}	
 		}
 	}
 
-	
 	protected function doCommonAssignments()
 	{
 		$this->xt->assign( "id", $this->id );
-
-		if ( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			if ( $this->mode === SEARCH_SIMPLE )
-			{
-				$this->headerCommonAssign();
-			}
-			else
-			{
-				$this->xt->assign("menu_chiddenattr", "data-hidden" );
-			}
-		}
 		
 		if( $this->mode !== SEARCH_DASHBOARD ) 
 			$this->assignBody();
 		
 		$this->xt->assign("contents_block", true);
-		$this->xt->assign("conditions_block", true);
-		$this->xt->assign("search_button", true);
-		$this->xt->assign("reset_button", true);
+		$this->xt->assign("conditions_block",true);
+		$this->xt->assign("search_button",true);
+		$this->xt->assign("reset_button",true);
 		
 	
-		$this->xt->assign("searchbutton_attrs", "id=\"searchButton".$this->id."\"");
-		$this->xt->assign("resetbutton_attrs", "id=\"resetButton".$this->id."\"");
+		$this->xt->assign("searchbutton_attrs","id=\"searchButton".$this->id."\"");
+		$this->xt->assign("resetbutton_attrs","id=\"resetButton".$this->id."\"");
 		
 		$this->xt->assign( "searchheader", true );
 		$this->xt->assign( "searchbuttons", true );
 		
 		if( $this->mode !== SEARCH_DASHBOARD ) 
 		{ 
-			$this->xt->assign("back_button", true);
-			$this->xt->assign("backbutton_attrs", "id=\"backButton".$this->id."\"");
+			$this->xt->assign("back_button",true);
+			$this->xt->assign("backbutton_attrs","id=\"backButton".$this->id."\"");
 		}
 		
 		//	webreports assignments
@@ -228,11 +205,19 @@ class SearchPage extends RunnerPage
 			$this->xt->assign( "dynamic", "true" );
 			$this->xt->assign( "rname", $this->reportName );
 		}
-		
 		if( $this->chartName )
 		{
 			$this->xt->assign( "dynamic", "true" );
 			$this->xt->assign( "cname", $this->chartName );
+		}
+		//	crosstab report
+		if ( $this->axis_x ) //fix it! remove the block or add the page's id to id attrs
+		{
+			$xtCrosseElem = "<input type=\"hidden\" id=\"select_group_x\" value=\"".$this->axis_x."\">
+							<input type=\"hidden\" id=\"select_group_y\" value=\"".$this->axis_y."\">
+							<input type=\"hidden\" id=\"select_data\" value=\"".$this->field."\">
+							<input type=\"hidden\" id=\"group_func_hidden\" value=\"".$this->group_func."\">";
+			$this->xt->assign("CrossElem",$xtCrosseElem);
 		}
 	}
 	
@@ -240,49 +225,19 @@ class SearchPage extends RunnerPage
 	{
 		$templateFile = $this->templatefile;
 		if( $this->eventsObject->exists("BeforeShowSearch") )
-			$this->eventsObject->BeforeShowSearch( $this->xt, $templateFile, $this );
+			$this->eventsObject->BeforeShowSearch($this->xt, $templateFile, $this);
 		
-		if( $this->mode == SEARCH_SIMPLE )
+		if( $this->mode == SEARCH_SIMPLE)
 		{
 			$this->display($templateFile);
 			return;
 		}
 		
-		$this->xt->assign("header", false);
-		$this->xt->assign("footer", false);
+		$this->xt->unassign("header");
+		$this->xt->unassign("footer");
 		$this->xt->assign("body", $this->body);
 		
 		$this->displayAJAX($templateFile, $this->flyId + 1);
-	}
-	
-	function getLayoutVersion() 
-	{
-		if( $this->layoutVersion )
-			return $this->layoutVersion;
-			
-		return parent::getLayoutVersion();
-	}
-	
-	/**
-	 * @return Array
-	 */
-	public static function getExtraPageParams()
-	{
-		$prms = array();
-		
-		//crosstable params
-		$prms["x"] = postvalue("x");
-		$prms["y"] = postvalue("y");
-		$prms["data"] = postvalue("data");
-		
-		if( !strlen( $prms["x"] ) &&  !strlen( $prms["y"] ) && !strlen( $prms["data"] ) )
-			return array();
-			
-		$prms["op"] = postvalue("op");
-		$prms["xtype"] = postvalue("xtype");
-		$prms["ytype"] = postvalue("ytype");	
-	
-		return $prms;
 	}
 }
 ?>

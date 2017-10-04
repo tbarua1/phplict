@@ -15,7 +15,7 @@ class Button
 	
 	var $nextInd;
 	
-	function __construct(&$params)
+	function Button(&$params)
 	{
 		RunnerApply($this, $params);
 		
@@ -39,10 +39,8 @@ class Button
 			else
 				$this->currentKeys = $this->keys;
 		}
-		if($this->location == PAGE_LIST) {
+		if($this->location == PAGE_LIST)
 			$this->selectedKeys = $this->keys;
-			$this->currentKeys = $this->keys;
-		}
 		
 		if($this->location == PAGE_EDIT || $this->location == PAGE_VIEW)
 			$this->currentKeys = $this->keys;
@@ -123,7 +121,6 @@ class Button
 	 */
 	function getRecordData()
 	{
-
 		global $gSettings, $gQuery, $cipherer, $strTableName, $cman;
 	
 		if($this->location!=PAGE_EDIT && $this->location!=PAGE_VIEW && $this->location!=PAGE_LIST && $this->location!='grid' && !$next)
@@ -140,21 +137,54 @@ class Button
 		else
 			$keys = $this->currentKeys;
 		
-		$strSQL = $gQuery->buildSQL_default( array( KeyWhere($keys), SecuritySQL("Search") ) );
+		$strWhereClause = KeyWhere($keys);
+		if($gSettings->getAdvancedSecurityType()!=ADVSECURITY_ALL)
+		{
+			if($this->location == PAGE_EDIT)
+				$strWhereClause = whereAdd($strWhereClause, SecuritySQL("Edit"));
+			else
+				$strWhereClause = whereAdd($strWhereClause, SecuritySQL("Search"));
+		}
+		
+		$strSQL = $gQuery->gSQLWhere($strWhereClause);
+		
+		$strSQLbak = $strSQL;
+		
+		if($strSQLbak == $strSQL)
+			$strSQL = $gQuery->gSQLWhere($strWhereClause);
+		
 		LogInfo($strSQL);
 		
 		$data = $cipherer->DecryptFetchedArray( $connection->query( $strSQL )->fetchAssoc() );
-		return $data;
-	}
-
-	function getMasterData( $masterTable )
-	{
-		if ( isset($_SESSION[ $masterTable . "_masterRecordData" ]) )
+		$res = array(); // .net compatibility
+		foreach($data as $fName => $val)
 		{
-			return $_SESSION[ $masterTable . "_masterRecordData" ];
+			$res[$fName] = $val;
+			$isBlobField = false;
+			if($this->location == PAGE_EDIT)
+			{
+				$editFormat = $gSettings->getEditFormat($fName);
+				if($editFormat == EDIT_FORMAT_DATABASE_FILE || $editFormat==EDIT_FORMAT_DATABASE_IMAGE)
+					$isBlobField = true;
+				
+				if(@$_POST["a"]!= "edited" && $gSettings->getAutoUpdateValue($fName))
+					$res[$fName] = $gSettings->getAutoUpdateValue($fName);
+			}
+			else
+			{
+				$viewFormat = $gSettings->getViewFormat($fName);
+				if($viewFormat == FORMAT_DATABASE_FILE || $viewFormat == FORMAT_DATABASE_IMAGE || $viewFormat == FORMAT_FILE_IMAGE)
+					$isBlobField = true;
+			}
+			if($isBlobField)
+			{
+				if($data[$fName])
+					$res[$fName] = true;
+				else
+					$res[$fName] = false;
+			}
 		}
-		
-		return false;
+		return $res;
 	}
 }
 ?>

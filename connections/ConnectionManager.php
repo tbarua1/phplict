@@ -31,7 +31,7 @@ class ConnectionManager
 	/**
 	 * @constructor
 	 */
-	function __construct()
+	function ConnectionManager()
 	{
 		$this->_setConnectionsData();
 		$this->_setTablesConnectionIds();
@@ -92,7 +92,7 @@ class ConnectionManager
 	 */
 	public function getDefault()
 	{
-		return $this->byId( "test_at_node3907_env_7428455_diadem_cloud" );
+		return $this->byId( "mydb_at_localhost" );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class ConnectionManager
 	 */	
 	public function getForLogin()
 	{
-		return $this->byId( "test_at_node3907_env_7428455_diadem_cloud" );
+		return $this->byId( "mydb_at_localhost" );
 	}
 	
 	/**
@@ -172,46 +172,19 @@ class ConnectionManager
 
 			case "mssql":
 			case "compact":
-				if( useMSSQLWinConnect() )
-				{
-					include_once getabspath("connections/MSSQLWinConnection.php");
-					return new MSSQLWinConnection( $data );
-				}
 				if( isSqlsrvExtLoaded() )
 				{
 					include_once getabspath("connections/MSSQLSrvConnection.php");	
 					return new MSSQLSrvConnection( $data );
 				}
+				if( useMSSQLWinConnect() )
+				{
+					include_once getabspath("connections/MSSQLWinConnection.php");
+					return new MSSQLWinConnection( $data );
+				}
 				
-				if( function_exists("mssql_connect") ) {
-					include_once getabspath("connections/MSSQLUnixConnection.php");
-					return new MSSQLUnixConnection( $data );			
-				}
-
-				if( class_exists("PDO") ) {
-					include_once getabspath("connections/PDOConnection.php");
-					$drivers = pdo_drivers();
-					if( in_array( "sqlsrv", $drivers) )
-					{
-						$data["PDOString"] = "sqlsrv:Server=" . $data["connInfo"][0] . ";Database=" . $data["connInfo"][3];
-						$data["PDOUser"] = $data["connInfo"][1];
-						$data["PDOPass"] = $data["connInfo"][2];
-						return new PDOConnection( $data );			
-					}
-					if( in_array( "dblib", $drivers) )
-					{
-						$data["PDOString"] = "dblib:host=" . $data["connInfo"][0] . ";dbname=" . $data["connInfo"][3];
-						$data["PDOUser"] = $data["connInfo"][1];
-						$data["PDOPass"] = $data["connInfo"][2];
-						return new PDOConnection( $data );			
-					}
-				}
-				echo "No SQL Server driver found in your PHP settings.";
-				if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-					echo "<br>To enable SQL Server support add the following line to php.ini file:";
-					echo "<br>extension=php_com_dotnet.dll";
-				}
-				exit();
+				include_once getabspath("connections/MSSQLUnixConnection.php");
+				return new MSSQLUnixConnection( $data );			
 
 			case "msaccess":
 			case "odbc":
@@ -246,22 +219,9 @@ class ConnectionManager
 			case "sqlite":
 				include_once getabspath("connections/SQLite3Connection.php");
 				return new SQLite3Connection( $data );
-			case "pdo":
-				include_once getabspath("connections/PDOConnection.php");
-				return new PDOConnection( $data );
 		}
 	}
-
-	public function getConectionsIds()
-	{
-		$connectionsIds = array();
-		foreach ($this->_connectionsData as $connId => $data) {
-			$connectionsIds[] = $connId;
-		}
-
-		return $connectionsIds;
-	}
-
+	
 	/**
 	 * Set the data representing the project's 
 	 * db connection properties
@@ -275,37 +235,34 @@ class ConnectionManager
 		
 		$data = array();
 		$data["dbType"] = 0;
-		$data["connId"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$data["connName"] = "test at node3907-env-7428455.diadem.cloud";
+		$data["connId"] = "mydb_at_localhost";
+		$data["connName"] = "mydb at localhost";
 		$data["connStringType"] = "mysql";
-		$data["connectionString"] = "mysql;node3907-env-7428455.diadem.cloud;root;;;test;;1"; //currently unused
-
-		$this->_connectionsIdByName["test at node3907-env-7428455.diadem.cloud"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$data["connectionString"] = "mysql;localhost;root;aaaAAA123;;mydb;;1"; //currently unused
+		
+		$this->_connectionsIdByName["mydb at localhost"] = "mydb_at_localhost";
 		
 		$data["connInfo"] = array();
 		$data["ODBCUID"] = "root";
-		$data["ODBCPWD"] = "";
+		$data["ODBCPWD"] = "aaaAAA123";
 		$data["leftWrap"] = "`";
 		$data["rightWrap"] = "`";
 		
 		$data["DBPath"] = "db"; //currently unused	
 		$data["useServerMapPath"] = 1; //currently unused
 		
-		$data["connInfo"][0] = "node3907-env-7428455.diadem.cloud";
-		$data["connInfo"][1] = "root";
-		$data["connInfo"][2] = "";
-		$data["connInfo"][3] = "";
-		$data["connInfo"][4] = "test";
-		$data["connInfo"][5] = ""; //currently unused
-		$data["connInfo"][6] = "1"; //currently unused
-		$data["ODBCString"] = "DRIVER={MySQL ODBC 3.51 Driver};Server=node3907-env-7428455.diadem.cloud;Uid=root;Pwd=;Database=test;OPTION=3";
-		// encription set
-		$data["EncryptInfo"] = array();
-		$data["EncryptInfo"]["mode"] = 0;
-		$data["EncryptInfo"]["alg"]  = 128;
-		$data["EncryptInfo"]["key"]  = "";
-
-		$connectionsData["test_at_node3907_env_7428455_diadem_cloud"] = $data;
+$host="node3966-env-8729974.diadem.cloud";
+$user="tbarua1";
+$pwd="aaaAAA123";
+$port="";
+$sys_dbname="mydb";
+$data["connInfo"][0] = $host;
+$data["connInfo"][1] = $user;
+$data["connInfo"][2] = $pwd;
+$data["connInfo"][3] = $port;
+$data["connInfo"][4] = $sys_dbname;
+;
+		$connectionsData["mydb_at_localhost"] = $data;
 		$this->_connectionsData = $connectionsData;
 	}
 	
@@ -316,20 +273,19 @@ class ConnectionManager
 	protected function _setTablesConnectionIds()
 	{
 		$connectionsIds = array();
-		$connectionsIds["batch"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["batchschedule"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["consultant"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["courses"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["department"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["district"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["division"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["emp_status"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["employees"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["full_batch_details"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["schedule_map"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["trainer"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["university"] = "test_at_node3907_env_7428455_diadem_cloud";
-		$connectionsIds["university_view"] = "test_at_node3907_env_7428455_diadem_cloud";
+		$connectionsIds["batch"] = "mydb_at_localhost";
+		$connectionsIds["batchschedule"] = "mydb_at_localhost";
+		$connectionsIds["consultant"] = "mydb_at_localhost";
+		$connectionsIds["courses"] = "mydb_at_localhost";
+		$connectionsIds["department"] = "mydb_at_localhost";
+		$connectionsIds["district"] = "mydb_at_localhost";
+		$connectionsIds["division"] = "mydb_at_localhost";
+		$connectionsIds["emp_status"] = "mydb_at_localhost";
+		$connectionsIds["employees"] = "mydb_at_localhost";
+		$connectionsIds["full_batch_details"] = "mydb_at_localhost";
+		$connectionsIds["trainer"] = "mydb_at_localhost";
+		$connectionsIds["university"] = "mydb_at_localhost";
+		$connectionsIds["university_view"] = "mydb_at_localhost";
 		$this->_tablesConnectionIds = $connectionsIds;
 	}
 	

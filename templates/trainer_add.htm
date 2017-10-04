@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,456 +12,259 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-add" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_editpage}
-<div {$editpage_chiddenattr} data-pageid="{$pageid}" data-container="editpage" class="container    "> 
+{BEGIN container_all}
+<div class="rnr-c rnr-cv rnr-c-all">
 
 
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_add} rnr-wrapper rnr-cbw-add">
 
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-9 col-md-offset-3"> 
+{BEGIN container_add}
+<div class="rnr-c rnr-cv rnr-c-add">
 
 {BEGIN addheader}
-	<h2 {$addheader_hiddenattr} data-pageid="{$pageid}" data-brick="addheader" >{$pagetitlelabel trainer add}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
+<div  class="rnr-brickcontents style2 rnr-b-addheader {$brickclass_addheader}"><span>	<h1>{$pagetitlelabel trainer add}</h1>
+</span></div>{END addheader}
 
-{END addheader}
-
-
-
-</div>
-{END container_header}
-
-
-
-
-
-
-
-
-{BEGIN container_message}
-<div {$message_chiddenattr} data-pageid="{$pageid}" data-container="message" class="   col-md-6 col-md-offset-3"> 
 
 {BEGIN message_block}
-<div {$message_hiddenattr} data-pageid="{$pageid}" data-brick="message" class="alert {$message_class}" role="alert">
-<h5>{$message}</h5>
-<div>
-{BEGIN back_button}
-		<button class="btn btn-sm btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{BEGIN view_page_button}
-	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>View</button>
-{END view_page_button}
-{BEGIN edit_page_button}
-	<button class="btn btn-sm btn-default" {$edit_page_button_attrs}>Edit</button>
-{END edit_page_button}
-</div>
-</div>
-
-{END message_block}
+<div  class="rnr-brickcontents style1 rnr-b-message {$brickclass_message}"><div class="rnr-message">{$message}</div></div>{END message_block}
 
 
 
-</div>
-{END container_message}
-
-
-
-
-
-
-
-</div>
-{END container_editpage}
-
-
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$addfields_hiddenattr} data-pageid="{$pageid}" data-brick="addfields" class="form-horizontal" role="form">
-			{BEGIN cid_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_cid}" data-fieldname="cid" data-signal-error-for="cid{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_cid}">
-		{BEGIN cid_label}{$label trainer cid}{END cid_label}
-	</label>
-	<div class="col-md-6" >
-		{$cid_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="cid">
-		<div class="text-muted" >
-		{$tooltip trainer cid}
-		</div>
-	</div>
-</div>
-</div>
-{END cid_fieldblock}
-
-			{BEGIN date_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_date}" data-fieldname="date" data-signal-error-for="date{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_date}">
+<div  class="rnr-brickcontents style1 rnr-b-addfields {$brickclass_addfields}"><table class="fieldGrid">
+	{BEGIN date_fieldblock}
+<tr class="{$fielddispclass_date}" data-fieldname="date">
+	<td class="rnr-label">
 		{BEGIN date_label}{$label trainer date}{END date_label}
-	</label>
-	<div class="col-md-6" >
-		{$date_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="date">
-		<div class="text-muted" >
-		{$tooltip trainer date}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$date_editcontrol}&nbsp;
+	</td>
+</tr>
 {END date_fieldblock}
-
-			{BEGIN emailid_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_emailid}" data-fieldname="emailid" data-signal-error-for="emailid{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_emailid}">
+	{BEGIN emailid_fieldblock}
+<tr class="{$fielddispclass_emailid}" data-fieldname="emailid">
+	<td class="rnr-label">
 		{BEGIN emailid_label}{$label trainer emailid}{END emailid_label}
-	</label>
-	<div class="col-md-6" >
-		{$emailid_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="emailid">
-		<div class="text-muted" >
-		{$tooltip trainer emailid}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$emailid_editcontrol}&nbsp;
+	</td>
+</tr>
 {END emailid_fieldblock}
-
-			{BEGIN experience_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_experience}" data-fieldname="experience" data-signal-error-for="experience{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_experience}">
+	{BEGIN experience_fieldblock}
+<tr class="{$fielddispclass_experience}" data-fieldname="experience">
+	<td class="rnr-label">
 		{BEGIN experience_label}{$label trainer experience}{END experience_label}
-	</label>
-	<div class="col-md-6" >
-		{$experience_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="experience">
-		<div class="text-muted" >
-		{$tooltip trainer experience}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$experience_editcontrol}&nbsp;
+	</td>
+</tr>
 {END experience_fieldblock}
-
-			{BEGIN mobile_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_mobile}" data-fieldname="mobile" data-signal-error-for="mobile{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_mobile}">
+	{BEGIN mobile_fieldblock}
+<tr class="{$fielddispclass_mobile}" data-fieldname="mobile">
+	<td class="rnr-label">
 		{BEGIN mobile_label}{$label trainer mobile}{END mobile_label}
-	</label>
-	<div class="col-md-6" >
-		{$mobile_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="mobile">
-		<div class="text-muted" >
-		{$tooltip trainer mobile}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$mobile_editcontrol}&nbsp;
+	</td>
+</tr>
 {END mobile_fieldblock}
-
-			{BEGIN name_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_name}" data-fieldname="name" data-signal-error-for="name{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_name}">
+	{BEGIN name_fieldblock}
+<tr class="{$fielddispclass_name}" data-fieldname="name">
+	<td class="rnr-label">
 		{BEGIN name_label}{$label trainer name}{END name_label}
-	</label>
-	<div class="col-md-6" >
-		{$name_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="name">
-		<div class="text-muted" >
-		{$tooltip trainer name}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$name_editcontrol}&nbsp;
+	</td>
+</tr>
 {END name_fieldblock}
-
-			{BEGIN natianality_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_natianality}" data-fieldname="natianality" data-signal-error-for="natianality{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_natianality}">
+	{BEGIN natianality_fieldblock}
+<tr class="{$fielddispclass_natianality}" data-fieldname="natianality">
+	<td class="rnr-label">
 		{BEGIN natianality_label}{$label trainer natianality}{END natianality_label}
-	</label>
-	<div class="col-md-6" >
-		{$natianality_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="natianality">
-		<div class="text-muted" >
-		{$tooltip trainer natianality}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$natianality_editcontrol}&nbsp;
+	</td>
+</tr>
 {END natianality_fieldblock}
-
-			{BEGIN password_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_password}" data-fieldname="password" data-signal-error-for="password{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_password}">
+	{BEGIN password_fieldblock}
+<tr class="{$fielddispclass_password}" data-fieldname="password">
+	<td class="rnr-label">
 		{BEGIN password_label}{$label trainer password}{END password_label}
-	</label>
-	<div class="col-md-6" >
-		{$password_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="password">
-		<div class="text-muted" >
-		{$tooltip trainer password}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$password_editcontrol}&nbsp;
+	</td>
+</tr>
 {END password_fieldblock}
-
-			{BEGIN qualification_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_qualification}" data-fieldname="qualification" data-signal-error-for="qualification{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_qualification}">
+	{BEGIN qualification_fieldblock}
+<tr class="{$fielddispclass_qualification}" data-fieldname="qualification">
+	<td class="rnr-label">
 		{BEGIN qualification_label}{$label trainer qualification}{END qualification_label}
-	</label>
-	<div class="col-md-6" >
-		{$qualification_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="qualification">
-		<div class="text-muted" >
-		{$tooltip trainer qualification}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$qualification_editcontrol}&nbsp;
+	</td>
+</tr>
 {END qualification_fieldblock}
-
-			{BEGIN registeredDate_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_registeredDate}" data-fieldname="registeredDate" data-signal-error-for="registeredDate{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_registeredDate}">
+	{BEGIN registeredDate_fieldblock}
+<tr class="{$fielddispclass_registeredDate}" data-fieldname="registeredDate">
+	<td class="rnr-label">
 		{BEGIN registeredDate_label}{$label trainer registeredDate}{END registeredDate_label}
-	</label>
-	<div class="col-md-6" >
-		{$registeredDate_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="registeredDate">
-		<div class="text-muted" >
-		{$tooltip trainer registeredDate}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$registeredDate_editcontrol}&nbsp;
+	</td>
+</tr>
 {END registeredDate_fieldblock}
-
-			{BEGIN skillset_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_skillset}" data-fieldname="skillset" data-signal-error-for="skillset{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_skillset}">
+	{BEGIN skillset_fieldblock}
+<tr class="{$fielddispclass_skillset}" data-fieldname="skillset">
+	<td class="rnr-label">
 		{BEGIN skillset_label}{$label trainer skillset}{END skillset_label}
-	</label>
-	<div class="col-md-6" >
-		{$skillset_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="skillset">
-		<div class="text-muted" >
-		{$tooltip trainer skillset}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$skillset_editcontrol}&nbsp;
+	</td>
+</tr>
 {END skillset_fieldblock}
-
-			{BEGIN skype_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_skype}" data-fieldname="skype" data-signal-error-for="skype{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_skype}">
+	{BEGIN skype_fieldblock}
+<tr class="{$fielddispclass_skype}" data-fieldname="skype">
+	<td class="rnr-label">
 		{BEGIN skype_label}{$label trainer skype}{END skype_label}
-	</label>
-	<div class="col-md-6" >
-		{$skype_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="skype">
-		<div class="text-muted" >
-		{$tooltip trainer skype}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$skype_editcontrol}&nbsp;
+	</td>
+</tr>
 {END skype_fieldblock}
-
-			{BEGIN username_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_username}" data-fieldname="username" data-signal-error-for="username{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_username}">
+	{BEGIN username_fieldblock}
+<tr class="{$fielddispclass_username}" data-fieldname="username">
+	<td class="rnr-label">
 		{BEGIN username_label}{$label trainer username}{END username_label}
-	</label>
-	<div class="col-md-6" >
-		{$username_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="username">
-		<div class="text-muted" >
-		{$tooltip trainer username}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$username_editcontrol}&nbsp;
+	</td>
+</tr>
 {END username_fieldblock}
-
-			{BEGIN usertype_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_usertype}" data-fieldname="usertype" data-signal-error-for="usertype{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_usertype}">
+	{BEGIN usertype_fieldblock}
+<tr class="{$fielddispclass_usertype}" data-fieldname="usertype">
+	<td class="rnr-label">
 		{BEGIN usertype_label}{$label trainer usertype}{END usertype_label}
-	</label>
-	<div class="col-md-6" >
-		{$usertype_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="usertype">
-		<div class="text-muted" >
-		{$tooltip trainer usertype}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$usertype_editcontrol}&nbsp;
+	</td>
+</tr>
 {END usertype_fieldblock}
-
-			{BEGIN whatsapp_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_whatsapp}" data-fieldname="whatsapp" data-signal-error-for="whatsapp{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_whatsapp}">
+	{BEGIN whatsapp_fieldblock}
+<tr class="{$fielddispclass_whatsapp}" data-fieldname="whatsapp">
+	<td class="rnr-label">
 		{BEGIN whatsapp_label}{$label trainer whatsapp}{END whatsapp_label}
-	</label>
-	<div class="col-md-6" >
-		{$whatsapp_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="whatsapp">
-		<div class="text-muted" >
-		{$tooltip trainer whatsapp}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$whatsapp_editcontrol}&nbsp;
+	</td>
+</tr>
 {END whatsapp_fieldblock}
-
-			{BEGIN photo_fieldblock}
-<div class=container>
-<div class="form-group {$fielddispclass_photo}" data-fieldname="photo" data-signal-error-for="photo{$id}" >
-	<label class="col-md-3 control-label" for="{$labelfor_photo}">
+	{BEGIN photo_fieldblock}
+<tr class="{$fielddispclass_photo}" data-fieldname="photo">
+	<td class="rnr-label">
 		{BEGIN photo_label}{$label trainer photo}{END photo_label}
-	</label>
-	<div class="col-md-6" >
-		{$photo_editcontrol}
-	</div>
-	<div class="col-md-3 help-block" data-helpfor="photo">
-		<div class="text-muted" >
-		{$tooltip trainer photo}
-		</div>
-	</div>
-</div>
-</div>
+	</td>
+	<td class="rnr-control style3">
+		{$photo_editcontrol}&nbsp;
+	</td>
+</tr>
 {END photo_fieldblock}
+	{BEGIN cid_fieldblock}
+<tr class="{$fielddispclass_cid}" data-fieldname="cid">
+	<td class="rnr-label">
+		{BEGIN cid_label}{$label trainer cid}{END cid_label}
+	</td>
+	<td class="rnr-control style3">
+		{$cid_editcontrol}&nbsp;
+	</td>
+</tr>
+{END cid_fieldblock}
+</table></div>
 
 
-</div>
-
-
+{BEGIN addbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-addbuttons {$brickclass_addbuttons}">{BEGIN save_button}
+<a href="#" class="rnr-button main" id="saveButton{$id}">Save</a>
+{END save_button}
+{BEGIN reset_button}
+<a href="#" class="rnr-button" id="resetButton{$id}">Reset</a>
+{END reset_button}
+{BEGIN cancel_button}
+<a href="#" class="rnr-button" id="cancelButton{$id}">Cancel</a>
+{END cancel_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" id="backButton{$id}">Back to list</a>
+{END back_button}
+{BEGIN backToMenu_button}
+<a href="#" class="rnr-button" id="backToMenuButton{$id}">Back to menu</a>
+{END backToMenu_button}</div>{END addbuttons}
 
 
 </div>
 {END container_fields}
 
+</div>
 
 
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+</div>
+{END container_add}
 
-
-
-
-{BEGIN container_buttons}
-<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-3 col-md-offset-3"> 
-
-{BEGIN addbuttons}
-	{BEGIN save_button}
-	<button class="btn btn-primary" {$savebutton_attrs}>Save</button>
-	{END save_button}
-	{BEGIN reset_button}
-	<button class="btn btn-default" id="resetButton{$id}">Reset</button>
-	{END reset_button}
-	{BEGIN back_button}
-		<button class="btn btn-default" id="backButton{$id}">Back to list</button>
-	{END back_button}
-	{BEGIN cancel_button}
-	<a href="#" class="btn btn-default" id="cancelButton{$id}">Cancel</a>
-	{END cancel_button}
-
-{END addbuttons}
+</div>
 
 
 
 </div>
-{END container_leftbuttons}
-
-
-
-
-
-
-</div>
-{END container_buttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
+{END container_all}
 
 
 		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 			</div>
-			<div class="bs-left" {$blockattr_left}>
+			<div class="rnr-center {$blockclass_center}">
 				
 			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
-		<DIV class="bs-bottom">
-        
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
 		</div>
+	</div>
+		
 		{$footer}
 	{END body}
 	</body>

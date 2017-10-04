@@ -4,103 +4,75 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdataemployees = array();
+$tdataemployees = array();	
 	$tdataemployees[".truncateText"] = true;
-	$tdataemployees[".NumberOfChars"] = 80;
+	$tdataemployees[".NumberOfChars"] = 80; 
 	$tdataemployees[".ShortName"] = "employees";
-	$tdataemployees[".OwnerID"] = "cid";
+	$tdataemployees[".OwnerID"] = "";
 	$tdataemployees[".OriginalTable"] = "employees";
 
 //	field labels
 $fieldLabelsemployees = array();
 $fieldToolTipsemployees = array();
 $pageTitlesemployees = array();
-$placeHoldersemployees = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelsemployees["English"] = array();
 	$fieldToolTipsemployees["English"] = array();
-	$placeHoldersemployees["English"] = array();
 	$pageTitlesemployees["English"] = array();
 	$fieldLabelsemployees["English"]["eid"] = "Eid";
 	$fieldToolTipsemployees["English"]["eid"] = "";
-	$placeHoldersemployees["English"]["eid"] = "";
 	$fieldLabelsemployees["English"]["ename"] = "Ename";
 	$fieldToolTipsemployees["English"]["ename"] = "";
-	$placeHoldersemployees["English"]["ename"] = "";
 	$fieldLabelsemployees["English"]["emppic"] = "Emppic";
 	$fieldToolTipsemployees["English"]["emppic"] = "";
-	$placeHoldersemployees["English"]["emppic"] = "";
 	$fieldLabelsemployees["English"]["designation"] = "Designation";
 	$fieldToolTipsemployees["English"]["designation"] = "";
-	$placeHoldersemployees["English"]["designation"] = "";
 	$fieldLabelsemployees["English"]["whtasapp"] = "Whtasapp";
 	$fieldToolTipsemployees["English"]["whtasapp"] = "";
-	$placeHoldersemployees["English"]["whtasapp"] = "";
 	$fieldLabelsemployees["English"]["localnum"] = "Localnum";
 	$fieldToolTipsemployees["English"]["localnum"] = "";
-	$placeHoldersemployees["English"]["localnum"] = "";
 	$fieldLabelsemployees["English"]["skype"] = "Skype";
 	$fieldToolTipsemployees["English"]["skype"] = "";
-	$placeHoldersemployees["English"]["skype"] = "";
 	$fieldLabelsemployees["English"]["dropbox"] = "Dropbox";
 	$fieldToolTipsemployees["English"]["dropbox"] = "";
-	$placeHoldersemployees["English"]["dropbox"] = "";
 	$fieldLabelsemployees["English"]["email"] = "Email";
 	$fieldToolTipsemployees["English"]["email"] = "";
-	$placeHoldersemployees["English"]["email"] = "";
 	$fieldLabelsemployees["English"]["dob"] = "Dob";
 	$fieldToolTipsemployees["English"]["dob"] = "";
-	$placeHoldersemployees["English"]["dob"] = "";
 	$fieldLabelsemployees["English"]["password"] = "Password";
 	$fieldToolTipsemployees["English"]["password"] = "";
-	$placeHoldersemployees["English"]["password"] = "";
 	$fieldLabelsemployees["English"]["passportno"] = "Passportno";
 	$fieldToolTipsemployees["English"]["passportno"] = "";
-	$placeHoldersemployees["English"]["passportno"] = "";
 	$fieldLabelsemployees["English"]["passport_expiry"] = "Passport Expiry";
 	$fieldToolTipsemployees["English"]["passport_expiry"] = "";
-	$placeHoldersemployees["English"]["passport_expiry"] = "";
 	$fieldLabelsemployees["English"]["visa_no"] = "Visa No";
 	$fieldToolTipsemployees["English"]["visa_no"] = "";
-	$placeHoldersemployees["English"]["visa_no"] = "";
 	$fieldLabelsemployees["English"]["visa_expiry"] = "Visa Expiry";
 	$fieldToolTipsemployees["English"]["visa_expiry"] = "";
-	$placeHoldersemployees["English"]["visa_expiry"] = "";
 	$fieldLabelsemployees["English"]["division_id"] = "Division Id";
 	$fieldToolTipsemployees["English"]["division_id"] = "";
-	$placeHoldersemployees["English"]["division_id"] = "";
 	$fieldLabelsemployees["English"]["doj"] = "Doj";
 	$fieldToolTipsemployees["English"]["doj"] = "";
-	$placeHoldersemployees["English"]["doj"] = "";
 	$fieldLabelsemployees["English"]["dor"] = "Dor";
 	$fieldToolTipsemployees["English"]["dor"] = "";
-	$placeHoldersemployees["English"]["dor"] = "";
 	$fieldLabelsemployees["English"]["status_id"] = "Status Id";
 	$fieldToolTipsemployees["English"]["status_id"] = "";
-	$placeHoldersemployees["English"]["status_id"] = "";
 	$fieldLabelsemployees["English"]["experence"] = "Experence";
 	$fieldToolTipsemployees["English"]["experence"] = "";
-	$placeHoldersemployees["English"]["experence"] = "";
 	$fieldLabelsemployees["English"]["nationality"] = "Nationality";
 	$fieldToolTipsemployees["English"]["nationality"] = "";
-	$placeHoldersemployees["English"]["nationality"] = "";
 	$fieldLabelsemployees["English"]["qulification"] = "Qulification";
 	$fieldToolTipsemployees["English"]["qulification"] = "";
-	$placeHoldersemployees["English"]["qulification"] = "";
 	$fieldLabelsemployees["English"]["skillset"] = "Skillset";
 	$fieldToolTipsemployees["English"]["skillset"] = "";
-	$placeHoldersemployees["English"]["skillset"] = "";
 	$fieldLabelsemployees["English"]["cid"] = "Cid";
 	$fieldToolTipsemployees["English"]["cid"] = "";
-	$placeHoldersemployees["English"]["cid"] = "";
 	$fieldLabelsemployees["English"]["reset_token"] = "Reset Token";
 	$fieldToolTipsemployees["English"]["reset_token"] = "";
-	$placeHoldersemployees["English"]["reset_token"] = "";
 	$fieldLabelsemployees["English"]["reset_date"] = "Reset Date";
 	$fieldToolTipsemployees["English"]["reset_date"] = "";
-	$placeHoldersemployees["English"]["reset_date"] = "";
 	if (count($fieldToolTipsemployees["English"]))
 		$tdataemployees[".isUseToolTips"] = true;
 }
@@ -108,27 +80,25 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelsemployees[""] = array();
 	$fieldToolTipsemployees[""] = array();
-	$placeHoldersemployees[""] = array();
 	$pageTitlesemployees[""] = array();
 	if (count($fieldToolTipsemployees[""]))
 		$tdataemployees[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdataemployees[".NCSearch"] = true;
 
 
 
 $tdataemployees[".shortTableName"] = "employees";
-$tdataemployees[".nSecOptions"] = 1;
-$tdataemployees[".recsPerRowPrint"] = 1;
-$tdataemployees[".mainTableOwnerID"] = "cid";
+$tdataemployees[".nSecOptions"] = 0;
+$tdataemployees[".recsPerRowList"] = 1;
+$tdataemployees[".mainTableOwnerID"] = "";
 $tdataemployees[".moveNext"] = 1;
-$tdataemployees[".entityType"] = 0;
+$tdataemployees[".nType"] = 0;
 
 $tdataemployees[".strOriginalTableName"] = "employees";
 
-	
 
 
 
@@ -152,25 +122,11 @@ $tdataemployees[".listAjax"] = false;
 	$tdataemployees[".locking"] = false;
 
 $tdataemployees[".edit"] = true;
-$tdataemployees[".afterEditAction"] = 1;
-$tdataemployees[".closePopupAfterEdit"] = 1;
-$tdataemployees[".afterEditActionDetTable"] = "";
-
-$tdataemployees[".add"] = true;
-$tdataemployees[".afterAddAction"] = 1;
-$tdataemployees[".closePopupAfterAdd"] = 1;
-$tdataemployees[".afterAddActionDetTable"] = "";
 
 $tdataemployees[".list"] = true;
 
-
-
-$tdataemployees[".reorderRecordsByHeader"] = true;
-
-
-$tdataemployees[".exportFormatting"] = 2;
-$tdataemployees[".exportDelimiter"] = ",";
-		
+$tdataemployees[".inlineEdit"] = true;
+$tdataemployees[".inlineAdd"] = true;
 $tdataemployees[".view"] = true;
 
 $tdataemployees[".import"] = true;
@@ -183,32 +139,21 @@ $tdataemployees[".delete"] = true;
 
 $tdataemployees[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdataemployees[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdataemployees[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdataemployees[".searchSaving"] = false;
 //
 
 $tdataemployees[".showSearchPanel"] = true;
-		$tdataemployees[".flexibleSearch"] = true;
+		$tdataemployees[".flexibleSearch"] = true;		
 
-$tdataemployees[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdataemployees[".isUseAjaxSuggest"] = false;
+else 
+	$tdataemployees[".isUseAjaxSuggest"] = true;
 
 $tdataemployees[".rowHighlite"] = true;
 
 
-
-
-
-$tdataemployees[".ajaxCodeSnippetAdded"] = false;
-
-$tdataemployees[".buttonsAdded"] = false;
 
 $tdataemployees[".addPageEvents"] = false;
 
@@ -217,7 +162,7 @@ $tdataemployees[".isUseTimeForSearch"] = false;
 
 
 
-$tdataemployees[".badgeColor"] = "BC8F8F";
+$tdataemployees[".useDetailsPreview"] = true;
 
 
 $tdataemployees[".allSearchFields"] = array();
@@ -320,13 +265,9 @@ $tdataemployees[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdataemployees[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdataemployees[".listGridLayout"] = 3;
+	
 
 
 
@@ -354,14 +295,6 @@ $tdataemployees[".sqlHead"] = "SELECT eid,  	ename,  	emppic,  	designation,  	w
 $tdataemployees[".sqlFrom"] = "FROM employees";
 $tdataemployees[".sqlWhereExpr"] = "";
 $tdataemployees[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -476,36 +409,9 @@ $tdataemployees[".addFields"][] = "experence";
 $tdataemployees[".addFields"][] = "nationality";
 $tdataemployees[".addFields"][] = "qulification";
 $tdataemployees[".addFields"][] = "skillset";
+$tdataemployees[".addFields"][] = "cid";
 $tdataemployees[".addFields"][] = "reset_token";
 $tdataemployees[".addFields"][] = "reset_date";
-
-$tdataemployees[".masterListFields"] = array();
-$tdataemployees[".masterListFields"][] = "eid";
-$tdataemployees[".masterListFields"][] = "ename";
-$tdataemployees[".masterListFields"][] = "emppic";
-$tdataemployees[".masterListFields"][] = "designation";
-$tdataemployees[".masterListFields"][] = "whtasapp";
-$tdataemployees[".masterListFields"][] = "localnum";
-$tdataemployees[".masterListFields"][] = "skype";
-$tdataemployees[".masterListFields"][] = "dropbox";
-$tdataemployees[".masterListFields"][] = "email";
-$tdataemployees[".masterListFields"][] = "dob";
-$tdataemployees[".masterListFields"][] = "password";
-$tdataemployees[".masterListFields"][] = "passportno";
-$tdataemployees[".masterListFields"][] = "passport_expiry";
-$tdataemployees[".masterListFields"][] = "visa_no";
-$tdataemployees[".masterListFields"][] = "visa_expiry";
-$tdataemployees[".masterListFields"][] = "division_id";
-$tdataemployees[".masterListFields"][] = "doj";
-$tdataemployees[".masterListFields"][] = "dor";
-$tdataemployees[".masterListFields"][] = "status_id";
-$tdataemployees[".masterListFields"][] = "experence";
-$tdataemployees[".masterListFields"][] = "nationality";
-$tdataemployees[".masterListFields"][] = "qulification";
-$tdataemployees[".masterListFields"][] = "skillset";
-$tdataemployees[".masterListFields"][] = "cid";
-$tdataemployees[".masterListFields"][] = "reset_token";
-$tdataemployees[".masterListFields"][] = "reset_date";
 
 $tdataemployees[".inlineAddFields"] = array();
 $tdataemployees[".inlineAddFields"][] = "ename";
@@ -530,6 +436,7 @@ $tdataemployees[".inlineAddFields"][] = "experence";
 $tdataemployees[".inlineAddFields"][] = "nationality";
 $tdataemployees[".inlineAddFields"][] = "qulification";
 $tdataemployees[".inlineAddFields"][] = "skillset";
+$tdataemployees[".inlineAddFields"][] = "cid";
 $tdataemployees[".inlineAddFields"][] = "reset_token";
 $tdataemployees[".inlineAddFields"][] = "reset_date";
 
@@ -586,34 +493,6 @@ $tdataemployees[".inlineEditFields"][] = "skillset";
 $tdataemployees[".inlineEditFields"][] = "cid";
 $tdataemployees[".inlineEditFields"][] = "reset_token";
 $tdataemployees[".inlineEditFields"][] = "reset_date";
-
-$tdataemployees[".updateSelectedFields"] = array();
-$tdataemployees[".updateSelectedFields"][] = "ename";
-$tdataemployees[".updateSelectedFields"][] = "emppic";
-$tdataemployees[".updateSelectedFields"][] = "designation";
-$tdataemployees[".updateSelectedFields"][] = "whtasapp";
-$tdataemployees[".updateSelectedFields"][] = "localnum";
-$tdataemployees[".updateSelectedFields"][] = "skype";
-$tdataemployees[".updateSelectedFields"][] = "dropbox";
-$tdataemployees[".updateSelectedFields"][] = "email";
-$tdataemployees[".updateSelectedFields"][] = "dob";
-$tdataemployees[".updateSelectedFields"][] = "password";
-$tdataemployees[".updateSelectedFields"][] = "passportno";
-$tdataemployees[".updateSelectedFields"][] = "passport_expiry";
-$tdataemployees[".updateSelectedFields"][] = "visa_no";
-$tdataemployees[".updateSelectedFields"][] = "visa_expiry";
-$tdataemployees[".updateSelectedFields"][] = "division_id";
-$tdataemployees[".updateSelectedFields"][] = "doj";
-$tdataemployees[".updateSelectedFields"][] = "dor";
-$tdataemployees[".updateSelectedFields"][] = "status_id";
-$tdataemployees[".updateSelectedFields"][] = "experence";
-$tdataemployees[".updateSelectedFields"][] = "nationality";
-$tdataemployees[".updateSelectedFields"][] = "qulification";
-$tdataemployees[".updateSelectedFields"][] = "skillset";
-$tdataemployees[".updateSelectedFields"][] = "cid";
-$tdataemployees[".updateSelectedFields"][] = "reset_token";
-$tdataemployees[".updateSelectedFields"][] = "reset_date";
-
 
 $tdataemployees[".exportFields"] = array();
 $tdataemployees[".exportFields"][] = "eid";
@@ -699,7 +578,6 @@ $tdataemployees[".printFields"][] = "cid";
 $tdataemployees[".printFields"][] = "reset_token";
 $tdataemployees[".printFields"][] = "reset_date";
 
-
 //	eid
 //	Custom field settings
 	$fdata = array();
@@ -707,128 +585,122 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "eid";
 	$fdata["GoodName"] = "eid";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","eid");
+	$fdata["Label"] = GetFieldLabel("employees","eid"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "eid";
-
+		$fdata["strField"] = "eid"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "eid";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["eid"] = $fdata;
 //	ename
 //	Custom field settings
@@ -837,130 +709,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "ename";
 	$fdata["GoodName"] = "ename";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","ename");
+	$fdata["Label"] = GetFieldLabel("employees","ename"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "ename";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "ename"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "ename";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["ename"] = $fdata;
 //	emppic
 //	Custom field settings
@@ -969,130 +834,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "emppic";
 	$fdata["GoodName"] = "emppic";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","emppic");
+	$fdata["Label"] = GetFieldLabel("employees","emppic"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "emppic";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "emppic"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "emppic";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=300";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=300";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["emppic"] = $fdata;
 //	designation
 //	Custom field settings
@@ -1101,130 +959,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "designation";
 	$fdata["GoodName"] = "designation";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","designation");
+	$fdata["Label"] = GetFieldLabel("employees","designation"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "designation";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "designation"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "designation";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["designation"] = $fdata;
 //	whtasapp
 //	Custom field settings
@@ -1233,130 +1084,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "whtasapp";
 	$fdata["GoodName"] = "whtasapp";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","whtasapp");
+	$fdata["Label"] = GetFieldLabel("employees","whtasapp"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "whtasapp";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "whtasapp"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "whtasapp";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["whtasapp"] = $fdata;
 //	localnum
 //	Custom field settings
@@ -1365,130 +1209,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "localnum";
 	$fdata["GoodName"] = "localnum";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","localnum");
+	$fdata["Label"] = GetFieldLabel("employees","localnum"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "localnum";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "localnum"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "localnum";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["localnum"] = $fdata;
 //	skype
 //	Custom field settings
@@ -1497,130 +1334,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "skype";
 	$fdata["GoodName"] = "skype";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","skype");
+	$fdata["Label"] = GetFieldLabel("employees","skype"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "skype";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "skype"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "skype";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["skype"] = $fdata;
 //	dropbox
 //	Custom field settings
@@ -1629,130 +1459,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "dropbox";
 	$fdata["GoodName"] = "dropbox";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","dropbox");
+	$fdata["Label"] = GetFieldLabel("employees","dropbox"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "dropbox";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "dropbox"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "dropbox";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["dropbox"] = $fdata;
 //	email
 //	Custom field settings
@@ -1761,130 +1584,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "email";
 	$fdata["GoodName"] = "email";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","email");
+	$fdata["Label"] = GetFieldLabel("employees","email"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "email";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "email"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "email";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "email";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["email"] = $fdata;
 //	dob
 //	Custom field settings
@@ -1893,130 +1709,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "dob";
 	$fdata["GoodName"] = "dob";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","dob");
+	$fdata["Label"] = GetFieldLabel("employees","dob"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "dob";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "dob"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "dob";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["dob"] = $fdata;
 //	password
 //	Custom field settings
@@ -2025,130 +1834,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "password";
 	$fdata["GoodName"] = "password";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","password");
+	$fdata["Label"] = GetFieldLabel("employees","password"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "password";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "password"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "password";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["password"] = $fdata;
 //	passportno
 //	Custom field settings
@@ -2157,130 +1959,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "passportno";
 	$fdata["GoodName"] = "passportno";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","passportno");
+	$fdata["Label"] = GetFieldLabel("employees","passportno"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "passportno";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "passportno"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "passportno";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["passportno"] = $fdata;
 //	passport_expiry
 //	Custom field settings
@@ -2289,130 +2084,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "passport_expiry";
 	$fdata["GoodName"] = "passport_expiry";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","passport_expiry");
+	$fdata["Label"] = GetFieldLabel("employees","passport_expiry"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "passport_expiry";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "passport_expiry"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "passport_expiry";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["passport_expiry"] = $fdata;
 //	visa_no
 //	Custom field settings
@@ -2421,130 +2209,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "visa_no";
 	$fdata["GoodName"] = "visa_no";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","visa_no");
+	$fdata["Label"] = GetFieldLabel("employees","visa_no"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "visa_no";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "visa_no"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "visa_no";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["visa_no"] = $fdata;
 //	visa_expiry
 //	Custom field settings
@@ -2553,130 +2334,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "visa_expiry";
 	$fdata["GoodName"] = "visa_expiry";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","visa_expiry");
+	$fdata["Label"] = GetFieldLabel("employees","visa_expiry"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "visa_expiry";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "visa_expiry"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "visa_expiry";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["visa_expiry"] = $fdata;
 //	division_id
 //	Custom field settings
@@ -2685,77 +2459,70 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "division_id";
 	$fdata["GoodName"] = "division_id";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","division_id");
+	$fdata["Label"] = GetFieldLabel("employees","division_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "division_id";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "division_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "division_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+			
 	
-		
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -2763,77 +2530,75 @@ $tdataemployees[".printFields"][] = "reset_date";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "division_id";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-	
-	
-	
+		
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-							
-	
+								
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["division_id"] = $fdata;
 //	doj
 //	Custom field settings
@@ -2842,132 +2607,125 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "doj";
 	$fdata["GoodName"] = "doj";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","doj");
+	$fdata["Label"] = GetFieldLabel("employees","doj"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "doj";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "doj"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "doj";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Date");
-
 	
+	$edata = array("EditFormat" => "Date");
+	
+			
+	
+	
+
+
+		$edata["IsRequired"] = true; 
 	
 		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
 	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
 						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
 		
 	
-	//	End validation
-
-	
-			
-	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["doj"] = $fdata;
 //	dor
 //	Custom field settings
@@ -2976,130 +2734,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "dor";
 	$fdata["GoodName"] = "dor";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","dor");
+	$fdata["Label"] = GetFieldLabel("employees","dor"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "dor";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "dor"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "dor";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["dor"] = $fdata;
 //	status_id
 //	Custom field settings
@@ -3108,130 +2859,125 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "status_id";
 	$fdata["GoodName"] = "status_id";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","status_id");
+	$fdata["Label"] = GetFieldLabel("employees","status_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "status_id";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "status_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "status_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["status_id"] = $fdata;
 //	experence
 //	Custom field settings
@@ -3240,130 +2986,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "experence";
 	$fdata["GoodName"] = "experence";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","experence");
+	$fdata["Label"] = GetFieldLabel("employees","experence"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "experence";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "experence"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "experence";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["experence"] = $fdata;
 //	nationality
 //	Custom field settings
@@ -3372,130 +3111,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "nationality";
 	$fdata["GoodName"] = "nationality";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","nationality");
+	$fdata["Label"] = GetFieldLabel("employees","nationality"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "nationality";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "nationality"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "nationality";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["nationality"] = $fdata;
 //	qulification
 //	Custom field settings
@@ -3504,130 +3236,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "qulification";
 	$fdata["GoodName"] = "qulification";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","qulification");
+	$fdata["Label"] = GetFieldLabel("employees","qulification"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "qulification";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "qulification"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "qulification";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["qulification"] = $fdata;
 //	skillset
 //	Custom field settings
@@ -3636,130 +3361,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "skillset";
 	$fdata["GoodName"] = "skillset";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","skillset");
+	$fdata["Label"] = GetFieldLabel("employees","skillset"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "skillset";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "skillset"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "skillset";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=100";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=100";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["skillset"] = $fdata;
 //	cid
 //	Custom field settings
@@ -3768,75 +3486,70 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "cid";
 	$fdata["GoodName"] = "cid";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","cid");
+	$fdata["Label"] = GetFieldLabel("employees","cid"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "cid";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "cid"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "cid";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+			
 	
-		
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -3844,77 +3557,75 @@ $tdataemployees[".printFields"][] = "reset_date";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "cid";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "cid";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-	
-	
-	
+		
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-							
-	
+								
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["cid"] = $fdata;
 //	reset_token
 //	Custom field settings
@@ -3923,130 +3634,123 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "reset_token";
 	$fdata["GoodName"] = "reset_token";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","reset_token");
+	$fdata["Label"] = GetFieldLabel("employees","reset_token"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "reset_token";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "reset_token"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "reset_token";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=50";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=50";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["reset_token"] = $fdata;
 //	reset_date
 //	Custom field settings
@@ -4055,138 +3759,130 @@ $tdataemployees[".printFields"][] = "reset_date";
 	$fdata["strName"] = "reset_date";
 	$fdata["GoodName"] = "reset_date";
 	$fdata["ownerTable"] = "employees";
-	$fdata["Label"] = GetFieldLabel("employees","reset_date");
+	$fdata["Label"] = GetFieldLabel("employees","reset_date"); 
 	$fdata["FieldType"] = 135;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "reset_date";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "reset_date"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "reset_date";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Date");
-
-		$edata["ShowTime"] = true;
-
 	
+	$edata = array("EditFormat" => "Date");
+	
+		$edata["ShowTime"] = true; 
 		
 	
+	
 
 
-	
-	
-	
+		
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
 	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
-	
+		
+		
 	//	End validation
-
 	
-			
+		
+				
+		
 	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataemployees["reset_date"] = $fdata;
 
-
+	
 $tables_data["employees"]=&$tdataemployees;
 $field_labels["employees"] = &$fieldLabelsemployees;
 $fieldToolTips["employees"] = &$fieldToolTipsemployees;
-$placeHolders["employees"] = &$placeHoldersemployees;
 $page_titles["employees"] = &$pageTitlesemployees;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
@@ -4200,31 +3896,28 @@ $detailsTablesData["employees"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="batch";
 		$detailsParam["dOriginalTable"] = "batch";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "batch";
 	$detailsParam["dCaptionTable"] = GetTableCaption("batch");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
 	$detailsParam["dispChildCount"] = "1";
-
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["employees"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["employees"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["employees"][$dIndex]["masterKeys"][]="eid";
 
 				$detailsTablesData["employees"][$dIndex]["detailKeys"] = array();
 
-	$detailsTablesData["employees"][$dIndex]["detailKeys"][]="local_spoc";
+	$detailsTablesData["employees"][$dIndex]["detailKeys"][]="soft_skill_trainer";
 //	consultant
 	
 	
@@ -4233,24 +3926,21 @@ $detailsTablesData["employees"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="consultant";
 		$detailsParam["dOriginalTable"] = "consultant";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "consultant";
 	$detailsParam["dCaptionTable"] = GetTableCaption("consultant");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
-	$detailsParam["dispChildCount"] = "0";
-
+	$detailsParam["dispChildCount"] = "1";
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["employees"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["employees"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["employees"][$dIndex]["masterKeys"][]="eid";
@@ -4258,7 +3948,7 @@ $detailsTablesData["employees"] = array();
 				$detailsTablesData["employees"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["employees"][$dIndex]["detailKeys"][]="eid";
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["employees"] = array();
 
@@ -4271,21 +3961,15 @@ $masterTablesData["employees"] = array();
 	$masterParams["mShortTable"]= "division";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["employees"][0] = $masterParams;
+					$masterTablesData["employees"][0] = $masterParams;	
 				$masterTablesData["employees"][0]["masterKeys"] = array();
 	$masterTablesData["employees"][0]["masterKeys"][]="division_id";
 				$masterTablesData["employees"][0]["detailKeys"] = array();
@@ -4299,21 +3983,15 @@ $masterTablesData["employees"] = array();
 	$masterParams["mShortTable"]= "courses";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["employees"][1] = $masterParams;
+					$masterTablesData["employees"][1] = $masterParams;	
 				$masterTablesData["employees"][1]["masterKeys"] = array();
 	$masterTablesData["employees"][1]["masterKeys"][]="cid";
 				$masterTablesData["employees"][1]["detailKeys"] = array();
@@ -4340,462 +4018,461 @@ $proto0["m_strFieldList"] = "eid,  	ename,  	emppic,  	designation,  	whtasapp, 
 $proto0["m_strFrom"] = "FROM employees";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "eid",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto6["m_sql"] = "eid";
-$proto6["m_srcTableName"] = "employees";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "eid";
+$proto5["m_srcTableName"] = "employees";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "ename",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto8["m_sql"] = "ename";
-$proto8["m_srcTableName"] = "employees";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
+$proto7["m_sql"] = "ename";
+$proto7["m_srcTableName"] = "employees";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto10=array();
+						$proto9=array();
 			$obj = new SQLField(array(
 	"m_strName" => "emppic",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto10["m_sql"] = "emppic";
-$proto10["m_srcTableName"] = "employees";
-$proto10["m_expr"]=$obj;
-$proto10["m_alias"] = "";
-$obj = new SQLFieldListItem($proto10);
+$proto9["m_sql"] = "emppic";
+$proto9["m_srcTableName"] = "employees";
+$proto9["m_expr"]=$obj;
+$proto9["m_alias"] = "";
+$obj = new SQLFieldListItem($proto9);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto12=array();
+						$proto11=array();
 			$obj = new SQLField(array(
 	"m_strName" => "designation",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto12["m_sql"] = "designation";
-$proto12["m_srcTableName"] = "employees";
-$proto12["m_expr"]=$obj;
-$proto12["m_alias"] = "";
-$obj = new SQLFieldListItem($proto12);
+$proto11["m_sql"] = "designation";
+$proto11["m_srcTableName"] = "employees";
+$proto11["m_expr"]=$obj;
+$proto11["m_alias"] = "";
+$obj = new SQLFieldListItem($proto11);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto14=array();
+						$proto13=array();
 			$obj = new SQLField(array(
 	"m_strName" => "whtasapp",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto14["m_sql"] = "whtasapp";
-$proto14["m_srcTableName"] = "employees";
-$proto14["m_expr"]=$obj;
-$proto14["m_alias"] = "";
-$obj = new SQLFieldListItem($proto14);
+$proto13["m_sql"] = "whtasapp";
+$proto13["m_srcTableName"] = "employees";
+$proto13["m_expr"]=$obj;
+$proto13["m_alias"] = "";
+$obj = new SQLFieldListItem($proto13);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto16=array();
+						$proto15=array();
 			$obj = new SQLField(array(
 	"m_strName" => "localnum",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto16["m_sql"] = "localnum";
-$proto16["m_srcTableName"] = "employees";
-$proto16["m_expr"]=$obj;
-$proto16["m_alias"] = "";
-$obj = new SQLFieldListItem($proto16);
+$proto15["m_sql"] = "localnum";
+$proto15["m_srcTableName"] = "employees";
+$proto15["m_expr"]=$obj;
+$proto15["m_alias"] = "";
+$obj = new SQLFieldListItem($proto15);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto18=array();
+						$proto17=array();
 			$obj = new SQLField(array(
 	"m_strName" => "skype",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto18["m_sql"] = "skype";
-$proto18["m_srcTableName"] = "employees";
-$proto18["m_expr"]=$obj;
-$proto18["m_alias"] = "";
-$obj = new SQLFieldListItem($proto18);
+$proto17["m_sql"] = "skype";
+$proto17["m_srcTableName"] = "employees";
+$proto17["m_expr"]=$obj;
+$proto17["m_alias"] = "";
+$obj = new SQLFieldListItem($proto17);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto20=array();
+						$proto19=array();
 			$obj = new SQLField(array(
 	"m_strName" => "dropbox",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto20["m_sql"] = "dropbox";
-$proto20["m_srcTableName"] = "employees";
-$proto20["m_expr"]=$obj;
-$proto20["m_alias"] = "";
-$obj = new SQLFieldListItem($proto20);
+$proto19["m_sql"] = "dropbox";
+$proto19["m_srcTableName"] = "employees";
+$proto19["m_expr"]=$obj;
+$proto19["m_alias"] = "";
+$obj = new SQLFieldListItem($proto19);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto22=array();
+						$proto21=array();
 			$obj = new SQLField(array(
 	"m_strName" => "email",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto22["m_sql"] = "email";
-$proto22["m_srcTableName"] = "employees";
-$proto22["m_expr"]=$obj;
-$proto22["m_alias"] = "";
-$obj = new SQLFieldListItem($proto22);
+$proto21["m_sql"] = "email";
+$proto21["m_srcTableName"] = "employees";
+$proto21["m_expr"]=$obj;
+$proto21["m_alias"] = "";
+$obj = new SQLFieldListItem($proto21);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto24=array();
+						$proto23=array();
 			$obj = new SQLField(array(
 	"m_strName" => "dob",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto24["m_sql"] = "dob";
-$proto24["m_srcTableName"] = "employees";
-$proto24["m_expr"]=$obj;
-$proto24["m_alias"] = "";
-$obj = new SQLFieldListItem($proto24);
+$proto23["m_sql"] = "dob";
+$proto23["m_srcTableName"] = "employees";
+$proto23["m_expr"]=$obj;
+$proto23["m_alias"] = "";
+$obj = new SQLFieldListItem($proto23);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto26=array();
+						$proto25=array();
 			$obj = new SQLField(array(
 	"m_strName" => "password",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto26["m_sql"] = "password";
-$proto26["m_srcTableName"] = "employees";
-$proto26["m_expr"]=$obj;
-$proto26["m_alias"] = "";
-$obj = new SQLFieldListItem($proto26);
+$proto25["m_sql"] = "password";
+$proto25["m_srcTableName"] = "employees";
+$proto25["m_expr"]=$obj;
+$proto25["m_alias"] = "";
+$obj = new SQLFieldListItem($proto25);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto28=array();
+						$proto27=array();
 			$obj = new SQLField(array(
 	"m_strName" => "passportno",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto28["m_sql"] = "passportno";
-$proto28["m_srcTableName"] = "employees";
-$proto28["m_expr"]=$obj;
-$proto28["m_alias"] = "";
-$obj = new SQLFieldListItem($proto28);
+$proto27["m_sql"] = "passportno";
+$proto27["m_srcTableName"] = "employees";
+$proto27["m_expr"]=$obj;
+$proto27["m_alias"] = "";
+$obj = new SQLFieldListItem($proto27);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto30=array();
+						$proto29=array();
 			$obj = new SQLField(array(
 	"m_strName" => "passport_expiry",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto30["m_sql"] = "passport_expiry";
-$proto30["m_srcTableName"] = "employees";
-$proto30["m_expr"]=$obj;
-$proto30["m_alias"] = "";
-$obj = new SQLFieldListItem($proto30);
+$proto29["m_sql"] = "passport_expiry";
+$proto29["m_srcTableName"] = "employees";
+$proto29["m_expr"]=$obj;
+$proto29["m_alias"] = "";
+$obj = new SQLFieldListItem($proto29);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto32=array();
+						$proto31=array();
 			$obj = new SQLField(array(
 	"m_strName" => "visa_no",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto32["m_sql"] = "visa_no";
-$proto32["m_srcTableName"] = "employees";
-$proto32["m_expr"]=$obj;
-$proto32["m_alias"] = "";
-$obj = new SQLFieldListItem($proto32);
+$proto31["m_sql"] = "visa_no";
+$proto31["m_srcTableName"] = "employees";
+$proto31["m_expr"]=$obj;
+$proto31["m_alias"] = "";
+$obj = new SQLFieldListItem($proto31);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto34=array();
+						$proto33=array();
 			$obj = new SQLField(array(
 	"m_strName" => "visa_expiry",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto34["m_sql"] = "visa_expiry";
-$proto34["m_srcTableName"] = "employees";
-$proto34["m_expr"]=$obj;
-$proto34["m_alias"] = "";
-$obj = new SQLFieldListItem($proto34);
+$proto33["m_sql"] = "visa_expiry";
+$proto33["m_srcTableName"] = "employees";
+$proto33["m_expr"]=$obj;
+$proto33["m_alias"] = "";
+$obj = new SQLFieldListItem($proto33);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto36=array();
+						$proto35=array();
 			$obj = new SQLField(array(
 	"m_strName" => "division_id",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto36["m_sql"] = "division_id";
-$proto36["m_srcTableName"] = "employees";
-$proto36["m_expr"]=$obj;
-$proto36["m_alias"] = "";
-$obj = new SQLFieldListItem($proto36);
+$proto35["m_sql"] = "division_id";
+$proto35["m_srcTableName"] = "employees";
+$proto35["m_expr"]=$obj;
+$proto35["m_alias"] = "";
+$obj = new SQLFieldListItem($proto35);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto38=array();
+						$proto37=array();
 			$obj = new SQLField(array(
 	"m_strName" => "doj",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto38["m_sql"] = "doj";
-$proto38["m_srcTableName"] = "employees";
-$proto38["m_expr"]=$obj;
-$proto38["m_alias"] = "";
-$obj = new SQLFieldListItem($proto38);
+$proto37["m_sql"] = "doj";
+$proto37["m_srcTableName"] = "employees";
+$proto37["m_expr"]=$obj;
+$proto37["m_alias"] = "";
+$obj = new SQLFieldListItem($proto37);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto40=array();
+						$proto39=array();
 			$obj = new SQLField(array(
 	"m_strName" => "dor",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto40["m_sql"] = "dor";
-$proto40["m_srcTableName"] = "employees";
-$proto40["m_expr"]=$obj;
-$proto40["m_alias"] = "";
-$obj = new SQLFieldListItem($proto40);
+$proto39["m_sql"] = "dor";
+$proto39["m_srcTableName"] = "employees";
+$proto39["m_expr"]=$obj;
+$proto39["m_alias"] = "";
+$obj = new SQLFieldListItem($proto39);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto42=array();
+						$proto41=array();
 			$obj = new SQLField(array(
 	"m_strName" => "status_id",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto42["m_sql"] = "status_id";
-$proto42["m_srcTableName"] = "employees";
-$proto42["m_expr"]=$obj;
-$proto42["m_alias"] = "";
-$obj = new SQLFieldListItem($proto42);
+$proto41["m_sql"] = "status_id";
+$proto41["m_srcTableName"] = "employees";
+$proto41["m_expr"]=$obj;
+$proto41["m_alias"] = "";
+$obj = new SQLFieldListItem($proto41);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto44=array();
+						$proto43=array();
 			$obj = new SQLField(array(
 	"m_strName" => "experence",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto44["m_sql"] = "experence";
-$proto44["m_srcTableName"] = "employees";
-$proto44["m_expr"]=$obj;
-$proto44["m_alias"] = "";
-$obj = new SQLFieldListItem($proto44);
+$proto43["m_sql"] = "experence";
+$proto43["m_srcTableName"] = "employees";
+$proto43["m_expr"]=$obj;
+$proto43["m_alias"] = "";
+$obj = new SQLFieldListItem($proto43);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto46=array();
+						$proto45=array();
 			$obj = new SQLField(array(
 	"m_strName" => "nationality",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto46["m_sql"] = "nationality";
-$proto46["m_srcTableName"] = "employees";
-$proto46["m_expr"]=$obj;
-$proto46["m_alias"] = "";
-$obj = new SQLFieldListItem($proto46);
+$proto45["m_sql"] = "nationality";
+$proto45["m_srcTableName"] = "employees";
+$proto45["m_expr"]=$obj;
+$proto45["m_alias"] = "";
+$obj = new SQLFieldListItem($proto45);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto48=array();
+						$proto47=array();
 			$obj = new SQLField(array(
 	"m_strName" => "qulification",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto48["m_sql"] = "qulification";
-$proto48["m_srcTableName"] = "employees";
-$proto48["m_expr"]=$obj;
-$proto48["m_alias"] = "";
-$obj = new SQLFieldListItem($proto48);
+$proto47["m_sql"] = "qulification";
+$proto47["m_srcTableName"] = "employees";
+$proto47["m_expr"]=$obj;
+$proto47["m_alias"] = "";
+$obj = new SQLFieldListItem($proto47);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto50=array();
+						$proto49=array();
 			$obj = new SQLField(array(
 	"m_strName" => "skillset",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto50["m_sql"] = "skillset";
-$proto50["m_srcTableName"] = "employees";
-$proto50["m_expr"]=$obj;
-$proto50["m_alias"] = "";
-$obj = new SQLFieldListItem($proto50);
+$proto49["m_sql"] = "skillset";
+$proto49["m_srcTableName"] = "employees";
+$proto49["m_expr"]=$obj;
+$proto49["m_alias"] = "";
+$obj = new SQLFieldListItem($proto49);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto52=array();
+						$proto51=array();
 			$obj = new SQLField(array(
 	"m_strName" => "cid",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto52["m_sql"] = "cid";
-$proto52["m_srcTableName"] = "employees";
-$proto52["m_expr"]=$obj;
-$proto52["m_alias"] = "";
-$obj = new SQLFieldListItem($proto52);
+$proto51["m_sql"] = "cid";
+$proto51["m_srcTableName"] = "employees";
+$proto51["m_expr"]=$obj;
+$proto51["m_alias"] = "";
+$obj = new SQLFieldListItem($proto51);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto54=array();
+						$proto53=array();
 			$obj = new SQLField(array(
 	"m_strName" => "reset_token",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto54["m_sql"] = "reset_token";
-$proto54["m_srcTableName"] = "employees";
-$proto54["m_expr"]=$obj;
-$proto54["m_alias"] = "";
-$obj = new SQLFieldListItem($proto54);
+$proto53["m_sql"] = "reset_token";
+$proto53["m_srcTableName"] = "employees";
+$proto53["m_expr"]=$obj;
+$proto53["m_alias"] = "";
+$obj = new SQLFieldListItem($proto53);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto56=array();
+						$proto55=array();
 			$obj = new SQLField(array(
 	"m_strName" => "reset_date",
 	"m_strTable" => "employees",
 	"m_srcTableName" => "employees"
 ));
 
-$proto56["m_sql"] = "reset_date";
-$proto56["m_srcTableName"] = "employees";
-$proto56["m_expr"]=$obj;
-$proto56["m_alias"] = "";
-$obj = new SQLFieldListItem($proto56);
+$proto55["m_sql"] = "reset_date";
+$proto55["m_srcTableName"] = "employees";
+$proto55["m_expr"]=$obj;
+$proto55["m_alias"] = "";
+$obj = new SQLFieldListItem($proto55);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto58=array();
-$proto58["m_link"] = "SQLL_MAIN";
-			$proto59=array();
-$proto59["m_strName"] = "employees";
-$proto59["m_srcTableName"] = "employees";
-$proto59["m_columns"] = array();
-$proto59["m_columns"][] = "eid";
-$proto59["m_columns"][] = "ename";
-$proto59["m_columns"][] = "emppic";
-$proto59["m_columns"][] = "designation";
-$proto59["m_columns"][] = "whtasapp";
-$proto59["m_columns"][] = "localnum";
-$proto59["m_columns"][] = "skype";
-$proto59["m_columns"][] = "dropbox";
-$proto59["m_columns"][] = "email";
-$proto59["m_columns"][] = "dob";
-$proto59["m_columns"][] = "password";
-$proto59["m_columns"][] = "passportno";
-$proto59["m_columns"][] = "passport_expiry";
-$proto59["m_columns"][] = "visa_no";
-$proto59["m_columns"][] = "visa_expiry";
-$proto59["m_columns"][] = "division_id";
-$proto59["m_columns"][] = "doj";
-$proto59["m_columns"][] = "dor";
-$proto59["m_columns"][] = "status_id";
-$proto59["m_columns"][] = "experence";
-$proto59["m_columns"][] = "nationality";
-$proto59["m_columns"][] = "qulification";
-$proto59["m_columns"][] = "skillset";
-$proto59["m_columns"][] = "cid";
-$proto59["m_columns"][] = "reset_token";
-$proto59["m_columns"][] = "reset_date";
-$obj = new SQLTable($proto59);
-
-$proto58["m_table"] = $obj;
-$proto58["m_sql"] = "employees";
-$proto58["m_alias"] = "";
+												$proto57=array();
+$proto57["m_link"] = "SQLL_MAIN";
+			$proto58=array();
+$proto58["m_strName"] = "employees";
 $proto58["m_srcTableName"] = "employees";
-$proto60=array();
-$proto60["m_sql"] = "";
-$proto60["m_uniontype"] = "SQLL_UNKNOWN";
+$proto58["m_columns"] = array();
+$proto58["m_columns"][] = "eid";
+$proto58["m_columns"][] = "ename";
+$proto58["m_columns"][] = "emppic";
+$proto58["m_columns"][] = "designation";
+$proto58["m_columns"][] = "whtasapp";
+$proto58["m_columns"][] = "localnum";
+$proto58["m_columns"][] = "skype";
+$proto58["m_columns"][] = "dropbox";
+$proto58["m_columns"][] = "email";
+$proto58["m_columns"][] = "dob";
+$proto58["m_columns"][] = "password";
+$proto58["m_columns"][] = "passportno";
+$proto58["m_columns"][] = "passport_expiry";
+$proto58["m_columns"][] = "visa_no";
+$proto58["m_columns"][] = "visa_expiry";
+$proto58["m_columns"][] = "division_id";
+$proto58["m_columns"][] = "doj";
+$proto58["m_columns"][] = "dor";
+$proto58["m_columns"][] = "status_id";
+$proto58["m_columns"][] = "experence";
+$proto58["m_columns"][] = "nationality";
+$proto58["m_columns"][] = "qulification";
+$proto58["m_columns"][] = "skillset";
+$proto58["m_columns"][] = "cid";
+$proto58["m_columns"][] = "reset_token";
+$proto58["m_columns"][] = "reset_date";
+$obj = new SQLTable($proto58);
+
+$proto57["m_table"] = $obj;
+$proto57["m_sql"] = "employees";
+$proto57["m_alias"] = "";
+$proto57["m_srcTableName"] = "employees";
+$proto59=array();
+$proto59["m_sql"] = "";
+$proto59["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto60["m_column"]=$obj;
-$proto60["m_contained"] = array();
-$proto60["m_strCase"] = "";
-$proto60["m_havingmode"] = false;
-$proto60["m_inBrackets"] = false;
-$proto60["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto60);
+$proto59["m_column"]=$obj;
+$proto59["m_contained"] = array();
+$proto59["m_strCase"] = "";
+$proto59["m_havingmode"] = false;
+$proto59["m_inBrackets"] = false;
+$proto59["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto59);
 
-$proto58["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto58);
+$proto57["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto57);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -4809,10 +4486,8 @@ $queryData_employees = createSqlQuery_employees();
 
 
 	
-		;
-
 																										
-
+	
 $tdataemployees[".sqlquery"] = $queryData_employees;
 
 $tableEvents["employees"] = new eventsBase;

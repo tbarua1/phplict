@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,255 +12,203 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-view" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_viewpage}
-<div {$viewpage_chiddenattr} data-pageid="{$pageid}" data-container="viewpage" class="container    "> 
+{BEGIN container_all}
+<div class="rnr-c rnr-cv rnr-c-all">
 
 
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_main} rnr-wrapper rnr-cbw-main">
+
+{BEGIN container_main}
+<div class="rnr-c rnr-cv rnr-c-main">
 
 
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-12 "> 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_view} rnr-wrapper rnr-cbw-view">
+
+{BEGIN container_view}
+<div class="rnr-c rnr-cv rnr-c-view">
 
 {BEGIN viewheader}
-	<h2 {$viewheader_hiddenattr} data-pageid="{$pageid}" data-brick="viewheader" >{$pagetitlelabel university view}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END viewheader}
+<div  class="rnr-brickcontents style2 rnr-b-viewheader {$brickclass_viewheader}"><span>	<h1>{$pagetitlelabel university view}</h1>
+</span></div>{END viewheader}
 
 
 
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_viewpage}
-
-
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class=" form-horizontal  col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$viewfields_hiddenattr} data-pageid="{$pageid}" data-brick="viewfields" >
-
-	<div class="container">
-					{BEGIN university_id_fieldblock}
-	<div class="{$fielddispclass_university_id} col-md-6 bs-viewcontrolgroup" data-fieldname="university_id">
-		<label class="control-label" for="{$labelfor_university_id}">
-			{$label university university_id}
-		</label>
-		<div class="" >
-			{$university_id_value}&nbsp;
-		</div>
-	</div>
+<div  class="rnr-brickcontents style1 rnr-b-viewfields {$brickclass_viewfields}"><table class="fieldGrid">
+	{BEGIN university_id_fieldblock}
+<tr class="{$fielddispclass_university_id}" data-fieldname="university_id">
+	<td class="rnr-label">
+		{$label university university_id}
+	</td>
+	<td class="rnr-control style3">
+		{$university_id_value}&nbsp;
+	</td>
+</tr>
 {END university_id_fieldblock}
-					{BEGIN University_name_fieldblock}
-	<div class="{$fielddispclass_University_name} col-md-6 bs-viewcontrolgroup" data-fieldname="University_name">
-		<label class="control-label" for="{$labelfor_University_name}">
-			{$label university University_name}
-		</label>
-		<div class="" >
-			{$University_name_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN University_name_fieldblock}
+<tr class="{$fielddispclass_University_name}" data-fieldname="University_name">
+	<td class="rnr-label">
+		{$label university University_name}
+	</td>
+	<td class="rnr-control style3">
+		{$University_name_value}&nbsp;
+	</td>
+</tr>
 {END University_name_fieldblock}
-					{BEGIN MOU_date_fieldblock}
-	<div class="{$fielddispclass_MOU_date} col-md-6 bs-viewcontrolgroup" data-fieldname="MOU_date">
-		<label class="control-label" for="{$labelfor_MOU_date}">
-			{$label university MOU_date}
-		</label>
-		<div class="" >
-			{$MOU_date_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN MOU_date_fieldblock}
+<tr class="{$fielddispclass_MOU_date}" data-fieldname="MOU_date">
+	<td class="rnr-label">
+		{$label university MOU_date}
+	</td>
+	<td class="rnr-control style3">
+		{$MOU_date_value}&nbsp;
+	</td>
+</tr>
 {END MOU_date_fieldblock}
-					{BEGIN TUP_fieldblock}
-	<div class="{$fielddispclass_TUP} col-md-6 bs-viewcontrolgroup" data-fieldname="TUP">
-		<label class="control-label" for="{$labelfor_TUP}">
-			{$label university TUP}
-		</label>
-		<div class="" >
-			{$TUP_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN TUP_fieldblock}
+<tr class="{$fielddispclass_TUP}" data-fieldname="TUP">
+	<td class="rnr-label">
+		{$label university TUP}
+	</td>
+	<td class="rnr-control style3">
+		{$TUP_value}&nbsp;
+	</td>
+</tr>
 {END TUP_fieldblock}
-					{BEGIN FS_fieldblock}
-	<div class="{$fielddispclass_FS} col-md-6 bs-viewcontrolgroup" data-fieldname="FS">
-		<label class="control-label" for="{$labelfor_FS}">
-			{$label university FS}
-		</label>
-		<div class="" >
-			{$FS_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN FS_fieldblock}
+<tr class="{$fielddispclass_FS}" data-fieldname="FS">
+	<td class="rnr-label">
+		{$label university FS}
+	</td>
+	<td class="rnr-control style3">
+		{$FS_value}&nbsp;
+	</td>
+</tr>
 {END FS_fieldblock}
-					{BEGIN TYPE_fieldblock}
-	<div class="{$fielddispclass_TYPE} col-md-6 bs-viewcontrolgroup" data-fieldname="TYPE">
-		<label class="control-label" for="{$labelfor_TYPE}">
-			{$label university TYPE}
-		</label>
-		<div class="" >
-			{$TYPE_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN TYPE_fieldblock}
+<tr class="{$fielddispclass_TYPE}" data-fieldname="TYPE">
+	<td class="rnr-label">
+		{$label university TYPE}
+	</td>
+	<td class="rnr-control style3">
+		{$TYPE_value}&nbsp;
+	</td>
+</tr>
 {END TYPE_fieldblock}
-					{BEGIN division_id_fieldblock}
-	<div class="{$fielddispclass_division_id} col-md-6 bs-viewcontrolgroup" data-fieldname="division_id">
-		<label class="control-label" for="{$labelfor_division_id}">
-			{$label university division_id}
-		</label>
-		<div class="" >
-			{$division_id_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN division_id_fieldblock}
+<tr class="{$fielddispclass_division_id}" data-fieldname="division_id">
+	<td class="rnr-label">
+		{$label university division_id}
+	</td>
+	<td class="rnr-control style3">
+		{$division_id_value}&nbsp;
+	</td>
+</tr>
 {END division_id_fieldblock}
-					{BEGIN Lat_fieldblock}
-	<div class="{$fielddispclass_Lat} col-md-6 bs-viewcontrolgroup" data-fieldname="Lat">
-		<label class="control-label" for="{$labelfor_Lat}">
-			{$label university Lat}
-		</label>
-		<div class="" >
-			{$Lat_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN Lat_fieldblock}
+<tr class="{$fielddispclass_Lat}" data-fieldname="Lat">
+	<td class="rnr-label">
+		{$label university Lat}
+	</td>
+	<td class="rnr-control style3">
+		{$Lat_value}&nbsp;
+	</td>
+</tr>
 {END Lat_fieldblock}
-					{BEGIN Lng_fieldblock}
-	<div class="{$fielddispclass_Lng} col-md-6 bs-viewcontrolgroup" data-fieldname="Lng">
-		<label class="control-label" for="{$labelfor_Lng}">
-			{$label university Lng}
-		</label>
-		<div class="" >
-			{$Lng_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN Lng_fieldblock}
+<tr class="{$fielddispclass_Lng}" data-fieldname="Lng">
+	<td class="rnr-label">
+		{$label university Lng}
+	</td>
+	<td class="rnr-control style3">
+		{$Lng_value}&nbsp;
+	</td>
+</tr>
 {END Lng_fieldblock}
-	</div>
+</table></div>
+
+
+{BEGIN viewbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-viewbuttons {$brickclass_viewbuttons}"><div class="rnr-buttons-right">
+{BEGIN prev_button}
+<a href="#" class="rnr-button {$prevbutton_class}" {$prevbutton_attrs}>&lt;&lt;&lt;</a>
+{END prev_button}
+{BEGIN next_button}
+<a href="#" class="rnr-button {$nextbutton_class}" {$nextbutton_attrs}>&gt;&gt;&gt;</a>
+{END next_button}
 </div>
-
-
+<div class="rnr-buttons-left">
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}
+{BEGIN close_button}
+<a href="#" class="rnr-button" {$closebutton_attrs}>Close window</a>
+{END close_button}
+{BEGIN edit_page_button}
+<a href="#" class="rnr-button" {$edit_page_button_attrs}>Edit</a>
+{END edit_page_button}
+</div>
+</div>{END viewbuttons}
 
 
 </div>
 {END container_fields}
 
+</div>
 
 
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+</div>
+{END container_view}
+
+</div>
 
 
+</div>
+{END container_main}
 
-
-{BEGIN container_buttons}
-<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-6 "> 
-
-{BEGIN viewbuttons}
-{BEGIN back_button}
-<button class="btn btn-primary" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{BEGIN close_button}
-<button href="#" class="btn btn-primary" {$closebutton_attrs}>Close window</button>
-{END close_button}
-{END viewbuttons}
+</div>
 
 
 
 </div>
-{END container_leftbuttons}
+{END container_all}
 
 
-
-
-
-
-
-
-{BEGIN container_leftbuttons_1}
-<div {$leftbuttons_1_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons_1" class="   col-md-4 "> 
-
-{BEGIN rightviewbuttons}
-<div class="btn-group" role="group">
-		{BEGIN prev_button}
-	<button class="btn btn-default {$prevbutton_class}" {$prevbutton_attrs}><span class="glyphicon glyphicon-chevron-left"></span></button>
-	{END prev_button}
-	{BEGIN next_button}
-	<button class="btn btn-default {$nextbutton_class}" {$nextbutton_attrs}><span class="glyphicon glyphicon-chevron-right"></span></button>
-	{END next_button}
-		{BEGIN view_menu_button}
-	<div class="btn-group dropup" role="group">
-		<button class="btn btn-default dropdown-toggle {$groupbutton_class}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-		<ul class="dropdown-menu dropdown-left">
-									{BEGIN edit_page_button}
-				<li><a href=# {$edit_page_button_attrs}>Edit</a></li>
-			{END edit_page_button}
-		</ul>
+		</div>
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
+				
+			</div>
+			<div class="rnr-center {$blockclass_center}">
+				
+			</div>
+			<div class="rnr-right {$blockclass_right}">
+				
+			</div>
+		</div>
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
+		</div>
 	</div>
-	{END view_menu_button}
-</div>
-{END rightviewbuttons}
-
-
-
-</div>
-{END container_leftbuttons_1}
-
-
-
-
-
-
-</div>
-{END container_buttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
-
-
-		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
-				
-			</div>
-			<div class="bs-left" {$blockattr_left}>
-				
-			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
-				
-			</div>
-		</div>
-		<DIV class="bs-bottom">
-        
-		</div>
+		
 		{$footer}
 	{END body}
 	</body>

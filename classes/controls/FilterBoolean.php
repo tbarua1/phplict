@@ -1,9 +1,9 @@
 <?php
 class FilterBoolean extends FilterControl
 {
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterBoolean($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterControl($fName, $pageObject, $id, $viewControls);
 		
 		$this->separator = "~checked~";
 		$this->filterFormat = FF_BOOLEAN;
@@ -22,8 +22,8 @@ class FilterBoolean extends FilterControl
 		$type = $this->pSet->getFieldType($this->fName);
 		$bNeedQuotes = NeedQuotes($type);
 		
-		$fullFieldName = $this->connection->addFieldWrappers($this->fName);
-		$fullTotalFieldName = $this->connection->addFieldWrappers($this->totalsfName);
+		$fullFieldName = $this->getDbFieldName($this->fName);
+		$fullTotalFieldName = $this->getDbFieldName($this->totalsfName);
 		
 		$booleanData = array("checked", "unchecked");
 		$totals = array();

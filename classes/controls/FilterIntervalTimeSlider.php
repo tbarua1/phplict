@@ -7,9 +7,9 @@ class FilterIntervalTimeSlider extends FilterIntervalDateSlider
 	 */
 	protected $baseDateArray = array();
 	
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterIntervalTimeSlider($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterIntervalDateSlider($fName, $pageObject, $id, $viewControls);
 		$this->baseDateArray = array(1970, 1, 1, 0, 0, 0);
 	}
 	
@@ -27,8 +27,7 @@ class FilterIntervalTimeSlider extends FilterIntervalDateSlider
 			return array(0, 0, 0, $timeArray[0], $timeArray[1] ,$timeArray[2]);
 		}	
 		$timeInSeonds = $this->getValueInSeconds($value);	
-		$baseDateArray = $this->baseDateArray;
-		return addSeconds($baseDateArray, $timeInSeonds);
+		return addSeconds($this->baseDateArray, $timeInSeonds);
 	}
 	
 	/**

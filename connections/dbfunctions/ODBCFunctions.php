@@ -9,6 +9,23 @@ class ODBCFunctions extends DBFunctions
 	{
 		return $str;
 	}
+	/**
+	 * @param String str
+	 * @return String
+	 */	
+	public function prepareString( $str )
+	{
+		return "'".$this->addSlashes($str)."'";
+	}
+	
+	/**
+	 * @param String str
+	 * @return String
+	 */		
+	public function addSlashes($str)
+	{
+		return str_replace("'", "''", $str);
+	}
 	
 	/**
 	 * @param String str
@@ -69,9 +86,7 @@ class ODBCFunctions extends DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
-		if( $val == "" || $val === null )
-			return 'null';
-		return "#".$this->addSlashes($val)."#";
+		return "#".$val."#";
 	}
 
 	/**
@@ -93,18 +108,6 @@ class ODBCFunctions extends DBFunctions
 	public function field2time($value, $type)
 	{
 		return $value;
-	}
-
-	/**
-	 * Get the auto generated SQL string used in the last query
-	 * @param String key
-	 * @param String table
-	 * @param String oraSequenceName (optional)	
-	 * @return String
-	 */
-	public function getInsertedIdSQL( $key = null, $table = null, $oraSequenceName = false )
-	{
-		return "SELECT @@IDENTITY";
 	}
 
 	/**

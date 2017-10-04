@@ -1,15 +1,6 @@
 <?php
 class MSSQLFunctions extends DBFunctions
 {	
-
-	function __construct( $params )
-	{
-		parent::__construct($params);
-		$this->strLeftWrapper = "[";
-		$this->strRightWrapper = "]";
-	}
-
-
 	/**
 	 * @param String str
 	 * @return String
@@ -28,7 +19,15 @@ class MSSQLFunctions extends DBFunctions
 		return "N'".$this->addSlashes($str)."'";
 	}
 	
-
+	/**
+	 * @param String str
+	 * @return String
+	 */		
+	public function addSlashes( $str )
+	{
+		return str_replace("'", "''", $str);
+	}
+		
 	/**
 	 * @param String str
 	 * @return String
@@ -38,6 +37,24 @@ class MSSQLFunctions extends DBFunctions
 		return "0x".bin2hex($str);
 	}
 	
+	/**
+	 * @param String str
+	 * @return String
+	 */	
+	public function stripSlashesBinary( $str )
+	{
+	//	try to remove ole header for BMP pictures
+		$pos = strpos($str, ".Picture");
+		if( $pos === false || $pos > 300 )
+			return $str;
+			
+		$pos1 = strpos($str, "BM", $pos);
+		if( $pos1 === false || $pos1 > 300 )
+			return $str;
+			
+		return substr($str, $pos1);
+	}
+
 	/**
 	 * adds wrappers to field name if required	
 	 * @param String strName
@@ -67,9 +84,7 @@ class MSSQLFunctions extends DBFunctions
 	 */
 	public function addDateQuotes( $val )
 	{
-		if( $val == "" || $val === null )
-			return 'null';
-		return "convert(datetime,'".$this->addSlashes($val)."',120)";
+		return "convert(datetime,'".$val."',120)";
 	}
 	
 	/**
@@ -97,19 +112,7 @@ class MSSQLFunctions extends DBFunctions
 	public function field2time($value, $type)
 	{
 		return $value;
-	}
-
-	/**
-	 * Get the auto generated SQL string used in the last query
-	 * @param String key
-	 * @param String table
-	 * @param String oraSequenceName (optional)	
-	 * @return String
-	 */
-	public function getInsertedIdSQL( $key = null, $table = null, $oraSequenceName = false )
-	{
-		return "SELECT @@IDENTITY";
-	}
+	}	
 
 	/**
 	 * @param String strName

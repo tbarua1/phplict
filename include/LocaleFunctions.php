@@ -52,8 +52,8 @@ function str_format_number($val,$valDigits = false)
       $fmul=1;
       for($i=0;$i<$iDigits;$i++)
         $fmul*=10;
-      $sfrac=round($frac*$fmul);
-	  //$sfrac=mysprintf("%.0f",array($frac));
+      $frac=round($frac*$fmul);
+	  $sfrac=mysprintf("%.0f",array($frac));
 	  while(strlen($sfrac)<$iDigits)
 	    $sfrac="0".$sfrac;
 	  $out.=$locale_info["LOCALE_SDECIMAL"].$sfrac;
@@ -198,11 +198,11 @@ function format_datetime_custom($time,$format)
 		return "";
 	$i=0;
 	$subst=array();
-	if( strpos( $format, "ddd" ) !== false ) {
-		$weekday=getdayofweek($time);
-		$subst["dddd"]=$locale_info["LOCALE_SDAYNAME".$weekday];
-		$subst["ddd"]=$locale_info["LOCALE_SABBREVDAYNAME".$weekday];
-	}
+	$weekday=getdayofweek($time);
+	
+	
+	$subst["dddd"]=$locale_info["LOCALE_SDAYNAME".$weekday];
+	$subst["ddd"]=$locale_info["LOCALE_SABBREVDAYNAME".$weekday];
 	$subst["dd"]=mysprintf("%02d",array($time[2]));
 	$subst["d"]=$time[2];
 	if(array_key_exists("LOCALE_SMONTHNAME".$time[1],$locale_info))
@@ -241,29 +241,13 @@ function format_datetime_custom($time,$format)
 	$subst["h"]=$hour12;
 	if($am)
 	{
-		if ( strlen($locale_info["LOCALE_S1159"]) !== 0 )
-		{
-			$subst["tt"]= $locale_info["LOCALE_S1159"];
-			$subst["t"]=substr($locale_info["LOCALE_S1159"],0,1);			
-		}
-		else
-		{
-			$subst["tt"]= "am";
-			$subst["t"]= "a";
-		}
+		$subst["tt"]=$locale_info["LOCALE_S1159"];
+		$subst["t"]=substr($locale_info["LOCALE_S1159"],0,1);
 	}
 	else
 	{
-		if ( strlen($locale_info["LOCALE_S2359"]) !== 0 )
-		{
-			$subst["tt"]= $locale_info["LOCALE_S2359"];
-			$subst["t"]=substr($locale_info["LOCALE_S2359"],0,1);			
-		}
-		else
-		{
-			$subst["tt"]= "pm";
-			$subst["t"]= "p";
-		}
+		$subst["tt"]=$locale_info["LOCALE_S2359"];
+		$subst["t"]=substr($locale_info["LOCALE_S2359"],0,1);
 	}
 	$out=$format;
 	$inquot=0;
@@ -339,33 +323,36 @@ function simpledate2db($strdate,$formatid)
 		$numbers[]=1;
 	if(!$formatid)
 	{
-		$vMonth=$numbers[0];
-		$vDay=$numbers[1];
-		$vYear=$numbers[2];
+		$month=$numbers[0];
+		$day=$numbers[1];
+		$year=$numbers[2];
+//		list($month,$day,$year)=$numbers;
 		
 	}
 	else if($formatid==1)
 	{
-		$vDay=$numbers[0];
-		$vMonth=$numbers[1];
-		$vYear=$numbers[2];
+		$day=$numbers[0];
+		$month=$numbers[1];
+		$year=$numbers[2];
+//		list($day,$month,$year)=$numbers;
 	}
 	else if($formatid==2)
 	{
-		$vYear=$numbers[0];
-		$vMonth=$numbers[1];
-		$vDay=$numbers[2];
+		$year=$numbers[0];
+		$month=$numbers[1];
+		$day=$numbers[2];
+//		list($year,$month,$day)=$numbers;
 	}
 	else
 		return $strdate;
-	if($vYear<100)
+	if($year<100)
 	{
-		if($vYear<60)
-			$vYear+=2000;
+		if($year<60)
+			$year+=2000;
 		else
-			$vYear+=1900;
+			$year+=1900;
 	}
-	return mysprintf("%04d-%02d-%02d",array($vYear,$vMonth,$vDay));
+	return mysprintf("%04d-%02d-%02d",array($year,$month,$day));
 }
 
 
@@ -384,53 +371,52 @@ function localdate2db($strdate)
 function localtime2db($strtime)
 {
 	global $locale_info;
-
-	//	check if we use 12hours clock
-	$use12 = 0;
-	$pos = strpos($locale_info["LOCALE_STIMEFORMAT"],"h".$locale_info["LOCALE_STIME"]);
-	$amstr = $locale_info["LOCALE_S1159"];
-	$pmstr = $locale_info["LOCALE_S2359"];
-
-	$amRegular = "a\.?m\.?";
-	$pmRegular = "p\.?m\.?";
-
-	if( strlen($amstr) )
-		$amRegular .= "|".$amstr;
-	if ( strlen($pmstr) )
-		$pmRegular .= "|".$pmstr;
-
-	$isAm = preg_match("/(" . $amRegular . ")/isU", $strtime);
-	$isPm = preg_match("/(" . $pmRegular . ")/isU", $strtime);
-
-	if ( $pos ||  $isAm || $isPm )
+//	check if we use 12hours clock
+	$use12=0;
+	$strtime = strtoupper($strtime);
+	$pos=strpos($locale_info["LOCALE_STIMEFORMAT"],"h".$locale_info["LOCALE_STIME"]);
+	if(!($pos===false)  or (strpos($strtime,"AM")!==false or strpos($strtime,"PM")!==false))
 	{
 		$use12=1;
+//	determine am/pm
 		$pm=0;
-
-		if ( !$isAm && $isPm )
-			$pm = 1;
-		elseif ( $isAm && !$isPm )
-			$pm = 0;
-		elseif ( !$isAm && !$isPm ) 
-			$use12 = 0;
+		
+		$amstr= $locale_info["LOCALE_S1159"] == "" ? "AM" :  $locale_info["LOCALE_S1159"];
+		$pmstr=$locale_info["LOCALE_S2359"] == "" ? "PM" : $locale_info["LOCALE_S2359"];
+		
+		$posam=false;
+		$pospm=false;
+		if(strlen($amstr))
+			$posam=strpos($strtime,$amstr);
+		if(strlen($pmstr))
+			$pospm=strpos($strtime,$pmstr);
+		if($posam===false && $pospm!==false)
+			$pm=1;
+		elseif($posam!==false && $pospm===false)
+			$pm=0;
+		elseif($posam===false && $pospm===false)
+			$use12=0;
+		else
+		{
+			if($posam>$pospm)
+				$pm=1;
+		}
 	}
-
-	$str = $strtime;
-	$numbers = parsenumbers($str);
-	while ( count($numbers) < 3 )
-		$numbers[] = 0;
-	$h = $numbers[0];
-	$m = $numbers[1];
-	$s = $numbers[2];
-	//	list($h,$m,$s)=$numbers;
-	if( $use12 && $h )
+	$str=$strtime;
+	$numbers=parsenumbers($str);
+	while(count($numbers)<3)
+		$numbers[]=0;
+	$h=$numbers[0];
+	$m=$numbers[1];
+	$s=$numbers[2];
+//	list($h,$m,$s)=$numbers;
+	if($use12 && $h)
 	{
-		if( !$pm && $h == 12 )
-			$h = 0;
-		if( $pm && $h < 12 )
-			$h += 12;
+		if(!$pm && $h==12)
+			$h=0;
+		if($pm && $h<12)
+			$h+=12;
 	}
-
 	return mysprintf("%02d:%02d:%02d",array($h,$m,$s));
 }
 
@@ -449,79 +435,77 @@ function localdatetime2db($strdatetime,$format="")
 	if($format=="ymd")
 		$locale_idate=2;
 
-	//	check if we use 12hours clock
-	$use12 = 0;
-	$pos = strpos($locale_info["LOCALE_STIMEFORMAT"],"h".$locale_info["LOCALE_STIME"]);
-	$amstr = $locale_info["LOCALE_S1159"];
-	$pmstr = $locale_info["LOCALE_S2359"];
-
-	$amRegular = "a\.?m\.?";
-	$pmRegular = "p\.?m\.?";
-
-	if( strlen($amstr) )
-		$amRegular .= "|".$amstr;
-	if ( strlen($pmstr) )
-		$pmRegular .= "|".$pmstr;
-
-	$isAm = preg_match("/(" . $amRegular . ")/isU", $strdatetime);
-	$isPm = preg_match("/(" . $pmRegular . ")/isU", $strdatetime);
-
-	if ( $pos ||  $isAm || $isPm )
+//	check if we use 12hours clock
+	$strtime = strtoupper($strdatetime);
+	$use12=0;
+	$pos=strpos($locale_info["LOCALE_STIMEFORMAT"],"h".$locale_info["LOCALE_STIME"]);
+	if(!($pos===false)  or (strpos($strtime,"AM")!==false or strpos($strtime,"PM")!==false))
 	{
 		$use12=1;
+//	determine am/pm
 		$pm=0;
-
-		if ( !$isAm && $isPm )
-			$pm = 1;
-		elseif ( $isAm && !$isPm )
-			$pm = 0;
-		elseif ( !$isAm && !$isPm ) 
-			$use12 = 0;
+		
+		$amstr= $locale_info["LOCALE_S1159"] == "" ? "AM" :  $locale_info["LOCALE_S1159"];
+		$pmstr=$locale_info["LOCALE_S2359"] == "" ? "PM" : $locale_info["LOCALE_S2359"];
+		
+		$posam=strpos($strdatetime,$amstr);
+		$pospm=strpos($strdatetime,$pmstr);
+		if($posam===false && $pospm!==false)
+			$pm=1;
+		elseif($posam!==false && $pospm===false)
+			$pm=0;
+		elseif($posam===false && $pospm===false)
+			$use12=0;
+		else
+		{
+			if($posam>$pospm)
+				$pm=1;
+		}
 	}
-
-	$numbers = parsenumbers($strdatetime);
-	if( !$numbers || count($numbers) < 2 )
+	$numbers=parsenumbers($strdatetime);
+	if(!$numbers || count($numbers)<2)
 		return "null";
 //	add current year if not specified
 	if(count($numbers)<3)
 	{	
 		if($locale_idate!=1)
 		{
-			$vMonth=$numbers[0];
-			$vDay=$numbers[1];
+			$month=$numbers[0];
+			$day=$numbers[1];
 		}
 		else
 		{
-			$vMonth=$numbers[1];
-			$vDay=$numbers[0];
+			$month=$numbers[1];
+			$day=$numbers[0];
 		}
-		$vYear=GetCurrentYear();
+		$tm=localtime(time(),true);
+		$year=1900+$tm["tm_year"];
 	}
 	else
 	{
 		if(!$locale_idate)
 		{
-			$vMonth=$numbers[0];
-			$vDay=$numbers[1];
-			$vYear=$numbers[2];
+			$month=$numbers[0];
+			$day=$numbers[1];
+			$year=$numbers[2];
 //			list($month,$day,$year)=$numbers;
 		}
 		else if($locale_idate==1)
 		{
-			$vDay=$numbers[0];
-			$vMonth=$numbers[1];
-			$vYear=$numbers[2];
+			$day=$numbers[0];
+			$month=$numbers[1];
+			$year=$numbers[2];
 //			list($day,$month,$year)=$numbers;
 		}
 		else if($locale_idate==2)
 		{
-			$vYear=$numbers[0];
-			$vMonth=$numbers[1];
-			$vDay=$numbers[2];
+			$year=$numbers[0];
+			$month=$numbers[1];
+			$day=$numbers[2];
 //			list($year,$month,$day)=$numbers;
 		}
 	}		
-	if(!$vMonth || !$vDay)
+	if(!$month || !$day)
 		return "null";
 	while(count($numbers)<6)
 		$numbers[]=0;
@@ -535,14 +519,14 @@ function localdatetime2db($strdatetime,$format="")
 		if($pm && $h<12)
 			$h+=12;
 	}
-	if($vYear<100)
+	if($year<100)
 	{
-		if($vYear<60)
-			$vYear+=2000;
+		if($year<60)
+			$year+=2000;
 		else
-			$vYear+=1900;
+			$year+=1900;
 	}
-	return mysprintf("%04d-%02d-%02d",array($vYear,$vMonth,$vDay))." ".mysprintf("%02d:%02d:%02d",array($h,$m,$s));
+	return mysprintf("%04d-%02d-%02d",array($year,$month,$day))." ".mysprintf("%02d:%02d:%02d",array($h,$m,$s));
 }
 
 
@@ -559,12 +543,12 @@ function parsenumbers($str)
 	$pos=0;
 	while($i<strlen($str))
 	{
-		if(is_numeric(substr($str,$i,1)) && !$num)
+		if(is_numeric($str[$i]) && !$num)
 		{
 			$num=1;
 			$pos=$i;
 		}
-		else if(!is_numeric(substr($str,$i,1)) && $num)
+		else if(!is_numeric($str[$i]) && $num)
 		{
 			$ret[]=(integer)substr($str,$pos,$i-$pos);
 			$num=0;
@@ -600,7 +584,7 @@ function getdayofweek($time)
 			else
 				$daydif-=365;
 //	to given month
-	$mdays=array(1=>31,2=>28,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
+	$mdays=array(1=>31,28,31,30,31,30,31,31,30,31,30,31);
 	if(isleapyear($time[0]))
 		$mdays[2]=29;
 	for($i=1;$i<$time[1] && $i<13;$i++)
@@ -648,7 +632,7 @@ function getweeknumber($time, $firstdayofweek = -1 )
 			else
 				$daydif-=365;
 //	to given month
-	$mdays=array(1=>31,2=>28,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
+	$mdays=array(1=>31,28,31,30,31,30,31,31,30,31,30,31);
 	if(isleapyear($time[0]))
 		$mdays[2]=29;
 	for($i=1;$i<$time[1];$i++)
@@ -666,7 +650,7 @@ function getweeknumber($time, $firstdayofweek = -1 )
  */
 function adddays_old($tm,$days)
 {
-	$mdays=array(1=>31,2=>28,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
+	$mdays=array(1=>31,28,31,30,31,30,31,31,30,31,30,31);
 	$time=$tm;
 	if(isleapyear($time[0]))
 		$mdays[2]=29;
@@ -718,16 +702,16 @@ function adddays_old($tm,$days)
 
 /**
  *	Get nubmer of days in a month
- * @param {int} vYear 
+ * @param {int} year 
  * @param {int} month - values 0-12, 0 - December, 1 - January, ..., 12 - December again
  * @intellisense
  */
-function getMonthDays($vYear, $vMonth)
+function getMonthDays($year, $month)
 {
 	global $_gmdays;
-	if( $vMonth != 2 )
-		return $_gmdays[ $vMonth ];
-	return isleapyear( $vYear ) ? 29 : 28;
+	if( $month != 2 )
+		return $_gmdays[ $month ];
+	return isleapyear( $year ) ? 29 : 28;
 }
 
 function adddays($tm,$days)
@@ -772,7 +756,7 @@ function adddays($tm,$days)
  */
 function addmonths( $tm, $months )
 {
-	$mdays=array(1=>31,2=>28,3=>31,4=>30,5=>31,6=>30,7=>31,8=>31,9=>30,10=>31,11=>30,12=>31);
+	$mdays=array(1=>31,28,31,30,31,30,31,31,30,31,30,31);
 	$time=$tm;
 	
 	$time[0] += (int)($months / 12);
@@ -1075,13 +1059,13 @@ function addMinutesToTime($timeArr, $minutes)
 * @param {number} month
 * @return {number}
 */
-function getLastMonthDayNumber($year, $vMonth)
+function getLastMonthDayNumber($year, $month)
 {
-	if( $vMonth == 2 && isleapyear($year) )
+	if( $month == 2 && isleapyear($year) )
 		return 29;
 		
 	$mdays = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-	return $mdays[$vMonth - 1];
+	return $mdays[$month - 1];
 }
 
 function date2db( $time )
@@ -1136,36 +1120,6 @@ function getMonthNameByNumber ($numMon, $format){
 	}
 		
 	return $numMon;
-}
-
-/**
-* Check if the argument is a date in DB format
-* @param {string} alleged date
-* @return {boolean}
-*/
-function dateInDbFormat($str) 
-{
-	$dbdate = db2time($str);
-	if( count( $dbdate ) < 3 || count( $dbdate ) > 6 )
-		return false;
-	if( $dbdate[1] < 1 || $dbdate[1] > 12 || $dbdate[2] < 1 || $dbdate[2] > 31 )
-		return false;
-	if( count( $dbdate ) >= 4 ) 
-	{
-		if( $dbdate[3] < 0 || $dbdate[3] > 23 )
-			return false;
-	}
-	if( count( $dbdate ) >= 5 ) 
-	{
-		if( $dbdate[4] < 0 || $dbdate[4] > 59 )
-			return false;
-	}
-	if( count( $dbdate ) == 6 ) 
-	{
-		if( $dbdate[5] < 0 || $dbdate[5] > 59 )
-			return false;
-	}
-	return true;
 }
 
 ?>

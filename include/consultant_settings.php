@@ -4,9 +4,9 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdataconsultant = array();
+$tdataconsultant = array();	
 	$tdataconsultant[".truncateText"] = true;
-	$tdataconsultant[".NumberOfChars"] = 80;
+	$tdataconsultant[".NumberOfChars"] = 80; 
 	$tdataconsultant[".ShortName"] = "consultant";
 	$tdataconsultant[".OwnerID"] = "";
 	$tdataconsultant[".OriginalTable"] = "consultant";
@@ -15,26 +15,20 @@ $tdataconsultant = array();
 $fieldLabelsconsultant = array();
 $fieldToolTipsconsultant = array();
 $pageTitlesconsultant = array();
-$placeHoldersconsultant = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelsconsultant["English"] = array();
 	$fieldToolTipsconsultant["English"] = array();
-	$placeHoldersconsultant["English"] = array();
 	$pageTitlesconsultant["English"] = array();
 	$fieldLabelsconsultant["English"]["consultant_id"] = "Consultant Id";
 	$fieldToolTipsconsultant["English"]["consultant_id"] = "";
-	$placeHoldersconsultant["English"]["consultant_id"] = "";
 	$fieldLabelsconsultant["English"]["eid"] = "Eid";
 	$fieldToolTipsconsultant["English"]["eid"] = "";
-	$placeHoldersconsultant["English"]["eid"] = "";
 	$fieldLabelsconsultant["English"]["divison_id"] = "Divison Id";
 	$fieldToolTipsconsultant["English"]["divison_id"] = "";
-	$placeHoldersconsultant["English"]["divison_id"] = "";
 	$fieldLabelsconsultant["English"]["Type"] = "Type";
 	$fieldToolTipsconsultant["English"]["Type"] = "";
-	$placeHoldersconsultant["English"]["Type"] = "";
 	if (count($fieldToolTipsconsultant["English"]))
 		$tdataconsultant[".isUseToolTips"] = true;
 }
@@ -42,27 +36,25 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelsconsultant[""] = array();
 	$fieldToolTipsconsultant[""] = array();
-	$placeHoldersconsultant[""] = array();
 	$pageTitlesconsultant[""] = array();
 	if (count($fieldToolTipsconsultant[""]))
 		$tdataconsultant[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdataconsultant[".NCSearch"] = true;
 
 
 
 $tdataconsultant[".shortTableName"] = "consultant";
 $tdataconsultant[".nSecOptions"] = 0;
-$tdataconsultant[".recsPerRowPrint"] = 1;
+$tdataconsultant[".recsPerRowList"] = 1;
 $tdataconsultant[".mainTableOwnerID"] = "";
 $tdataconsultant[".moveNext"] = 1;
-$tdataconsultant[".entityType"] = 0;
+$tdataconsultant[".nType"] = 0;
 
 $tdataconsultant[".strOriginalTableName"] = "consultant";
 
-	
 
 
 
@@ -86,25 +78,11 @@ $tdataconsultant[".listAjax"] = false;
 	$tdataconsultant[".locking"] = false;
 
 $tdataconsultant[".edit"] = true;
-$tdataconsultant[".afterEditAction"] = 1;
-$tdataconsultant[".closePopupAfterEdit"] = 1;
-$tdataconsultant[".afterEditActionDetTable"] = "";
-
-$tdataconsultant[".add"] = true;
-$tdataconsultant[".afterAddAction"] = 1;
-$tdataconsultant[".closePopupAfterAdd"] = 1;
-$tdataconsultant[".afterAddActionDetTable"] = "";
 
 $tdataconsultant[".list"] = true;
 
-
-
-$tdataconsultant[".reorderRecordsByHeader"] = true;
-
-
-$tdataconsultant[".exportFormatting"] = 2;
-$tdataconsultant[".exportDelimiter"] = ",";
-		
+$tdataconsultant[".inlineEdit"] = true;
+$tdataconsultant[".inlineAdd"] = true;
 $tdataconsultant[".view"] = true;
 
 $tdataconsultant[".import"] = true;
@@ -117,32 +95,21 @@ $tdataconsultant[".delete"] = true;
 
 $tdataconsultant[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdataconsultant[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdataconsultant[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdataconsultant[".searchSaving"] = false;
 //
 
 $tdataconsultant[".showSearchPanel"] = true;
-		$tdataconsultant[".flexibleSearch"] = true;
+		$tdataconsultant[".flexibleSearch"] = true;		
 
-$tdataconsultant[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdataconsultant[".isUseAjaxSuggest"] = false;
+else 
+	$tdataconsultant[".isUseAjaxSuggest"] = true;
 
 $tdataconsultant[".rowHighlite"] = true;
 
 
-
-
-
-$tdataconsultant[".ajaxCodeSnippetAdded"] = false;
-
-$tdataconsultant[".buttonsAdded"] = false;
 
 $tdataconsultant[".addPageEvents"] = false;
 
@@ -151,7 +118,7 @@ $tdataconsultant[".isUseTimeForSearch"] = false;
 
 
 
-$tdataconsultant[".badgeColor"] = "6493EA";
+$tdataconsultant[".useDetailsPreview"] = true;
 
 
 $tdataconsultant[".allSearchFields"] = array();
@@ -188,13 +155,9 @@ $tdataconsultant[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdataconsultant[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdataconsultant[".listGridLayout"] = 3;
+	
 
 
 
@@ -222,14 +185,6 @@ $tdataconsultant[".sqlHead"] = "SELECT consultant_id,  	eid,  	divison_id,  	`Ty
 $tdataconsultant[".sqlFrom"] = "FROM consultant";
 $tdataconsultant[".sqlWhereExpr"] = "";
 $tdataconsultant[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -282,12 +237,6 @@ $tdataconsultant[".addFields"][] = "eid";
 $tdataconsultant[".addFields"][] = "divison_id";
 $tdataconsultant[".addFields"][] = "Type";
 
-$tdataconsultant[".masterListFields"] = array();
-$tdataconsultant[".masterListFields"][] = "consultant_id";
-$tdataconsultant[".masterListFields"][] = "eid";
-$tdataconsultant[".masterListFields"][] = "divison_id";
-$tdataconsultant[".masterListFields"][] = "Type";
-
 $tdataconsultant[".inlineAddFields"] = array();
 $tdataconsultant[".inlineAddFields"][] = "eid";
 $tdataconsultant[".inlineAddFields"][] = "divison_id";
@@ -302,12 +251,6 @@ $tdataconsultant[".inlineEditFields"] = array();
 $tdataconsultant[".inlineEditFields"][] = "eid";
 $tdataconsultant[".inlineEditFields"][] = "divison_id";
 $tdataconsultant[".inlineEditFields"][] = "Type";
-
-$tdataconsultant[".updateSelectedFields"] = array();
-$tdataconsultant[".updateSelectedFields"][] = "eid";
-$tdataconsultant[".updateSelectedFields"][] = "divison_id";
-$tdataconsultant[".updateSelectedFields"][] = "Type";
-
 
 $tdataconsultant[".exportFields"] = array();
 $tdataconsultant[".exportFields"][] = "consultant_id";
@@ -327,7 +270,6 @@ $tdataconsultant[".printFields"][] = "eid";
 $tdataconsultant[".printFields"][] = "divison_id";
 $tdataconsultant[".printFields"][] = "Type";
 
-
 //	consultant_id
 //	Custom field settings
 	$fdata = array();
@@ -335,128 +277,122 @@ $tdataconsultant[".printFields"][] = "Type";
 	$fdata["strName"] = "consultant_id";
 	$fdata["GoodName"] = "consultant_id";
 	$fdata["ownerTable"] = "consultant";
-	$fdata["Label"] = GetFieldLabel("consultant","consultant_id");
+	$fdata["Label"] = GetFieldLabel("consultant","consultant_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "consultant_id";
-
+		$fdata["strField"] = "consultant_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "consultant_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataconsultant["consultant_id"] = $fdata;
 //	eid
 //	Custom field settings
@@ -465,77 +401,70 @@ $tdataconsultant[".printFields"][] = "Type";
 	$fdata["strName"] = "eid";
 	$fdata["GoodName"] = "eid";
 	$fdata["ownerTable"] = "consultant";
-	$fdata["Label"] = GetFieldLabel("consultant","eid");
+	$fdata["Label"] = GetFieldLabel("consultant","eid"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "eid";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "eid"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "eid";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+			
 	
-		
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -543,79 +472,77 @@ $tdataconsultant[".printFields"][] = "Type";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "eid";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "eid";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-		$edata["IsRequired"] = true;
-
+		$edata["IsRequired"] = true; 
 	
-	
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
 						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
 		
 	
-	//	End validation
-
-	
-			
-	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataconsultant["eid"] = $fdata;
 //	divison_id
 //	Custom field settings
@@ -624,77 +551,70 @@ $tdataconsultant[".printFields"][] = "Type";
 	$fdata["strName"] = "divison_id";
 	$fdata["GoodName"] = "divison_id";
 	$fdata["ownerTable"] = "consultant";
-	$fdata["Label"] = GetFieldLabel("consultant","divison_id");
+	$fdata["Label"] = GetFieldLabel("consultant","divison_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "divison_id";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "divison_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "divison_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Lookup wizard");
-
 	
+			
 	
-		
 	
 // Begin Lookup settings
 				$edata["LookupType"] = 2;
@@ -702,79 +622,77 @@ $tdataconsultant[".printFields"][] = "Type";
 		$edata["autoCompleteFieldsOnEdit"] = 0;
 	$edata["autoCompleteFields"] = array();
 		$edata["LCType"] = 0;
-
-	
 		
+		
+			
 	$edata["LinkField"] = "division_id";
 	$edata["LinkFieldType"] = 3;
 	$edata["DisplayField"] = "division_id";
 	
-	
-
-	
+		
 	$edata["LookupOrderBy"] = "";
-
+	
+		
+			
+		
+				
 	
 	
-	
-	
-
-	
-	
+		
 		$edata["SelectSize"] = 1;
-
+		
 // End Lookup Settings
 
 
-		$edata["IsRequired"] = true;
-
+		$edata["IsRequired"] = true; 
 	
-	
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-	
+		
+		
+		
+		
+		
+		
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
 						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
 		
 	
-	//	End validation
-
-	
-			
-	
-	
-	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataconsultant["divison_id"] = $fdata;
 //	Type
 //	Custom field settings
@@ -783,137 +701,129 @@ $tdataconsultant[".printFields"][] = "Type";
 	$fdata["strName"] = "Type";
 	$fdata["GoodName"] = "Type";
 	$fdata["ownerTable"] = "consultant";
-	$fdata["Label"] = GetFieldLabel("consultant","Type");
+	$fdata["Label"] = GetFieldLabel("consultant","Type"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "Type";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "Type"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "`Type`";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdataconsultant["Type"] = $fdata;
 
-
+	
 $tables_data["consultant"]=&$tdataconsultant;
 $field_labels["consultant"] = &$fieldLabelsconsultant;
 $fieldToolTips["consultant"] = &$fieldToolTipsconsultant;
-$placeHolders["consultant"] = &$placeHoldersconsultant;
 $page_titles["consultant"] = &$pageTitlesconsultant;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
@@ -927,24 +837,21 @@ $detailsTablesData["consultant"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="batch";
 		$detailsParam["dOriginalTable"] = "batch";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "batch";
 	$detailsParam["dCaptionTable"] = GetTableCaption("batch");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
 	$detailsParam["dispChildCount"] = "1";
-
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["consultant"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["consultant"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["consultant"][$dIndex]["masterKeys"][]="consultant_id";
@@ -952,7 +859,7 @@ $detailsTablesData["consultant"] = array();
 				$detailsTablesData["consultant"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["consultant"][$dIndex]["detailKeys"][]="ey_spoc";
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["consultant"] = array();
 
@@ -965,21 +872,15 @@ $masterTablesData["consultant"] = array();
 	$masterParams["mShortTable"]= "division";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["consultant"][0] = $masterParams;
+					$masterTablesData["consultant"][0] = $masterParams;	
 				$masterTablesData["consultant"][0]["masterKeys"] = array();
 	$masterTablesData["consultant"][0]["masterKeys"][]="division_id";
 				$masterTablesData["consultant"][0]["detailKeys"] = array();
@@ -993,21 +894,15 @@ $masterTablesData["consultant"] = array();
 	$masterParams["mShortTable"]= "employees";
 	$masterParams["masterKeys"]= array();
 	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "0";
+	$masterParams["dispChildCount"]= "1";
 	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
+	$masterParams["dispInfo"]= "1";
 	$masterParams["previewOnList"]= 1;
 	$masterParams["previewOnAdd"]= 0;
 	$masterParams["previewOnEdit"]= 0;
 	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
 	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["consultant"][1] = $masterParams;
+					$masterTablesData["consultant"][1] = $masterParams;	
 				$masterTablesData["consultant"][1]["masterKeys"] = array();
 	$masterTablesData["consultant"][1]["masterKeys"][]="eid";
 				$masterTablesData["consultant"][1]["detailKeys"] = array();
@@ -1034,132 +929,131 @@ $proto0["m_strFieldList"] = "consultant_id,  	eid,  	divison_id,  	`Type`";
 $proto0["m_strFrom"] = "FROM consultant";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "consultant_id",
 	"m_strTable" => "consultant",
 	"m_srcTableName" => "consultant"
 ));
 
-$proto6["m_sql"] = "consultant_id";
-$proto6["m_srcTableName"] = "consultant";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "consultant_id";
+$proto5["m_srcTableName"] = "consultant";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "eid",
 	"m_strTable" => "consultant",
 	"m_srcTableName" => "consultant"
 ));
 
-$proto8["m_sql"] = "eid";
-$proto8["m_srcTableName"] = "consultant";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
+$proto7["m_sql"] = "eid";
+$proto7["m_srcTableName"] = "consultant";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto10=array();
+						$proto9=array();
 			$obj = new SQLField(array(
 	"m_strName" => "divison_id",
 	"m_strTable" => "consultant",
 	"m_srcTableName" => "consultant"
 ));
 
-$proto10["m_sql"] = "divison_id";
-$proto10["m_srcTableName"] = "consultant";
-$proto10["m_expr"]=$obj;
-$proto10["m_alias"] = "";
-$obj = new SQLFieldListItem($proto10);
+$proto9["m_sql"] = "divison_id";
+$proto9["m_srcTableName"] = "consultant";
+$proto9["m_expr"]=$obj;
+$proto9["m_alias"] = "";
+$obj = new SQLFieldListItem($proto9);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto12=array();
+						$proto11=array();
 			$obj = new SQLField(array(
 	"m_strName" => "Type",
 	"m_strTable" => "consultant",
 	"m_srcTableName" => "consultant"
 ));
 
-$proto12["m_sql"] = "`Type`";
-$proto12["m_srcTableName"] = "consultant";
-$proto12["m_expr"]=$obj;
-$proto12["m_alias"] = "";
-$obj = new SQLFieldListItem($proto12);
+$proto11["m_sql"] = "`Type`";
+$proto11["m_srcTableName"] = "consultant";
+$proto11["m_expr"]=$obj;
+$proto11["m_alias"] = "";
+$obj = new SQLFieldListItem($proto11);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto14=array();
-$proto14["m_link"] = "SQLL_MAIN";
-			$proto15=array();
-$proto15["m_strName"] = "consultant";
-$proto15["m_srcTableName"] = "consultant";
-$proto15["m_columns"] = array();
-$proto15["m_columns"][] = "consultant_id";
-$proto15["m_columns"][] = "eid";
-$proto15["m_columns"][] = "divison_id";
-$proto15["m_columns"][] = "Type";
-$obj = new SQLTable($proto15);
-
-$proto14["m_table"] = $obj;
-$proto14["m_sql"] = "consultant";
-$proto14["m_alias"] = "";
+												$proto13=array();
+$proto13["m_link"] = "SQLL_MAIN";
+			$proto14=array();
+$proto14["m_strName"] = "consultant";
 $proto14["m_srcTableName"] = "consultant";
-$proto16=array();
-$proto16["m_sql"] = "";
-$proto16["m_uniontype"] = "SQLL_UNKNOWN";
+$proto14["m_columns"] = array();
+$proto14["m_columns"][] = "consultant_id";
+$proto14["m_columns"][] = "eid";
+$proto14["m_columns"][] = "divison_id";
+$proto14["m_columns"][] = "Type";
+$obj = new SQLTable($proto14);
+
+$proto13["m_table"] = $obj;
+$proto13["m_sql"] = "consultant";
+$proto13["m_alias"] = "";
+$proto13["m_srcTableName"] = "consultant";
+$proto15=array();
+$proto15["m_sql"] = "";
+$proto15["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto16["m_column"]=$obj;
-$proto16["m_contained"] = array();
-$proto16["m_strCase"] = "";
-$proto16["m_havingmode"] = false;
-$proto16["m_inBrackets"] = false;
-$proto16["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto16);
+$proto15["m_column"]=$obj;
+$proto15["m_contained"] = array();
+$proto15["m_strCase"] = "";
+$proto15["m_havingmode"] = false;
+$proto15["m_inBrackets"] = false;
+$proto15["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto15);
 
-$proto14["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto14);
+$proto13["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto13);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -1173,10 +1067,8 @@ $queryData_consultant = createSqlQuery_consultant();
 
 
 	
-		;
-
 				
-
+	
 $tdataconsultant[".sqlquery"] = $queryData_consultant;
 
 $tableEvents["consultant"] = new eventsBase;

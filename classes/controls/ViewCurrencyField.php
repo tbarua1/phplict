@@ -3,13 +3,17 @@ class ViewCurrencyField extends ViewControl
 {
 	public function showDBValue(&$data, $keylink)
 	{
-		$result = str_format_currency( $data[ $this->field ] );
+		$result = str_format_currency($data[$this->field]);
 		
-		if( !$this->container->forExport || $this->container->forExport != "excel" && $this->container->forExport != "csv" )
-			$result = runner_htmlspecialchars( $result );
+		if(!$this->container->forExport || $this->container->forExport && $this->container->forExport != "excel" && $this->container->forExport != "csv")
+		{
+			$result = runner_htmlspecialchars($result);
+		}
 		
-		if( $this->searchHighlight )
-			$result = $this->highlightSearchWord( $result, false, $data[ $this->field ] );
+		if($this->searchHighlight)
+		{
+			$result = $this->highlightSearchWord($result, false, $data[$this->field]);
+		}
 		
 		return $result;
 	}

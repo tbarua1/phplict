@@ -1,6 +1,8 @@
 <?php
 class ViewPage extends RunnerPage
 {
+	protected $data = null;
+	
 	public $keys = array();
 	
 	public $jsKeys = array();
@@ -9,20 +11,31 @@ class ViewPage extends RunnerPage
 	
 	public $viewPdfEnabled = false;
 
-
+	/**
+	 * The name of the dashboard element where the page is displayed on
+	 * It's set up correctly in dash mode only
+	 */
+	public $dashElementName = "";
+	
+	/**
+	 * The corresponding dashboard name
+	 * It's set up correctly in dash mode only	 
+	 */
+	public $dashTName = "";
+	
+	
 	/**
 	 * @constructor
 	 */
-	function __construct(&$params)
+	function ViewPage(&$params)
 	{
-		parent::__construct($params);
+		parent::RunnerPage($params);
 		
 		$this->setKeysForJs();
 		
 		$this->formBricks["header"] = "viewheader";
-		$this->formBricks["footer"] = array( "viewbuttons", "rightviewbuttons");
+		$this->formBricks["footer"] = "viewbuttons";
 		$this->assignFormFooterAndHeaderBricks( true );		
-		
 	}
 
 	/**
@@ -49,20 +62,6 @@ class ViewPage extends RunnerPage
 		$_SESSION[ $this->sessionPrefix.'_advsearch' ] = serialize($this->searchClauseObj);
 	}
 	
-	public static function processEditPageSecurity( $table )
-	{
-		$pageMode = ViewPage::readViewModeFromRequest();
-		$messageLink = "";
-		
-		if( !isLogged() || isLoggedAsGuest() ) 		
-			$messageLink = " <a href='#' id='loginButtonContinue'>". "Login" . "</a>";		
-		
-		if( !Security::processPageSecurity( $table, "S", $pageMode != VIEW_SIMPLE, $messageLink) )
-			return false;
-		
-		return true;
-	}
-	
 	/**
 	 * Set keys values
 	 * @param {array} keys 
@@ -80,10 +79,7 @@ class ViewPage extends RunnerPage
 	protected function prepareJsSettings()
 	{
 		$this->jsSettings['tableSettings'][ $this->tName ]["keys"] = $this->jsKeys;
-		$this->jsSettings['tableSettings'][ $this->tName ]["keyFields"] = $this->pSet->getTableKeys();
-		
-		if( $this->mode == VIEW_DASHBOARD )
-			$this->jsSettings['tableSettings'][ $this->tName ]["masterKeys"] = $this->getMarkerMasterKeys( $this->getCurrentRecordInternal() );
+		$this->jsSettings['tableSettings'][ $this->tName ]["keyFields"] = $this->keyFields;
 	}
 
 	public function setKeysForJs()
@@ -91,6 +87,7 @@ class ViewPage extends RunnerPage
 		$i = 0;
 		foreach($this->keys as $field => $value)
 		{
+			$this->keyFields[ $i ] = $field;
 			$this->jsKeys[ $i++ ] = $value;
 		}
 	}
@@ -115,7 +112,6 @@ class ViewPage extends RunnerPage
 		}
 		return $data;
 	}
-
 	
 	/**
 	 * Read current values from the database
@@ -126,46 +122,42 @@ class ViewPage extends RunnerPage
 		if( !is_null($this->data) )
 			return $this->data;
 				
-		$sql = $this->getSubsetSQLComponents();
-		$orderClause = $this->getOrderByClause();
-
-		$keysSet = $this->checkKeysSet();
+		$strWhereClause = "";
+		$orderClause = "";
+		
+		$keysSet = $this->checkKeysSet();		
 		if( $keysSet )
 		{
-			//	use keys and security filters only
-			
-			$sql["optionalWhere"] = array();
-			$sql["optionalHaving"] = array();
-			$sql["mandatoryHaving"] = array();
-			$sql["mandatoryWhere"] = array();
-			
-			$sql["mandatoryWhere"][] = KeyWhere( $this->keys );
-			$sql["mandatoryWhere"][] = $this->SecuritySQL("Search", $this->tName);
+			$strWhereClause = KeyWhere( $this->keys );
 		}
-
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-
+		elseif( $this->mode == VIEW_DASHBOARD )
+		{
+			$whereComponents = $this->getWhereComponents();
+			$strWhereClause = $whereComponents["searchWhere"];
+		}
+		else
+		{
+			$orderClause = $this->getOrderByClause();
+			$strWhereClause = $_SESSION[ $this->sessionPrefix."_where" ];
+		}
+		
+		if( $this->pSet->getAdvancedSecurityType() != ADVSECURITY_ALL )
+			$strWhereClause = whereAdd($strWhereClause, SecuritySQL("Search", $this->tName));
+		$strSQL = $this->gQuery->gSQLWhere( $strWhereClause );
 		if( !$keysSet )
-		{
-			$strSQL = applyDBrecordLimit($strSQL . $orderClause, 1, $this->connection->dbType);
-		}
+			$strSQL = applyDBrecordLimit($strSQL.$orderClause, 1, $this->connection->dbType);
 		
+		$strSQLbak = $strSQL;
+		$strWhereClauseBak = $strWhereClause;	
 		if( $this->eventsObject->exists("BeforeQueryView") )
-		{
-		//	call Before Query event
-			$strWhereClause = SQLQuery::combineCases( $sql["mandatoryWhere"], "and" );
-			$strSQLbak = $strSQL;
-			$strWhereClauseBak = $strWhereClause;
-		
 			$this->eventsObject->BeforeQueryView($strSQL, $strWhereClause, $this);
 		
-			if( $strSQLbak == $strSQL && $strWhereClauseBak != $strWhereClause )
-			{
-				// user didn't change the query string but changed $strWhereClause
-				$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], array( $strWhereClause ));
-				if( !$keysSet )
-					$strSQL = applyDBrecordLimit($strSQL . $orderClause, 1, $this->connection->dbType);
-			}
+		if( $strSQLbak == $strSQL && $strWhereClauseBak != $strWhereClause )
+		{
+			// user didn't change the query string but changed $strWhereClause
+			$strSQL = $this->gQuery->gSQLWhere( $strWhereClause );
+			if( !$keysSet )
+				$strSQL = applyDBrecordLimit($strSQL.$orderClause, 1, $this->connection->dbType);
 		}
 			
 		LogInfo($strSQL);
@@ -231,14 +223,11 @@ class ViewPage extends RunnerPage
 			return;
 			
 		$this->prepareMaps();
-
-		if ( $this->mode == VIEW_SIMPLE )
-			$this->preparePdfControls();
+		
+		$this->preparePdfControls();
 
 		$this->doCommonAssignments();
-		$this->prepareMockControls();
 		$this->prepareButtons();
-		$this->prepareSteps();
 		
 		$this->prepareFields();
 		
@@ -257,20 +246,6 @@ class ViewPage extends RunnerPage
 		
 		$this->displayViewPage();	
 	}
-
-	/**
-	 * Add common javascript files and code
-	 */
-	function addCommonJs() 
-	{
-		parent::addCommonJs();
-		
-		if( $this->allDetailsTablesArr )
-		{			
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.min.css");
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.theme.min.css");
-		}
-	}
 	
 	/**
 	 * Assign basic page's xt variables
@@ -279,21 +254,9 @@ class ViewPage extends RunnerPage
 	{
 		$this->xt->assign( "id", $this->id );
 		
-		if ( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			if ( $this->mode === VIEW_SIMPLE )
-			{
-				$this->headerCommonAssign();
-			}
-			else
-			{
-				$this->xt->assign("menu_chiddenattr", "data-hidden" );
-			}
-		}
-
 		//	display legacy page caption - key values
 		$data = $this->getCurrentRecordInternal();
-		foreach( $this->pSet->getTableKeys() as $i => $k )
+		foreach( $this->keyFields as $i => $k )
 		{
 			$viewFormat = $this->pSet->getViewFormat( $k );
 			if( $viewFormat == FORMAT_HTML || $viewFormat == FORMAT_FILE_IMAGE || $viewFormat == FORMAT_FILE || 
@@ -307,15 +270,13 @@ class ViewPage extends RunnerPage
 				$this->xt->assign( "show_key" . ($i+1), $this->showDBValue( $k, $data ) );
 			}
 		}
-		$this->assignViewFieldsBlocksAndLabels();
-		
+
 		//	body["end"]	- this assignment is very important
 		if($this->mode == VIEW_SIMPLE)
 		{
 			$this->assignBody();
 			$this->xt->assign("flybody", true);
 		}
-		$this->displayMasterTableInfo();
 	}
 	
 	/**
@@ -358,7 +319,6 @@ class ViewPage extends RunnerPage
 		if( $this->pSet->isViewPagePDFFitToPage() )
 		{
 			$pagewidth = postvalue("width");
-			$pageheight = postvalue("height");
 		}
 		else
 		{
@@ -367,12 +327,29 @@ class ViewPage extends RunnerPage
 		include(getabspath("plugins/page2pdf.php"));
 	}
 	
+	protected function preparePdfControls()
+	{
+		if( !$this->viewPdfEnabled )
+			return;
+			
+		if( $this->pdfMode )
+			return;
+			
+		if( !GetGlobalData("openPDFFileDirectly", true) )
+			$this->AddJSFile("include/pdf.js");
+		else 
+			$this->AddJSFile("include/pdfinitlink.js");
+
+		if( $this->mode == VIEW_SIMPLE )
+			$this->xt->assign("pdflink_block", true);
+	}
+	
 	/**
 	 * Set details preview on the view master page 
 	 */	
 	protected function prepareDetailsTables()
 	{
-		if( !$this->isShowDetailTables /*|| $this->mode == VIEW_DASHBOARD*/ )
+		if( !$this->isShowDetailTables || $this->mode == VIEW_DASHBOARD )
 			return;
 			
 		$dpParams = $this->getDetailsParams( $this->id ); 
@@ -380,37 +357,20 @@ class ViewPage extends RunnerPage
 		if( !count($dpParams['ids']) )
 			return;
 
-		$this->xt->assign("detail_tables", true);
-		
-		if( $this->mode == VIEW_DASHBOARD )
-			$dpTablesParams = array();
-	
+		$this->xt->assign("detail_tables", true);	
 		
 		for($d = 0; $d < count($dpParams['ids']); $d++)
 		{
-			if( $this->mode != VIEW_DASHBOARD )
-				$this->setDetailPreview( $dpParams['type'][ $d ], $dpParams['strTableNames'][ $d ], $dpParams['ids'][ $d ], $this->getCurrentRecordInternal() );
-			else
-			{
-				$this->xt->assign("details_". $dpParams['shorTNames'][ $d ], true);
-				$dpTablesParams[] = array("tName" => $dpParams['strTableNames'][ $d ], "id" => $dpParams['ids'][ $d ], "pType" => $dpParams['type'][ $d ]);
-				$this->xt->assign("displayDetailTable_". goodFieldName( $dpParams['strTableNames'][ $d ] ), "<div id='dp_".goodFieldName( $this->tName )."_".$this->pageType."_". $dpParams['ids'][ $d ]."'></div>");
-			}
+			$this->setDetailPreview( $dpParams['type'][ $d ], $dpParams['strTableNames'][ $d ], $dpParams['ids'][ $d ], $this->getCurrentRecordInternal() );
 		}
-		
-		if( $this->mode == VIEW_DASHBOARD )
-			$this->controlsMap["dpTablesParams"] = $dpTablesParams;
 	}
 
-	/**
-	 *
-	 */
 	protected function prepareFields()
 	{
 		$viewFields = $this->pSet->getViewFields();
 		$data = $this->getCurrentRecordInternal();
 		
-		foreach($this->pSet->getTableKeys() as $i=>$kf)
+		foreach($this->keyFields as $i=>$kf)
 		{
 			$keyParams[] = "&key".($i + 1)."=".runner_htmlspecialchars( rawurlencode(@$data[ $kf ]) );
 		}
@@ -419,7 +379,7 @@ class ViewPage extends RunnerPage
 		foreach( $viewFields as $f )
 		{
 			$gname = GoodFieldName( $f );
-			$value = '<span id="view'.$this->id.'_'.$gname.'" >' . $this->showDBValue( $f, $data, $keylink ). '</span>';
+			$value = $this->showDBValue( $f, $data, $keylink );
 			$this->xt->assign( $gname . "_value", $value );
 
 			if( !$this->isAppearOnTabs( $f ) )
@@ -427,32 +387,11 @@ class ViewPage extends RunnerPage
 			else
 				$this->xt->assign( $gname . "_tabfieldblock", true );
 				
-			if( $this->pSet->hideEmptyViewFields() && $data[$f] == "" ) 
+			if( $this->pSet->hideEmptyViewFields() && $value == "" ) 
 				$this->hideField( $f );
 		}
 	}
 	
-	/**
-	 * Prepare Mock controls (support Javascript Control Api)
-	 */
-	protected function prepareMockControls()
-	{
-		$controlFields = $this->pSet->getViewFields();
-		foreach($controlFields as $fName)
-		{
-			$control = array();
-			$control["id"] = $this->id;
-			$control["ctrlInd"] = 0;
-			$control["fieldName"] = $fName;
-			$control["mode"] = "view";
-
-			$this->controlsMap["controls"][] = $control;
-		}		
-	}
-
-	/**
-	 *
-	 */
 	protected function prepareMaps()
 	{
 		$fieldsArr = array();
@@ -475,15 +414,15 @@ class ViewPage extends RunnerPage
 		$next = array();
 		$prev = array();
 		
-		$nextPrev = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal() );
+		$this->getNextPrevRecordKeys( $this->getCurrentRecordInternal(), "Search", $next, $prev, $this->mode == VIEW_DASHBOARD );
 		
 		//show Prev/Next buttons
-		$this->assignPrevNextButtons( count( $nextPrev["next"] ) > 0, count( $nextPrev["prev"] ) > 0, $this->mode == VIEW_DASHBOARD && ($this->hasTableDashGridElement() || $this->hasDashMapElement()) ); // TODO: haMajorDashElem
+		$this->assignPrevNextButtons( count( $next ) > 0, count( $prev ) > 0 );
 		
-		$this->jsSettings["tableSettings"][ $this->tName] ["prevKeys"] = $nextPrev["prev"];
-		$this->jsSettings["tableSettings"][ $this->tName ]["nextKeys"] = $nextPrev["next"];
-	}	
-
+		$this->jsSettings['tableSettings'][ $this->tName ]["prevKeys"] = $prev;
+		$this->jsSettings['tableSettings'][ $this->tName ]["nextKeys"] = $next; 			
+	}
+	
 	/**
 	 * Assign buttons xt variables
 	 */
@@ -497,12 +436,7 @@ class ViewPage extends RunnerPage
 		$this->prepareNextPrevButtons();
 		
 		if( $this->mode == VIEW_DASHBOARD )
-		{
-			if ( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-				$this->xt->assign("groupbutton_class", "rnr-invisible-button");
-				
 			return;
-		}
 		
 		if( $this->mode == VIEW_SIMPLE )
 		{
@@ -525,12 +459,11 @@ class ViewPage extends RunnerPage
 			$this->xt->assign("close_button", true);
 			$this->xt->assign("closebutton_attrs", "id=\"closeButton".$this->id."\"");
 		}
-		
-		$editable = false;
-		if( $this->editAvailable() )
+
+		if( $this->pSet->hasEditPage() && $this->permis[ $this->tName ]['edit'] )
 		{
 			$data = $this->getCurrentRecordInternal();
-			$editable = CheckSecurity($data[ $this->pSet->getTableOwnerID() ], "Edit");
+			$editable = $this->permis[ $this->tName ]['edit'] && CheckSecurity($data[ $this->pSet->getTableOwnerID() ], "Edit");
 			
 			if( $globalEvents->exists("IsRecordEditable", $this->tName) )
 				$editable = $globalEvents->IsRecordEditable($this->getCurrentRecordInternal(), $editable, $this->tName);
@@ -539,12 +472,8 @@ class ViewPage extends RunnerPage
 			{
 				$this->xt->assign("edit_page_button", true);
 				$this->xt->assign("edit_page_button_attrs", "id=\"editPageButton".$this->id."\"");
-				$this->xt->assign("header_edit_page_button_attrs", "id=\"headerEditPageButton".$this->id."\"");
-			} 
-		}
-
-		// show or hide menu button
-		$this->xt->assign("view_menu_button", $editable || $this->viewPdfEnabled);
+			}
+		}		
 	}	
 
 	public static function readViewModeFromRequest()
@@ -555,70 +484,5 @@ class ViewPage extends RunnerPage
 			return VIEW_POPUP;
 		return VIEW_SIMPLE;
 	}	
-	/**
-	 *	Returns true is the page has multistepped layout
-	 *  @return boolean
-	 */
-	function isMultistepped()
-	{
-		return $this->pSet->isViewMultistep();
-	}
-
-	function editAvailable() {
-		
-		if( $this->dashElementData )
-			return parent::editAvailable() && $this->dashElementData["details"][$this->tName]["edit"];
-		return parent::editAvailable();
-	}
-	
-	function assignViewFieldsBlocksAndLabels()
-	{
-		$viewFields = $this->pSet->getViewFields();
-
-		foreach($viewFields as $fName)
-		{
-			$gfName = GoodFieldName($fName);
-
-			if( !$this->isAppearOnTabs($fName) )
-				$this->xt->assign($gfName."_fieldblock", true);
-			else
-				$this->xt->assign($gfName."_tabfieldblock", true);
-
-			$this->xt->assign($gfName."_label", true);
-			if( $this->is508 && $this->getLayoutVersion() != BOOTSTRAP_LAYOUT )
-				$this->xt->assign_section($gfName."_label","<label for=\"" . $this->getInputElementId( $fName ) . "\">","</label>");
-		}
-	}
-	
-	/**
-	 * @return Array
-	 */
-	public static function processMasterKeys()
-	{
-		$i = 1;
-		$options = array();
-		
-		while( isset( $_REQUEST["masterkey".$i] ) ) 
-		{
-			$options[ $i ] = $_REQUEST["masterkey".$i];
-			$i++;
-		}
-		
-		return $options;
-	}
-
-	protected function getSubsetSQLComponents() {
-
-		$sql = parent::getSubsetSQLComponents();
-		
-		if( $this->connection->dbType == nDATABASE_DB2 ) 
-			$sql["sqlParts"]["head"] .= ", ROW_NUMBER() over () as DB2_ROW_NUMBER ";
-		
-		//	security
-		$sql["mandatoryWhere"][] = $this->SecuritySQL("Search", $this->tName);
-		
-		return $sql;
-	}
-	
 }
 ?>

@@ -80,7 +80,7 @@ class SearchPanel
 	 * @param array $params
 	 * @return SearchPanel
 	 */
-	function __construct(&$params)
+	function SearchPanel(&$params)
 	{
 		// copy properties to object
 		RunnerApply($this, $params);
@@ -94,8 +94,6 @@ class SearchPanel
 		
 		$this->panelState = $this->searchClauseObj->getSrchPanelAttrs();
 		$this->isUseAjaxSuggest = $this->pSet->isUseAjaxSuggest();
-		if( $this->pageObj->mobileTemplateMode() )
-			$this->isUseAjaxSuggest = false;
 		
 		$this->searchControlBuilder = new PanelSearchControl($this->id, $this->tName, $this->searchClauseObj, $this->pageObj);	
 		
@@ -127,12 +125,10 @@ class SearchPanel
 	 */
 	function buildSearchPanel()
 	{
+		$srchPanelAttrs = $this->searchClauseObj->getSrchPanelAttrs();
 		$this->searchAssign();
 	}
 	
-	/**
-	 *
-	 */
 	function searchAssign() 
 	{
 		$this->xt->assign("asearch_link", $this->searchPerm);
@@ -146,7 +142,7 @@ class SearchPanel
 			$searchPerm=$this->searchPerm;
 		
 		$this->xt->assign("searchform_block", $searchPerm);
-		if( $this->pageObj->mobileTemplateMode() )
+		if( isMobile() )
 			$this->xt->assign("searchformmobile_block", $searchPerm);
 		
 		$this->xt->assign("searchformbuttons_block",$searchPerm);
@@ -158,18 +154,15 @@ class SearchPanel
 		$this->xt->assign('searchbutton_attrs', 'id="searchButtTop'.$this->id.'" title="'.$srchButtTitle.'"');
 		$this->xt->assign('clear_searchbutton_attrs', 'id="clearSearch'.$this->id.'"');
 		
-		if( $this->pageObj->mobileTemplateMode() )
+		if( isMobile() )
 		{
 			$this->xt->assign("searchform_showall_mobile", true);
 			$this->xt->assign("searchform_clear_search_mobile", true);
 		}
 		else 
 		{
-			if( !$this->pSet->noRecordsOnFirstPage() ) 
-			{
-				$this->xt->assign("searchform_showall", true);
-				$this->xt->assign("searchform_clear_search", true);
-			}
+			$this->xt->assign("searchform_showall", true);
+			$this->xt->assign("searchform_clear_search", true);
 		}
 		
 		$showallbutton_attrs = 'id="showAll'.$this->id.'"';

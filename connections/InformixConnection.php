@@ -10,9 +10,9 @@ class InformixConnection extends Connection
 	protected $dbname;	 
 	
 	
-	function __construct( $params )
+	function InformixConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -36,7 +36,7 @@ class InformixConnection extends Connection
 	{
 		$this->conn = ifx_connect($this->dbname."@".$this->host, $this->user, $this->pwd);
 		if( !$this->conn ) 
-			$this->triggerError(ifx_errormsg());
+			trigger_error(ifx_errormsg(), E_USER_ERROR);
 		
 		ifx_blobinfile_mode(0);
 		ifx_textasvarchar(1);
@@ -64,7 +64,7 @@ class InformixConnection extends Connection
 		$ret = ifx_query($sql, $this->conn);
 		if( !$ret )
 		{
-			$this->triggerError(ifx_errormsg());
+			trigger_error(ifx_errormsg(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -94,7 +94,7 @@ class InformixConnection extends Connection
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
 		return 0;
 	}
@@ -104,9 +104,9 @@ class InformixConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return ifx_fetch_row( $qHandle );
+		return ifx_fetch_row( $qHanle );
 	}
 	
 	/**	
@@ -114,11 +114,11 @@ class InformixConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
 		$res = array();
 		$col = 0;
-		foreach( ifx_fetch_row($qHandle) as $val )
+		foreach( ifx_fetch_row($qHanle) as $val )
 		{
 			$res[ $col ] = $val;
 			$col += $col;
@@ -130,9 +130,9 @@ class InformixConnection extends Connection
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@ifx_free_result($qHandle);
+		@ifx_free_result($qHanle);
 	}
 
 	/**	
@@ -151,10 +151,10 @@ class InformixConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
 		$count = 1;
-		foreach( ifx_fetch_row($qHandle) as $fname => $val )
+		foreach( ifx_fetch_row($qHanle) as $fname => $val )
 		{
 			if($count == $offset)
 				return $fname;

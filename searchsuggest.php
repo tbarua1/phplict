@@ -3,7 +3,6 @@
 @ini_set("display_startup_errors","1");
 
 require_once("include/dbcommon.php");
-require_once getabspath('classes/searchclause.php');
 add_nocache_headers();
 
 $table = postvalue("table");
@@ -20,7 +19,7 @@ if(!CheckSecurity(@$_SESSION["_".$strTableName."_OwnerID"],"Search"))
 	return;
 
 
-$searchFor = trim( postvalue('searchFor') );
+$searchFor = postvalue('searchFor');
 // if nothing to search 
 if($searchFor == '')
 {
@@ -34,11 +33,10 @@ $_connection = $cman->byTable( $strTableName );
 $response = array();
 $searchOpt = postvalue("start") ? "Starts with" : "Contains";
 $searchField = GoodFieldName(postvalue('searchField'));
+$strSecuritySql = SecuritySQL("Search", $strTableName);
 $numberOfSuggests = GetGlobalData("searchSuggestsNumber", 10);
 
 $pSet = new ProjectSettings($strTableName, PAGE_SEARCH);
-
-$query = $pSet->getSQLQuery();
 
 if($searchField == "")
 	$allSearchFields = $pSet->getGoogleLikeFields();
@@ -49,43 +47,31 @@ else
 require_once getabspath('classes/controls/EditControlsContainer.php');
 
 $detailKeys = array();
-
-$whereClauses = array();
-$whereClauses[] = SecuritySQL("Search", $strTableName);
+$masterWhere = "";	
 
 $cipherer = new RunnerCipherer($strTableName);
 $controls = new EditControlsContainer(null, $pSet, PAGE_LIST, $cipherer);
 
 if(@$_SESSION[$strTableName."_mastertable"] != "")
 {
-	$masterWhere = "";	
 	$masterTablesInfoArr = $pSet->getMasterTablesArr($strTableName);
 	for($i = 0; $i < count($masterTablesInfoArr); $i++) 
 	{
 		if( $_SESSION[$strTableName."_mastertable"] != $masterTablesInfoArr[$i]['mDataSourceTable'] )
 			continue;
 		
-		$detailKeys = $masterTablesInfoArr[$i]['detailKeys'];
-		for($j = 0; $j < count($detailKeys); $j++)
+		if($masterTablesInfoArr[$i]['dispInfo']) 
 		{
-			$mastervalue = $cipherer->MakeDBValue($detailKeys[$j], @$_SESSION[$strTableName."_masterkey".($j + 1)], "", true);
-			if($mastervalue == "null")
-				$masterWhere .= RunnerPage::_getFieldSQL($detailKeys[$j], $_connection, $pSet)." is NULL ";
-			else
-				$masterWhere .= RunnerPage::_getFieldSQLDecrypt($detailKeys[$j], $_connection, $pSet, $cipherer)."=".$mastervalue;
+			$detailKeys = $masterTablesInfoArr[$i]['detailKeys'];
+			for($j = 0; $j < count($detailKeys); $j++)
+			{
+				$masterWhere .= " and ".$controls->getControl( $detailKeys[$j] )->getSuggestWhere('Equals', @$_SESSION[$strTableName."_masterkey".($j + 1)]);
+			}
 		}
 		break;		
 	}
-	$whereClauses[] = $masterWhere;
 }
 
-$searchClauseObj = SearchClause::getSearchObject( $strTableName, "", $strTableName, $cipherer );
-$searchClauseObj->processFiltersWhere($_connection);
-
-foreach ($searchClauseObj->filteredFields as $filteredField) 
-{
-	$whereClauses[] = $filteredField["where"];
-}
 
 $result = array();
 
@@ -103,7 +89,6 @@ foreach($allSearchFields as $f)
 	if( $searchField != '' && $searchField != GoodFieldName($f) || !$pSet->checkFieldPermissions($f) )
 		continue;
 	
-	
 	$fieldControl = $controls->getControl($f);
 	
 	$isAggregateField = $pSet->isAggregateField($f);
@@ -112,33 +97,40 @@ foreach($allSearchFields as $f)
 		
 	if( !strlen($where) && !strlen($having) )
 		continue;
-
+	
+	$where = whereAdd($where.$masterWhere, $strSecuritySql);
+	
+	$clausesData = $fieldControl->getSelectColumnsAndJoinFromPart( $searchFor, $searchOpt, true );	
+	$selectColumns = $clausesData["selectColumns"];
+	$fromClause = $gQuery->FromToSql().$clausesData["joinFromPart"];
+	
 	$distinct = "DISTINCT";
 	if( $_connection->dbType == nDATABASE_MSSQLServer || $_connection->dbType == nDATABASE_Access )
 	{
 		if( IsTextType($fType) )
 			$distinct = "";
 	}
+	$sqlHead = "SELECT ".$distinct." ".$selectColumns." as _srchfld_";
 	
-	$sql = $query->getSQLComponents();
-	$clausesData = $fieldControl->getSelectColumnsAndJoinFromPart( $searchFor, $searchOpt, true );	
-	if( 0 == strlen( $clausesData["joinFromPart"] ) ) 
+	if($gQuery->HasGroupBy())
 	{
-		//	no hassle, just make a subquery
-
-		$subQuery = SQLQuery::buildSQL( $sql, $whereClauses, array(), array( $where ), array( $having ) );
-		$strSQL = "SELECT " . $distinct . " st.".$_connection->addFieldWrappers($f)." from (" . $subQuery . ") st";
+		$strSQL = $gQuery->gSQLWhere_having_fromQuery("", $where, $having);
+		$strSQL = "SELECT DISTINCT st.".$_connection->addFieldWrappers($f)." from (".$strSQL.") st";
 	}
 	else
 	{
-		//	special case, with lookup wizards and joins
-		$sql['from'] .= $clausesData["joinFromPart"];
-		$sql['head'] = "SELECT " . $distinct . " " . $clausesData["selectColumns"] . " as " . $_connection->addFieldWrappers("_srchfld_");
-		$subQuery = SQLQuery::buildSQL( $sql, $whereClauses, array(), array( $where ), array( $having ) );
-		$strSQL = "SELECT " . $_connection->addFieldWrappers("_srchfld_") . " from (" . $subQuery . ") st";
+		$strSQL = SQLQuery::gSQLWhere_having($sqlHead, $fromClause, $gQuery->WhereToSql(), $gQuery->GroupByToSql()
+			, $gQuery->Having()->toSql($gQuery), $where, $having);
 	}
 	
-	$qResult = $_connection->queryPage( $strSQL, 1,  $numberOfSuggests, true );
+	if( $_connection->dbType == nDATABASE_MySQL || $_connection->dbType == nDATABASE_PostgreSQL )
+		$strSQL.= " LIMIT ".$numberOfSuggests;
+	elseif( $_connection->dbType == nDATABASE_MSSQLServer || $_connection->dbType == nDATABASE_Access )
+		$strSQL = "select top ".$numberOfSuggests." * from (".$strSQL.") st";
+	elseif( $_connection->dbType == nDATABASE_Oracle )
+		$strSQL = AddRowNumber($strSQL, $numberOfSuggests);
+
+	$qResult = $_connection->query( $strSQL );
 	
 	// fill $response array with the field's suggest value
 	while( ( $row = $qResult->fetchNumeric() ) && count($response) < $numberOfSuggests ) 

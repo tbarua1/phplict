@@ -7,29 +7,18 @@ class DashboardPage extends RunnerPage
 	 * @constructor
 	 * @param &Array params
 	 */
-	function __construct(&$params)
+	function DashboardPage(&$params)
 	{
-		parent::__construct($params);
+		parent::RunnerPage($params);
 		
-		if ( $params["mode"] == "dashsearch" )
-		{
-			$showShowAllButton = $this->searchClauseObj->bIsUsedSrch;
-			$returnJSON = array("success"=>true, 'show_all'=> $showShowAllButton);
-			echo printJSON($returnJSON);
-			exit();
-		}
-
 		// Set language params, if have more than one language
 		$this->setLangParams();
 		
 		$this->jsSettings['tableSettings'][ $this->tName ]['dashElements'] = array();
 		
-		$majorElements = $this->getMajorElements();
-		
 		//	calculate additional element settings
 		foreach( $this->pSet->getDashboardElements() as $key => $elem ) 
 		{
-			$this->createElementLinks( $elem );
 			$permissions = false;
 			$newElem = $elem;
 			
@@ -61,34 +50,20 @@ class DashboardPage extends RunnerPage
 					if( $this->CheckPermissions( $d['dDataSourceTable'], $d['dType'] ) )
 					{
 						$permissions = true;
-						$newElem['details'][] = $d;
+						$newElem['details'][$idx] = $d;
 						$this->jsSettings['tableSettings'][ $d['dDataSourceTable'] ]['shortTName'] = $d[ 'dShortTable' ];
 					}
 				}
 			}
 			elseif( $elem['type'] == DASHBOARD_CHART || $elem['type'] == DASHBOARD_REPORT || $elem['type'] == DASHBOARD_SEARCH)
-				$permissions = $this->CheckPermissions($elem['table'], "Search" );
-			elseif( $elem['type'] == DASHBOARD_LIST )
-				$permissions = $this->CheckPermissions( $elem['table'], "list" );
-			elseif( $elem['type'] == DASHBOARD_MAP )
-			{
-				$permissions = $this->CheckPermissions( $elem['table'], "list" );
-				if( !$elem["updateMoved"] )
-					$newElem["updateMoved"] = !$this->hasGridElement( $elem['table'] );
-			}
-			elseif( $elem['type'] == DASHBOARD_SNIPPET )
-			{
-				$permissions = true;
-			}
-				
+					$permissions = $this->CheckPermissions($elem['table'], "Search" );
+			elseif( $elem['type'] == DASHBOARD_LIST)
+				$permissions = $this->CheckPermissions($elem['table'], "list" );
 			
 			$this->elementsPermissions[$key] = $permissions;
 			if ( !$permissions )
 				continue;
-				
-			if( isset( $majorElements[ $newElem["elementName"]] ) )
-				$newElem["major"] = true;
-				
+			
 			// add shortTableNames and element
 			$this->jsSettings['tableSettings'][ $elem['table'] ]['shortTName'] = GetTableURL( $elem['table'] );
 			$this->jsSettings['tableSettings'][ $this->tName ]['dashElements'][$key] = $newElem;
@@ -134,85 +109,15 @@ class DashboardPage extends RunnerPage
 		$this->createElementContainers();
 	}
 	
-	/**
-	 *
-	 */
 	function createElementContainers()
 	{
 		foreach( $this->pSet->getDashboardElements() as $key => $elem ) 
 		{
 			if ( !$this->elementsPermissions[$key] )
 				continue;
-			$style = "";
-			if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			{
-				if( $elem["width"] )
-					$style .= "#dashelement_" . $elem["elementName"] . $this->id . " > .panel > .panel-body, 
-						#dashelement_" . $elem["elementName"] . $this->id . " > * > .tab-content > * > * > .panel > .panel-body, 
-						#dashelement_" . $elem["elementName"] . $this->id . " > .bs-containedpage > .panel > .panel-body {
-						width: " . $elem["width"] . "px;
-						overflow-x: auto;
-					}";
-				if( $elem["height"] )
-					$style .= "#dashelement_" . $elem["elementName"] . $this->id . " > .panel > .panel-body,
-						#dashelement_" . $elem["elementName"] . $this->id . " > * > .tab-content > * > * > .panel > .panel-body, 
-						#dashelement_" . $elem["elementName"] . $this->id . " > .bs-containedpage > .panel > .panel-body {
-						height: " . $elem["height"] . "px;
-						overflow-y: auto;
-					}";
-				if( $style != "" )
-				{
-					$style = "<style> @media (min-width: 768px){ " . $style . " } </style>";
-				}
-					
-			}
-
-			$contentHtml = "";
-			if ( $elem['type'] == DASHBOARD_SNIPPET ) {
-				$method = $elem['snippetId'];
-				$snippetData = callDashboardSnippet( $elem['snippetId'], $this->eventsObject );
-				$contentHtml = $this->getSnippetHtml($snippetData["header"], $snippetData["body"], $elem["width"], $elem["height"]);
-			}
-				
-			$this->xt->assign( "db_".$elem["elementName"] , $style."<div class=\"" . $this->getElementClass( $elem ) . "\" id=\"dashelement_" . $elem["elementName"] . $this->id . "\">".$contentHtml."</div>");
- 		}
-	}
-
-	/**
-	 * Formation html code snippet panel 
-	 * @param String $headerCont
-	 * @param String $bodyCont
-	 * @param Integer $width
-	 * @param Integer $height
-	 * @return String html
-	 */
-	function getSnippetHtml($headerCont, $bodyCont, $width, $height) 
-	{		
-		if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			$headerCont = '<div class="panel-heading">' . $headerCont . '</div>';
-			$bodyCont = '<div class="panel-body">' . $bodyCont . '</div>';
-			$html = '<div class="panel panel-primary">' . $headerCont . $bodyCont . '</div>';
+			
+			$this->xt->assign( "db_".$elem["elementName"] , "<div class=\"" . $this->getElementClass( $elem ) . "\" id=\"dashelement_" . $elem["elementName"] . $this->id . "\"></div>");
 		}
-		else
-		{
-			if ( strlen($headerCont) )
-			{
-				if ( strlen($headerCont) > 1 )
-				{
-					$headerCont = '<div class="rnr-dbehcont">' . $headerCont . '</div>';	
-				}
-				$headerCont = '<tr><td class="rnr-tabelemheader rnr-dbelemheader">'.$headerCont.'</td></tr>';
-			}
-
-			$bodyStyle = $width ? "width:" . $width . "px; overflow-x:auto; " : "";
-			$bodyStyle .= $height ? "height:" . $height . "px; overflow-y:auto; " : "";
-
-			$bodyCont = '<tr><td class="rnr-dbelembody"><div style="' . $bodyStyle . '">' . $bodyCont . '</div></td><tr>';
-			$html = '<table class="rnr-dbelemtable">' . $headerCont . $bodyCont . '</table>';
-		}
-
-		return $html;
 	}
 	
 	/**
@@ -221,11 +126,6 @@ class DashboardPage extends RunnerPage
 	 */
 	function clearSessionKeys()
 	{
-		if ( count($_POST) && $_POST["mode"] == "dashsearch" )
-		{
-			return;
-		}
-
 		parent::clearSessionKeys();
 		
 		if( !count($_POST) && ( !count($_GET) || count($_GET) == 1 && isset($_GET["menuItemId"]) ) )
@@ -235,7 +135,7 @@ class DashboardPage extends RunnerPage
 		
 		foreach( $this->pSet->getDashboardElements() as $elem ) 
 		{
-			if( $elem['type'] != DASHBOARD_SEARCH )
+			if( $elem['type'] != DASHBOARD_REPORT && $elem['type'] != DASHBOARD_SEARCH )
 				$this->unsetAllPageSessionKeys( $this->tName."_".$elem["table"] );
 		}
 	}
@@ -257,8 +157,8 @@ class DashboardPage extends RunnerPage
 	{
 		if( $this->hasSingleRecordOrDetailsElement() )
 		{
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.min.css");
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.theme.min.css");
+			$this->AddJSFile("include/jquery-ui/jquery-ui-1.10.4.custom.js");
+			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui-1.10.4.custom.css");
 		}
 	}
 	
@@ -281,21 +181,6 @@ class DashboardPage extends RunnerPage
 	}
 	
 	/**
-	 * @param String table
-	 * @return Boolean
-	 */
-	protected function hasGridElement( $table )
-	{
-		foreach( $this->pSet->getDashboardElements() as $elem ) 
-		{
-			if( $elem["table"] == $table && $elem["type"] == DASHBOARD_LIST )
-				return true;
-		}
-		
-		return false;			
-	}
-	
-	/**
 	 * Assign 'body' element
 	 */
 	public function addCommonHtml()
@@ -303,7 +188,8 @@ class DashboardPage extends RunnerPage
 		// assign body begin
 		$this->body['begin'] = GetBaseScriptsForPage(false);
 		// assign body end
-		$this->body['end'] = XTempl::create_method_assignment( 'assignBodyEnd', $this );
+		$this->body['end'] = array();
+		AssignMethod($this->body['end'], 'assignBodyEnd', $this);
 
 		$this->xt->assignbyref('body', $this->body);
 	}
@@ -314,9 +200,6 @@ class DashboardPage extends RunnerPage
 	protected function doCommonAssignments()
 	{
 		$this->xt->assign("asearch_link", true);
-		
-		if( $this->mobileTemplateMode() )
-			$this->xt->assign('tableinfomobile_block', true);
 	}
 	
 	/**
@@ -326,10 +209,16 @@ class DashboardPage extends RunnerPage
 	{
 		parent::commonAssign();
 		
-		if( $this->mobileTemplateMode() )
+		if( isMobile() )
 		{
 			$this->xt->displayBrickHidden("search_dashboard_m");
-		}		
+		}
+		
+		$this->xt->assign("languages_block", true);	
+	
+		$this->assignAdmin();
+		$this->xt->assign("changepwd_link", $_SESSION["AccessLevel"]!= ACCESS_LEVEL_GUEST && $_SESSION["fromFacebook"] == false);
+		$this->xt->assign("changepwdlink_attrs", "href=\"".GetTableLink("changepwd")."\" onclick=\"window.location.href='".GetTableLink("changepwd")."';return false;\"");
 	}
 	
 	/**
@@ -347,8 +236,6 @@ class DashboardPage extends RunnerPage
 		$this->commonAssign();
 		$this->doCommonAssignments();
 		$this->addCommonHtml();
-		$this->prepareBreadcrumbs("main");
-
 		if( $this->eventsObject->exists("BeforeShowDashboard") )
 		{
 			$this->eventsObject->BeforeShowDashboard( $this->xt, $this->templatefile, $this );
@@ -356,145 +243,11 @@ class DashboardPage extends RunnerPage
 		$this->display( $this->templatefile );
 	}
 
-	/**
-	 * @param &Array element
-	 * @return String
-	 */
 	protected function getElementClass( &$element )
 	{
-		if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			return "";
 		if( $element[ "type" ] != DASHBOARD_DETAILS && $element[ "type" ] != DASHBOARD_RECORD )
 			return "rnr-dbbordered";
 		return "";
-	}
-	
-	/**
-	 * Fill in element children and parents lists
-	 * Children can be updated by this element, parents can update this element
-	 * There can be peer elements that are both child and parent to each other.
-	 * @param &Array elem
-	 */
-	function createElementLinks( &$elem )
-	{
-		foreach( $this->pSet->getDashboardElements() as $key => $e ) 
-		{
-			if( $e["elementName"] == $elem["elementName"] )
-				continue;
-			if( $e["table"] == $elem["masterTable"] && DashboardPage::canUpdateDetails( $e ) )
-			{
-				$elem["parents"][ $e["elementName"] ] = true;
-			}
-			if( $elem["table"] == $e["masterTable"] && DashboardPage::canUpdateDetails( $elem ) )
-			{
-				$elem["children"][ $e["elementName"] ] = true;
-			}
-			if( $elem["table"] == $e["table"] )
-			{
-				if( DashboardPage::canUpdatePeers( $e ) )
-					$elem["parents"][ $e["elementName"] ] = true;
-				if( DashboardPage::canUpdatePeers( $elem ) )
-					$elem["children"][ $e["elementName"] ] = true;
-			}
-		}
-	}
-	
-	/**
-	 * @return Array
-	 */
-	function getMajorElements()
-	{
-		$majorElements = array();
-		$dashboardTables = array();
-		$elements = $this->pSet->getDashboardElements();
-		//	distribute elements by tables
-		foreach( $elements as $key => $e ) 
-		{
-			if( !isset( $dashboardTables[ $e["table"] ] ) )
-			{
-				$dashboardTables[ $e["table"] ] = array();
-			}
-			$dashboardTables[ $e["table"] ][] = $key;
-		}
-		//	locate major element in each table
-		foreach( $dashboardTables as $t )
-		{
-			$major = "";
-			//	locate main map first
-			foreach( $t as $i )
-			{
-				if( $elements[$i]["type"] == DASHBOARD_MAP && $elements[$i]["updateMoved"] )
-				{
-					$major = $elements[$i]["elementName"];
-					break;
-				}
-			}
-			//	locate grid 
-			if( $major == "" )
-			{
-				foreach( $t as $i )
-				{
-					if( $elements[$i]["type"] == DASHBOARD_LIST || $elements[$i]["type"] == DASHBOARD_CHART || $elements[$i]["type"] == DASHBOARD_REPORT )
-					{
-						$major = $elements[$i]["elementName"];
-						break;
-					}
-				}
-			}
-			//	locate any map
-			if( $major == "" )
-			{
-				foreach( $t as $i )
-				{
-					if( $elements[$i]["type"] == DASHBOARD_MAP )
-					{
-						$major = $elements[$i]["elementName"];
-						break;
-					}
-				}
-			}
-			//	locate single record with edit or view enabled
-			if( $major == "" )
-			{
-				foreach( $t as $i )
-				{
-					if( $elements[$i]["type"] != DASHBOARD_RECORD )
-						continue;
-					if( in_array( PAGE_EDIT, $elements[$i]["tabsPageTypes"] ) || in_array( PAGE_VIEW, $elements[$i]["tabsPageTypes"] ) ) 
-					{
-						$major = $elements[$i]["elementName"];
-						break;
-					}
-				}
-			}
-			if( $major != "" ) 
-				$majorElements[ $major ] = true;
-				
-		}
-		
-		return $majorElements;
-	}
-	
-	/**
-	 * @param &Array elem
-	 * @return Boolean	 
-	 */
-	static function canUpdateDetails( &$elem )
-	{
-		return DashboardPage::canUpdatePeers( $elem );
-	}
-	
-	/**
-	 * @param &Array elem
-	 * @return Boolean
-	 */
-	static function canUpdatePeers( &$elem )
-	{
-		return $elem["type"] == DASHBOARD_LIST 
-				|| $elem["type"] == DASHBOARD_CHART
-				|| $elem["type"] == DASHBOARD_REPORT
-				|| $elem["type"] == DASHBOARD_RECORD
-				|| $elem["type"] == DASHBOARD_MAP;
 	}
 }
 ?>

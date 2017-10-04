@@ -1,11 +1,36 @@
 <?php
-include_once(getabspath("classes/paramsLogger.php"));
-class searchParamsLogger extends paramsLogger
+class searchParamsLogger
 {
 	/**
 	 * @type String
 	 */
+	protected $searchSaveTableName = "";
+	
+	/**
+	 * @type String
+	 */
+	protected $userID = "";
+	
+	/**
+	 * @type String
+	 */	
+	protected $cookie = "";
+	
+	/**
+	 * @type String
+	 */
+	protected $tableName;
+	protected $dbSearchSaveTableName;
 	protected $dbNameFieldName;
+	protected $dbSearchFieldName;
+	protected $dbTableNameFieldName;
+	protected $dbCookieFieldName;
+	protected $dbUserNameFieldName;	
+	
+	/**
+	 * @type Connection
+	 */
+	protected $connection;
 	
 	/**
 	 * This property is used to store 
@@ -15,13 +40,15 @@ class searchParamsLogger extends paramsLogger
 	protected $savedSearchesParams = array(); 
 	
 	
-	public function __construct( $tableNameId, $type = SSEARCH_PARAMS_TYPE ) 
+	public function searchParamsLogger( $tableName ) 
 	{		
-		// type 1 - saved search
-		parent::__construct( $tableNameId, SSEARCH_PARAMS_TYPE );
+		global $cman;
+		$this->tableName = $tableName;
+		$this->connection = $cman->getForSavedSearches();	
 		
-		//	.NET conversion needs this
-		$this->type = SSEARCH_PARAMS_TYPE;
+		$this->assignDbFieldsAndTableNames();						
+		$this->assignUserId();	
+		$this->assignCookieParams();	
 	}
 	
 	/**
@@ -30,11 +57,35 @@ class searchParamsLogger extends paramsLogger
 	 */
 	protected function assignDbFieldsAndTableNames() 
 	{
-		parent::assignDbFieldsAndTableNames();
-
+		$this->dbSearchSaveTableName = $this->connection->addTableWrappers( $this->searchSaveTableName );
 		$this->dbNameFieldName = $this->connection->addFieldWrappers( "NAME" );
+		$this->dbSearchFieldName = $this->connection->addFieldWrappers( "SEARCH" );
+		$this->dbTableNameFieldName = $this->connection->addFieldWrappers( "TABLENAME" );
+		$this->dbCookieFieldName = $this->connection->addFieldWrappers( "COOKIE" );
+		$this->dbUserNameFieldName = $this->connection->addFieldWrappers( "USERNAME" );	
+		
 	}
 	
+	/**
+	 * Assign the userID prop with the currenly logged in user`s name
+	 */
+	protected function assignUserId()
+	{
+		if( isset($_SESSION["UserID"]) && $_SESSION["UserID"] != "Guest" )	
+			$this->userID = $_SESSION["UserID"];
+	}
+	
+	/**
+	 * Set a COOKIE 'searchSaving' param If It isn`t set before.
+	 * Assign the 'cookie' property with the COOKIE 'searchSaving' param
+	 */
+	protected function assignCookieParams()
+	{
+		if( !strlen($_COOKIE["searchSaving"]) && !$this->userID ) 
+			setcookie("searchSaving", generatePassword(24), time() + 5 * 365 * 86400);
+		
+		$this->cookie = $_COOKIE["searchSaving"];
+	}
 	
 	/**
 	 * Save the search under a particular name
@@ -50,10 +101,24 @@ class searchParamsLogger extends paramsLogger
 			return;
 		}
 		
-		$column = $this->dbNameFieldName . ", ";
-		$value = $this->connection->prepareString( $searchName ).", ";
-
-		$this->save($searchParams, $column, $value);	
+		$columnsList = implode( ",", array( $this->dbNameFieldName, $this->dbSearchFieldName, $this->dbTableNameFieldName));
+		$valuesList =  $this->connection->prepareString( $searchName ).", "
+			.$this->connection->prepareString( runner_serialize_array( $searchParams ) ).", "
+			.$this->connection->prepareString( $this->tableName );
+		
+		if($this->userID)
+		{
+			$columnsList.= ", ".$this->dbUserNameFieldName;
+			$valuesList.= ", ".$this->connection->prepareString( $this->userID );
+		} 
+		else if($this->cookie)
+		{	
+			$columnsList.= ", ".$this->dbCookieFieldName;
+			$valuesList.= ", ".$this->connection->prepareString( $this->cookie );
+		}
+			
+		$sql = "INSERT INTO ". $this->dbSearchSaveTableName ." (".$columnsList.") values (".$valuesList.")";
+		$this->connection->exec( $sql );	
 	}
 
 	/**
@@ -63,8 +128,11 @@ class searchParamsLogger extends paramsLogger
 	 */
 	public function updateSearch( $searchName, $searchParams )
 	{
-		$where = $this->dbNameFieldName."=".$this->connection->prepareString( $searchName );	
-		$this->update($searchParams, $where);				
+		$where = $this->dbNameFieldName."=".$this->connection->prepareString( $searchName )." AND ".$this->getCommonWhere();	
+		$sql = "UPDATE ". $this->dbSearchSaveTableName 
+			." SET ". $this->dbSearchFieldName ."=".$this->connection->prepareString( serialize( $searchParams ) )." WHERE ".$where;
+		
+		$this->connection->exec( $sql );
 	}
 	
 	/**
@@ -73,8 +141,29 @@ class searchParamsLogger extends paramsLogger
 	 */	
 	public function deleteSearch( $searchName )
 	{	
-		$where = $this->dbNameFieldName."=".$this->connection->prepareString( $searchName );	
-		$this->delete($where);
+		$where = $this->dbNameFieldName."=".$this->connection->prepareString( $searchName )." AND ".$this->getCommonWhere();	
+		$sql = "DELETE FROM ". $this->dbSearchSaveTableName ." WHERE ".$where;
+		
+		$this->connection->exec( $sql );
+	}
+	
+	/**
+	 * Get the commont where condition envolving
+	 * user id and cookie values
+	 * @return String
+	 */
+	protected function getCommonWhere()
+	{
+		$wheres = array();
+		if($this->userID)
+			$wheres[] = $this->dbUserNameFieldName."=".$this->connection->prepareString( $this->userID );
+		if($this->cookie)	
+			$wheres[] = $this->dbCookieFieldName."=".$this->connection->prepareString( $this->cookie );
+		
+		if( !count($wheres) )
+			return "1=0";
+		
+		return whereAdd( $this->dbTableNameFieldName."=".$this->connection->prepareString( $this->tableName ), implode(" OR ", $wheres) );	
 	}
 	
 	/**
@@ -88,24 +177,15 @@ class searchParamsLogger extends paramsLogger
 			return $this->savedSearchesParams; 			
 	
 		$where = $this->getCommonWhere();			
-		$sql = "SELECT ".$this->dbNameFieldName.", ". $this->dbDataFieldName.", ". $this->dbTypeFieldName ." from ". $this->dbParamsTableName 
+		$sql = "SELECT ".$this->dbNameFieldName.", ". $this->dbSearchFieldName ." from ". $this->dbSearchSaveTableName 
 			." where ".$where." ORDER BY ".$this->dbNameFieldName;
 		
-		$qResult = $this->connection->querySilent( $sql );
-		if( !$qResult )
-			return array();
+		$qResult = $this->connection->query( $sql );
 		
 		$names = array();
 		while( $data = $qResult->fetchAssoc() )
 		{
-			if( !$data["TYPE"] || $data["TYPE"] == 1 ) 
-			{
-				if(substr($data["SEARCH"],0,2) != "{\"")
-					$names[ $data["NAME"] ] = runner_unserialize_array( $data["SEARCH"] );
-				else
-					$names[ $data["NAME"] ] = $this->decode( $data["SEARCH"] );
-				
-			}
+			$names[ $data["NAME"] ] = runner_unserialize_array( $data["SEARCH"] );
 		}
 		
 		$this->savedSearchesParams = $names;

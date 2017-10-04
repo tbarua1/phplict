@@ -5,8 +5,13 @@ require_once(getabspath("classes/projectsettings.php"));
 
 class ListPage extends RunnerPage 
 {	
+	public $gsqlHead = "";
+	public $gsqlFrom = "";
+	public $gsqlWhereExpr = "";
+	public $gsqlGroupBy = "";
+	public $gsqlHaving = ""; 	
 	
-	public $querySQL = "";
+	protected $querySQL = "";
 	
 	/**
      * Page size
@@ -53,6 +58,17 @@ class ListPage extends RunnerPage
 	 */
 	public $nSecOptions = 0;
 	
+	/**
+	 * If use body scroll for grid
+	 * @type bool
+	 */
+	public $isScrollGridBody = false;
+
+	/**
+	 * String of OrderBy for query
+	 * @var string
+	 */
+	public $strOrderBy = "";
 	
 	/**
 	 * Number of record
@@ -77,6 +93,14 @@ class ListPage extends RunnerPage
 	 * @type integer
 	 */
 	protected $recordsDeleted = 0;
+	
+	/**
+	 * String of part query Where for make sql "select" string
+	 * @type string
+	 */
+	protected $strWhereClause = "";
+	
+	protected $strHavingClause = "";
 
 	/**
 	 * Original table name
@@ -84,7 +108,17 @@ class ListPage extends RunnerPage
 	 */
 	public $origTName = ""; //fix it
 	
+	/**
+	 * If use Inline Add on page or not
+	 * @type bool
+	 */
+	public $isUseInlineAdd = false;
 	
+	/**
+	 * If use Inline Edit on page or not
+	 * @type bool
+	 */
+	public $isUseInlineEdit = false;
 	
 	/**
 	 * Fields that used for search on panel, and should be open on every page load
@@ -180,26 +214,15 @@ class ListPage extends RunnerPage
 	 */
 	protected $showViewInPopup = false;
 	
-	/**
-	 * fieldClass function cache
-	 * @type Array
-	 */
-	protected $fieldClasses = array();
-	
-	public $sortBy;
-
-	protected $addedDetailsCountSubqueries = array();
-	
 	
 	/**
 	 * Constructor, set initial params
 	 * @param array $params
 	 */
-	function __construct(&$params) 
+	function ListPage(&$params) 
 	{
 		// call parent constructor
-		parent::__construct($params);
-		
+		parent::RunnerPage($params);
 		
 		$this->showAddInPopup = $this->pSet->isShowAddInPopup();
 		$this->showEditInPopup = $this->pSet->isShowEditInPopup();
@@ -210,13 +233,10 @@ class ListPage extends RunnerPage
 		//	Before Process event
 		$this->beforeProcessEvent();
 		
-		
-
 		// Set language params, if have more than one language
 		$this->setLangParams();
 		
-		if($this->searchClauseObj) //for asp & .net
-			$this->jsSettings['tableSettings'][$this->tName]['simpleSearchActive'] = $this->searchClauseObj->simpleSearchActive;
+		$this->jsSettings['tableSettings'][$this->tName]['simpleSearchActive'] = $this->searchClauseObj->simpleSearchActive;
 		
 		for($i = 0; $i < count($this->allDetailsTablesArr); $i ++) 
 		{
@@ -229,16 +249,11 @@ class ListPage extends RunnerPage
 		
 		$this->genId();
 		
-		
 		// fill span val indicator for totals
 		$this->jsSettings['tableSettings'][$this->tName]['totalFields'] = array();
 		foreach ($this->totalsFields as $tField)
 		{
-			$totalFieldData = array('type'=> $tField['totalsType'], 'fName'=> $tField['fName'], 'format'=> $tField['viewFormat']);
-			if( FORMAT_NUMBER == $tField['viewFormat'] )
-				$totalFieldData["numberOfDigits"] = $this->pSet->isDecimalDigits( $tField['fName'] );
-				
-			$this->jsSettings['tableSettings'][ $this->tName ]['totalFields'][] = $totalFieldData;
+			$this->jsSettings['tableSettings'][$this->tName]['totalFields'][] = array('type'=>$tField['totalsType'], 'fName'=>$tField['fName'], 'format'=>$tField['viewFormat']);
 			
 			if ($tField['totalsType'] == 'COUNT')
 			{
@@ -251,7 +266,7 @@ class ListPage extends RunnerPage
 		}
 		
 		//if scroll body of grid
-		$this->jsSettings['tableSettings'][$this->tName]['scrollGridBody'] = (( $this->listGridLayout == gltHORIZONTAL || $this->listGridLayout == gltFLEXIBLE )&& $this->isScrollGridBody);
+		$this->jsSettings['tableSettings'][$this->tName]['scrollGridBody'] = ($this->listGridLayout == gltHORIZONTAL && $this->isScrollGridBody);
 		
 		$this->jsSettings['tableSettings'][$this->tName]['permissions'] = $this->permis[$this->tName];
 		if($this->pSet->getAdvancedSecurityType() == ADVSECURITY_EDIT_OWN)
@@ -271,153 +286,10 @@ class ListPage extends RunnerPage
 				$this->gMapFields[] = $i;
 		}
 		
-		$this->processClickAction();
-		
 		$this->addPopupLayoutNamesToSettings();
 		
-		$this->createOrderByObject();
-
-		// init setting for params in hash URL for ajax list 
-		if ( $this->listAjax && $this->mode != LIST_DETAILS )
-		{
-			$this->pageData['urlParams'] = $this->getUrlParams();
-		}
-
-	}
-
-	protected function createOrderByObject() {
-		//	read order by info from request
-		$this->orderClause = OrderClause::createFromPage( $this, true );
-	}
-
-	function processClickAction()
-	{
-		$clickActionJSON = $this->pSet->getClickActionJSONString();
-		if( $clickActionJSON != "" )
-		{
-			$clickAction = my_json_decode( $clickActionJSON );
-
-			foreach ( $clickAction["fields"] as $field => $fSetting )
-			{
-				if ( !$this->checkAllowClickAction($fSetting) )
-					$clickAction["fields"][$field]["action"] = "noaction";
-			}
-
-			if ( !$this->checkAllowClickAction($clickAction["row"]) )
-				$clickAction["row"]["action"] = "noaction";
-
-			$this->jsSettings['tableSettings'][$this->tName]["clickActions"] = $clickAction;
- 		}
- 	}
-
- 	function checkAllowClickAction( $actionSet )
- 	{
- 		$isActionAllowed = true;
- 		if ( $actionSet["action"] == "open" )
-		{
-			switch ($actionSet["openData"]["page"])
-			{
-				case 'add':
-					$isActionAllowed = $this->addAvailable();
-					break;
-				case 'edit':
-					$isActionAllowed = $this->editAvailable();
-					break;
-				case 'view':
-					$isActionAllowed = $this->viewAvailable();
-					break;							
-				case 'print':
-					$isActionAllowed = $this->printAvailable();
-					break;						
-				default:
-					$isActionAllowed = true;
-					break;
-			}
-		}
-
-		return $isActionAllowed;
- 	}
-
-	/**
-	 * add Order data for set in URL 
-	 */
-	function addOrderUrlParam() 
-	{
-		$urlParams = $this->orderClause->getOrderUrlParams();
-
-		if ( strlen($urlParams) > 0 )
-		{
-			if ( !isset($this->pageData["urlParams"]) )
-				$this->pageData["urlParams"] = array();
-			
-			$this->pageData["urlParams"]["orderby"] = $urlParams;
-		}
-	}
-
-	/**
-	 * Get list params for using in Url hash (ajax reload)
-	 */
-	function getUrlParams()
-	{
-		$params = array();
-		if ( @$_SESSION[$this->sessionPrefix."_qs"] )
-		{
-			$params["qs"] = rawurlencode($_SESSION[$this->sessionPrefix."_qs"]);
-		}
-		if ( @$_SESSION[$this->sessionPrefix."_q"] )
-		{
-			$params["q"] = rawurlencode($_SESSION[$this->sessionPrefix."_q"]);
-		}
-		if ( @$_SESSION[$this->sessionPrefix."_criteriaSearch"] && $_SESSION[$this->sessionPrefix."_criteriaSearch"] != "and" )
-		{
-			$params["criteria"] = $_SESSION[$this->sessionPrefix."_criteriaSearch"];
-		}
-		if ( @$_SESSION[$this->sessionPrefix."_filters"] )
-		{
-			$params["f"] = rawurlencode($_SESSION[$this->sessionPrefix."_filters"]);
-		}
-		if( !postvalue("qs") && !postvalue("q") && !isset( $_REQUEST["f"] ) && @$_SESSION[$this->sessionPrefix."_pagenumber"] && @$_SESSION[$this->sessionPrefix."_pagenumber"] > 1 )
-		{
-			$params["goto"] = $_SESSION[$this->sessionPrefix."_pagenumber"];
-		}
-		if( @$_SESSION[$this->sessionPrefix."_pagesize"] && $this->gPageSize != $_SESSION[$this->sessionPrefix."_pagesize"])
-		{
-			$params["pagesize"] = $_SESSION[$this->sessionPrefix."_pagesize"];
-		}
-		if( @$_SESSION[$this->sessionPrefix."_mastertable"] )
-		{
-			$params["mastertable"] = $_SESSION[$this->sessionPrefix."_mastertable"];
-		}
-		if( @$_SESSION[$this->sessionPrefix."_mastertable"] )
-		{
-			$params["mastertable"] = $_SESSION[$this->sessionPrefix."_mastertable"];
-		}
-		if ( count($this->masterKeysReq) )
-		{
-			for($i = 1; $i <= count($this->masterKeysReq); $i++)
-			{
-				$params["masterkey".$i] = $this->masterKeysReq[$i];
-			}
-		}
-		elseif ( count($this->detailKeysByM) )
-		{
-			for( $i = 1; $i <= count($this->detailKeysByM); $i++ )
-			{
-				$params["masterkey".$i] = $this->masterKeysReq[$i];
-			}	
-		}
-
-		if( $this->searchClauseObj )
-		{
-			if( $this->searchClauseObj->savedSearchIsRun )
-				$params["savedSearch"] = true;
-		}
-
-		$tabId = $this->getCurrentTabId();
-		if( strlen( $tabId ) )
-			$params["tab"] = rawurlencode( $tabId );
-		
-		return $params;
+		$this->orderClause = new OrderClause($this);
+		$this->orderClause->moveNext = $this->pSet->useMoveNext();
 	}
 	
 	/**
@@ -436,7 +308,7 @@ class ListPage extends RunnerPage
 	 */	
 	function addCommonHtml() 
 	{
-		if ( !$this->isDashboardElement() && !$this->mobileTemplateMode())
+		if (!isMobile())
 			$this->body["begin"].= "<div id=\"search_suggest\" class=\"search_suggest\"></div>";
 		
 		if($this->is508) {
@@ -462,11 +334,6 @@ class ListPage extends RunnerPage
 		// add button events if exist
 		$this->addButtonHandlers();
 		
-		if( $this->allDetailsTablesArr )
-		{
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.min.css");
-			$this->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.theme.min.css");
-		}
 	}
 	
 	/**
@@ -474,13 +341,8 @@ class ListPage extends RunnerPage
 	 */
 	function addJsForGrid()
 	{ 
-		if( $this->isResizeColumns )
+		if($this->isResizeColumns)
 			$this->prepareForResizeColumns();
-
-		if( $this->pSet->isAllowFieldsReordering() && $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			$this->AddJSFile( 'include/jquery.dragtable.js' );
-		}
 		
 		$this->jsSettings['tableSettings'][$this->tName]['showRows'] = ($this->numRowsFromSQL ? true : false);
 		
@@ -493,15 +355,9 @@ class ListPage extends RunnerPage
 	 */
 	function prepareForResizeColumns()
 	{
-		if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
+		if($this->mode!=LIST_AJAX)
 		{
-			$this->AddJSFile( 'include/colresizable.js' );
-			return;
-		}
-		
-		if( $this->mode != LIST_AJAX )
-		{
-			if( $this->debugJSMode === true )
+			if($this->debugJSMode === true)
 				$this->AddJSFile("include/runnerJS/RunnerResizeGrid.js");
 		}
 	}
@@ -517,9 +373,8 @@ class ListPage extends RunnerPage
 		//	reset search and page number
 		$_SESSION[$this->sessionPrefix."_search"] = 0;
 		if($this->firstTime)
-			$_SESSION[$this->sessionPrefix."_pagenumber"] = 1;		
+			$_SESSION[$this->sessionPrefix."_pagenumber"] = 1;
 	}
-	
 	/**
 	 * Add event before process list
 	 */
@@ -535,36 +390,29 @@ class ListPage extends RunnerPage
 	{
 		parent::setSessionVariables();
 		
-		if( $this->searchClauseObj )
+		if($this->searchClauseObj->bIsUsedSrch)
 		{
-			if( $this->searchClauseObj->isSearchFunctionalityActivated() )
-			{
-				// if search used serialize clause object
-				$_SESSION[$this->sessionPrefix.'_advsearch'] = serialize($this->searchClauseObj);
-			}
-			else
-			{
-				// Unset session for search if search not used
-				unset($_SESSION[$this->sessionPrefix.'_advsearch']);
-			}
-			
-			// Unset session for filters if filters  not activated
-			if(!$this->searchClauseObj->filtersActivated)
-				unset($_SESSION[$this->sessionPrefix.'_filters']);
-		} 
-		else 
+			// if search used serialize clause object
+			$_SESSION[$this->sessionPrefix.'_advsearch'] = serialize($this->searchClauseObj);
+		}
+		else
 		{
+			// Unset session for search if search not used
 			unset($_SESSION[$this->sessionPrefix.'_advsearch']);
-			unset($_SESSION[$this->sessionPrefix.'_filters']);
 		}
 		
+		// Unset session for filters if filters  not activated
+		if(!$this->searchClauseObj->filtersActivated)
+			unset($_SESSION[$this->sessionPrefix.'_filters']);
+		
+		//set session order by
+		if(@$_REQUEST["orderby"])
+			$_SESSION[$this->sessionPrefix."_orderby"]= @$_REQUEST["orderby"];
 		
 		//set session goto
 		if(@$_REQUEST["goto"])
 			$_SESSION[$this->sessionPrefix."_pagenumber"]= @$_REQUEST["goto"];
-		
-		
-			
+				
 		//	page number
 		$this->myPage =(integer) $_SESSION[$this->sessionPrefix."_pagenumber"];
 		if(! $this->myPage)
@@ -575,30 +423,40 @@ class ListPage extends RunnerPage
 			$this->pageSize = $this->gPageSize;	
 	}
 	
-	protected function assignColumnHeaderClasses()
+	/**
+	 * Order links attribute for order on list page
+	 */
+	function orderLinksAttr() 
 	{
 		for($i = 0; $i < count($this->listFields); $i ++) 
 		{
 			$field = $this->listFields[$i]['fName'];
 			$goodName = GoodFieldname($field);
+			$this->xt->assign($goodName."_orderlinkattrs", $this->setLinksAttr(GoodFieldName($this->listFields[$i]['fName'])));
+			$this->xt->assign($goodName."_fieldheader", true);			
 			// add class for field header as field value
 			$fieldClassStr = $this->fieldClass($field);
 			// add class for mobile columns hiding
-			if( isset( $this->hiddenColumnClasses[$goodName] ) )
-				$fieldClassStr .= " ".$this->hiddenColumnClasses[$goodName ];
-			$this->xt->assign(GoodFieldName($field)."_class", $fieldClassStr); 
+			if( isset( $this->hiddenColumnClasses[$field] ) )
+				$fieldClassStr .= " ".$this->hiddenColumnClasses[$field];
+			$this->xt->assign(GoodFieldName($this->listFields[$i]['fName'])."_class", $fieldClassStr); 
 		}
 	}
-	
-	
 	/**
-	 * @return Boolean
+	 * Set order links attribute for order on list page
+	 *
+	 * @param String field	- name field, which is ordering
+	 * @param String sort	- how is filed ordering, "a" - asc or "d" - desc, default is "a"
+	 * @param String setIcon
+	 * @return String
 	 */
-	public function isReoderByHeaderClickingEnabled()
+	function setLinksAttr($field, $sort = "", $setIcon = false) 
 	{
-		return $this->getLayoutVersion() != BOOTSTRAP_LAYOUT || $this->pSet->hasReorderingByHeader();
+		$href = GetTableLink($this->shortTableName, "list", "orderby=".($sort == "a" ? "d" : "a").$field);
+		$orderlinkattrs = ' data-order="' . ($sort == "a" ? "d" : "a") . $field . '" id="order_'.$field.'_'.$this->id.'" name="order_'.$field.'_'.$this->id.'" data-href="'.$href.'" class="rnr-orderlink"';
+		
+		return $orderlinkattrs;
 	}
-	
 	
 	/**
 	 * Delete selected records
@@ -606,10 +464,7 @@ class ListPage extends RunnerPage
 	function deleteRecords() 
 	{	
 		global $globalEvents; 
-		if( @$_REQUEST["a"] != "delete" )
-			return;
-
-		$message_class = "alert-warning";
+		
 		$this->deleteMessage = "";
 		if(@$_REQUEST["mdelete"]) 
 		{
@@ -644,27 +499,16 @@ class ListPage extends RunnerPage
 		foreach($this->selectedRecs as $keys) 
 		{
 			$where = KeyWhere($keys);
-			$mandatoryWhere = array();
-			$mandatoryWhere[]= $where;
-
 			//	delete only owned records
 			if($this->nSecOptions != ADVSECURITY_ALL && $this->nLoginMethod == SECURITY_TABLE && $this->createLoginPage)
-			{
 				$where = whereAdd($where, SecuritySQL("Delete", $this->tName));
-				$mandatoryWhere[] = $this->SecuritySQL("Delete", $this->tName);
-			}
 			
-			
-			$sqlParts = $this->gQuery->getSqlComponents();
-			$selectSQL = SQLQuery::buildSQL( $sqlParts, $mandatoryWhere );
-			
-			$strSQL = "delete from ".$this->connection->addTableWrappers( $this->origTName )." where ".$where;
+			$strSQl = "delete from ".$this->connection->addTableWrappers( $this->origTName )." where ".$where;
 			
 			$retval = true;
 			
-			
-			
-			$deletedqResult = $this->connection->query( SQLQuery::buildSQL($sqlParts, $mandatoryWhere ) );
+			$deletedqResult = $this->connection->query( SQLQuery::gSQLWhere_having($this->gsqlHead, $this->gsqlFrom, $this->gsqlWhereExpr
+				, $this->gsqlGroupBy, $this->gsqlHaving, $where) );
 				
 			$deleted_values = $this->cipherer->DecryptFetchedArray( $deletedqResult->fetchAssoc() );		
 			if($globalEvents->exists("IsRecordEditable", $this->tName)) 
@@ -675,11 +519,9 @@ class ListPage extends RunnerPage
 			
 			if($this->eventExists("BeforeDelete"))
 			{
-				RunnerContext::pushRecordContext( $deleted_values, $this );
 				$tdeleteMessage = $this->deleteMessage;
 				$retval = $this->eventsObject->BeforeDelete($where, $deleted_values, $tdeleteMessage, $this);
 				$this->deleteMessage = $tdeleteMessage;
-				RunnerContext::pop();
 			}
 				
 			$lockRecord = false;
@@ -708,8 +550,8 @@ class ListPage extends RunnerPage
 				// delete associated uploaded files if any
 				DeleteUploadedFiles($this->pSet, $deleted_values);
 			
-				LogInfo($strSQL);
-				$this->connection->exec( $strSQL );
+				LogInfo($strSQl);
+				$this->connection->exec( $strSQl );
 				
 				if($this->audit && $deleted_values)
 				{
@@ -725,23 +567,18 @@ class ListPage extends RunnerPage
 					}
 					$this->audit->LogDelete($this->tName, $deleted_audit_values, $keys);
 				}
-						
+				
 				if($this->eventExists("AfterDelete"))
 				{
-					RunnerContext::pushRecordContext( $deleted_values, $this );
 					$tdeleteMessage = $this->deleteMessage;
 					$this->eventsObject->AfterDelete($where, $deleted_values,$tdeleteMessage, $this);
 					$this->deleteMessage = $tdeleteMessage;
-					RunnerContext::pop();
-					$message_class = "alert-info";
-					
 				}
 			}
 			
 			if (strlen($this->deleteMessage))
 			{
 				$this->xt->assignbyref("message", $this->deleteMessage);
-				$this->xt->assignbyref( "message_class", $message_class );
 				$this->xt->assign("message_block",true);
 			}
 		}
@@ -754,9 +591,6 @@ class ListPage extends RunnerPage
 	 */
 	function rulePRG() 
 	{		
-		if( $this->stopPRG )
-			return false;
-		
 		if(no_output_done() && count($this->selectedRecs) && !strlen($this->deleteMessage)) 
 		{	
 			// redirect, add a=return param for saving SESSION
@@ -786,72 +620,28 @@ class ListPage extends RunnerPage
 	function commonAssign() 
 	{
 		parent::commonAssign();
-		
 		$this->xt->assign("id", $this->id);
 		$this->xt->assignbyref("body", $this->body);
 		
-		$this->xt->assign("newrecord_controls_block", $this->inlineAddAvailable() || $this->addAvailable() );
+		$this->xt->assign("newrecord_controls_block", $this->permis[$this->tName]['add']);
+		$this->xt->assign("record_controls_block", $this->permis[$this->tName]['add'] || $this->isDispGrid());
+		//$this->xt->assign("grid_controls", $this->isDispGrid());	
 		
-		if( ( $this->isDispGrid() || $this->listAjax ) 	&& ( 
-				$this->printAvailable() 
-				||  $this->exportAvailable() 
-				||  $this->deleteAvailable() 
-				|| $this->updateSelectedAvailable() 
-				|| $this->inlineEditAvailable() 
-				|| $this->inlineAddAvailable() 
-				|| $this->showAddInPopup && $this->addAvailable() 
-			) 
-		)
-		{
-			$this->xt->assign("record_controls_block", true);
-		}
+		$this->importLinksAttrs();
 		
-		if( $this->numRowsFromSQL == 0 )
-			$this->xt->displayBrickHidden("recordcontrol");
-			
-		//	add link
-		if( $this->addAvailable() )
-		{
-			$this->xt->assign("add_link", true);
-			$this->xt->assign("addlink_attrs", "href='".GetTableLink($this->shortTableName, "add")."' id=\"addButton".$this->id."\"");
-			if ( $this->dashTName )
-			{
-				$this->xt->assign("addlink_getparams", "?fromDashboard=" . $this->dashTName);	
-			}
-		}
-		//	inline add link
-		$this->inlineAddLinksAttrs();				
+		$this->xt->assign("changepwd_link", $_SESSION["AccessLevel"]!= ACCESS_LEVEL_GUEST && $_SESSION["fromFacebook"] == false);
+		$this->xt->assign("changepwdlink_attrs", "href=\"".GetTableLink("changepwd")."\" onclick=\"window.location.href='".GetTableLink("changepwd")."';return false;\"");
 		
 		if($this->isShowMenu() || $this->isAdminTable()) 
 			$this->xt->assign("quickjump_attrs", 'class="'.$this->makeClassName("quickjump").'"');
 		
-		foreach ($this->googleMapCfg['mainMapIds'] as $mapId)
-		{
-			$this->xt->assign_event($mapId, $this, 'createMapDiv', array('mapId'=>$mapId, 'width'=>$this->googleMapCfg['mapsData'][$mapId]['width'], 'height'=>$this->googleMapCfg['mapsData'][$mapId]['height']));
-		}
+		$this->xt->assign("more_list", true);
 		
-		$this->assignSortByDropdown();
+		foreach ($this->googleMapCfg['mainMapIds'] as $mapId)
+			$this->xt->assign_event($mapId, $this, 'createMapDiv', array('mapId'=>$mapId, 'width'=>$this->googleMapCfg['mapsData'][$mapId]['width'], 'height'=>$this->googleMapCfg['mapsData'][$mapId]['height']));
 		
 		//add assign for grid block
 		$this->addAssignForGrid();
-		$this->xt->assign("grid_block", true);
-		
-		//select all link and attr
-		$this->selectAllLinkAttrs();
-		
-		//edit selected link and attr
-		$this->editSelectedLinkAttrs();
-
-		//update selected link and attr
-		$this->updateSelectedLinkAttrs();
-		
-		//save all link, attr, span	
-		$this->saveAllLinkAttrs();
-		
-		//cansel all link, attr, span
-		$this->cancelAllLinkAttrs();
-		
-		$this->assignDetailsTablesBadgeColors();
 	}
 	
 	/**
@@ -859,19 +649,12 @@ class ListPage extends RunnerPage
 	 */
 	function addAssignForGrid()
 	{
-		if( !$this->isDispGrid() )
-			return;
-		
 		if($this->is508)
-		{
-			if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT && $this->listGridLayout == gltVERTICAL )
-				$this->xt->assign_section("grid_header", "<div style=\"display:none\">Table data</div>", "");
-			else
-				$this->xt->assign_section("grid_header", "<caption style=\"display:none\">Table data</caption>", "");
-		}
+			$this->xt->assign_section("grid_header", "<caption style=\"display:none\">Table data</caption>", "");
 		
 		$this->xt->assign("endrecordblock_attrs", "colid=\"endrecord\"");
 		
+		$this->inlineAddLinksAttrs();
 		
 		for($i = 0; $i < count($this->listFields); $i ++) 
 		{
@@ -880,80 +663,46 @@ class ListPage extends RunnerPage
 			$this->xt->assign(GoodFieldName($this->listFields[$i]['fName'])."_fieldfootercolumn", true);
 		}
 		
-		$colsonpage = $this->recsPerRowList;
-		
-		$record_header = array("data" => array());
-		$record_footer = array("data" => array());
-		if ($colsonpage > $this->recordsOnPage && $this->recordsOnPage && $this->listGridLayout != gltVERTICAL){
-			$colsonpage = $this->recordsOnPage;
-		}
-		for($i = 0; $i < $colsonpage; $i ++) 
+		if($this->isDispGrid()) 
 		{
-			$rheader = array();
-			$rfooter = array();
-			if($i < $colsonpage - 1) 
-			{
-				$rheader["endrecordheader_block"] = true;
-				$rfooter["endrecordfooter_block"] = true;
+			$colsonpage = $this->recsPerRowList;
+			
+			$record_header = array("data" => array());
+			$record_footer = array("data" => array());
+			if ($colsonpage > $this->recordsOnPage && $this->recordsOnPage && $this->listGridLayout != gltVERTICAL){
+				$colsonpage = $this->recordsOnPage;
 			}
-			$record_header["data"][] = $rheader;
-			$record_footer["data"][] = $rfooter;
+			for($i = 0; $i < $colsonpage; $i ++) 
+			{
+				$rheader = array();
+				$rfooter = array();
+				if($i < $colsonpage - 1) 
+				{
+					$rheader["endrecordheader_block"] = true;
+					$rfooter["endrecordfooter_block"] = true;
+				}
+				$record_header["data"][] = $rheader;
+				$record_footer["data"][] = $rfooter;
+			}
+			$this->xt->assignbyref("record_header", $record_header);
+			$this->xt->assignbyref("record_footer", $record_footer);
+			$this->xt->assign("grid_header", true);
+			$this->xt->assign("grid_footer", true);
+			
+			// hiding header, if no rows
+			if(!$this->numRowsFromSQL){
+				$this->xt->assign("gridHeader_class", " ".$this->makeClassName("hiddenelem"));
+				$this->xt->assign("gridFooter_class", " ".$this->makeClassName("hiddenelem"));
+			}
+			
+			//$this->xt->assign("grid_footer", true);
+			
+			// moved from search panel
+			$gridTableStyle = "";
+			$gridTableStyle = 'style="';
+			$gridTableStyle .= $this->recordsOnPage>0 ? '"' : 'width: 50%;"'; 
+			$this->xt->assign('gridTable_attrs', $gridTableStyle);
 		}
-		$this->xt->assignbyref("record_header", $record_header);
-		$this->xt->assignbyref("record_footer", $record_footer);
-		$this->xt->assign("grid_header", true);
-		$this->xt->assign("grid_footer", true);
-		
-		// hiding header, if no rows
-		if(!$this->numRowsFromSQL){
-			$this->xt->assign("gridHeader_class", " ".$this->makeClassName("hiddenelem"));
-			$this->xt->assign("gridFooter_class", " ".$this->makeClassName("hiddenelem"));
-		}
-		
-		
-		// moved from search panel
-		$gridTableStyle = "";
-		$gridTableStyle = 'style="';
-		$gridTableStyle .= $this->recordsOnPage>0 ? '"' : 'width: 50%;"'; 
-		$this->xt->assign('gridTable_attrs', $gridTableStyle);
-
-		//checkbox column
-		$this->checkboxColumnAttrs();
-		
-		if( $this->editAvailable() )
-		{
-			$this->xt->assign("edit_column", true);
-			$this->xt->assign("edit_headercolumn", true);
-			$this->xt->assign("edit_footercolumn", true);
-		}
-		
-		if( $this->inlineEditAvailable() )
-		{
-			$this->xt->assign("inlineedit_column", true);
-			$this->xt->assign("inlineedit_headercolumn", true);
-			$this->xt->assign("inlineedit_footercolumn", true);
-		}
-		
-		//copy link
-		if( $this->copyAvailable() )
-			$this->xt->assign("copy_column", true);
-		
-		//view column
-		if( $this->displayViewLink() )
-			$this->xt->assign("view_column", true);
-		
-		//for list icons instead of list links
-		$this->assignListIconsColumn();
-		
-		if( $this->detailsInGridAvailable() )
-		{
-			$this->xt->assign(GoodFieldName($this->tName)."_dtable_column", true);
-			//$this->xt->assign("dtables_link", true);
-		}
-	
-		//delete link and attr
-		$this->deleteSelectedLink();
-
 	}
 	
 	function createMapDiv(&$params) 
@@ -975,24 +724,11 @@ class ListPage extends RunnerPage
 	 * Show inline add link
 	 * Add inline add attributes
 	 */
-
-	function getInlineAddLinksAttrs()
+	function inlineAddLinksAttrs()
 	{
-		return "name=\"inlineAdd_".$this->id."\" href='".GetTableLink($this->shortTableName, "add")."' id=\"inlineAdd".$this->id."\"";
-	}
-
-	function getAddLinksAttrs()
-	{
-		return "href='".GetTableLink($this->shortTableName, "add")."' id=\"addButton".$this->id."\"";
-	}
-	
-	 function inlineAddLinksAttrs()
-	{
-		if( !$this->inlineAddAvailable() )
-			return;
 		//inline add link and attr
-		$this->xt->assign("inlineadd_link", true );
-		$this->xt->assign("inlineaddlink_attrs", $this->getInlineAddLinksAttrs() );
+		$this->xt->assign("inlineadd_link", $this->permis[$this->tName]['add']);
+		$this->xt->assign("inlineaddlink_attrs", "name=\"inlineAdd_".$this->id."\" href='".GetTableLink($this->shortTableName, "add")."' id=\"inlineAdd".$this->id."\"");
 	}
 	
 	/**
@@ -1000,7 +736,7 @@ class ListPage extends RunnerPage
 	 */
 	function selectAllLinkAttrs()
 	{
-		$this->xt->assign("selectall_link", $this->deleteAvailable() || $this->permis[$this->tName]['export']|| $this->permis[$this->tName]['edit']);
+		$this->xt->assign("selectall_link", $this->permis[$this->tName]['delete']|| $this->permis[$this->tName]['export']|| $this->permis[$this->tName]['edit']);
 		$this->xt->assign("selectalllink_span", $this->buttonShowHideStyle());
 		$this->xt->assign("selectalllink_attrs", 
 			"name=\"select_all".$this->id."\" 
@@ -1013,8 +749,7 @@ class ListPage extends RunnerPage
 	 */
 	function checkboxColumnAttrs()
 	{
-		$showColumn = $this->deleteAvailable() || $this->exportAvailable() || $this->inlineEditAvailable() || $this->printAvailable() || $this->updateSelectedAvailable();
-		$this->xt->assign("checkbox_column", $showColumn);
+		$this->xt->assign("checkbox_column", $this->permis[$this->tName]['delete']|| $this->permis[$this->tName]['export']|| $this->permis[$this->tName]['edit']);
 		$this->xt->assign("checkbox_header", true);
 		$this->xt->assign("checkboxheader_attrs", "id=\"chooseAll_".$this->id."\" class=\"chooseAll".$this->id."\"");
 	}
@@ -1047,29 +782,12 @@ class ListPage extends RunnerPage
 	 */
 	function editSelectedLinkAttrs()
 	{
-		if( !$this->inlineEditAvailable() ) 
-			return;
-
-		$this->xt->assign("editselected_link", true );
+		$this->xt->assign("editselected_link", $this->permis[$this->tName]['edit']);
 		$this->xt->assign("editselectedlink_span", $this->buttonShowHideStyle());
 		$this->xt->assign("editselectedlink_attrs","
 					href='".GetTableLink($this->shortTableName, "edit")."' 
 					name=\"edit_selected".$this->id."\" 
 					id=\"edit_selected".$this->id."\"");
-	}
-
-	function updateSelectedLinkAttrs()
-	{
-		if( !$this->updateSelectedAvailable() ) 
-			return;
-
-		$this->xt->assign("updateselected_link", true );
-		$this->xt->assign("updateselectedlink_attrs", $this->getUpdateSelectedAttrs() . $this->buttonShowHideStyle() );
-	}
-	
-	protected function getUpdateSelectedAttrs()
-	{
-		return "href='".GetTableLink($this->shortTableName, "edit")."' name=\"update_selected".$this->id."\" id=\"update_selected".$this->id."\"";	
 	}
 	
 	/**
@@ -1097,23 +815,18 @@ class ListPage extends RunnerPage
 	 */
 	function deleteSelectedLink()
 	{	
-		if( !$this->deleteAvailable() )
-			return;
-
-		$this->xt->assign("deleteselected_link", true );
-		
+		//delete link and attr
+		$this->xt->assign("deleteselected_link", $this->permis[$this->tName]['delete']);
 		$this->xt->assign("deleteselectedlink_span", $this->buttonShowHideStyle());
-		$this->xt->assign("deleteselectedlink_attrs", $this->getDeleteLinksAttrs());
-	}
-
-	function getDeleteLinksAttrs()
-	{
-		return "id=\"delete_selected".$this->id."\" name=\"delete_selected".$this->id."\" ";
+		$this->deleteSelectedAttrs();
 	}
 	
-	function getEditLinksAttrs()
+	/**
+	 * Assign delete selected attrs 
+	 */
+	function deleteSelectedAttrs()
 	{
-		return "id=\"edit_selected".$this->id."\" name=\"edit_selected".$this->id."\" ";
+		$this->xt->assign("deleteselectedlink_attrs", "id=\"delete_selected".$this->id."\" name=\"delete_selected".$this->id."\" ");
 	}
 	
 	function getFormInputsHTML() 
@@ -1134,12 +847,17 @@ class ListPage extends RunnerPage
 	{
 		$listarray = false;
 		
-		if( $this->eventExists("ListQuery") )
+		if($this->eventExists("ListQuery"))
 		{
-			$orderData = $this->orderClause->getListQueryData();
-
-			$listarray = $this->eventsObject->ListQuery( $this->searchClauseObj, $orderData["fieldsForSort"], $orderData["howToSortData"], 
-				$this->masterTable, $this->masterKeysReq, null, $this->pageSize, $this->myPage, $this );
+			$arrFieldForSort = array();
+			$arrHowFieldSort = array();
+			for($i = 0; $i < count($this->orderClause->fieldsList); $i++)
+			{
+				$arrFieldForSort[] = $this->orderClause->fieldsList[$i]->fieldIndex; 
+				$arrHowFieldSort[] = $this->orderClause->fieldsList[$i]->orderDirection; 
+			}
+			$listarray = $this->eventsObject->ListQuery($this->searchClauseObj, $arrFieldForSort, $arrHowFieldSort, 
+				$this->masterTable, $this->masterKeysReq, null, $this->pageSize, $this->myPage, $this);
 		}
 		
 		if( $listarray !== false )
@@ -1147,239 +865,170 @@ class ListPage extends RunnerPage
 		else
 			$this->recSet = $this->connection->queryPage( $strSQL, $this->myPage, $this->pageSize, $this->maxPages > 1 );
 	}
-
-	protected function getSubsetSQLComponents() {
-
-		$sql = parent::getSubsetSQLComponents();
-		
-		if( $this->connection->dbType == nDATABASE_DB2 ) 
-			$sql["sqlParts"]["head"] .= ", ROW_NUMBER() over () as DB2_ROW_NUMBER ";
-		
-		//	security
-		$sql["mandatoryWhere"][] = $this->SecuritySQL("Search", $this->tName);
-
-		//	no records on first page
-		if( $this->mode != LIST_DETAILS && $this->noRecordsFirstPage && !$this->isSearchFunctionalityActivated() )
-			$sql["mandatoryWhere"][] = "1=0";
-	
-		//	add details subqueries
-		$detailsSubqueries = $this->getMasterDetailSubQuery();
-		if( $detailsSubqueries )
-			$sql["sqlParts"]["head"] .= ", " . implode( ", ", $detailsSubqueries );
-		
-		return $sql;
-	}
-	
-	public function getOrderByClause()
-	{
-		// use builtin orderClause object
-		return $this->orderClause->getOrderByExpression();
-	}
 	
 	/**
 	 * Builds SQL query, for retrieve data from DB
 	 */
 	function buildSQL() 
 	{
-		$sql = $this->getSubsetSQLComponents();
-//	build SQL
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-		$countSQL = $strSQL;
+		$this->gstrOrderBy = $this->gQuery->OrderByToSql();
+		$this->gsqlHead = $this->gQuery->HeadToSql();
+		if( $this->connection->dbType == nDATABASE_DB2 ) 
+			$this->gsqlHead.=", ROW_NUMBER() over () as DB2_ROW_NUMBER ";
+	
+		// add to gsqlHead subquery counting the number of details
+		$this->addMasterDetailSubQuery();
+	
+		$this->gsqlFrom = $this->gQuery->FromToSql();
+		$this->gsqlWhereExpr = $this->gQuery->WhereToSql();
+		$this->gsqlGroupBy = $this->gQuery->GroupByToSql();
+		$this->gsqlHaving = $this->gQuery->Having()->toSql($this->gQuery);
+
+		$whereComponents = $this->getWhereComponents();
+		$searchWhere = $whereComponents["searchWhere"];
+		$searchHaving = $whereComponents["searchHaving"];
+		$joinFromPart = $whereComponents["joinFromPart"];
 		
-		$strOrderBy = $this->getOrderByClause();
-		$strSQL.= " ".trim( $strOrderBy );
+		$filterWhere = $this->getFiltersWhere();
+		$filterHaving = $this->getFiltersHaving();
 		
-//	do Before SQL Query event
-		$strSQLbak = $strSQL;
-		$sqlModifiedInEvent = false;
-		$whereModifiedInEvent = false;
-		$orderbyModifiedInEvent = false;
+		//$this->strWhereClause could contain some conditions for a lookup list page so It needs combining with commonWhere
+		$sqlWhere = combineSQLCriteria( array($whereComponents["commonWhere"], $filterWhere, $this->strWhereClause) ); 		
+		$sqlHaving = combineSQLCriteria( array($whereComponents["commonHaving"], $filterHaving) );
+		$sqlFrom = $this->gsqlFrom.$joinFromPart;
 		
-		if( $this->eventsObject->exists("BeforeQueryList") )
+		$strSecuritySql = $this->SecuritySQL("Search", $this->tName);
+		// where clause with foreign keys of current table and it's master table master keys		
+		$masterWhere = $this->getMasterTableSQLClause();
+		$this->strWhereClause = combineSQLCriteria( array($searchWhere, $strSecuritySql, $masterWhere, $filterWhere) );
+		$this->strHavingClause = combineSQLCriteria( array($searchHaving, $filterHaving) );
+		
+		
+		if( $this->mode != LIST_DETAILS && $this->noRecordsFirstPage && !$this->isRequiredSearchRunning() )
 		{
-			$tstrWhereClause = SQLQuery::combineCases( array( 
-					SQLQuery::combineCases( $sql["mandatoryWhere"], "and" ),
-					SQLQuery::combineCases( $sql["optionalWhere"], "or" )
-				), "and" );
-				
-			$strWhereBak = $tstrWhereClause;
-			$tstrOrderBy = $strOrderBy;
+			$this->strWhereClause = whereAdd($this->strWhereClause, "1=0");
+			$sqlWhere = combineSQLCriteria( array($sqlWhere, "1=0") );
+		}
+		
+		$searchCombineType = $whereComponents["searchUnionRequired"] ? "or" : "and";			
+		
+		$strSQL = SQLQuery::gSQLWhere_having($this->gsqlHead, $sqlFrom, $sqlWhere, $this->gsqlGroupBy, $sqlHaving, $searchWhere, $searchHaving, $searchCombineType);	
+		$strSQL.= " ".trim( $this->strOrderBy );
+		
+		//	save SQL parts to use in "Export" and "Printer-friendly" pages and to get prev\next records
+		$_SESSION[$this->sessionPrefix."_sql"] = $strSQL;
+		$_SESSION[$this->sessionPrefix."_where"] = $this->strWhereClause;
+		$_SESSION[$this->sessionPrefix."_having"] = $this->strHavingClause;
+		$_SESSION[$this->sessionPrefix."_criteria"] = $searchCombineType;
+		$_SESSION[$this->sessionPrefix."_order"] = $this->strOrderBy;
+		$_SESSION[$this->sessionPrefix."_joinFromPart"] = $joinFromPart;
+		
+		$strSQLbak = $strSQL;
+		$whereModifiedInEvent = false;
+		if( $this->eventExists("BeforeQueryList") )
+		{
+			$tstrWhereClause = $this->strWhereClause;
+			$tstrOrderBy = $this->strOrderBy;
 			
 			$this->eventsObject->BeforeQueryList($strSQL, $tstrWhereClause, $tstrOrderBy, $this);
 			
-			$whereModifiedInEvent = ( $tstrWhereClause != $strWhereBak );
-			$orderbyModifiedInEvent = ( $tstrOrderBy != $strOrderBy );
-			$sqlModifiedInEvent = ( $strSQL != $strSQLbak );
-			
-			$strOrderBy = $tstrOrderBy;
-			
+			$whereModifiedInEvent = $tstrWhereClause != $this->strWhereClause;
+			$this->strWhereClause = $tstrWhereClause;
+			$this->strOrderBy = $tstrOrderBy;
 		
 			//	Rebuild SQL if needed
-			if( $sqlModifiedInEvent ) 
+			if($strSQL != $strSQLbak) 
 			{
-				
 				//	changed $strSQL - old style	
 				$this->numRowsFromSQL = GetRowCount($strSQL, $this->connection);
 			}
-			else if( $whereModifiedInEvent )
+			else if( $whereModifiedInEvent || $this->strOrderBy != $tstrOrderBy )
 			{
-				$strSQL = SQLQuery::buildSQL($sql["sqlParts"], array( $tstrWhereClause ), $sql["mandatoryHaving"] );
-				$countSQL = $strSQL;
-				$strSQL.= " ".trim( $strOrderBy );
-			}
-			else if( $orderbyModifiedInEvent )
-			{
-				$strSQL = SQLQuery::buildSQL($sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-				$countSQL = $strSQL;
-				$strSQL.= " ".trim( $strOrderBy );
+				$strSQL = SQLQuery::gSQLWhere_having($this->gsqlHead, $sqlFrom, $this->gsqlWhereExpr, $this->gsqlGroupBy, $this->gsqlHaving
+					, $this->strWhereClause, $this->strHavingClause, $searchCombineType);
+				$strSQL.= " ".trim( $this->strOrderBy );
 			}
 		}
-
-//	custom GetRowCount event:
+		
 		$rowcount = false;
-		
 		if($this->eventExists("ListGetRowCount"))
-		{
 			$rowcount = $this->eventsObject->ListGetRowCount($this->searchClauseObj, $this->masterTable, $this->masterKeysReq, null, $this);
-			if( $rowcount !== false )
-				$this->numRowsFromSQL = $rowcount;
-		}
 		
-//	normal mode row count
-		if( $rowcount === false && !$sqlModifiedInEvent )
+		if( $rowcount !== false )
+			$this->numRowsFromSQL = $rowcount;
+		else
 		{
-			$this->numRowsFromSQL = $this->connection->getFetchedRowsNumber( $countSQL );
+			if( $whereModifiedInEvent ) 
+			{
+				$this->numRowsFromSQL = SQLQuery::gSQLRowCount_int( $this->gsqlHead, $sqlFrom, $this->gsqlWhereExpr, $this->gsqlGroupBy
+					, $this->gsqlHaving, $this->strWhereClause, $this->strHavingClause, $this->connection, $searchCombineType );
+			} 
+			else 
+			{
+				$this->numRowsFromSQL = SQLQuery::gSQLRowCount_int($this->gsqlHead, $sqlFrom, $sqlWhere, $this->gsqlGroupBy
+					, $sqlHaving, $searchWhere, $searchHaving, $this->connection, $searchCombineType);
+			}
 		}
-		
-		$this->numRowsFromSQL = $this->limitRowCount( $this->numRowsFromSQL );
 
-		// check if we need to count details number using a sub-query when numRowsFromSQL prop is calculated 
-		if( $this->useDetailsCountBySubquery() )
-		{
-			// rebuild SQL query to add a details counting sub-query #12991
-			// when numRowsFromSQL isn't set the sub-query doesn't go to SQLComponents subset
-			$sql = $this->getSubsetSQLComponents();
-			$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-			$strSQL.= " ".trim( $this->getOrderByClause() );
-		}
-		
 		LogInfo($strSQL);
 		$this->querySQL = $strSQL;
  	}
-
+	
 	/**
-	 * Get rows count for tab
+	 * Adds sub query for counting details recs number
 	 */
-	protected function getRowCountByTab($tab)
+	protected function addMasterDetailSubQuery() 
 	{
-		$sql = $this->getTabSQLComponents( $tab );
-		
-		//	build SQL
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-		$countSQL = $strSQL;
-				
-		
-		if( $this->eventsObject->exists("BeforeQueryList") )
-		{
-			//	do Before SQL Query event
-			$strSQLbak = $strSQL;
-			$sqlModifiedInEvent = false;
-			$whereModifiedInEvent = false;
-
-			$tstrWhereClause = SQLQuery::combineCases( array( 
-					SQLQuery::combineCases( $sql["mandatoryWhere"], "and" ),
-					SQLQuery::combineCases( $sql["optionalWhere"], "or" )
-				), "and" );
-				
-			$strWhereBak = $tstrWhereClause;
-
-			$tstrOrderBy = "";
-			$this->eventsObject->BeforeQueryList($strSQL, $tstrWhereClause, $tstrOrderBy, $this);
-			$whereModifiedInEvent = ( $tstrWhereClause != $strWhereBak );
-			$sqlModifiedInEvent = ( $strSQL != $strSQLbak );
-		
-			//	Rebuild SQL if needed
-			if( $sqlModifiedInEvent ) 
-			{				
-				return $this->limitRowCount( GetRowCount($strSQL, $this->connection) );
-			}
-			
-			if( $whereModifiedInEvent )
-			{
-				$countSQL = SQLQuery::buildSQL($sql["sqlParts"], array( $tstrWhereClause ), $sql["mandatoryHaving"] );
-			}
-		}
-
-		//	normal mode row count
-		return $this->limitRowCount( $this->connection->getFetchedRowsNumber( $countSQL ) );
-	}
-
-	/**
-	 * Returns array of subqueries for counting details records 
-	 * These queries should be added to the select-list of the main SQL query
-	 * @return Array
-	 */
-	protected function getMasterDetailSubQuery() 
-	{
-		if( $this->numRowsFromSQL == 0 )
-			return array();
-		
-		$ret = array();
-		
 		for($i = 0; $i < count($this->allDetailsTablesArr); $i++) 
 		{
 			$detailData = $this->allDetailsTablesArr[$i];
-			if( !$detailData['dispChildCount'] && !$detailData['hideChild'] ) 
-				continue;
-				
-			$dataSourceTName = $detailData['dDataSourceTable'];
+			if( $detailData['dispChildCount'] || $detailData['hideChild'] ) 
+			{
+				$dataSourceTName = $detailData['dDataSourceTable'];
 
-			if( !$this->isDetailTableSubquerySupported( $dataSourceTName, $i ) )
-				continue;
-			
-			$detailsSettings = $this->pSet->getTable($dataSourceTName);
-			$detailsQuery = $detailsSettings->getSQLQuery();
-			$detailsSqlWhere = $detailsQuery->WhereToSql();
-			
-			$masterWhere = "";
-			foreach($this->masterKeysByD[$i] as $idx => $val) 
-			{
-				if($masterWhere)
-					$masterWhere.= " and ";
+				if( !$this->isDetailTableSubquerySupported( $dataSourceTName, $i )	)
+					continue;
 				
-				$masterWhere.= $this->cipherer->GetFieldName( $this->connection->addTableWrappers("subQuery_cnt")."." 
-						.$this->connection->addFieldWrappers($this->detailKeysByD[$i][$idx]), $this->masterKeysByD[$i][$idx] )
-					."=".$this->cipherer->GetFieldName( $this->connection->addTableWrappers($this->origTName)."."
-						.$this->connection->addFieldWrappers($this->masterKeysByD[$i][$idx]), $this->masterKeysByD[$i][$idx] );
+				$detailsSettings = $this->pSet->getTable($dataSourceTName);
+				$detailsQuery = $detailsSettings->getSQLQuery();
+				$detailsSqlWhere = $detailsQuery->WhereToSql();
+				
+				$masterWhere = "";
+				foreach($this->masterKeysByD[$i] as $idx => $val) 
+				{
+					if($masterWhere)
+						$masterWhere.= " and ";
+					
+					$masterWhere.= $this->cipherer->GetFieldName( $this->connection->addTableWrappers("subQuery_cnt")."." 
+							.$this->connection->addFieldWrappers($this->detailKeysByD[$i][$idx]), $this->masterKeysByD[$i][$idx] )
+						."=".$this->cipherer->GetFieldName( $this->connection->addTableWrappers($this->origTName)."."
+							.$this->connection->addFieldWrappers($this->masterKeysByD[$i][$idx]), $this->masterKeysByD[$i][$idx] );
+				}
+				
+				//	add a key field to the select list
+				$subQ = "";
+				foreach($this->detailKeysByD[$i] as $k) 
+				{
+					if( strlen($subQ) )
+						$subQ.= ",";
+					$subQ.= RunnerPage::_getFieldSQL($k, $this->connection, $detailsSettings);
+				}
+				$subQ = "SELECT ".$subQ." ".$detailsQuery->FromToSql();
+				
+				//	add security where clause for sub query	
+				$securityClause = SecuritySQL("Search", $dataSourceTName);
+				if( strlen($securityClause) )
+					$subQ.= " WHERE ".whereAdd($detailsSqlWhere, $securityClause);
+				elseif( strlen($detailsSqlWhere) )
+					$subQ.= " WHERE ".whereAdd("", $detailsSqlWhere);
+				
+				// add detail table query tail	
+				$subQ.= " ".$detailsQuery->TailToSql();	
+				
+				$countsql = "SELECT count(*) FROM (".$subQ.") ".$this->connection->addTableWrappers("subQuery_cnt")." WHERE ".$masterWhere;
+				$this->gsqlHead.= ",(".$countsql.") as ".$this->connection->addFieldWrappers($dataSourceTName."_cnt")." "; 
 			}
-			
-			//	add a key field to the select list
-			$subQ = "";
-			foreach($this->detailKeysByD[$i] as $k) 
-			{
-				if( strlen($subQ) )
-					$subQ.= ",";
-				$subQ.= RunnerPage::_getFieldSQL($k, $this->connection, $detailsSettings);
-			}
-			$subQ = "SELECT ".$subQ." ".$detailsQuery->FromToSql();
-			
-			//	add security where clause for sub query	
-			$securityClause = SecuritySQL("Search", $dataSourceTName);
-			if( strlen($securityClause) )
-				$subQ.= " WHERE ".whereAdd($detailsSqlWhere, $securityClause);
-			elseif( strlen($detailsSqlWhere) )
-				$subQ.= " WHERE ".whereAdd("", $detailsSqlWhere);
-			
-			$subQ.= " ".$detailsQuery->GroupByHavingToSql();	
-			
-			$countsql = "SELECT count(*) FROM (".$subQ.") ".$this->connection->addTableWrappers("subQuery_cnt")." WHERE ".$masterWhere;
-			$ret[] = "(".$countsql.") as ".$this->connection->addFieldWrappers( $dataSourceTName."_cnt" );
-			
-			$this->addedDetailsCountSubqueries[ $dataSourceTName ] = true;
 		}
-		
-		return $ret;
-	
 	}
 
 	/**
@@ -1392,41 +1041,11 @@ class ListPage extends RunnerPage
 	{	
 		global $cman, $bSubqueriesSupported;	
 
-		return $bSubqueriesSupported 
-			&& $this->connection->checkDBSubqueriesSupport() 
+		return $bSubqueriesSupported && $this->connection->checkDBSubqueriesSupport() 
 			&& $cman->checkTablesSubqueriesSupport( $this->tName, $dDataSourceTName ) 
-			&& $this->checkfDMLinkFieldsOfTheSameType( $dDataSourceTName, $dTableIndex )
-			&& !$this->gQuery->HasJoinInFromClause();
+			&& $this->checkfDMLinkFieldsOfTheSameType( $dDataSourceTName, $dTableIndex );
 	}
 
-	/**
-	 * Check if to add a details counting sub-query to the page's sql-query
-	 * @return Boolean
-	 */
-	protected function useDetailsCountBySubquery()
-	{
-		 //	mind ASP conversion before modifying this code!!!
-		 $manyPages = false;
-		 if( $this->numRowsFromSQL > 0 ) 
-			 $manyPages = ($this->pageSize / $this->numRowsFromSQL < 0.1);
-			 
-		 return count($this->allDetailsTablesArr) > 0 && 
-			( max($this->pageSize, $this->numRowsFromSQL) <= 20 
-			|| $manyPages ) 
-			&& !$this->eventExists("BeforeQueryList") 
-			&& !$this->eventExists("ListGetRowCount");
-	}
-	
-	/**
-	 * #12351
-	 * Check if a sub-query counting a number of details is added to the page's SQL-query
-	 * @param String table	The detail datasource table name
-	 * @return Boolean	
-	 */
-	protected function isDetailTableSubqueryApplied( $table )
-	{
-		return $this->addedDetailsCountSubqueries[ $table ];
-	}	
 	
 	/**
 	 * Check if detail and master tables' link fields have the same type.
@@ -1459,134 +1078,111 @@ class ListPage extends RunnerPage
 	}	
 	
 	/**
-	 * @return Boolean
-	 */
-	protected function isInlineAreaToSet()
-	{
-		return $this->inlineAddAvailable() || $this->addAvailable() && $this->showAddInPopup;
-	}
-	
-	/**
 	 * Fills info in array about grid.
 	 * For new add row
 	 * @param array $rowInfoArr array with total info, that assignes grid
 	 */
-	function prepareInlineAddArea(&$rowInfoArr)
+	function fillGridShowInfo(&$rowInfoArr)
 	{
 		$rowInfoArr["data"]= array();
-		if( !$this->isInlineAreaToSet() )
-			return;
-			
 		$editlink = "";
 		$copylink = "";
 		//	add inline add row
-		$row = array();
-		$row["rowclass"] = "gridRowAdd ".$this->makeClassName("hiddenelem");
-		$row["rsclass"] = "gridRowSepAdd ".$this->makeClassName("hiddenelem");
-		if($this->listGridLayout == gltVERTICAL)
-			$row["rowattrs"] .= "vertical=\"1\"";
+		if(($this->isUseInlineAdd || $this->showAddInPopup) && $this->permis[$this->tName]['add']) 
+		{
+			$row = array();
+			$row["rowclass"] = "gridRowAdd ".$this->makeClassName("hiddenelem");
+			$row["rsclass"] = "gridRowSepAdd ".$this->makeClassName("hiddenelem");
+			if($this->listGridLayout == gltVERTICAL)
+				$row["rowattrs"] .= "vertical=\"1\"";
+					
+			$record = array();
+			$record["edit_link"]= true;
+			$record["inlineedit_link"]= true;
+			$record["view_link"]= true;
+			$record["copy_link"]= true;
+			$record["checkbox"]= true;
+			$record["editlink_attrs"]= "id=\"editLink_add".$this->id."\"";
+			
+			
+			$record["copylink_attrs"]= "id=\"copyLink_add".$this->id."\" name=\"copyLink_add".$this->id."\"";
+			$record["viewlink_attrs"]= "id=\"viewLink_add".$this->id."\" name=\"viewLink_add".$this->id."\"";
+			$record["checkbox_attrs"]= "id=\"check_add".$this->id."\" name=\"selection[]\"";
+			
+			//	add container for inline add controls
+			$addedInlineAddContainer = false;
+			if($this->permis[$this->tName]['edit']&& $this->isUseInlineEdit)
+			{
+				$record["inlineeditlink_attrs"]= "id=\"inlineEdit_add".$this->id."\" ";
+				$addedInlineAddContainer = true;
+			}
+			
+			for($i = 0; $i < count($this->allDetailsTablesArr); $i ++) 
+			{
+				//detail tables
+				$dDataSourceTable = $this->allDetailsTablesArr[$i]['dDataSourceTable'];
+				$dShortTable = $this->allDetailsTablesArr[$i]['dShortTable'];
+			
+				$record[$dShortTable."_dtable_link"]=($this->permis[$dDataSourceTable]['add'] || $this->permis[$dDataSourceTable]['search']);
+				$record[$dShortTable."_dtablelink_attrs"] = " href=\"".GetTableLink($dShortTable, "list")."?\" id=\"master_".$dShortTable."_add".$this->id."\" ";
+				if($this->allDetailsTablesArr[$i]['previewOnList'] == DP_INLINE) 
+				{
+					$record[$dShortTable."_dtablelink_attrs"] = 
+						"id = \"".$dShortTable."_preview".$this->id."\"
+						caption = \"".GetTableCaption(GoodFieldName($dDataSourceTable))."\" 
+						href = \"".GetTableLink($dShortTable, "list")."?\"
+						style = \"display:none;\"
+						data-pagetype = \"".$this->allDetailsTablesArr[$i]['dType']."\"";
+				}
+			}
+			
+			$this->addSpansForGridCells('add', $record);
+			
+			for($i = 0; $i < count($this->listFields); $i ++) 
+			{
+				$field = $this->listFields[$i]['fName'];
+				$gFieldName = GoodFieldName( $field );
+				if(!$addedInlineAddContainer)
+				{
+					if($i==0 && !($this->permis[$this->tName]['edit'] && $this->isUseInlineEdit))
+					{
+						$span = "<span id=\"inlineEdit_add".$this->id."\"></span>";
+						$record[ $gFieldName."_value" ] = $span . $record[ $gFieldName."_value" ] ;
+					}
+				}
 				
-		$record = array();
-		$record["edit_link"]= true;
-		$record["inlineedit_link"]= true;
-		$record["view_link"]= true;
-		$record["copy_link"]= true;
-		$record["checkbox"]= true;
-		$record["editlink_attrs"]= "id=\"editLink_add".$this->id."\" data-gridlink";
-		
-		$record["copylink_attrs"]= "id=\"copyLink_add".$this->id."\" name=\"copyLink_add".$this->id."\" data-gridlink";
-		$record["viewlink_attrs"]= "id=\"viewLink_add".$this->id."\" name=\"viewLink_add".$this->id."\" data-gridlink";
-		$record["checkbox_attrs"]= "id=\"check_add".$this->id."\" name=\"selection[]\"";
-		
-		//	add container for inline add controls
-		if( $this->inlineEditAvailable() )
-		{
-			$record["inlineeditlink_attrs"]= "id=\"inlineEdit_add".$this->id."\" ";
-		}
+				$record[ $gFieldName."_class" ] .= $this->fieldClass( $field );
 
-		$record["ieditbuttonsholder_attrs"]= "id=\"ieditbuttonsholder".$this->id."\" ";
-		
-		if( $this->detailsInGridAvailable() )
-			$record["dtables_link"] = true;
-		
-		$hideDPLink = false;
-		for($i = 0; $i < count($this->allDetailsTablesArr); $i ++) 
-		{
-			//detail tables
-			$dDataSourceTable = $this->allDetailsTablesArr[$i]['dDataSourceTable'];
-			$dShortTable = $this->allDetailsTablesArr[$i]['dShortTable'];
-		
-			$record[$dShortTable."_dtable_link"]=($this->permis[$dDataSourceTable]['add'] || $this->permis[$dDataSourceTable]['search']);
-			
-			if( $this->allDetailsTablesArr[$i]['dispChildCount'] )
-			{			
-				$record[ $dShortTable."_childnumber_attr" ] = " id='cntDet_".$dShortTable."_'";
-				$record[ $dShortTable."_link_attrs" ] = " href=\"#\" id=\"details_add".$this->id."_".$dShortTable."\" ";
-				$record[ $dShortTable."_childcount" ] = true;
+				$this->addHiddenColumnClasses($record, $field);
+								
 			}
 			
-			$htmlAttributes = array(); 
-			$record[$dShortTable."_dtablelink_attrs"] = "";
-			$htmlAttributes["href"] = GetTableLink($dShortTable, "list")."?";
-			$htmlAttributes["id"] = $dShortTable."_preview".$this->id;
-			$htmlAttributes["style"] = "display:none;";
-			if( $this->allDetailsTablesArr[$i]['previewOnList'] == DP_INLINE ) 
+			if($this->colsOnPage > 1)
+				$record["endrecord_block"]= true;
+			$record["grid_recordheader"]= true;
+			$record["grid_vrecord"]= true;
+			$row["grid_record"]= array("data" => array());
+			//set the $row["grid_record"] value
+			$this->setRowsGridRecord($row, $record); 
+			
+			for($i = 1; $i < $this->colsOnPage; $i ++) 
 			{
-				$htmlAttributes["caption"] = GetTableCaption(GoodFieldName($dDataSourceTable));
-				$htmlAttributes["data-pagetype"] = $this->allDetailsTablesArr[$i]['dType'];				
+				$rec = array();
+				if($i < $this->colsOnPage - 1)
+					$rec["endrecord_block"]= true;
+				if($row["grid_record"]["data"])
+				{				
+					$row["grid_record"]["data"][]= $rec;
+				}	
 			}
-			foreach ($htmlAttributes as $attr => $value)
-			{
-				$record[$dShortTable."_dtablelink_attrs"] .= $attr . "=\"" . $value . "\" ";
-			}
 			
-			if( $this->allDetailsTablesArr[$i]['hideChild'] && !$hideDPLink )
-				$hideDPLink = true;
+			$row["grid_rowspace"]= true;
+			$row["grid_recordspace"]= array("data" => array());
+			for($i = 0; $i < $this->colsOnPage * 2 - 1; $i ++)
+				$row["grid_recordspace"]["data"][]= true;
+			$rowInfoArr["data"][]= $row;
+			
 		}
-		$record["dtables_link_attrs"] = " href=\"#\" id=\"details_add".$this->id."\" ";
-		if( $hideDPLink )
-			$record["dtables_link_attrs"].= " class=\"".$this->makeClassName("hiddenelem")."\"";
-			
-		$this->addSpansForGridCells('add', $record);
-		
-		for($i = 0; $i < count($this->listFields); $i ++) 
-		{
-			$field = $this->listFields[$i]['fName'];
-			$gFieldName = GoodFieldName( $field );
-			
-			// code deleted due to #12459
-			
-			$record[ $gFieldName."_class" ] .= $this->fieldClass( $field );
-
-			$this->addHiddenColumnClasses($record, $field);
-							
-		}
-		
-		if($this->colsOnPage > 1)
-			$record["endrecord_block"]= true;
-		$record["grid_recordheader"]= true;
-		$record["grid_vrecord"]= true;
-		$row["grid_record"]= array("data" => array());
-		//set the $row["grid_record"] value
-		$this->setRowsGridRecord($row, $record); 
-		
-		for($i = 1; $i < $this->colsOnPage; $i ++) 
-		{
-			$rec = array();
-			if($i < $this->colsOnPage - 1)
-				$rec["endrecord_block"]= true;
-			if($row["grid_record"]["data"])
-			{				
-				$row["grid_record"]["data"][]= $rec;
-			}	
-		}
-		
-		$row["grid_rowspace"]= true;
-		$row["grid_recordspace"]= array("data" => array());
-		for($i = 0; $i < $this->colsOnPage * 2 - 1; $i ++)
-			$row["grid_recordspace"]["data"][]= true;
-		$rowInfoArr["data"][]= $row;
-		
 	}
 	/**
 	 * Incapsulates beforeProccessRow event
@@ -1598,22 +1194,18 @@ class ListPage extends RunnerPage
 		if($this->eventExists("ListFetchArray"))
 			$data = $this->eventsObject->ListFetchArray($this->recSet, $this);
 		else
-			$data = $this->cipherer->DecryptFetchedArray( $this->recSet->fetchAssoc() );	
+			$data = $this->cipherer->DecryptFetchedArray( $this->connection->fetch_array($this->recSet) );	
 			
 		while($data) 
 		{
 			if($this->eventExists("BeforeProcessRowList")) 
 			{
-				RunnerContext::pushRecordContext( $data, $this );
-				$result = $this->eventsObject->BeforeProcessRowList($data, $this);
-				RunnerContext::pop();
-				
-				if(!$result )
+				if(! $this->eventsObject->BeforeProcessRowList($data, $this))
 				{
 					if($this->eventExists("ListFetchArray"))
 						$data = $this->eventsObject->ListFetchArray($this->recSet, $this);
 					else
-						$data = $this->cipherer->DecryptFetchedArray( $this->recSet->fetchAssoc() );
+						$data = $this->cipherer->DecryptFetchedArray( $this->connection->fetch_array($this->recSet) );
 					continue;
 				}
 			}
@@ -1630,12 +1222,9 @@ class ListPage extends RunnerPage
 	 * @param {integer} $addPermis - add permissions
 	 * @param {integer} $searchPermis - search permissions
 	 */
-	function assignListIconsColumn()
+	function assignListIconsColumn($editPermis = 1, $addPermis = 1, $searchPermis = 1)
 	{	
-		if( $this->inlineEditAvailable() || $this->inlineAddAvailable() || $this->displayViewLink() || $this->editAvailable() )
-		{
-			$this->xt->assign("listIcons_column", true);
-		}
+		$this->xt->assign("listIcons_column", true);
 	}
 	
 	/**
@@ -1647,9 +1236,7 @@ class ListPage extends RunnerPage
 		$totals=array();
 		//	fill $rowinfo array
 		$rowinfo = array();
-		$this->prepareInlineAddArea($rowinfo);
-		
-		$this->setDetailsBadgeStyles();
+		$this->fillGridShowInfo($rowinfo);
 		
 		//	add grid data
 		$data = $this->beforeProccessRow();
@@ -1663,15 +1250,8 @@ class ListPage extends RunnerPage
 		{
 			$this->recordFieldTypes[ $this->listFields[$i]['fName'] ] = $this->pSet->getFieldType( $this->listFields[$i]["fName"] );
 		}
-
-		// calc current page size by records limit for last 
-		$currentPageSize = $this->pageSize;
-		if ( $this->pSet->getRecordsLimit() && $this->maxPages == $this->myPage )
-		{
-			$currentPageSize = $this->pSet->getRecordsLimit() - ( ($this->myPage-1) * $this->pageSize);
-		}		
 		
-		while($data && ($this->recNo <= $currentPageSize || $currentPageSize == -1 ) ) 
+		while($data && ($this->recNo <= $this->pageSize || $this->pageSize == -1)) 
 		{
 			$row = array();
 			
@@ -1679,7 +1259,7 @@ class ListPage extends RunnerPage
 			$row["grid_record"]["data"]= array();
 			$this->rowId ++;
 			
-			for($col = 1; $data && ($this->recNo <= $currentPageSize || $currentPageSize == -1) && $col <= $this->colsOnPage; $col ++) 
+			for($col = 1; $data && ($this->recNo <= $this->pageSize || $this->pageSize == -1) && $col <= $this->colsOnPage; $col ++) 
 			{
 				$this->countTotals($totals, $data);
 				$record = array();
@@ -1697,7 +1277,6 @@ class ListPage extends RunnerPage
 				if($globalEvents->exists("IsRecordEditable", $this->tName))
 					$isEditable = $globalEvents->IsRecordEditable($data, $isEditable, $this->tName);
 				$this->controlsMap['gridRows'][$gridRowInd]['isEditOwnRow'] = $isEditable;
-				$this->controlsMap['gridRows'][$gridRowInd]['gridLayout'] = $this->listGridLayout;
 				$this->controlsMap['gridRows'][$gridRowInd]['keyFields'] = array();
 				$this->controlsMap['gridRows'][$gridRowInd]['keys'] = array();
 				for($i = 0; $i < count($tKeys); $i ++) {
@@ -1761,48 +1340,33 @@ class ListPage extends RunnerPage
 				}
 				
 				$this->recIds[] = $this->recId;
-				
 				$record["recordattrs"] = "data-record-id=\"".$this->recId."\"";	
-				$record["editlink_attrs"]= "id=\"editLink".$this->recId."\" name=\"editLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."' data-gridlink";
-				$record["copylink_attrs"]= "id=\"copyLink".$this->recId."\" name=\"copyLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "add", $copylink)."' data-gridlink";
-				
-				$record["viewlink_attrs"]= "id=\"viewLink".$this->recId."\" name=\"viewLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "view", $editlink)."' data-gridlink";
-				$record["inlineeditlink_attrs"]= "id=\"iEditLink".$this->recId."\" name=\"iEditLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."' data-gridlink";
-				$record["ieditbuttonsholder_attrs"]= "id=\"ieditbuttonsholder".$this->recId."\" ";
-				
-				if( $this->mobileTemplateMode() ) 
-				{
-					if( $this->displayViewLink() )
-						$record["recordattrs"] .= " data-viewlink='".GetTableLink($this->shortTableName, "view", $editlink)."'";	
-					if( $this->editAvailable() && $isEditable )
-						$record["recordattrs"] .= " data-editlink='".GetTableLink($this->shortTableName, "edit", $editlink)."'";	
-				}
+				$record["editlink_attrs"]= "id=\"editLink".$this->recId."\" name=\"editLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."'";
+				$record["copylink_attrs"]= "id=\"copyLink".$this->recId."\" name=\"copyLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "add", $copylink)."'";
+				$record["viewlink_attrs"]= "id=\"viewLink".$this->recId."\" name=\"viewLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "view", $editlink)."'";
+				$record["inlineeditlink_attrs"]= "id=\"iEditLink".$this->recId."\" name=\"iEditLink".$this->recId."\" href='".GetTableLink($this->shortTableName, "edit", $editlink)."'";
 				
 				$this->fillCheckAttr($record, $data, $keyblock);
 				
-				if( $this->detailsInGridAvailable() )
-					$record["dtables_link"] = true;
-				
-				if( $this->hasBigMap() )
+				if ($this->googleMapCfg['isUseMainMaps'])
+				{
 					$this->addBigGoogleMapMarkers($data, $keys, $editlink);
+				}
 				
 				for($i = 0; $i < count($this->listFields); $i ++) 
 				{
 					// call addGoogleMapData before call proccessRecordValue!!!
-					if( $this->checkFieldHasMapData($i) )
-						$this->addGoogleMapData( $this->listFields[$i]['fName'], $data, $keys, $editlink ); 
-				
+					if (in_array($i, $this->gMapFields))
+					{
+						$this->addGoogleMapData($this->listFields[$i]['fName'], $data, $keys, $editlink); 
+					}
 					$record[$this->listFields[$i]['valueFieldName']] = $this->proccessRecordValue($data, $keylink, $this->listFields[$i]);
 				}
 								
 				$this->addSpansForGridCells('edit', $record, $data);
 								
 				if($this->eventExists("BeforeMoveNextList"))
-				{
-					RunnerContext::pushRecordContext( $data, $this );
 					$this->eventsObject->BeforeMoveNextList($data, $row, $record, $this);
-					RunnerContext::pop();
-				}
 				
 				$this->spreadRowStyles($data, $row, $record);
 											
@@ -1860,34 +1424,12 @@ class ListPage extends RunnerPage
 			$rowinfo["data"][count($rowinfo["data"]) - 1]["grid_rowspace"]= false;
 			
 			if($this->listGridLayout == gltVERTICAL && $this->is508)
-			{
-				if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-					$rowinfo["begin"] = "<div style=\"display:none\">Table data</div>";
-				else
-					$rowinfo["begin"] = "<caption style=\"display:none\">Table data</caption>";
-			}
+				$rowinfo["begin"]= "<caption style=\"display:none\">Table data</caption>";
 			
 			$this->xt->assignbyref("grid_row", $rowinfo);
 		}
 		
 		$this->buildTotals($totals);
-	}
-	
-	/**
-	 * @return Boolean
-	 */
-	protected function hasBigMap()
-	{
-		return $this->googleMapCfg['isUseMainMaps'];
-	}
-	
-	/**
-	 * @param Number fIndex
-	 * @return Boolean
-	 */
-	protected function checkFieldHasMapData( $fIndex )
-	{
-		return in_array($fIndex, $this->gMapFields);
 	}
 	
 	/**
@@ -1899,13 +1441,13 @@ class ListPage extends RunnerPage
 	 */
 	protected function addHiddenColumnClasses(&$record, $field)
 	{
-		$gFieldName = GoodFieldName( $field );
-		if( isset( $this->hiddenColumnClasses[$gFieldName] ) )
-		{	
-			$record[ $gFieldName."_class" ] .= " " . $this->hiddenColumnClasses[$gFieldName];
+		if( isset( $this->hiddenColumnClasses[$field] ) )
+		{
+			$gFieldName = GoodFieldName( $field );
+			$record[ $gFieldName."_class" ] .= " " . $this->hiddenColumnClasses[$field];
 			
 			if( $this->listGridLayout != gltHORIZONTAL )
-				$record[ $gFieldName."_label_class" ] = $this->hiddenColumnClasses[$gFieldName];
+				$record[ $gFieldName."_label_class" ] = $this->hiddenColumnClasses[$field];
 		}
 	}
 	
@@ -1918,13 +1460,6 @@ class ListPage extends RunnerPage
 	 * @return string
 	 */
 	function fieldClass($f)
-	{
-		if( !isset($this->fieldClasses[$f]) )
-			$this->fieldClasses[$f] = $this->calcFieldClass( $f );
-		return $this->fieldClasses[$f];
-	}
-	
-	function calcFieldClass($f)
 	{
 		if( $this->pSet->getEditFormat($f) == FORMAT_LOOKUP_WIZARD )
 			return '';
@@ -1959,13 +1494,13 @@ class ListPage extends RunnerPage
 	 */
 	protected function setRowHoverCssRule($rowHoverCssRule, $fieldName = "")
 	{
-		if( $this->listGridLayout != gltHORIZONTAL && $this->listGridLayout != gltFLEXIBLE )
+		if( $this->listGridLayout != gltHORIZONTAL )
 			return;
 		
 		if( $fieldName )
 		{
 			$className = 'rnr-style'.$this->recId.'-'.$fieldName;
-			$this->row_css_rules .= ' tr:hover > td.'. $className .'.'. $className .'{'. $this->getCustomCSSRule( $rowHoverCssRule ) ."}\n";
+			$this->row_css_rules .= ' tr.rnr-row:hover > td.'. $className .'{'. $this->getCustomCSSRule( $rowHoverCssRule ) ."}\n";
 			return $className;
 		}
 		else
@@ -2036,11 +1571,12 @@ class ListPage extends RunnerPage
 	 */
 	function addSpanVal($fName, &$data) 
 	{
-		$type = $this->pSet->getFieldType($fName);
-		if( !IsBinaryType($type) && ( @$this->arrFieldSpanVal [$fName ] == 2 || @$this->arrFieldSpanVal[ $fName ] == 1 
-			|| $this->pSet->hasAjaxSnippet() || $this->pSet->hasButtonsAdded() ) )
+		global $strTableName;
+		$pSet = new ProjectSettings($strTableName, PAGE_LIST);
+		$type = $pSet->getFieldType($fName);
+		if((@$this->arrFieldSpanVal[$fName] == 2 || @$this->arrFieldSpanVal[$fName] == 1) && !IsBinaryType($type))
 		{
-			return "val=\"".runner_htmlspecialchars( $data[$fName ] )."\" ";
+			return "val=\"".runner_htmlspecialchars($data[$fName])."\" ";
 		}
 	}
 	
@@ -2053,7 +1589,7 @@ class ListPage extends RunnerPage
 	 */
 	function addSpansForGridCells($type, &$record, $data = null) 
 	{
-		for($i=0; $i<count($this->listFields); $i++) 
+		for($i=0;$i<count($this->listFields);$i++) 
 		{
 			$span = "<span id=\"".$type.($type == 'edit' ? $this->recId : $this->id)."_".$this->listFields[$i]['goodFieldName']."\" ";
 			
@@ -2089,15 +1625,10 @@ class ListPage extends RunnerPage
 	 */
 	function isDispGrid() 
 	{
-		//	can show data
-		if( $this->permis[$this->tName]['search'] && $this->rowsFound )
-			return true;
-		
-		//	can add data to grid
-		if ( $this->inlineAddAvailable() || $this->addAvailable() && $this->showAddInPopup )
-			return true;
-	
-		return false;
+		if(!$this->isUseInlineAdd && !$this->showAddInPopup)
+			return $this->permis[$this->tName]['search'] && $this->rowsFound;
+		else
+			return $this->permis[$this->tName]['add'] || $this->permis[$this->tName]['search']&& $this->rowsFound;
 	}
 	
 	/**
@@ -2105,11 +1636,13 @@ class ListPage extends RunnerPage
 	 */
 	function fillCheckAttr(&$record, $data, $keyblock)
 	{
-		if( $this->exportAvailable() || $this->printAvailable() || $this->deleteAvailable() || $this->inlineEditAvailable()) 
+		$record["checkbox"]= $this->permis[$this->tName]['edit'];
+		if($this->exportTo || $this->printFriendly || $this->deleteRecs) 
 		{
-			$record["checkbox"]= true;
-			$record["checkbox_attrs"]= "name=\"selection[]\" value=\"".runner_htmlspecialchars($keyblock)."\" id=\"check".$this->id."_".$this->recId."\"";
+			if($this->permis[$this->tName]['export'] || $this->permis[$this->tName]['delete'])
+				$record["checkbox"]= true;
 		}
+		$record["checkbox_attrs"]= "name=\"selection[]\" value=\"".runner_htmlspecialchars($keyblock)."\" id=\"check".$this->id."_".$this->recId."\"";
 	}
 	
 	/**
@@ -2118,17 +1651,11 @@ class ListPage extends RunnerPage
 	 */
 	function prepareForBuildPage() 
 	{
-
-		if( $this->mode == LIST_DASHDETAILS 
-			|| $this->mode == LIST_DETAILS && ( $this->masterPageType == PAGE_LIST || $this->masterPageType == PAGE_REPORT ))
-			$this->updateDetailsTabTitles();
-
-
 		// build column hiding CSS
 		$this->buildMobileCssRules();
 
 		//Sorting fields
-		$this->buildOrderParams();
+		$this->orderClause->buildOrderParams();
 		
 		// delete record
 		$this->deleteRecords();
@@ -2136,8 +1663,7 @@ class ListPage extends RunnerPage
 		// PRG rule, to avoid POSTDATA resend
 		$this->rulePRG();
 		
-		//	we need to decide which tab to display first
-		$this->processGridTabs();
+		// build sql query
 		$this->buildSQL();
 		
 		// build pagination block
@@ -2147,14 +1673,9 @@ class ListPage extends RunnerPage
 		$this->seekPageInRecSet($this->querySQL);
 		
 		$this->setGoogleMapsParams($this->listFields);
-		$this->setGridUserParams();
-		$this->assignColumnHeaderClasses();
-		
+
 		// fill grid data
 		$this->fillGridData();
-		
-		if( $this->mode != LIST_MASTER )
-			$this->buildSearchPanel();
 		
 		// add common js code
 		$this->addCommonJs();
@@ -2166,145 +1687,10 @@ class ListPage extends RunnerPage
 		$this->commonAssign();
 		
 		// Add cells' custom css
-		$this->addCustomCss();	
-	}
-	
-	/**
-	 * Sorting fields
-	 */
-	function buildOrderParams()
-	{
-		$this->assignColumnHeaders();
+		$this->addCustomCss();
 		
-		if( !$this->isPageSortable() )
-			return;
-		
-		$this->addOrderUrlParam();
-	}
-
-	function assignColumnHeaders() 
-	{
-		//	show headers
-		foreach( $this->listFields as $f) 
-		{
-			$this->xt->assign( GoodFieldname( $f['fName'] ) . "_fieldheader", true );			
-		}
-
-		//	add sorting links and icons
-		if( !$this->isReoderByHeaderClickingEnabled() )	
-			return;
-		
-		//	add icons and find already sorted fields
-		$orderFields =& $this->orderClause->getOrderFields();
-
-		foreach( $orderFields as $of )
-		{
-			if( $of['hidden'] )
-				continue;
-			//	add icon
-			$this->xt->assign_section( GoodFieldname( $of['column'] )."_fieldheader", "", "<span data-icon=\"".( $of["dir"] == "ASC" ? "sortasc" : "sortdesc")."\"></span>" );
-		}
-		
-		foreach( $this->listFields as $f ) 
-		{
-			$gf = GoodFieldName( $f['fName'] );
-			$dir = "a";
-		
-		//  build multisort parameter
-		//	update direction if the field is already sorted
-			
-			$multisort = array();
-			foreach( $orderFields as $of )
-			{
-				if( $of['hidden'] )
-					continue;
-				if( $of['column'] == $f['fName'] )
-				{
-					$dir = $of["dir"] == "ASC" ? "d" : "a";
-				}
-				else
-				{
-					$multisort[] = ($of["dir"] == "ASC" ? "a" : "d") . GoodFieldName($of['column']);
-				}
-			}
-			
-		//	assign sorting links
-			$attrs = array();
-			$attrs[] = 'data-href="' . GetTableLink($this->shortTableName, "list", "orderby=" . $dir.$gf ) . '"';
-			$attrs[] = 'data-order="' . $dir . $gf . '"';
-			$attrs[] = 'id="order_'.$gf.'_'.$this->id.'"';
-			$attrs[] = 'name="order_'.$gf.'_'.$this->id.'"';
-			$attrs[] = 'data-multisort="' . implode( ';', $multisort ) . '"';
-			$attrs[] = 'class="rnr-orderlink"';
-			
-			$this->xt->assign( $gf."_orderlinkattrs", implode( " ", $attrs ) );
-		}
-	}
-	
-	
-	/**
-	 * @param String fName
-	 * @param Boolean desc
-	 * @param Boolean showLabelOnly
-	 * @return String
-	 */
-	protected function orderFieldLabelString( $fName, $desc, $showLabelOnly )
-	{ 
-		$fName = GetFieldLabel( GoodFieldName( $this->tName ), GoodFieldName( $fName ) );
-		if( $showLabelOnly )
-			return $fName;
-			
-		return $fName." ". ($desc ? "High to Low" : "Low to High");
-	}
-	
-	/**
-	 *
-	 */
-	protected function assignSortByDropdown()
-	{
-		if( !$this->pSet->hasSortByDropdown() )
-			return;
-
-		// no data	
-		if( !$this->rowsFound )
-		{
-			if( $this->listAjax ) 
-			{
-				$this->xt->assign("reorder_records", true);
-				$this->xt->displayBrickHidden("reorder_records");			
-			}
-			return;
-		}
-		
-		$sortSettings = $this->orderClause->getSortBySettings();		
-		$sortByIdx = $this->orderClause->getSortByControlIdx();
-		
-		$options = array();		
-		if( $sortByIdx == -1 )
-			$options[] = "<option selected> </option>";	
-
-		foreach( $sortSettings as $idx => $sData )
-		{
-			$label = $sData["label"];
-			if( !$label )
-			{
-				$labelParts = array();
-				foreach( $sData["fields"] as $fData )
-				{
-					$labelParts[] = $this->orderFieldLabelString( $fData["field"], $fData["desc"], $fData["labelOnly"] );
-				}
-				$label = implode( "; ", $labelParts );				
-			}
-			
-			$selected = $sortByIdx == $idx ? " selected" : "";			
-			$options[] = '<option value="'.($idx + 1).'" '.$selected.'>'.$label.'</option>';
-		}
-		
-		if( count( $options ) )
-			$markup = '<select id="sortBy'.$this->id.'" class="form-control">'.implode("", $options)."</select>";
-		
-		$this->xt->assign("reorder_records", true);
-		$this->xt->assign("sortByDropdown", $markup);
+		// build admin block
+		$this->assignAdmin();
 	}
 	
 	/**
@@ -2334,16 +1720,25 @@ class ListPage extends RunnerPage
 		$params['tName'] = $strTableName;
 		$params['origTName'] = $gSettings->getOriginalTableName();
 		$params['gPageSize'] = $gSettings->getInitialPageSize();
+		$params['gOrderIndexes'] = $gSettings->getOrderIndexes();
+		$params['gstrOrderBy'] = $gQuery->OrderByToSql();
+		$params['gsqlHead'] = $gQuery->HeadToSql();
+		$params['gsqlFrom'] = $gQuery->FromToSql();
+		$params['gsqlWhereExpr'] = $gQuery->WhereToSql();
+		$params['gsqlGroupBy'] = $gQuery->GroupByToSql();
+		$params['gsqlHaving'] = $gQuery->Having()->toSql($gQuery);
 		
 		$params['nSecOptions'] = $gSettings->getAdvancedSecurityType();
 		$params['nLoginMethod'] = GetGlobalData("nLoginMethod",0);
-		$params['recsPerRowList'] = $gSettings->getRecordsPerRowList();		
+		$params['recsPerRowList'] = isMobile() ? 1 : $gSettings->getRecordsPerRowList();
 		$params['mainTableOwnerID'] = $gSettings->getTableOwnerIdField();
 		$params['exportTo'] = $gSettings->hasExportPage();
 		$params['printFriendly'] = $gSettings->hasPrintPage();
 		$params['deleteRecs'] = $gSettings->hasDelete();
 		$params["isGroupSecurity"] = $isGroupSecurity;
 		$params['arrKeyFields'] = $gSettings->getTableKeys();
+		$params["isUseInlineAdd"] = $gSettings->hasInlineAdd();
+		$params["isUseInlineEdit"] = $gSettings->hasInlineEdit();
 		$params["panelSearchFields"] = $gSettings->getPanelSearchFields();
 		$params['listGridLayout'] = $gSettings->getListGridLayout();
 		$params['createLoginPage'] = GetGlobalData("createLoginPage",false);
@@ -2354,7 +1749,7 @@ class ListPage extends RunnerPage
 		$params['isScrollGridBody'] = $gSettings->getScrollGridBody();
 		$params['viewPDF'] = $gSettings->isViewPagePDF() || $gSettings->isPrinterPagePDF();
 		
-		$params['audit'] = GetAuditObject($strTableName);
+		$params['audit'] = GetAuditObject($table);
 		
 		$params['listFields'] = array();
 		$allfields = $gSettings->getListFields();
@@ -2373,20 +1768,14 @@ class ListPage extends RunnerPage
 		}
 		
 		// choose class by mode
-		if ($params["mode"]==LIST_SIMPLE )
+		if ($params["mode"]==LIST_SIMPLE)
 			$pageObject = new ListPage_Simple($params);	
-		else if($params["mode"]==LIST_MASTER)
-			$pageObject = new ListPage_Master($params);	
 		else if($params["mode"]==LIST_AJAX)
 			$pageObject = new ListPage_Ajax($params);
 		else if($params["mode"]==LIST_LOOKUP)
 			$pageObject = new ListPage_Lookup($params);
-		else if($params["mode"]==LIST_DETAILS && $params["masterPageType"] == PAGE_LIST)
-			$pageObject = new ListPage_DPList($params);
-		else if($params["mode"]==LIST_DETAILS )
+		else if($params["mode"]==LIST_DETAILS || $params["mode"]==LIST_DASHDETAILS)
 			$pageObject = new ListPage_DPInline($params);
-		else if( $params["mode"]==LIST_DASHDETAILS )
-			$pageObject = new ListPage_DPDash($params);
 		else if($params["mode"]==RIGHTS_PAGE)
 		{
 				$pageObject = new RightsPage($params);
@@ -2395,11 +1784,9 @@ class ListPage extends RunnerPage
 		{
 				$pageObject = new MembersPage($params);
 		}
-		else if($params["mode"] == LIST_DASHBOARD)
+		else if($params["mode"]==LIST_DASHBOARD)
 			$pageObject = new ListPage_Dashboard($params);
-		else if( $params["mode"] == MAP_DASHBOARD )
-			$pageObject = new MapPage_Dashboard($params);
-
+		
 		$pageObject->init();
 		
 		return $pageObject;
@@ -2429,26 +1816,30 @@ class ListPage extends RunnerPage
 	 */	
 	protected function buildMobileCssRules()
 	{
-		if( $this->pSet->isAllowShowHideFields() ) 
-			return;
-		$cssBlocks = array();
-		$columnsToHide = $this->getColumnsToHide();
-		
 		$devices = array( TABLET_7_IN, SMARTPHONE_PORTRAIT, SMARTPHONE_LANDSCAPE, TABLET_10_IN, DESKTOP );
+		$cssBlocks = array();
+		$columnsToHide = array();
+		foreach( $devices as $d )
+		{
+			$columnsToHide[ $d ] = $this->pSet->getHiddenFields( $d );
+		}
 		
 		//	build CSS code
 		foreach( $this->listFields as $f )
 		{
-			$gFieldName = GoodFieldName( $f['fName'] );
 			$fieldMentioned = false;
 			$field = $f['fName'];
 			foreach( $devices as $d )
 			{
-				if( in_array($gFieldName, $columnsToHide[ $d ]) )
+				if( isset($columnsToHide[ $d ][ $field ]) )
 				{
-					$this->hiddenColumnClasses[$gFieldName] = "column".GoodFieldName( $field );
-					$cssBlocks[$d] .= "." . $this->hiddenColumnClasses[$gFieldName] . ":not([data-forced-visible-column]) { display: none !important;; }\n";
+					$this->hiddenColumnClasses[$field] = "column".GoodFieldName( $field );
+					$cssBlocks[$d] .= "." . $this->hiddenColumnClasses[$field] . " { display: none; }\n";
 					$fieldMentioned = true;
+				}
+				else if( isset( $this->hiddenColumnClasses[$field] ) )
+				{
+					$cssBlocks[$d] .= "." . $this->hiddenColumnClasses[$field] . " { display: table-cell; }\n";
 				}
 			}
 		}
@@ -2461,7 +1852,6 @@ class ListPage extends RunnerPage
 				$this->mobile_css_rules .= ProjectSettings::getDeviceMediaClause($d)."\n{\n".$cssBlocks[$d]."\n}\n";
 			}
 		}
-
 	}
 
 	/**
@@ -2497,9 +1887,6 @@ class ListPage extends RunnerPage
 			return LIST_DASHDETAILS;
 		else if($postedMode == "dashlist")
 			return LIST_DASHBOARD;
-		else if($postedMode == "dashmap")
-			return MAP_DASHBOARD;
-			
 		return LIST_SIMPLE;
 	}
 
@@ -2555,7 +1942,7 @@ class ListPage extends RunnerPage
 		
 		// The user is logged in but lacks necessary permissions
 		// redirect to List page or Menu.
-		if( isLogged() && !isLoggedAsGuest() )
+		if( isLogged() &&  !isLoggedAsGuest() )
 		{
 			HeaderRedirect("menu");
 			return false;
@@ -2566,92 +1953,6 @@ class ListPage extends RunnerPage
 		//	Current URL is already saved in session
 		redirectToLogin();
 		return false;
-	}
-
-	/**
-	 * Hide the field on the page
-	 * @param String fieldName
-	 */
-	function hideField($fieldName)
-	{
-		$this->xt->assign(GoodFieldName($fieldName) ."_fieldheadercolumn", false);
-		$this->xt->assign(GoodFieldName($fieldName) . "_fieldcolumn", false);
-		$this->xt->assign(GoodFieldName($fieldName) . "_fieldfootercolumn", false);
-	}
-
-	/**
-	 * Show the field on the page
-	 * @param String fieldName
-	 */
-	function showField($fieldName)
-	{
-		$this->xt->assign(GoodFieldName($fieldName) ."_fieldheadercolumn", true);
-		$this->xt->assign(GoodFieldName($fieldName) . "_fieldcolumn", true);
-		$this->xt->assign(GoodFieldName($fieldName) . "_fieldfootercolumn", true);
-	}
-
-	public function isPageSortable()
-	{
-		return true;
-	}
-	
-	/**
-	 * save user setting
-	 * @param String table
-	 * @return Boolean
-	 */
-	public static function processSaveParams( $table ) 
-	{
-		if( postvalue("saveParam") ) 
-		{
-			$paramType = intval( postvalue("saveParam") );
-			$paramData = my_json_decode(postvalue("data"));
-			
-			include_once getabspath("classes/paramsLogger.php");
-			
-			if( postvalue("onDashboard") )
-				$paramsLogger = new paramsLogger( postvalue("dashElementId"), $paramType );
-			else
-				$paramsLogger = new paramsLogger( $table, $paramType );			
-			
-			if( $paramType == SHFIELDS_PARAMS_TYPE )
-			{
-				$macroDeviceClass = RunnerPage::deviceClassToMacro( postvalue("deviceClass") );
-				$ps = new ProjectSettings($table);
-				if( !$ps->columnsByDeviceEnabled() )
-					$macroDeviceClass = 0;
-				$paramsLogger->saveShowHideData( $macroDeviceClass, $paramData );
-			}
-			else
-				$paramsLogger->save( $paramData );
-			return true;
-		}
-
-		return false;		
-	}
-	protected function setGridUserParams() 
-	{
-		
-	}
-	
-	protected function displayViewLink() {
-		return $this->viewAvailable();
-	}
-
-	function gridTabsAvailable() {
-		if( $this->mode == LIST_DETAILS && $this->masterPageType == PAGE_ADD )
-			return false;
-		return true;
-	}
-
-	protected function hasMainDashMapElem()
-	{
-		return false;	
-	}
-
-	function displayTabsInPage() 
-	{
-		return $this->simpleMode() || ( $this->mode == LIST_DETAILS && ($this->masterPageType == PAGE_VIEW || $this->masterPageType == PAGE_EDIT));
 	}
 	
 }

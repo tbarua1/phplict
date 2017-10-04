@@ -5,7 +5,7 @@ class ViewDatabaseVideoField extends ViewControl
 	 * addJSFiles
 	 * Add control JS files to page object
 	 */
-	public function addJSFiles()
+	function addJSFiles()
 	{
 				$this->AddJSFile("include/video/projekktor.js");
 		$this->getJSControl();

@@ -5,14 +5,14 @@ class UserControl extends EditControl
 	{
 		parent::buildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data);
 		$this->buildUserControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data);
-		$this->buildControlEnd($validate, $mode);
+		$this->buildControlEnd($validate);
 	}
 	
-	public function buildUserControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data)
+	function buildUserControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data)
 	{
 	}
 	
-	public function initUserControl()
+	function initUserControl()
 	{		
 	}
 	

@@ -66,7 +66,7 @@ class FilterControl
 	public $parentFilterName = "";
 	
 	
-	public function __construct($fName, $pageObj, $id, $viewControls)
+	public function FilterControl($fName, $pageObj, $id, $viewControls)
 	{		
 		$this->id = $id;
 		$this->fName = $fName;
@@ -145,17 +145,19 @@ class FilterControl
 	 */
 	protected function buildSQL()
 	{	
-		$this->strSQL = "SELECT ".$this->getTotals() . " from ( " . $this->buildBasicSQL() . ") a";
+		$sqlHead = "SELECT ".$this->getTotals();		
+		
+		$whereComponents = $this->whereComponents;
+		
+		$gQuery = $this->pSet->getSQLQuery();	
+		$sqlFrom = $gQuery->FromToSql().$whereComponents["joinFromPart"];
+		$sqlWhere = $this->getCombinedFilterWhere();		
+		$sqlHaving = $this->getCombinedFilterHaving();
+		
+		$searchCombineType = $whereComponents["searchUnionRequired"] ? "or" : "and";
+		
+		$this->strSQL = SQLQuery::gSQLWhere_having($sqlHead, $sqlFrom, $sqlWhere, "", $sqlHaving, $whereComponents["searchWhere"], $whereComponents["searchHaving"], $searchCombineType);
 	}
-
-	/**
-	 * Stub
-	 */
-	protected function getTotals()
-	{	
-		return "";
-	}
-
 	
 	/**
 	 * Get the case-then-else statement basing on the database type
@@ -234,18 +236,10 @@ class FilterControl
 		$ctrlsMap['multiSelect'] = $this->multiSelect;
 		$ctrlsMap['filtered'] = $this->filtered;
 		$ctrlsMap['separator'] = $this->separator;
-		$ctrlsMap['collapsed'] = $this->showCollapsed;
 		
 		if( $this->filtered )
-		{
 			$ctrlsMap['defaultValuesArray'] = $this->filteredFields[ $this->fName ]["values"];
-			$ctrlsMap['defaultShowValues'] = array();
-			foreach( $ctrlsMap['defaultValuesArray'] as $dv )
-			{
-				$ctrlsMap['defaultShowValues'][] = $this->getValueToShow( $dv );
-			}
-		}
-		
+			
 		return $ctrlsMap;	
 	}
 	
@@ -446,12 +440,6 @@ class FilterControl
 		$encodeDataValue = runner_htmlspecialchars($dataValue);
 		$extraDataAttrs = $this->getExtraDataAttrs($parentFiltersData);
 		
-		$pageType = 'list';
-		if( titREPORT == $this->pSet->getEntityType() )
-			$pageType = 'report';
-		else if( titCHART == $this->pSet->getEntityType() )
-			$pageType = 'chart';
-		
 		if($this->multiSelect != FM_NONE)
 		{
 			$style = $this->filtered || $this->multiSelect == FM_ALWAYS ? '' : 'style="display: none;"';
@@ -463,7 +451,7 @@ class FilterControl
 				
 		if($this->multiSelect != FM_ALWAYS) 
 		{
-			$href = GetTableLink( GetTableURL($this->tName), $pageType, 'f=('.runner_htmlspecialchars( rawurlencode( $this->fName ) ).$separator.$encodeDataValue.')' );
+			$href = GetTableLink( GetTableURL($this->tName), 'list', 'f=('.$this->fName.$separator.$encodeDataValue.')' );
 			$label = '<a href="'.$href.'" data-filtervalue="'.$encodeDataValue.'" '.$extraDataAttrs.' class="'.$this->gfName.'-filter-value">'.$showValue.'</a>';
 		} 
 		else
@@ -526,18 +514,8 @@ class FilterControl
 			"visible" => $this->visible,
 			"filtered" => $this->filtered,
 			"collapsed" => $this->showCollapsed,
-			"truncated" => $this->isTruncated(),
-			"showMoreHidden" => $this->isShowMoreHidden()
+			"truncated" => $this->isTruncated() 
 		);
-	}
-	
-	/**
-     * Check if the "show more" button must be hidden by class attr
-	 * @return Boolean
-	 */
-	protected function isShowMoreHidden()
-	{
-		return false;
 	}
 	
 	/**
@@ -684,90 +662,5 @@ class FilterControl
 				return new FilterValuesList($fName, $pageObj, $id, $viewControls);
 		}	
 	}
-	
-	/**
-	 * Build the main filter data source. Apply search, filter and security params to the original SQL
-	 * This will be used in a subquery or as is
-	 * @return String
-	 */
-	protected function buildBasicSQL()
-	{
-		$query = $this->pSet->getSQLQuery();
-		
-		$sqlParts = $query->getSqlComponents();
-
-		$mandatoryWhere = array();
-		$mandatoryHaving = array();
-		$optionalWhere = array();
-		$optionalHaving = array();
-
-//	search where & having
-		if( $this->whereComponents["searchUnionRequired"] )
-		{
-			$optionalWhere[] = $this->whereComponents["searchWhere"];
-			$optionalHaving[] = $this->whereComponents["searchHaving"];
-		}
-		else
-		{
-			$mandatoryWhere[] = $this->whereComponents["searchWhere"];
-			$mandatoryHaving[] = $this->whereComponents["searchHaving"];
-		}
-		$sqlParts["from"] .= $this->whereComponents["joinFromPart"];
-		
-//	filter where & having
-//	don't apply field's own filter expression!
-		foreach( $this->whereComponents["filterWhere"] as $f => $w )
-		{
-			if( $f != $this->fName )
-				$mandatoryWhere[] = $w;
-		}
-		foreach( $this->whereComponents["filterHaving"] as $f => $w )
-		{
-			if( $f != $this->fName )
-				$mandatoryHaving[] = $w;
-		}
-		
-//	master and security		
-		$mandatoryWhere[] = $this->whereComponents["security"];
-		$mandatoryWhere[] = $this->whereComponents["master"];
-		
-
-		return SQLQuery::buildSQL( $sqlParts, $mandatoryWhere, $mandatoryHaving, $optionalWhere, $optionalHaving );
-		
-	}
-	
-	/**
-	 * Get the 'not null' condition to add it to the WHERE clause
-	 * @param String dbfName
-	 * @return String
-	 */
-	protected function getNotNullWhere()
-	{
-		//	'field is not null' clauses for the field and all parent filters
-		
-		$ret = array();
-		$wName = $this->connection->addFieldWrappers( $this->fName );
-		$ret[] = $wName . " is not NULL";
-		if( $this->connection->dbType != nDATABASE_Oracle && IsCharType($this->fieldType) )
-		{	
-			$ret[] = $wName . " <> ''";
-		}
-			
-		if( !$this->dependent )
-			return $ret;
-			
-		foreach( $this->pSet->getParentFiltersNames($this->fName) as $p )
-		{
-			$wp = $this->connection->addFieldWrappers( $p );
-			$ret[] = $wp . " is not NULL";
-			if( $this->connection->dbType != nDATABASE_Oracle && IsCharType( $this->pSet->getFieldType( $p ) ) )
-			{	
-				$ret[] = $wp . " <> ''";
-			}
-		}
-		
-		return $ret;
-	}
-	
 }
 ?>

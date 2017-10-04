@@ -1,7 +1,7 @@
 <?php
 class oLocking
 {
-	var $lockTableName = "project1_locking";
+	var $lockTableName = "";
 	var $ConfirmTime=250;
 	var $UnlockTime=300;
 	var $ConfirmAdmin;
@@ -18,7 +18,7 @@ class oLocking
 	/**
 	 * @constructor
 	 */
-	function __construct()
+	function oLocking()
 	{
 		global $cman;
 		

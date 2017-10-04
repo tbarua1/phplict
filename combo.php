@@ -24,18 +24,18 @@ if($contentType=='application/x-javascript')
 				//Add module to array for loading
 				$yuiComponents[] = $parts[2]."/".$parts[2];
 			} else {
-			die('<!-- Unable to determine module name! '.runner_htmlspecialchars($yuiFile).' -->');
+			die('<!-- Unable to determine module name! '.$yuiFile.' -->');
 			}
 		}
 		else
 		{
 			$start = strpos($yuiFile, "/build/");
 			if($start === FALSE)
-				die('<!-- Unable to determine module name! '.runner_htmlspecialchars($yuiFile).' -->');
+				die('<!-- Unable to determine module name! '.$yuiFile.' -->');
 			$start += strlen("/build/");
 			$end = strpos($yuiFile, ".js");
 			if($end === FALSE)
-				die('<!-- Unable to determine module name! '.runner_htmlspecialchars($yuiFile).' -->');
+				die('<!-- Unable to determine module name! '.$yuiFile.' -->');
 			$yuiComponents[] = substr($yuiFile, $start, $end - $start);
 		}
 	}
@@ -47,7 +47,7 @@ else
 	foreach($yuiFiles as $yuiFile) {
 		$start = strpos($yuiFile, "/build/");
 		if($start === FALSE)
-			die('<!-- Unable to determine module name! '.runner_htmlspecialchars($yuiFile).' -->');
+			die('<!-- Unable to determine module name! '.$yuiFile.' -->');
 		$start += strlen("/build/");
 		$yuiComponents[] = substr($yuiFile, $start);
 	}
@@ -63,13 +63,13 @@ foreach($yuiComponents as $y)
 	$start = strpos($library, "begincombofile ".$y);
 	if($start === FALSE)
 	{
-		die("Unknown file ".runner_htmlspecialchars($y));
+		die("Unknown file ".$y);
 	}
 	$start += strlen("begincombofile ".$y);
 	$end = strpos($library, "endcombofile", $start);
 	if($end === FALSE)
 	{
-		die("Unknown file ".runner_htmlspecialchars($y));
+		die("Unknown file ".$y);
 	}
 	echo substr($library, $start, $end - $start);
 }

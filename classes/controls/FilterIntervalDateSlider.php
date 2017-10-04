@@ -53,9 +53,9 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 	protected $months = array();
 	
 	
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterIntervalDateSlider($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterIntervalSlider($fName, $pageObject, $id, $viewControls);
 
 		$this->stepType = $this->pSet->getFilterStepType($fName);
 		
@@ -84,6 +84,7 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 	{
 		$filterValues = $this->filteredFields[ $this->fName ]['values'];	
 		$value1 = prepare_for_db($this->fName, $filterValues[0], "");
+		$dateArray = $this->getDateTimeArray($value);
 				
 		if($this->knobsType == FS_MIN_ONLY) 
 		{

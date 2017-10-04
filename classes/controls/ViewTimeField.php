@@ -5,9 +5,10 @@ class ViewTimeField extends ViewControl
 	{	
 		$result = $this->getTextValue( $data );
 		
-		if( !$this->container->forExport || $this->container->forExport != "excel" && $this->container->forExport != "csv" )
-			$result = runner_htmlspecialchars( $result );
-			
+		if(!$this->container->forExport || $this->container->forExport && $this->container->forExport != "excel" && $this->container->forExport != "csv")
+		{	
+			$result = runner_htmlspecialchars($result);
+		}
 		return $result;
 	}
 	

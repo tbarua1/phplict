@@ -11,9 +11,9 @@ class ViewFileField extends ViewControl
 	 */
 	var $upload_handler = null;
 	
-	function __construct($field, $container, $pageobject)
+	function ViewFileField($field, $container, $pageobject)
 	{
-		parent::__construct($field, $container, $pageobject);
+		parent::ViewControl($field, $container, $pageobject);
 		$this->initUploadHandler();
 	}
 	

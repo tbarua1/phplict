@@ -1,9 +1,9 @@
 <?php
 class FileFieldSingle extends EditControl
 {
-	function __construct($field, $pageObject, $id, $connection)
+	function FileFieldSingle($field, $pageObject, $id, $connection)
 	{
-		parent::__construct($field, $pageObject, $id, $connection);
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = EDIT_FORMAT_FILE;
 	}
 	
@@ -31,16 +31,13 @@ class FileFieldSingle extends EditControl
 		
 		if( $this->pageObject->pageType == PAGE_SEARCH || $this->pageObject->pageType == PAGE_LIST )
 		{
-			$classString = "";
-			if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-				$classString = " class=\"form-control\"";
-			echo '<input id="'.$this->cfield.'" '.$classString.$this->inputStyle.' type="text" '
+			echo '<input id="'.$this->cfield.'" '.$this->inputStyle.' type="text" '
 				.($mode == MODE_SEARCH ? 'autocomplete="off" ' : '')
 				.(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508==true ? 'alt="'.$this->strLabel.'" ' : '')
 				.'name="'.$this->cfield.'" '.$this->pageObject->pSetEdit->getEditParams($this->field).' value="'
 				.runner_htmlspecialchars($value).'">';	
 				
-			$this->buildControlEnd($validate, $mode);
+			$this->buildControlEnd($validate);
 			return;
 		}	
 			
@@ -105,7 +102,7 @@ class FileFieldSingle extends EditControl
 	
 		echo '<input type="Hidden" id="notempty_'.$this->cfieldname.'" value="'.(strlen($value)? 1 : 0).'">';
 		
-		$this->buildControlEnd($validate, $mode);
+		$this->buildControlEnd($validate);
 	}
 	
 	/**

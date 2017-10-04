@@ -3,60 +3,83 @@
 class ListPage_Lookup extends ListPage_Embed
 {
 	/**
+      * String where for query
+      *
+      * @var string
+      */
+	var $strLookupWhere = "";
+	/**
+      * Field of category
+      *
+      * @var string
+      */
+	var $categoryField = "";
+	/**
       * Field of link
       *
       * @var string
       */
 	var $linkField = "";
-
-	
+	/**
+      * Parent id
+      *
+      * @var integer
+      */
+	var $parId = 0;
+	/**
+      * Field of lookup
+      *
+      * @var string
+      */
+	var $lookupField = "";
+	/**
+      * Control of lookup
+      *
+      * @var string
+      */
+	var $lookupControl = "";
+	/**
+      * Category of lookup
+      *
+      * @var array
+      */
+	var $lookupCategory = array();
+	/**
+      * Table of lookup
+      *
+      * @var string
+      */
+	var $lookupTable = "";
+	/**
+      * Params of lookup
+      *
+      * @var string
+      */
+	var $lookupParams = "";
 	/**
       * Select field of lookup
       *
       * @var string
       */
 	var $lookupSelectField = "";
-	
 	/**
       * Field customed
       *
       * @var string
       */
 	var $customField = "";
-	
 	/**
       * Field displayed
       *
       * @var string
       */
-	var $dispField = "";	
+	var $dispField = "";
+	var $mainTable = "";
+	var $mainField = "";
 	
 	var $dispFieldAlias = "";
 	
 	var $lookupValuesArr = array();
-
-	/**
-     * @type Array
-     */
-	public $parentCtrlsData;	
-	
-	/**
-	 * The name of a table containing a lookup-field
-	 * @type String
-	 */	
-	public $mainTable;
-	
-	/**
-	 * The type of a page containing a lookup-field
-	 * @type String	 
-	 */		
-	public $mainPageType;
-	
-	/**
-	 * The lookup-field's
-	 * @type String	 
-	 */
-	public $mainField = "";
 	
 	/**
 	 * A  settings object for the table 
@@ -65,21 +88,16 @@ class ListPage_Lookup extends ListPage_Embed
 	 */
 	protected $mainPSet;
 	
-	public $mainRecordData;
-	public $mainRecordMasterTable;	
-	
-	public $mainContext;
-	
 	
 	/**
       * Constructor, set initial params
       *
       * @param array $params
       */
-	function __construct(&$params)
+	function ListPage_Lookup(&$params)
 	{
 		// call parent constructor. always at the first line!!!
-		parent::__construct($params);
+		parent::ListPage_Embed($params);
 		// init params
 		$this->initLookupParams();	
 		
@@ -89,74 +107,82 @@ class ListPage_Lookup extends ListPage_Embed
 		$this->isUseAjaxSuggest = false;	
 	}
 
-	/**
-	 * Set the correct session prefix
-	 */
 	protected function assignSessionPrefix() 
 	{
-		$this->sessionPrefix = $this->tName."_lookup_".$this->mainTable.'_'.$this->mainField;	
+		$mainTable = postvalue("table");
+		$mainField = postvalue("field");
+		$this->sessionPrefix = $this->tName."_lookup_".$mainTable.'_'.$mainField;	
 	}
 	
-	/**
-	 *
-	 */
 	function initLookupParams()
-	{							
-		if( $this->mainPageType != PAGE_ADD && $this->mainPageType != PAGE_EDIT )
-			$this->mainPageType = PAGE_SEARCH;
-			
-		$this->mainPSet = new ProjectSettings($this->mainTable, $this->mainPageType);
-
-		$this->linkField = $this->mainPSet->getLinkField( $this->mainField );
-		$this->dispField = $this->mainPSet->getDisplayField( $this->mainField ); 
+	{
+		global $cman;
 		
-		if( $this->mainPSet->getCustomDisplay( $this->mainField ) )
+		$this->parId = postvalue("parId");
+		$this->firstTime = postvalue("firsttime");
+		$this->mainField = postvalue("field");
+		$this->lookupControl = postvalue("control");
+		$this->lookupCategory = postvalue("category");
+		$this->mainTable = postvalue("table");
+				
+		// convert into an array as parent ctrl can have multiple values
+		if (!is_array($this->lookupCategory))
+			$this->lookupCategory = (strlen($this->lookupCategory)!=0) ? splitvalues($this->lookupCategory) : array();
+				
+		$arrCategory = array();
+		foreach($this->lookupCategory as $categValue)
+			$arrCategory[] = "category[]=".$categValue;
+		
+		$lookCategory = implode("&",$arrCategory);
+		if($lookCategory)
+			$lookCategory = "&".$lookCategory;
+
+		$this->lookupParams = "mode=lookup&id=".$this->id."&parId=".$this->parId."&field=".rawurlencode($this->mainField)
+			."&control=".rawurlencode($this->lookupControl).$lookCategory
+			."&table=".rawurlencode($this->mainTable)."&editMode=".postvalue('editMode');
+		
+		$pageType = postvalue("pageType");
+		if($pageType != PAGE_ADD && $pageType != PAGE_EDIT)
+			$pageType = PAGE_SEARCH;
+			
+		$this->mainPSet = new ProjectSettings($this->mainTable, $pageType);
+
+		$this->linkField = $this->mainPSet->getLinkField($this->mainField);
+		$this->dispField = $this->mainPSet->getDisplayField($this->mainField); 
+		
+		if ($this->mainPSet->getCustomDisplay($this->mainField))
 		{
 			$this->dispFieldAlias = GetGlobalData("dispFieldAlias", "rrdf1");
-			
+			$this->pSet->getSQLQuery()->AddCustomExpression($this->mainPSet->getDisplayField($this->mainField), $this->pSet, 
+				$this->mainTable, $this->mainField, $this->dispFieldAlias);
 			$this->customField = $this->linkField;
 		}
-		
 		$this->outputFieldValue($this->linkField, 2);
 		$this->outputFieldValue($this->dispField, 2);
 		
-		if( $this->dispFieldAlias && $this->pSet->appearOnListPage( $this->dispField ) )
-			$this->lookupSelectField = $this->dispField;	
-		elseif( $this->pSet->appearOnListPage( $this->dispField ) )
-			$this->lookupSelectField = $this->dispField;
+		if ($this->mainPSet->useCategory($this->mainField))
+			$this->categoryField = $this->mainPSet->getCategoryFilter($this->mainField);
+		
+		$this->strLookupWhere = GetLWWhere($this->mainField, $pageType, $this->mainTable);
+		
+		if ($this->dispFieldAlias && $this->pSet->appearOnListPage($this->dispField))
+			$this->lookupSelectField=$this->dispField;	
+		elseif ($this->pSet->appearOnListPage($this->dispField))
+			$this->lookupSelectField=$this->dispField;
 		else
 			$this->lookupSelectField = $this->listFields[0]['fName'];
-			
-		$this->mainContext = $this->getMainContext();	
-	}
-
-	/**
-	 * The stub - ListPage Lookup no supported MasterTable 
-	 */
-	function displayMasterTableInfo() 
-	{
-	}
-
-	/**
-	 * The stub - ListPage Lookup no supported master-details mode
-	 */
-	function processMasterKeyValue()
-	{
-	}
-	
-	/**
-	 * @return Array
-	 */
-	protected function getMainContext()
-	{
-		$contextParams = array();
 		
-		$contextParams["data"] = $this->mainRecordData;
-
-		if ( $this->mainRecordMasterTable && isset($_SESSION[ $this->mainRecordMasterTable . "_masterRecordData" ]) )
-			$contextParams["masterData"] = $_SESSION[ $this->mainRecordMasterTable . "_masterRecordData" ];
-			
-		return $contextParams;
+		if(!$this->categoryField)
+			$this->lookupCategory=array();
+		
+		$orderByField = $this->mainPSet->getLookupOrderBy( $this->mainField );		
+		if( strlen($orderByField) )
+		{
+			// adjust the ORDER BY clause according to the main lookup settings
+			$this->gstrOrderBy = " ORDER BY ".$this->connection->addTableWrappers( $this->tName ).".".$this->connection->addFieldWrappers($orderByField);
+			if( $this->mainPSet->isLookupDesc( $this->mainField ) )
+				$this->gstrOrderBy.= ' DESC';			
+		}		
 	}
 	
 	/**
@@ -176,18 +202,166 @@ class ListPage_Lookup extends ListPage_Embed
 		}
 	}
 	
+	/**
+	 * Checks if need to display grid
+	 */
+	function isDispGrid() 
+	{
+		return $this->permis[$this->tName]['add'] || $this->permis[$this->tName]['search'];
+	}
+	
+	/**
+	 * Fills info in array about grid.
+	 * For new add row
+	 * @param array $rowInfoArr array with total info, that assignes grid
+	 */
+	function fillGridShowInfo(&$rowInfoArr)
+	{
+		$rowInfoArr["data"]= array();
+		$editlink = "";
+		$copylink = "";
+		//	add inline add row
+		if($this->mainPSet->isAllowToAdd($this->mainField) && $this->permis[$this->tName]['add']) 
+		{
+			$row = array();
+			$row["rowclass"] = "gridRowAdd ".$this->makeClassName("hiddenelem");
+			$row["rsclass"] = "gridRowSepAdd ".$this->makeClassName("hiddenelem");
+			if($this->listGridLayout == gltVERTICAL)
+				$row["rowattrs"] .= "vertical=\"1\"";
+			
+			$record = array();
+			$record["edit_link"]= true;
+			$record["inlineedit_link"]= true;
+			$record["view_link"]= true;
+			$record["copy_link"]= true;
+			$record["checkbox"]= true;
+			$record["checkbox"]= true;
+			$record["editlink_attrs"]= "id=\"editLink_add".$this->id."\"";
+			
+			
+			$record["copylink_attrs"]= "id=\"copyLink_add".$this->id."\" name=\"copyLink_add".$this->id."\"";
+			$record["viewlink_attrs"]= "id=\"viewLink_add".$this->id."\" name=\"viewLink_add".$this->id."\"";
+			$record["checkbox_attrs"]= "id=\"check_add".$this->id."\" name=\"selection[]\"";
+			
+			//	add container for inline add controls
+			$addedInlineAddContainer = false;
+			if($this->permis[$this->tName]['edit']&& $this->isUseInlineEdit)
+			{
+				$record["inlineeditlink_attrs"]= "id=\"inlineEdit_add".$this->id."\" ";
+				$addedInlineAddContainer = true;
+			}
+			
+			for($i = 0; $i < count($this->allDetailsTablesArr); $i ++) 
+			{
+				//detail tables
+				$dDataSourceTable = $this->allDetailsTablesArr[$i]['dDataSourceTable'];
+				$dShortTable = $this->allDetailsTablesArr[$i]['dShortTable'];
+			
+				$record[$dShortTable."_dtable_link"]=($this->permis[$dDataSourceTable]['add'] || $this->permis[$dDataSourceTable]['search']);
+				$record[$dShortTable."_dtablelink_attrs"] = " href=\"".GetTableLink($dShortTable, "list")."\" id=\"master_".$dShortTable
+					."_add".$this->id."\" ";
+				if($this->allDetailsTablesArr[$i]['previewOnList'] == DP_INLINE) 
+				{
+					$record[$dShortTable."_dtablelink_attrs"] = 
+						"id = \"".$dShortTable."_preview".$this->id."\"
+						caption = \"".GetTableCaption(GoodFieldName($dDataSourceTable))."\" 
+						href = \"".GetTableLink($dShortTable, "list")."\"
+						style = \"display:none;\"";
+				}
+			}
+			
+			$this->addSpansForGridCells('add', $record);
+			for($i = 0; $i < count($this->listFields); $i ++) 
+			{
+				$field = $this->listFields[$i]['fName'];
+				$gFieldName = GoodFieldName( $field );				
+				if(!$addedInlineAddContainer)
+				{
+					if($i==0 && !($this->permis[$this->tName]['edit'] && $this->isUseInlineEdit))
+						$record[$gFieldName."_value"].= "<span id=\"inlineEdit_add".$this->id."\"></span>";
+				}
+				$record[$gFieldName."_class"].= $this->fieldClass($field);
+				
+				if( isset( $this->hiddenColumnClasses[$field] ) )
+				{
+					$record[ $gFieldName."_class" ] .= " " . $this->hiddenColumnClasses[$field];
+					
+					if( $this->listGridLayout != gltHORIZONTAL )
+						$record[ $gFieldName."_label_class" ] = $this->hiddenColumnClasses[$field];
+				}				
+			}
+			
+			if($this->colsOnPage > 1)
+				$record["endrecord_block"]= true;
+			
+			$record["grid_recordheader"]= true;
+			$record["grid_vrecord"]= true;
+			$row["grid_record"]= array("data" => array());
+			//set the $row["grid_record"] value
+			$this->setRowsGridRecord($row, $record);
+			
+			for($i = 1; $i < $this->colsOnPage; $i ++) 
+			{
+				$rec = array();
+				if($i < $this->colsOnPage - 1)
+					$rec["endrecord_block"]= true;
+				if($row["grid_record"]["data"])
+				{				
+					$row["grid_record"]["data"][]= $rec;
+				}
+			}
+			
+			$row["grid_rowspace"]= true;
+			$row["grid_recordspace"]= array("data" => array());
+			for($i = 0; $i < $this->colsOnPage * 2 - 1; $i ++)
+				$row["grid_recordspace"]["data"][]= true;
+			$rowInfoArr["data"][]= $row;
+			
+		}
+	}
+	
+	/**
+	 * Add common html code for simple mode on list page
+	 */	
+	function addCommonHtml() 
+	{
+		//add parent common html code
+		parent::addCommonHtml();
+	}
 	
 	function addCommonJs()
 	{
+		$fieldAsDisplay = $this->dispField;
+		if ($this->customField)
+		{
+			$fieldAsDisplay = $this->lookupSelectField;
+		}
+		
+		$this->controlsMap['lookupSelectField'] = $this->lookupSelectField;
 		$this->controlsMap['dispFieldAlias'] = $this->dispFieldAlias;
+		$this->controlsMap['linkField'] = $this->linkField;
+		$this->controlsMap['dispField'] = $this->dispField;
 		
 		$this->addControlsJSAndCSS();
 		$this->addButtonHandlers();
 	}
 	
 	/**
+	 * Set order links attribute for order on list page
 	 *
+	 * @param {string} $field - name field, which is ordering
+	 * @param {string} $sort - how is filed ordering, "a" - asc or "d" - desc, default is "a"
+	 * @param String $setIcon
+	 * @return String		 
 	 */
+	function setLinksAttr($field, $sort = "", $setIcon = false)
+	{
+		$href = GetTableLink($this->shortTableName, "list", "orderby=".($sort == "a" ? "d" : "a").$field."&".$this->lookupParams);
+		$orderlinkattrs = 'id="order_'.$field.'_'.$this->id.'" name="order_'.$field.'_'.$this->id.'" data-href="'.$href.'" class="rnr-orderlink"';
+		
+		return $orderlinkattrs;
+	}
+	
 	function addSpanVal($fName, &$data) 
 	{
 		if ($this->dispFieldAlias && @$this->arrFieldSpanVal[$fName] == 2)
@@ -196,91 +370,41 @@ class ListPage_Lookup extends ListPage_Embed
 			return parent::addSpanVal($fName, $data);
 	}
 	
-	public function getOrderByClause()
+	function buildLookupWhereClause()
 	{
-		$orderByField = $this->mainPSet->getLookupOrderBy( $this->mainField );		
-		if( strlen($orderByField) )
+		$arWhereClause = array();
+		foreach($this->lookupCategory as $arLookupCategory)
 		{
-			$strOrder = " ORDER BY ".$this->getFieldSQL( $orderByField );
-			if( $this->mainPSet->isLookupDesc( $this->mainField ) )
-				$strOrder .= ' DESC';			
+			if($this->cipherer != null)
+				$lookupValue = $this->cipherer->MakeDBValue($this->categoryField, $arLookupCategory);
+			else 
+				$lookupValue = make_db_value($this->categoryField, $arLookupCategory);
+			$arWhereClause[] = whereAdd($this->strWhereClause, $this->getFieldSQLDecrypt($this->categoryField) . "=" . $lookupValue);
 		}
-		else
-			$strOrder = parent::getOrderByClause();
 		
-		return $strOrder;
-	}
-	
-	/**
-	 * Build and return SQL logical clause serving dependent dropdowns
-	 * "make='Ford'" or similar
-	 * @return String
-	 */
-	protected function getDependentDropdownFilter() 
-	{
-		if( !$this->mainPSet->useCategory( $this->mainField ) ) 
-			return "";
-	
+		if(count($arWhereClause) > 1)
+			$this->strWhereClause = "(".implode(" OR ", $arWhereClause).")";
+		elseif(count($arWhereClause) == 1)
+			$this->strWhereClause = $arWhereClause[0];
+		
+		if(strlen($this->strLookupWhere))
+			$this->strWhereClause = whereAdd($this->strWhereClause,$this->strLookupWhere);
+		
 		// add 1=0 if parent control contain empty value and no search used	
-		if( $this->mainPageType != PAGE_SEARCH && !count($this->parentCtrlsData) )
-		{
-			return "1=0";
-		}
-		
-		$parentWhereParts = array();
-		foreach( $this->mainPSet->getParentFieldsData( $this->mainField ) as $cData )
-		{
-			if( !isset( $this->parentCtrlsData[ $cData["main"] ] ) )
-				continue;
-			
-			$parentFieldName = $cData["lookup"];
-			$parentFieldValues = splitvalues( $this->parentCtrlsData[ $cData["main"] ] );
-			
-			$arWhereClause = array();
-			foreach($parentFieldValues as $value)
-			{
-				if( $this->cipherer != null )
-					$lookupValue = $this->cipherer->MakeDBValue($parentFieldName, $value);
-				else 
-					$lookupValue = make_db_value($parentFieldName, $value);
-					
-				$arWhereClause[] = $this->getFieldSQLDecrypt($parentFieldName) . "=" . $lookupValue;
-			}
-			
-			if( count($arWhereClause) )
-				$parentWhereParts[] = "(".implode(" OR ", $arWhereClause).")";	
-		}
-		return "(".implode(" AND ", $parentWhereParts).")";
+		if($this->mainPSet->useCategory($this->mainField) && postvalue('editMode') != MODE_SEARCH && !count($this->lookupCategory)/* && !$this->searchClauseObj->isUsedSrch()*/)
+			$this->strWhereClause = whereAdd($this->strWhereClause, "1=0");
 	}
 	
-	protected function getSubsetSQLComponents() 
-	{
-		$sql = parent::getSubsetSQLComponents();
-		
+	function buildSQL()
+	{	
+		$this->buildLookupWhereClause();
 		if ($this->dispFieldAlias)
 		{
-			$sql["sqlParts"]["head"] .= ", " . $this->dispField." ";
-			$sql["sqlParts"]["head"] .= "as " . $this->connection->addFieldWrappers($this->dispFieldAlias);
+			$this->gsqlHead.=", ".$this->dispField." ";
+			$this->gsqlHead .= "as ".$this->connection->addFieldWrappers($this->dispFieldAlias)." ";
 		}
 		
-		$sql["mandatoryWhere"][] = $this->getLookupWizardWhere();
-		
-		//	dependent dropdown filter
-		$sql["mandatoryWhere"][] = $this->getDependentDropdownFilter();
-		
-		return $sql;
-	}
-
-	/**
-	 * @return String
-	 */
-	protected function getLookupWizardWhere()
-	{
-		RunnerContext::push( new RunnerContextItem( CONTEXT_ROW, $this->mainContext ) );
-		$where = prepareLookupWhere( $this->mainField, $this->mainPSet );
-		RunnerContext::pop();
-		
-		return $where;
+		parent::buildSQL();
 	}
 	
 	/**
@@ -298,22 +422,50 @@ class ListPage_Lookup extends ListPage_Embed
 		$this->searchPanel->buildSearchPanel();
 	}
 	
-	/**
-	 *
-	 */
 	function addLookupVals()
 	{
 		$this->controlsMap['lookupVals'] = $this->lookupValuesArr;
 	}
 	
-	function fillGridData()
-	{
-		parent::fillGridData();
-
+	function prepareForBuildPage()
+	{	
+		// build column hiding CSS
+		$this->buildMobileCssRules();
+		
+		//Sorting fields
+		$this->orderClause->buildOrderParams();
+		
+		// delete record
+		$this->deleteRecords();
+		
+		// build sql query
+		$this->buildSQL();
+		
+		// build pagination block
+		$this->buildPagination();
+		
+		// seek page must be executed after build pagination
+		$this->seekPageInRecSet($this->querySQL);
+		
+		$this->setGoogleMapsParams($this->listFields);
+		
+		// fill grid data
+		$this->fillGridData();
+		
 		$this->addLookupVals();
 		
+		// add common js code
+		$this->addCommonJs();
+		
+		// add common html code
+		$this->addCommonHtml();
+		
+		// Set common assign
+		$this->commonAssign();
+		
+		// Add cells' custom css
+		$this->addCustomCss();
 	}
-
 	
 	function fillCheckAttr(&$record,$data,$keyblock)
 	{
@@ -347,41 +499,32 @@ class ListPage_Lookup extends ListPage_Embed
 		}
 	}
 	
-	/**
-	 *
-	 */
 	function proccessRecordValue(&$data, &$keylink, $listFieldInfo)
 	{
 		$value = parent::proccessRecordValue($data, $keylink, $listFieldInfo);
 		
 		if ($this->lookupSelectField == $listFieldInfo['fName'])
-			$value = '<a href="#" data-ind="'.count( $this->lookupValuesArr ).'" type="lookupSelect'.$this->id.'">'.$value."</a>";
+			$value = '<a href="#" type="lookupSelect'.$this->id.'">'.$value."</a>";
 		
 		return $value;
 	}
 	
-	/**
-	 *
-	 */	
 	function showPage() 
 	{
 		$this->BeforeShowList();
 		
-		if ($this->mobileTemplateMode())
+		if (isMobile())
 		{
 			$this->xt->assign("cancelbutton_block",true);
 			$this->xt->assign("searchform_block", true);
 			$this->xt->assign("searchform_showall", true);
-			$bricksExcept = array("grid_mobile", "message", "pagination", "vmsearch2", "cancelbutton_mobile");
+			$bricksExcept = array("grid_mobile", "pagination", "vmsearch2", "cancelbutton_mobile");
 		}
 		else 
 		{
-			$bricksExcept = array("grid", "message", "pagination", "vsearch1", "vsearch2", "search", "recordcontrols_new", "bsgrid_tabs");
-			if( $this->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			{
-				$bricksExcept[] = "add";
-				$bricksExcept[] = "reorder_records";
-			}
+			$bricksExcept = array("grid", "pagination", "vsearch1", "vsearch2", "search");
+			if( $this->mainPSet->isAllowToAdd($this->mainField) )
+				$bricksExcept[] = "recordcontrols_new";
 		}
 		
 		$this->xt->hideAllBricksExcept($bricksExcept);
@@ -403,14 +546,12 @@ class ListPage_Lookup extends ListPage_Embed
 		$this->fillSetCntrlMaps();
 		
 		$returnJSON = array();
-		global $pagesData;
-		$returnJSON["pagesData"] = $pagesData;
 		$returnJSON['controlsMap'] = $this->controlsHTMLMap;
 		$returnJSON['viewControlsMap'] = $this->viewControlsHTMLMap;
 		$returnJSON['settings'] = $this->jsSettings;
 		$this->xt->assign("header",false);
 		$this->xt->assign("footer",false);
-		$returnJSON["headerCont"] = "<h2>" . $this->getPageTitle($this->pageType, GoodFieldName($this->tName)) . "</h2>";
+		
 		$returnJSON["html"] = $this->xt->fetch_loaded("body");
 		
 		$returnJSON['idStartFrom'] = $this->flyId;
@@ -423,8 +564,12 @@ class ListPage_Lookup extends ListPage_Embed
 	}
 	
 	/**
-	 *
+	 * A stub
 	 */
+	function buildTotals(&$totals)
+	{
+	}
+	
 	function SecuritySQL($strAction, $table="")
 	{
 		global $strTableName;
@@ -438,70 +583,14 @@ class ListPage_Lookup extends ListPage_Embed
 		
 		return SecuritySQL($strAction, $table, $strPerm);
 	}
-
-	function displayTabsInPage() 
-	{		
-		return true;
-	}
-	
-	/**
-	 * A stub
-	 */
-	function buildTotals(&$totals)
-	{
-	}
 	
 	/**
 	 * Returns where clause for active master-detail relationship
 	 * @return string
 	 */
-	function getMasterTableSQLClause( $basedOnProp = false )
+	function getMasterTableSQLClause()
 	{
 		return "";
-	}	
-
-	function deleteAvailable() {
-		return false;
-	}
-	function importAvailable() {
-		return false;
-	}
-	function editAvailable() {
-		return false;
-	}
-	function addAvailable() {
-		return false;
-	}
-	function copyAvailable() {
-		return false;
-	}
-	function inlineAddAvailable() {
-		return parent::inlineAddAvailable() && $this->mainPSet->isAllowToAdd( $this->mainField );
-	}
-	function inlineEditAvailable() {
-		return false;
-	}
-	function viewAvailable() {
-		return false;
-	}
-	function exportAvailable() {
-		return false;
-	}
-	function printAvailable() {
-		return false;
-	}
-	function advSearchAvailable() {
-		return false;
-	}
-	
-	function detailsInGridAvailable()
-	{
-		return false;
-	}
-	
-	function updateSelectedAvailable() 
-	{
-		return false;
 	}	
 }
 ?>

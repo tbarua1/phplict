@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * That function  copies all elements from associative array to object, as object properties with same names
  * Usefull when you need to copy many properties
@@ -8,7 +8,7 @@
  * @intellisense
  */
 function RunnerApply (&$obj, &$argsArr)
-{
+{	
 	foreach ($argsArr as $key=>$var)
 		setObjectProperty($obj,$key,$argsArr[$key]);
 }
@@ -19,31 +19,31 @@ function RunnerApply (&$obj, &$argsArr)
 function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 {
 	global $cman;
-
+	
 	if(!$forPDF)
 	{
 		$table = postvalue("table");
 		$strTableName = GetTableByShort($table);
 		$settings = new ProjectSettings($strTableName);
-
+		
 		if (!checkTableName($table))
 		{
 			return '';
 		}
-
+		
 		@ini_set("display_errors","1");
 		@ini_set("display_startup_errors","1");
-
+	
 		if(!isLogged() || !CheckSecurity(@$_SESSION["_".$strTableName."_OwnerID"],"Search"))
-		{
-			HeaderRedirect("login");
+		{ 
+			HeaderRedirect("login"); 
 			return;
 		}
-
+	
 		$field = postvalue("field");
 		if(!$settings->checkFieldPermissions($field))
 			return DisplayNoImage();
-
+	
 		//	construct sql
 		$keysArr = $settings->getTableKeys();
 		$keys = array();
@@ -55,14 +55,14 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 	else
 	{
 		$table = @$params["table"];
-
+	
 		$strTableName = GetTableByShort($table);
-
+		
 		if (!checkTableName($table))
 		{
 			exit(0);
 		}
-
+		
 		$settings = new ProjectSettings($strTableName);
 		$field = @$params["field"];
 		//	construct sql
@@ -73,9 +73,9 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 			$keys[$k]=@$params["key".($ind+1)];
 		}
 	}
-
-	$connection = $cman->byTable( $strTableName );
-
+	
+	$connection = $cman->byTable( $strTableName );	
+	
 	if(!$gQuery->HasGroupBy())
 	{
 		// Do not select any fields except current (image) field.
@@ -83,18 +83,18 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 		// Just don't do anything in that case.
 		$gQuery->RemoveAllFieldsExcept($settings->getFieldIndex($field));
 	}
-
+	
 	$where = KeyWhere($keys);
-
+	
 	$secOpt = $settings->getAdvancedSecurityType();
 	if ($secOpt == ADVSECURITY_VIEW_OWN)
 	{
 		$where = whereAdd($where, SecuritySQL("Search"));
 	}
-
+	
 	$sql = $gQuery->gSQLWhere($where);
 	$data = $connection->query( $sql )->fetchAssoc();
-
+	
 	if($forPDF)
 	{
 		if( $data )
@@ -104,14 +104,14 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 	{
 		if( !$data )
 			return DisplayNoImage();
-
+			
 		if(postvalue('src') == 1)
 		{
 			$value = myfile_get_contents('images/icons/jpg.png');
 		}
 		else
 			$value = $connection->stripSlashesBinary( $data[ $field ] );
-
+			
 		if(!$value)
 		{
 			if(postvalue("alt"))
@@ -123,12 +123,12 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
 			else
 				return DisplayNoImage();
 		}
-
+		
 		$itype = SupposeImageType($value);
-
+		
 		if(!$itype)
 			return DisplayFile();
-
+		
 		if(!isset($pdf))
 		{
 			header("Content-Type: ".$itype);
@@ -147,37 +147,25 @@ function GetImageFromDB($gQuery, $forPDF = false, $params = array())
  */
 function redirectToLogin()
 {
-
+	
 	$expired = "";
 	$url = "http://";
-if( $_SERVER["HTTPS"] && $_SERVER["HTTPS"] != "off")
+	if( $_SERVER["HTTPS"] && $_SERVER["HTTPS"] != "off")
 		$url = "https://";
 	$url .= $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 
 	global $logoutPerformed;
 	if( !$logoutPerformed && isset($_SERVER['HTTP_REFERER']) )
 	{
-		if( getDirectoryFromURI( $_SERVER['HTTP_REFERER'] ) == getDirectoryFromURI( $url )
-			&& getFilenameFromURI( $_SERVER['HTTP_REFERER'] ) != "index.htm"
+		if( getDirectoryFromURI( $_SERVER['HTTP_REFERER'] ) == getDirectoryFromURI( $url ) 
+			&& getFilenameFromURI( $_SERVER['HTTP_REFERER'] ) != "index.htm" 
 			&& $_SERVER['HTTP_REFERER'] != getDirectoryFromURI( $url ))
-			$expired = "message=expired";
+			$expired = "&message=expired";
 	}
-	if( !$logoutPerformed )
-		$expired = "return=true&" . $expired;
-	HeaderRedirect("login", "", $expired);
+	
+	HeaderRedirect("login", "", "return=true" . $expired);
 	exit();
 }
-
-/**
- *	Returns server and directory path from the file-based URI
- *  Examples:
- *  http://server.com:88/Calendar/login.php?a=expired => http://server.com:88/Calendar/
- *
- *  Beware! These URLs are incorrect input:
- *  https://server.com/app1
- *  https://server.com
- *
- */
 
 function getDirectoryFromURI( $uri )
 {
@@ -226,17 +214,13 @@ function GetGlobalData($name, $defValue)
 /**
  * @intellisense
  */
-function DisplayMap($params)
+function DisplayMap($params) 
 {
 	global $pageObject;
-
+	
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['addressField'] = $params['addressField'] ? $params['addressField'] : "";
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['latField'] = $params['latField'] ? $params['latField'] : '';
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['lngField'] = $params['lngField'] ? $params['lngField'] : '';
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['weightField'] = $params['weightField'] ? $params['weightField'] : '';
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['clustering'] = $params['clustering'];
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['heatMap'] = $params['heatMap'];
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['showAllMarkers'] = $params['showAllMarkers'] || $params['clustering'] || $params['heatMap'];
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['width'] = $params['width'] ? $params['width'] : 0;
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['height'] = $params['height'] ? $params['height'] : 0;
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['type'] = 'BIG_MAP';
@@ -244,21 +228,28 @@ function DisplayMap($params)
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['descField'] = $params['descField'] ? $params['descField'] : $pageObject->googleMapCfg['mapsData'][$params['id']]['addressField'];
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['descField'] = $params['description'] ? $params['description'] : $pageObject->googleMapCfg['mapsData'][$params['id']]['addressField'];
 	$pageObject->googleMapCfg['mapsData'][$params['id']]['markerAsEditLink'] = $params['markerAsEditLink'];
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['markerIcon'] = $params['markerIcon'] ? $params['markerIcon'] : '';
-	$pageObject->googleMapCfg['mapsData'][$params['id']]['markerField'] = $params['markerField'] ? $params['markerField'] : '';
-
+	
 	if (isset($params['zoom']))
 		$pageObject->googleMapCfg['mapsData'][$params['id']]['zoom'] = $params['zoom'];
-
+	
 	//$pageObject->googleMapCfg['bigMapDefZoom'] = $pageObject->googleMapCfg['mapsData'][$params['id']]['zoom'];
-
+	
 	if ($pageObject->googleMapCfg['mapsData'][$params['id']]['showCenterLink'])
 		$pageObject->googleMapCfg['mapsData'][$params['id']]['centerLinkText'] = $params['centerLinkText'] ? $params['centerLinkText'] : '';
-
+	
 	$pageObject->googleMapCfg['mainMapIds'][] = $params['id'];
-
+	
 	if (isset($params['APIkey']))
 		$pageObject->googleMapCfg['APIcode'] = $params['APIkey'];
+}
+
+/**
+ * @intellisense
+ */
+function DisplayCAPTCHA() 
+{
+	global $pageObject;
+	$pageObject->xt->assign_event($pageObject->captchaId, $pageObject, 'createCaptcha', array());
 }
 
 /**
@@ -268,7 +259,7 @@ function checkTableName($shortTName, $type=false)
 {
 	if (!$shortTName)
 		return false;
-
+	
 	if ("batch" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	if ("batchschedule" == $shortTName && ($type===false || ($type!==false && $type == 0)))
@@ -288,8 +279,6 @@ function checkTableName($shortTName, $type=false)
 	if ("employees" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	if ("full_batch_details" == $shortTName && ($type===false || ($type!==false && $type == 0)))
-		return true;
-	if ("schedule_map" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
 	if ("trainer" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
@@ -346,110 +335,30 @@ function GetEmailField($table = "")
 function GetTablesList($pdfMode = false)
 {
 	$arr = array();
-	$strPerm = GetUserPermissions("batch");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="batch";
-	}
-	$strPerm = GetUserPermissions("batchschedule");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="batchschedule";
-	}
-	$strPerm = GetUserPermissions("consultant");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="consultant";
-	}
-	$strPerm = GetUserPermissions("courses");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="courses";
-	}
-	$strPerm = GetUserPermissions("department");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="department";
-	}
-	$strPerm = GetUserPermissions("district");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="district";
-	}
-	$strPerm = GetUserPermissions("division");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="division";
-	}
-	$strPerm = GetUserPermissions("emp_status");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="emp_status";
-	}
-	$strPerm = GetUserPermissions("employees");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="employees";
-	}
-	$strPerm = GetUserPermissions("full_batch_details");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="full_batch_details";
-	}
-	$strPerm = GetUserPermissions("schedule_map");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
-		$arr[]="schedule_map";
-	}
-	$strPerm = GetUserPermissions("trainer");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="trainer";
-	}
-	$strPerm = GetUserPermissions("university");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="university";
-	}
-	$strPerm = GetUserPermissions("university_view");
-	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
-	{
 		$arr[]="university_view";
-	}
-	return $arr;
-}
-
-/**
- * @intellisense
- */
-function GetTablesListWithoutSecurity()
-{
-	$arr = array();
-	$arr[]="batch";
-	$arr[]="batchschedule";
-	$arr[]="consultant";
-	$arr[]="courses";
-	$arr[]="department";
-	$arr[]="district";
-	$arr[]="division";
-	$arr[]="emp_status";
-	$arr[]="employees";
-	$arr[]="full_batch_details";
-	$arr[]="schedule_map";
-	$arr[]="trainer";
-	$arr[]="university";
-	$arr[]="university_view";
 	return $arr;
 }
 
 /**
  * DEPRECATED! Use RunnerPage::_getFieldSQLDecrypt instead
  * Return the full database field original name
- *
+ * 
  * @param string	$field
  * @param string	$table The datasource table name
  * @param boolean	$addAs OPTIONAL
- *
+ * 
  * @return String
  * @intellisense
  * @deprecated
@@ -457,17 +366,17 @@ function GetTablesListWithoutSecurity()
 function GetFullFieldName($field, $table = "", $addAs = true, $connection = null)
 {
 	global $strTableName, $cman;
-
+	
 	if( $table == "" )
 		$table = $strTableName;
-
+	
 	if( !$connection )
 		$connection = $cman->byTable( $table );
 	$pSet = new ProjectSettings($table);
-
+	
 	$fname = RunnerPage::_getFieldSQL($field, $connection, $pSet);
-
-	if($pSet->hasEncryptedFields() && !$connection->isEncryptionByPHPEnabled())
+	
+	if($pSet->hasEncryptedFields() && !isEncryptionByPHPEnabled())
 	{
 		$cipherer = new RunnerCipherer($table);
 		return $cipherer->GetFieldName($fname, $field)
@@ -495,7 +404,7 @@ function GetChartType($shorttable)
 function GetShorteningForLargeText($strValue, $cNumberOfChars)
 {
 	$ret = runner_substr($strValue, 0, $cNumberOfChars );
-
+		
 	return runner_htmlspecialchars($ret);
 }
 
@@ -533,7 +442,7 @@ function GetTotals($field, $value, $stype, $iNumberOfRows, $sFormat, $ptype, $pS
 	if($stype == "AVERAGE")
 	{
 		if($iNumberOfRows)
-		{
+		{	
 			if($sFormat == FORMAT_TIME)
 			{
 				if($value)
@@ -549,7 +458,7 @@ function GetTotals($field, $value, $stype, $iNumberOfRows, $sFormat, $ptype, $pS
 					$value -= $h;
 					$value /= 24;
 					$d = $value;
-
+					
 					$value = ($d!=0 ? $d.'d ' : ''). mysprintf("%02d:%02d:%02d",array($h,$m,$s));
 				}
 			}
@@ -583,23 +492,23 @@ function GetTotals($field, $value, $stype, $iNumberOfRows, $sFormat, $ptype, $pS
 	if($sFormat == FORMAT_CURRENCY)
 	 	$sValue = str_format_currency($value);
 	else if($sFormat == FORMAT_PERCENT)
-		$sValue = str_format_number($value*100)."%";
+		$sValue = str_format_number($value*100)."%"; 
 	else if($sFormat == FORMAT_NUMBER)
  		$sValue = str_format_number($value, $pSet->isDecimalDigits($field));
 	else if($sFormat == FORMAT_CUSTOM && $stype!="COUNT")
 	{
 		include_once getabspath('classes/controls/ViewControlsContainer.php');
-		$viewControls = new ViewControlsContainer($pSet, $ptype);
+		$viewControls = new ViewControlsContainer($pSet, $ptype);			
 		$sValue = $viewControls->showDBValue($field, $data);
 	}
-	else
+	else 
  		$sValue = $value;
-
-	if($stype == "COUNT")
+	
+	if($stype == "COUNT") 
 		return $value;
-	if($stype == "TOTAL")
+	if($stype == "TOTAL") 
 		return $sValue;
-	if($stype == "AVERAGE")
+	if($stype == "AVERAGE") 
 		return $sValue;
 	return "";
 }
@@ -678,7 +587,7 @@ function CheckImageExtension($filename)
 	if($ext==".GIF" || $ext==".JPG" || $ext=="JPEG" || $ext==".PNG" || $ext==".BMP")
 		return $ext;
 	return false;
-}
+} 
 
 /**
  * @intellisense
@@ -718,39 +627,24 @@ function whereAdd($where,$clause)
  */
 function combineSQLCriteria($arrElements, $and = true)
 {
-	$filteredCriteria = array();
+	$ret="";
 	$union = $and ? " AND " : " OR ";
-
 	foreach($arrElements as $e)
 	{
 		if(strlen($e))
-			$filteredCriteria[] = "( " . $e . " )";
+		{
+			if(!strlen($ret))
+			{
+				$ret = "(".$e.")";
+			}
+			else
+			{
+				$ret .= $union."(".$e.")";
+			}
+		}
 	}
-	return implode( $union, $filteredCriteria );
+	return $ret;
 }
-
-
-function sqlMoreThan( $field, $value ) 
-{
-	if( $value == 'null' )
-		return $field . " is not null";
-	return $field . " > " . $value;
-}
-function sqlLessThan( $field, $value ) 
-{
-	if( $value == 'null' )
-		return "";
-	return $field . " < " . $value . ' or ' . $field . ' is null';
-	
-}
-
-function sqlEqual( $field, $value ) 
-{
-	if( $value == 'null' )
-		return $value . ' is null';
-	return $field . " = " . $value;
-}
-
 
 /**
  * add WHERE clause to SQL string
@@ -780,10 +674,10 @@ function AddWhere($sql,$where)
 /**
  *  DEPRECATED. Use RunnerPage::keysSQLExpression instead
  *	Construct WHERE clause with key values
- *
+ * 
  * @param &Array	$keys
  * @param String	$table Teh data source table name OPTIONAL
- *
+ * 
  * @return String
  * @intellisense
  * @deprecated
@@ -791,28 +685,28 @@ function AddWhere($sql,$where)
 function KeyWhere(&$keys, $table = "")
 {
 	global $strTableName, $cman;
-
+	
 	if( !$table )
 		$table = $strTableName;
 	$strWhere="";
-
+	
 	$pSet = new ProjectSettings($table);
 	$cipherer = new RunnerCipherer($table);
 	$connection = $cman->byTable( $table );
-
+	
 	$keyFields = $pSet->getTableKeys();
 	foreach($keyFields as $kf)
 	{
 		if( strlen($strWhere) )
 			$strWhere.= " and ";
-
+			
 		$value = $cipherer->MakeDBValue($kf, $keys[ $kf ], "", true);
-
+		
 		if( $connection->dbType == nDATABASE_Oracle )
 			$valueisnull = $value === "null" || $value == "''";
 		else
 			$valueisnull = $value === "null";
-
+		
 		if( $valueisnull )
 			$strWhere.= RunnerPage::_getFieldSQL($kf, $connection, $pSet)." is null";
 		else
@@ -841,7 +735,7 @@ function GetRowCount($strSQL, $connection)
 		if($ind3 === false)
 			$ind3 = strlen($strSQL);
 	}
-
+	
 	$countstr = substr($strSQL, 0, $ind1 + 6)." count(*) ".substr($strSQL, $ind2 + 1, $ind3 -$ind2);
 	$countdata = $connection->query( $countstr )->fetchNumeric();
 	return $countdata[0];
@@ -851,24 +745,18 @@ function GetRowCount($strSQL, $connection)
  * 	add MSSQL Server TOP clause
  * @intellisense
  */
-function AddTop( $strSQL, $n )
+function AddTop($strSQL, $n)
 {
-	$pattern = "/(^\\s*select\\s+distinct\\s+)|(^\\s*select\\s+)/i";
-	$matches = array();
-	preg_match_all( $pattern, $strSQL, $matches );
-	
-	if( $matches[0] ) {
-		return $matches[0][0] . "top " . $n . " " . substr( $strSQL, strlen( $matches[0][0] ) );
-	}
-	return $strSQL;
+	$tstr = strtoupper($strSQL);
+	$ind1 = strpos($tstr,"SELECT");
+	return substr($strSQL,0,$ind1+6)." top ".$n." ".substr($strSQL,$ind1+6);
 }
-
 /**
  * 	add DB2 Server TOP clause
  * @intellisense
  */
 function AddTopDB2($strSQL, $n)
-{
+{	
 	return $strSQL." fetch first ".$n." rows only";
 }
 /**
@@ -891,26 +779,26 @@ function AddRowNumber($strSQL, $n)
  * Apply a limit to an SQL-query
  * @param String sql
  * @param Number N
- * @param Number dbType
+ * @param Number dbType 
  * @return String
  */
-function applyDBrecordLimit($sql, $N, $dbType)
+function applyDBrecordLimit($sql, $N, $dbType) 
 {
 	if( !strlen($dbType) )
 		return $sql;
-
+		
 	if( $dbType == nDATABASE_MySQL || $dbType == nDATABASE_PostgreSQL || $dbType == nDATABASE_SQLite3 )
 		return $sql." LIMIT ".$N;
-
+	
 	if( $dbType == nDATABASE_Oracle )
 		return AddRowNumber($sql, $N);
-
-	if( $dbType == nDATABASE_MSSQLServer || $dbType == nDATABASE_Access )
+	
+	if( $dbType == nDATABASE_MSSQLServer || $dbType == nDATABASE_Access )	
 		return AddTop($sql, $N);
-
+	
 	if( $dbType == nDATABASE_Informix )
 		return AddTopIfx($sql, $N);
-
+	
 	if( $dbType == nDATABASE_DB2 )
 		return AddTopDB2($sql, $N);
 
@@ -923,7 +811,7 @@ function applyDBrecordLimit($sql, $N, $dbType)
  */
 function NeedQuotesNumeric($type)
 {
-    if($type == 203 || $type == 8 || $type == 129 || $type == 130 ||
+    if($type == 203 || $type == 8 || $type == 129 || $type == 130 || 
 		$type == 7 || $type == 133 || $type == 134 || $type == 135 ||
 		$type == 201 || $type == 205 || $type == 200 || $type == 202 || $type==72 || $type==13)
 		return true;
@@ -940,7 +828,7 @@ function NeedQuotesNumeric($type)
  */
 function IsNumberType($type)
 {
-	if($type==20 || $type==14 || $type==5 || $type==10 || $type==6
+	if($type==20 || $type==14 || $type==5 || $type==10 || $type==6 
 	|| $type==3 || $type==131 || $type==4 || $type==2 || $type==16
 	|| $type==21 || $type==19 || $type==18 || $type==17 || $type==139
 	|| $type==11)
@@ -1012,7 +900,7 @@ function IsTimeType($type)
 /**
  * @intellisense
  */
-function IsCharType($type)
+function IsCharType($type)	
 {
 	if(IsTextType($type) || $type==8 || $type==129 || $type==200 || $type==202 ||  $type==130)
 		return true;
@@ -1056,80 +944,88 @@ function IsBigInt($type)
  */
 function GetUserPermissionsStatic( $table )
 {
-	if( !isLogged() )
+	if( !isLogged() ) 
 		return "";
 
 	$extraPerm = $_SESSION["AccessLevel"] == ACCESS_LEVEL_ADMINGROUP ? 'M' : '';
 	$sUserGroup=@$_SESSION["GroupID"];
-//	default permissions
+//	default permissions	
 	if($table=="batch")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="batchschedule")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="consultant")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="courses")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="department")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="district")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="division")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="emp_status")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="employees")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="full_batch_details")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
-	if($table=="schedule_map")
-	{
-		return "ADESPI".$extraPerm;
-	}
-//	default permissions
+//	default permissions	
 	if($table=="trainer")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="university")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
-//	default permissions
+//	default permissions	
 	if($table=="university_view")
 	{
-		return "ADESPI".$extraPerm;
+		// grant all by default
+		return "ADESPI".$extraPerm;	
 	}
 	// grant nothing by default
 	return "";
@@ -1168,15 +1064,8 @@ function GetUserPermissions($table="")
 	$permissions = "";
 	if( !IsLogged() )
 		return "";
-
-	if( is_array( $_SESSION["securityOverrides"] ) ) 
-	{
-		if( isset( $_SESSION["securityOverrides"][ $table ] ) )
-			return $_SESSION["securityOverrides"][ $table ];
-	}
-	
 		$permissions =  GetUserPermissionsStatic($table);
-
+	
 	if($globalEvents->exists("GetTablePermissions", $table))
 	{
 		$permissions = $globalEvents->GetTablePermissions($permissions, $table);
@@ -1189,21 +1078,8 @@ function GetUserPermissions($table="")
  */
 function isLogged()
 {
-
-if( @$_SESSION["UserID"] )
-	return true;
-	
-	return false;
-}
-
-
-
-/**
- * @intellisense
- */
-function guestHasPermissions()
-{
-	$tables = GetTablesListWithoutSecurity();
+	if (@$_SESSION["UserID"])
+		return true;
 	return false;
 }
 
@@ -1212,26 +1088,30 @@ function guestHasPermissions()
  * Set session variables and permissions after login via Facebook
  * @intellisense
  */
-function AfterFBLogIn( $pUsername, $pPassword, $pDisplayUsername, &$pageObject = null)
+function AfterFBLogIn($pUsername, $pPassword, &$pageObject = null)
 {
-	global $cman, $cUserNameFieldType, $cUserNameField, $cDisplayNameField;
-
-	$connection = $cman->getForLogin();
-
+	global $cman, $cUserNameFieldType, $cPasswordFieldType, $cUserNameField, $cDisplayNameField, $globalEvents;
+	
+	$logged = false;
 	$strUsername = (string)$pUsername;
-	if( NeedQuotes( $cUserNameFieldType ) )
-		$strUsername = $connection->prepareString( $strUsername );
+	$sUsername = $strUsername;
+	$connection = $cman->getForLogin();
+	
+	if(NeedQuotes($cUserNameFieldType))
+		$strUsername = $connection->prepareString($strUsername);
 	else
-		$strUsername = (0 + $strUsername);
-
+		$strUsername = (0+$strUsername);
+	
 	$strSQL = "select * from ".$connection->addTableWrappers("employees")
-		." where ".$connection->addFieldWrappers( $cUserNameField )."=".$strUsername."";
+		." where ".$connection->addFieldWrappers($cUserNameField)."=".$strUsername."";
 
  	$data = $connection->query( $strSQL )->fetchAssoc();
 	if( count($data) )
 	{
-		DoLogin( false, $pUsername, $pDisplayUsername, "", ACCESS_LEVEL_USER, $pPassword, $pageObject );
-		SetAuthSessionData( $pUsername, $data, true, $pPassword, $pageObject );
+		$logged = true;
+		$pDisplayUsername = $data[ $cDisplayNameField ] != '' ? $data[ $cDisplayNameField ] : $sUsername;
+		DoLogin(false, $pUsername, $pDisplayUsername, "", ACCESS_LEVEL_USER, $pPassword, $pageObject);
+		SetAuthSessionData($pUsername, $data, true, $pPassword, $pageObject);
 	}
 }
 
@@ -1244,22 +1124,16 @@ function AfterFBLogIn( $pUsername, $pPassword, $pDisplayUsername, &$pageObject =
  * @param {object} page object
  * @intellisense
  */
-function SetAuthSessionData($pUsername, &$data, $fromFacebook, $password, &$pageObject = null, $fireEvents = true )
+function SetAuthSessionData($pUsername, &$data, $fromFacebook, $password, &$pageObject = null)
 {
 	global $globalEvents;
-	$_SESSION["GroupID"] = $data["email"];
+	$_SESSION["GroupID"] = "";
 
 
-		$_SESSION["OwnerID"] = $data["cid"];
-	$_SESSION["_batchschedule_OwnerID"] = $data["cid"];
-		$_SESSION["_employees_OwnerID"] = $data["cid"];
-
-	$_SESSION["UserData"] = $data;
-	
-	if( $fireEvents && $globalEvents->exists("AfterSuccessfulLogin") )
+	if($globalEvents->exists("AfterSuccessfulLogin"))
 	{
 		$globalEvents->AfterSuccessfulLogin($pUsername != "Guest" ? $pUsername : "", $password, $data, $pageObject);
-	}
+	}	
 }
 
 /**
@@ -1268,24 +1142,19 @@ function SetAuthSessionData($pUsername, &$data, $fromFacebook, $password, &$page
 function DoLogin($callAfterLoginEvent = false, $userID = "Guest", $userName = "", $groupID = "<Guest>", $accessLevel = ACCESS_LEVEL_GUEST, $password = "", &$pageObject = null)
 {
 	global $globalEvents;
-
+	
 	if($userID == "Guest" && $userName == "")
 		$userName = "Guest";
-		
-	if( !GetGlobalData("bTwoFactorAuth", false) || $userID == "Guest" )
-	{
-		$_SESSION["UserID"] = $userID;
-		$_SESSION["UserName"] = runner_htmlspecialchars( $userName );
-		$_SESSION["GroupID"] = $groupID;
-		$_SESSION["AccessLevel"] = $accessLevel;
-	}
 	
+	$_SESSION["UserID"] = $userID;
+	$_SESSION["UserName"] = runner_htmlspecialchars( $userName );
+	$_SESSION["GroupID"] = $groupID;
+	$_SESSION["AccessLevel"] = $accessLevel;
 	$auditObj = GetAuditObject();
 	if($auditObj)
 	{
 		$auditObj->LogLogin($userID);
-		if( $userID != "Guest" )
-			$auditObj->LoginSuccessful();
+		$auditObj->LoginSuccessful();
 	}
 	if($callAfterLoginEvent && $globalEvents->exists("AfterSuccessfulLogin"))
 	{
@@ -1304,32 +1173,15 @@ function CheckSecurity($strValue, $strAction, $table = "")
 	if( $table == "" )
 		$table = $strTableName;
 	$pSet = new ProjectSettings($table);
-
+	
 	if($_SESSION["AccessLevel"]==ACCESS_LEVEL_ADMIN)
 		return true;
 
 	$strPerm = GetUserPermissions();
 	if( strpos($strPerm, "M") === false )
 	{
-		if($table=="employees")
-		{
-
-				if(!($pSet->getCaseSensitiveUsername((string)$_SESSION["_".$table."_OwnerID"])===$pSet->getCaseSensitiveUsername((string)$strValue)))
-				return false;
-		}
 	}
-	//	 check user group permissions
-	$localAction = strtolower($strAction);
-	if($localAction=="add" && !(strpos($strPerm, "A")===false) ||
-	   $localAction=="edit" && !(strpos($strPerm, "E")===false) ||
-	   $localAction=="delete" && !(strpos($strPerm, "D")===false) ||
-	   $localAction=="search" && !(strpos($strPerm, "S")===false) ||
-	   $localAction=="import" && !(strpos($strPerm, "I")===false) ||
-	   $localAction=="export" && !(strpos($strPerm, "P")===false) )
 		return true;
-	else
-		return false;
-	return true;
 }
 
 /**
@@ -1339,14 +1191,14 @@ function CheckTablePermissions($strTableName, $permission)
 {
 	if( strpos(GetUserPermissions($strTableName), $permission) === false )
 		return false;
-
+	
 	return true;
 }
 
 function pagetypeToPermissions($pageType)
 {
 	global $_pagetypeToPermissions_dict;
-
+	
 	if(!$_pagetypeToPermissions_dict)
 	{
 		$_pagetypeToPermissions_dict = array();
@@ -1359,7 +1211,7 @@ function pagetypeToPermissions($pageType)
 		$_pagetypeToPermissions_dict["export"] = "P";
 		$_pagetypeToPermissions_dict["import"] = "I";
 	}
-
+	
 	return $_pagetypeToPermissions_dict[$pageType];
 }
 
@@ -1370,29 +1222,25 @@ function pagetypeToPermissions($pageType)
 function SecuritySQL($strAction, $table="", $strPerm="")
 {
 	global $cAdvSecurityMethod,$strTableName;
-
-	if (!strlen($table))
+	
+	if (!strlen($table))	
 		$table = $strTableName;
-
+	
 	$pSet = new ProjectSettings($table);
-
+	
    	$ownerid=@$_SESSION["_".$table."_OwnerID"];
 	$ret="";
 	if(@$_SESSION["AccessLevel"]==ACCESS_LEVEL_ADMIN)
 		return "";
-
+		
 	$ret="";
 	if(!strlen($strPerm))
 		$strPerm = GetUserPermissions($table);
 
 	if( strpos($strPerm, "M") === false )
 	{
-		if($table=="employees")
-		{
-				$ret = GetFullFieldName($pSet->getTableOwnerID(), $table, false)."=".make_db_value($pSet->getTableOwnerID(), $ownerid, "", "", $table);
-		}
 	}
-
+	
 	if($strAction=="Edit" && !(strpos($strPerm, "E")===false) ||
 	   $strAction=="Delete" && !(strpos($strPerm, "D")===false) ||
 	   $strAction=="Search" && !(strpos($strPerm, "S")===false) ||
@@ -1410,12 +1258,12 @@ function SecuritySQL($strAction, $table="", $strPerm="")
  * @intellisense
  */
 function make_db_value($field,$value,$controltype="",$postfilename="",$table="")
-{
+{	
 	$ret = prepare_for_db($field, $value, $controltype, $postfilename, $table);
-
+	
 	if($ret === false)
 		return $ret;
-
+		
 	return add_db_quotes($field, $ret, $table);
 }
 
@@ -1429,22 +1277,22 @@ function make_db_value($field,$value,$controltype="",$postfilename="",$table="")
 function add_db_quotes($field, $value, $table = "", $type = null)
 {
 	global $strTableName, $locale_info, $cman;
-
+	
 	if( $table == "" )
 		$table=$strTableName;
-
+	
 	$pSet = new ProjectSettings($table);
 	$connection = $cman->byTable( $table );
-
+	
 	if( $type == null )
 		$type = $pSet->getFieldType($field);
-
+		
 	if( IsBinaryType($type) )
 		return $connection->addSlashesBinary( $value );
-
+	
 	if( ($value === "" || $value === FALSE || is_null($value)) && !IsCharType($type) )
 		return "null";
-
+	
 	if(NeedQuotes($type))
 	{
 		if( !IsDateFieldType($type) )
@@ -1464,22 +1312,28 @@ function add_db_quotes($field, $value, $table = "", $type = null)
 	}
 	else
 	{
-		// if boolean type field, add quotes
-		if( $connection->dbType == nDATABASE_PostgreSQL && $type == 11 )
-		{
-			$value = strtolower($value);
-			if (!strlen($value) || $value == 0 || $value == "0" || $value == "false" || $value == "f" || $value == "n" || $value == "no" || $value == "off")
-				$value = "f";
-			else
-				$value = "t";
-			$value = $connection->prepareString($value);
-		} 
+		$strvalue = (string)$value;
+		if(is_numeric($strvalue))
+			$value = str_replace(",",".",$strvalue);
 		else
-			$value = DB::prepareNumberValue( $value );
+			$value=0;
+		
+		if( $connection->dbType == nDATABASE_PostgreSQL )
+		{
+			// if boolean type field, add quotes
+			if ($type == 11)
+			{
+				$value = strtolower($value);
+				if (!strlen($value) || $value == 0 || $value == "0" || $value == "false" || $value == "f" || $value == "n" || $value == "no" || $value == "off")
+					$value = "f";
+				else
+					$value = "t";
+				$value = $connection->prepareString($value);
+			}
+		}
 	}
 	return $value;
 }
-
 
 /**
  * @param String field
@@ -1492,13 +1346,10 @@ function add_db_quotes($field, $value, $table = "", $type = null)
 function prepare_for_db($field, $value, $controltype = "", $postfilename = "", $table = "")
 {
 	global $strTableName, $cman;
-
-	if( $controltype == "display" )
-		return $value;
-		
+	
 	if($table == "")
 		$table = $strTableName;
-
+		
 	$pSet = new ProjectSettings($table);
 	$connection = $cman->byTable( $table );
 	
@@ -1515,10 +1366,10 @@ function prepare_for_db($field, $value, $controltype = "", $postfilename = "", $
 			if(!IsGuidString($value))
 				return "";
 		}
-
+		
 		if( IsFloatType($type) )
 			return makeFloat($value);
-
+		
 		if( IsNumberType($type) && !is_int($value) )
 		{
 			$value = trim($value);
@@ -1526,12 +1377,12 @@ function prepare_for_db($field, $value, $controltype = "", $postfilename = "", $
 				$value = "";
 		}
 		return $value;
-	}
+	}	
 	else if($controltype == "time" || IsTimeType($type))
 	{
 		if(!strlen($value))
 			return "";
-
+			
 		$time = localtime2db($value);
 		if( $connection->dbType == nDATABASE_PostgreSQL )
 		{
@@ -1539,10 +1390,10 @@ function prepare_for_db($field, $value, $controltype = "", $postfilename = "", $
 			if($timeArr[0]>24 || $timeArr[1]>59 || $timeArr[2]>59)
 				return "";
 		}
-
+		
 		if( IsDateFieldType($type) )
 			$time = "2000-01-01 ".$time;
-
+		
 		return $time;
 	}
 	else if(substr($controltype, 0, 4) == "date")
@@ -1584,7 +1435,7 @@ function prepare_for_db($field, $value, $controltype = "", $postfilename = "", $
 			$ret = 1;
 		else if($value == "none")
 			return "";
-		else
+		else 
 			$ret = 0;
 		return $ret;
 	}
@@ -1600,12 +1451,12 @@ function DeleteUploadedFiles($pSet, $deleted_values)
 {
 	foreach($deleted_values as $field => $value)
 	{
-		if(($pSet->getEditFormat($field) == EDIT_FORMAT_FILE || $pSet->getPageTypeByFieldEditFormat($field, EDIT_FORMAT_FILE) != "")
+		if(($pSet->getEditFormat($field) == EDIT_FORMAT_FILE || $pSet->getPageTypeByFieldEditFormat($field, EDIT_FORMAT_FILE) != "") 
 			&& $pSet->isDeleteAssociatedFile($field))
 		{
 			if(!strlen($value))
 				return;
-
+				
 			$filesArray = my_json_decode($value);
 			if(!is_array($filesArray) || count($filesArray) == 0)
 			{
@@ -1613,7 +1464,7 @@ function DeleteUploadedFiles($pSet, $deleted_values)
 				if($pSet->getCreateThumbnail($field))
 					$filesArray[0]["thumbnail"] = $pSet->getUploadFolder($field).$pSet->getStrThumbnail($field).$value;
 			}
-
+		
 			foreach($filesArray as $delFile)
 			{
 				$filename = $delFile["name"];
@@ -1684,7 +1535,7 @@ function splitvalues($str)
 				$val=substr($val,1,strlen($val)-2);
 				$val=str_replace('""','"',$val);
 			}
-
+			
 			if( $val !== FALSE )
 			$arr[]=$val;
 		}
@@ -1694,7 +1545,7 @@ function splitvalues($str)
 }
 
 /**
- *
+ * 
  */
 function GetLookupFieldsIndexes($pSet, $field)
 {
@@ -1717,7 +1568,7 @@ function GetLookupFieldsIndexes($pSet, $field)
 				$displayFieldIndex = $lookupPSet->getFieldIndex($displayFieldName) - 1;
 		}
 	}
-	else
+	else 
 	{
 		$linkFieldIndex = 0;
 		$displayFieldIndex = $linkAndDisplaySame ? 0 : 1;
@@ -1765,8 +1616,8 @@ function getLacaleAmPmForTimePicker($convention, $useTimePicker = false)
 	}
 	else
 		$locale = $locale_info["LOCALE_STIMEFORMAT"];
-
-	return array('am'=>$am,'pm'=>$pm,'locale'=>$locale);
+		
+	return array('am'=>$am,'pm'=>$pm,'locale'=>$locale);	
 }
 
 /**
@@ -1788,7 +1639,7 @@ function getValForTimePicker($type,$value,$locale)
 		if(count($dbtime))
 			$val = format_datetime_custom($dbtime, $locale);
 	}
-	else
+	else 
 	{
 		$arr = parsenumbers($value);
 		if(count($arr))
@@ -1799,7 +1650,7 @@ function getValForTimePicker($type,$value,$locale)
 			$val = format_datetime_custom($dbtime, $locale);
 		}
 	}
-
+	
 	return array('val'=>$val,'dbTime'=>$dbtime);
 }
 
@@ -1812,7 +1663,7 @@ function my_stripos($str,$needle, $offest)
 	if (strlen($needle)==0 || strlen($str)==0)
 		return false;
 	return strpos(strtolower($str),strtolower($needle), $offest);
-}
+} 
 
 /**
  * @intellisense
@@ -1823,7 +1674,7 @@ function my_str_ireplace($search, $replace,$str)
 	if($pos===false)
 		return $str;
 	return substr($str,0,$pos).$replace.substr($str,$pos+strlen($search));
-}
+} 
 
 
 /**
@@ -1831,7 +1682,7 @@ function my_str_ireplace($search, $replace,$str)
  */
 function in_assoc_array($name, $arr)
 {
-	foreach ($arr as $key => $value)
+	foreach ($arr as $key => $value) 
 	{
 		if ($key==$name)
 			return true;
@@ -1866,7 +1717,7 @@ function print_inline_array(&$arr,$printkey=false)
 		foreach( $arr as $key=>$val )
 			echo str_replace(array("&","<","\\","\r","\n"),array("&amp;","&lt;","\\\\","\\r","\\n"),str_replace(array("\\","\r","\n"),array("\\\\","\\r","\\n"),$key))."\\n";
 	}
-
+		
 }
 
 /**
@@ -1888,7 +1739,7 @@ function checkpassword($pwd)
 			$cUpper++;
 		else
 			$cDigit++;
-
+			
 		$cUnique[$c] = 1;
 	}
 	if(count($cUnique)<4)
@@ -1903,53 +1754,35 @@ function checkpassword($pwd)
  */
 function GetChartXML($chartname)
 {
-	$strTableName = GetTableByShort($chartname);
+	$strTableName = GetTableByShort($chartname);	
 	$settings = new ProjectSettings($strTableName);
 	return $settings->getChartXml();
 }
 
-function isSecureProtocol() {
-  return
-    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-    || $_SERVER['SERVER_PORT'] == 443;
-}
 
 /**
- * Returns site address without path
- * Examples:
- * http://server.com:88
- * https://server.com
- *
  * @intellisense
  */
 function GetSiteUrl()
 {
-	$proto = "http://";
-	if( $_SERVER["HTTPS"] && $_SERVER["HTTPS"] != "off")
-		$proto = "https://";
-	return $proto . $_SERVER["HTTP_HOST"];
+	$url = "http://".$_SERVER["SERVER_NAME"];
+	if($_SERVER["SERVER_PORT"]!=80)
+	{
+		if ($_SERVER["SERVER_PORT"]==443)
+		   $url = "https://".$_SERVER["SERVER_NAME"];
+		else
+		   $url.=":".$_SERVER["SERVER_PORT"];
+	}
+	return $url;
 }
-
-/**
- * Returns site address with path
- * Examples:
- * http://server.com:88/Calendar
- * https://server.com
- *
- * @intellisense
- */
-function GetFullSiteUrl()
-{
-	return getDirectoryFromURI( GetSiteUrl() . $_SERVER['REQUEST_URI'] );
-}
-
 
 /**
  * @intellisense
  */
 function GetAuditObject($table="")
 {
-
+	return NULL;
+	
 	$linkAudit = false;
 	if(!$table)
 	{
@@ -1961,9 +1794,8 @@ function GetAuditObject($table="")
 		$linkAudit = $settings->auditEnabled();
 	}
 	if ($linkAudit)
-	{
+	{	
 		require_once(getabspath("include/audit.php"));
-		return new AuditTrailFile();
 	}
 	else
 	{
@@ -1976,6 +1808,7 @@ function GetAuditObject($table="")
  */
 function GetLockingObject($table="")
 {
+	return NULL;
 
 	if(!$table)
 	{
@@ -1984,7 +1817,7 @@ function GetLockingObject($table="")
 	}
 	$settings = new ProjectSettings($table);
 	if ($settings->lockingEnabled())
-	{
+	{	
 		require_once(getabspath("include/locking.php"));
 		return new oLocking();
 	}
@@ -2003,6 +1836,23 @@ function isEnableSection508()
 }
 
 /**
+ * @intellisense
+ */
+function isEncryptionEnabled()
+{
+	return GetGlobalData("isUseEncryption", ENCRYPTION_NONE) == ENCRYPTION_PHP 
+		|| GetGlobalData("isUseEncryption", ENCRYPTION_NONE) == ENCRYPTION_DB;
+}
+
+/**
+ * @intellisense
+ */
+function isEncryptionByPHPEnabled()
+{
+	return GetGlobalData("isUseEncryption", ENCRYPTION_NONE) == ENCRYPTION_PHP;
+}
+
+/**
  * Returns validation type which defined in js validation object.
  * Use this function, because runner constants has another names of validation functions
  *
@@ -2010,9 +1860,9 @@ function isEnableSection508()
  * @return string
   * @intellisense
  */
-function getJsValidatorName($name)
-{
-	switch ($name)
+function getJsValidatorName($name) 
+{	
+	switch ($name) 
 	{
 		case "Number":
 			return "IsNumeric";
@@ -2046,7 +1896,7 @@ function getJsValidatorName($name)
 			break;
 		case "Regular expression":
 			return "RegExp";
-			break;
+			break;						
 		default:
 			return $name;
 			break;
@@ -2058,30 +1908,22 @@ function getJsValidatorName($name)
  */
 function SetLangVars($xt, $prefix, $pageName = "", $extraparams = "")
 {
-	$xt->assign("lang_label", true);
-
-	if( @$_REQUEST["language"] )
-		$_SESSION["language"] = @$_REQUEST["language"];
-
-	$currentLang = mlang_getcurrentlang();
-
-	$var = GoodFieldName($currentLang)."_langattrs";
-	$xt->assign($var, "selected");
-
-	$xt->assign($currentLang . "LANGLINK_ACTIVE", true);
-
-	$xt->assign("EnglishLANGLINK", "English" != $currentLang);
-
-	if( isEnableSection508() )
-		$xt->assign_section("lang_label", "<label for=\"languageSelector\">","</label>");
+	$xt->assign("lang_label",true);
+	if(@$_REQUEST["language"])
+		$_SESSION["language"]=@$_REQUEST["language"];
 
 	if( $extraparams )
 		$extraparams = $extraparams."&";
 
-	$dataAttr = 'data-params="'.$extraparams.'" data-prefix="'.$prefix.'"';
-	$xt->assign("langselector_attrs", "id=\"languageSelector\" ".$dataAttr);
-
-	$xt->assign("languages_block", true);
+	$var=GoodFieldName(mlang_getcurrentlang())."_langattrs";
+	$xt->assign($var,"selected");
+	$is508=isEnableSection508();
+	if($is508)
+		$xt->assign_section("lang_label","<label for=\"lang\">","</label>");
+	if($prefix.$pageName == "login")
+		$xt->assign("langselector_attrs","name=lang ".($is508==true ? "id=\"lang\" " : "")."onchange=\"javascript: document.forms[0].btnSubmit.value='';document.forms[0].action = '".GetTableLink($prefix, $pageName)."?".$extraparams."language='+this.options[this.selectedIndex].value;document.forms[0].submit();\"");
+	else
+		$xt->assign("langselector_attrs","name=lang ".($is508==true ? "id=\"lang\" " : "")."onchange=\"javascript: window.location='".GetTableLink($prefix, $pageName)."?".$extraparams."language='+this.options[this.selectedIndex].value\"");
 }
 
 /**
@@ -2096,19 +1938,19 @@ function GetTableCaption($table)
 /**
  * @intellisense
  */
-function GetFieldByLabel($table, $label)
+function GetFieldByLabel($table, $label) 
 {
 	global $field_labels, $strTableName;
 	if (!$table)
 	{
 		$table = $strTableName;
 	}
-
+	
 	if(!array_key_exists($table,$field_labels))
 		return "";
 	$currLang = mlang_getcurrentlang();
 	if(!array_key_exists($currLang,$field_labels[$table]))
-		return "";
+		return "";	
 	$lables = $field_labels[$table][mlang_getcurrentlang()];
 	foreach ($lables as $key=>$val)
 	{
@@ -2126,10 +1968,9 @@ function GetFieldByLabel($table, $label)
 function GetFieldLabel($table,$field)
 {
 	global $field_labels;
-	if( !array_key_exists( $table, $field_labels ) )
+	if(!array_key_exists($table,$field_labels))
 		return "";
-		
-	return @$field_labels[ $table ][ mlang_getcurrentlang() ][ $field ];
+	return @$field_labels[$table][mlang_getcurrentlang()][$field];
 }
 
 
@@ -2139,25 +1980,9 @@ function GetFieldLabel($table,$field)
 function GetFieldToolTip($table, $field)
 {
 	global $fieldToolTips;
-	if( !array_key_exists( $table, $fieldToolTips ) )
+	if(!array_key_exists($table, $fieldToolTips))
 		return "";
-		
-	return @$fieldToolTips[ $table ][ mlang_getcurrentlang() ][ $field ];
-}
-
-/**
- * @param String table
- * @param String field
- * @return String
- */
-function GetFieldPlaceHolder( $table, $field )
-{
-	global $placeHolders;
-	
-	if( !array_key_exists( $table, $placeHolders ) )
-		return "";
-		
-	return @$placeHolders[ $table ][ mlang_getcurrentlang() ][ $field ];
+	return @$fieldToolTips[$table][mlang_getcurrentlang()][$field];
 }
 
 /**
@@ -2202,28 +2027,6 @@ function mlang_getlanglist()
 /**
  * @intellisense
  */
-function getMountNames()
-{
-	$mounts = array();
-		$mounts[1] = "January";
-	$mounts[2] = "February";
-	$mounts[3] = "March";
-	$mounts[4] = "April";
-	$mounts[5] = "May";
-	$mounts[6] = "June";
-	$mounts[7] = "July";
-	$mounts[8] = "August";
-	$mounts[9] = "September";
-	$mounts[10] = "October";
-	$mounts[11] = "November";
-	$mounts[12] = "December";
-
-	return $mounts;
-}
-
-/**
- * @intellisense
- */
 function displayDetailsOn($table,$page)
 {
 	global $detailsTablesData;
@@ -2255,7 +2058,7 @@ function showDetailTable($params)
 	$strTableName = $params["table"];
 	// show page
 	if($params["dpObject"]->isDispGrid())
-		$params["dpObject"]->showPage();
+		$params["dpObject"]->showPage();	
 	$strTableName = $oldTableName;
 }
 
@@ -2267,25 +2070,25 @@ function showDetailTable($params)
 function DoUpdateRecordSQL( $pageObject )
 {
 	$table = $pageObject->pSet->getOriginalTableName();
-	$strWhereClause = $pageObject->getKeysWhereClause( true );
+	$strWhereClause = $pageObject->getWhereClause( true );
 	$evalues = $pageObject->getNewRecordData();
 	$blobfields = $pageObject->getBlobFields();
 
 	if(!count($evalues))
 		return true;
-
+		
 	$strSQL = "update ".$pageObject->connection->addTableWrappers($table)." set ";
 	$blobs = PrepareBlobs($evalues, $blobfields, $pageObject);
 	//	construct SQL string
 	foreach($evalues as $ekey=>$value)
 	{
-		if(in_array($ekey,$blobfields))
+		if(in_array($ekey,$blobfields))			
 			$strValue = $value;
 		else
 		{
 			if( is_null( $pageObject->cipherer ) )
 				$strValue = add_db_quotes( $ekey, $value );
-			else
+			else 
 				$strValue = $pageObject->cipherer->AddDBQuotes( $ekey, $value );
 		}
 		$strSQL .= $pageObject->getTableField($ekey)."=".$strValue.", ";
@@ -2296,8 +2099,8 @@ function DoUpdateRecordSQL( $pageObject )
 		$strWhereClause = " (1=1) ";
 	}
 	$strSQL.=" where ".$strWhereClause;
-
-	if(SecuritySQL("Edit", $pageObject->tName))
+	
+	if(SecuritySQL("Edit", $pageObject->tName))	
 		$strSQL .= " and (".SecuritySQL("Edit", $pageObject->tName).")";
 
 	if( !ExecuteUpdate($pageObject, $strSQL, $blobs) )
@@ -2314,44 +2117,44 @@ function DoInsertRecordSQL($table, &$avalues, &$blobfields, &$pageObject)
 {
 	//	make SQL string
 	$strSQL = "insert into ".$pageObject->connection->addTableWrappers($table)." ";
-
+	
 	$strFields = "(";
 	$strValues = "(";
 	$blobs = PrepareBlobs($avalues, $blobfields, $pageObject);
-
+	
 	foreach($avalues as $akey => $value)
 	{
 		$strFields.= $pageObject->getTableField($akey).", ";
-
-		if( in_array($akey, $blobfields) )
+		
+		if( in_array($akey, $blobfields) )			
 			$strValues.= $value.", ";
 		else
 		{
 			if( is_null($pageObject->cipherer) )
 				$strValues.= add_db_quotes($akey, $value).", ";
-			else
+			else 
 				$strValues.= $pageObject->cipherer->AddDBQuotes($akey, $value).", ";
 		}
 	}
-
+	
 	if( substr($strFields, -2) == ", " )
 		$strFields = substr($strFields, 0, strlen($strFields) - 2);
-
+	
 	if( substr($strValues, -2) == ", " )
 		$strValues = substr($strValues, 0, strlen($strValues) - 2);
-
+	
 	$strSQL.= $strFields.") values ".$strValues.")";
-
+	
 	if( !ExecuteUpdate($pageObject, $strSQL, $blobs) )
 		return false;
-
+		
 	$pageObject->ProcessFiles();
 
 	return true;
 }
 
 /**
- * insert record on Add page
+ * insert record on Add page 
  * @param RunnerPage &pageObject
  * @intellisense
  */
@@ -2360,37 +2163,37 @@ function DoInsertRecordSQLOnAdd( &$pageObject )
 	$table = $pageObject->pSet->getOriginalTableName();
 	$avalues = $pageObject->getNewRecordData();
 	$blobfields = $pageObject->getBlobFields();
-
+	
 	//	make SQL string
 	$strSQL = "insert into ".$pageObject->connection->addTableWrappers($table)." ";
-
+	
 	$strFields="(";
 	$strValues="(";
 	$blobs = PrepareBlobs( $avalues, $blobfields, $pageObject );
-
+	
 	foreach($avalues as $akey => $value)
 	{
 		$strFields.= $pageObject->getTableField($akey).", ";
-
-		if( in_array($akey, $blobfields) )
+		
+		if( in_array($akey, $blobfields) )			
 			$strValues.= $value.", ";
 		else
 		{
 			if( is_null( $pageObject->cipherer ) )
 				$strValues.= add_db_quotes($akey, $value).", ";
-			else
+			else 
 				$strValues.= $pageObject->cipherer->AddDBQuotes($akey, $value).", ";
 		}
 	}
-
+	
 	if( substr($strFields, -2) == ", ")
 		$strFields = substr($strFields, 0, strlen($strFields) - 2);
-
+		
 	if( substr($strValues, -2) == ", ")
 		$strValues = substr($strValues, 0, strlen($strValues) - 2);
-
+	
 	$strSQL.= $strFields.") values ".$strValues.")";
-
+	
 	if( !ExecuteUpdate($pageObject, $strSQL, $blobs) )
 		return false;
 
@@ -2433,14 +2236,14 @@ function add_nocache_headers()
  */
 function IsGuidString(&$str)
 {
-//	{3F2504E0-4F89-11D3-9A0C-0305E82C3301}
+//	{3F2504E0-4F89-11D3-9A0C-0305E82C3301} 
 	if(strlen($str)==36 && substr($str,0,1)!="{" && substr($str,-1)!="}")
 		$str="{".$str."}";
 	elseif(strlen($str)==37 && substr($str,0,1)=="{" && substr($str,-1)!="}")
 		$str=$str."}";
 	elseif(strlen($str)==37 && substr($str,0,1)!="{" && substr($str,-1)=="}")
 		$str="{".$str;
-
+		
 	if(strlen($str)!=38)
 		return false;
 	for($i=0;$i<38;$i++)
@@ -2494,15 +2297,15 @@ function IsStoredProcedure($strSQL)
  * @return Mixed
  * @intellisense
  */
-function MobileDetected()
+function MobileDetected() 
 {
 	$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 	$accept = strtolower($_SERVER['HTTP_ACCEPT']);
-
-	if( strpos($accept,'text/vnd.wap.wml')!==false || strpos($accept,'application/vnd.wap.xhtml+xml')!==false )
+ 
+	if( strpos($accept,'text/vnd.wap.wml')!==false || strpos($accept,'application/vnd.wap.xhtml+xml')!==false ) 
 		return 1; // Mobile browser detected by HTTP-headers
-
-	if( isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE']) )
+ 
+	if( isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE']) ) 
 		return 2; // Mobile browser detected by server settings
 
 
@@ -2524,7 +2327,7 @@ function MobileDetected()
 		'd736|p-9521|telco|sl74|ktouch|m4u\/|me702|8325rc|kddi|phone|lg |'.
 		'sonyericsson|samsung|240x|x320vx10|nokia|sony cmd|motorola|'.
 		'up.browser|up.link|mmp|symbian|smartphone|midp|wap|vodafone|o2|'.
-		'pocket|kindle|silk|hpwos|mobile|psp|treo)/', $user_agent))
+		'pocket|kindle|silk|hpwos|mobile|psp|treo)/', $user_agent)) 
 	{
 		return 3; // Mobile browser detected by User Agent signature
 	}
@@ -2574,13 +2377,13 @@ function MobileDetected()
 			  "w3c ", "w3c-", "wap-", "wapa", "wapi", "wapj", "wapm", "wapp", "wapr",
 			  "waps", "wapt", "wapu", "wapv", "wapy", "webc", "whit", "wig ", "winc",
 			  "winw", "wmlb", "wonu", "x700", "xda-", "xda2", "xdag", "yas-", "your",
-			  "zeto", "zte-")))
+			  "zeto", "zte-"))) 
 	{
 		return 4; // Mobile browser detected by User Agent signature
 	}
 
 	return false; // Mobile browser not found
-}
+} 
 
 /**
  * Check if user is using IE 8
@@ -2597,7 +2400,7 @@ function isIE8()
  * Check if the client application's part is run on a mobile device
  * @intellisense
  */
-function mobileDeviceDetected()
+function isMobile()
 {
 	return false;
 }
@@ -2605,15 +2408,10 @@ function mobileDeviceDetected()
 /**
  * Check if the client application's part is run on a mobile device
  * @return Boolean
- */
+ */ 
 function detectMobileDevice()
 {
 	return false;
-}
-
-function IsMobile() 
-{
-	return detectMobileDevice();
 }
 
 /**
@@ -2626,12 +2424,16 @@ function IsMobile()
  */
 function & GetPageLayout($tableName, $pageType, $suffixName = '')
 {
-	global $page_layouts;
+	global $page_layouts, $bUseMobileStyleOnly;
 	$layoutName = ($tableName != '' ? $tableName.'_' : '').$pageType.($suffixName != '' ? '_'.$suffixName : '');
-	$layout = $page_layouts[$layoutName];
+	$layout = $page_layouts[$layoutName]; 
 	if($layout)
 	{
-		if(postvalue("pdf"))
+		if($bUseMobileStyleOnly && isMobile())
+		{
+			$layout->style = $layout->styleMobile;
+		}
+		else if(postvalue("pdf"))
 		{
 			$layout->style = $layout->pdfStyle();
 		}
@@ -2693,24 +2495,8 @@ function isSingleSign()
 {
 	if( GetGlobalData("ADSingleSign",0) && $_SERVER["REMOTE_USER"] )
 		return false;
-
+		
 	return true;
-}
-
-/**
- * A number string of a particular length
- * @param Number length
- * @return String
- */
-function generateUserCode($length)
-{
-	$code = "";
-	for($i = 0; $i < $length; $i++)
-	{
-		$code.= rand(0, 9); 
-	}
-	
-	return $code;
 }
 
 /**
@@ -2784,10 +2570,9 @@ function getOptionsForMultiUpload($pSet, $field)
  */
 function getContentTypeByExtension($ext)
 {
-	$ext = strtolower( $ext );
 	if( substr($ext,0,1) != "." )
 		$ext = ".".$ext;
-
+	
 		if($ext==".asf")
 		$ctype = "video/x-ms-asf";
 	elseif($ext==".avi")
@@ -2822,113 +2607,40 @@ function getContentTypeByExtension($ext)
 		$ctype = "video/mp4";
 	elseif($ext == ".webm")
 		$ctype = "video/webm";
-	elseif($ext == ".pdf")
-		$ctype = "application/pdf";
 	else
-		$ctype = "application/octet-stream";
-
+		$ctype = "application/octet-stream";	
+		
 	return $ctype;
-}
-
-function common_runner_sms($number, $message, $parameters = array())
-{
-	global $twilioSID, $twilioAuth, $twilioNumber;
-
-	if ( !isset($parameters["To"]) )
-		$parameters["To"] = $number;
-
-	if ( !isset($parameters["Body"]) )
-		$parameters["Body"] = $message;
-
-	$parameters["From"] = $twilioNumber;
-
-	$url = "https://api.twilio.com/2010-04-01/Accounts/".$twilioSID."/Messages.json";
-
-	$headers = array();
-	$headers["User-Agent"] = "twilio-php/5.7.3 (PHP 5.6.12)";
-	$headers["Accept-Charset"] = "utf-8";
-	$headers["Content-Type"] = "application/x-www-form-urlencoded";
-	$headers["Accept"] = "application/json";
-	$headers["Authorization"] = "Basic " . base64_encode("$twilioSID:$twilioAuth");
-
-	$certPath = getabspath('include/cacert.pem');
-
-	$result = array();
-    $result["success"] = false;
-
-	$response = runner_post_request($url, $parameters, $headers, $certPath);
-	if ( !$response["error"] )
-	{
-	    $result["response"] = my_json_decode($response["content"]);
-	    if ( $result["response"]["status"] == "queued" )
-	    	$result["success"] = true;
-	    else
-	    	$result["error"] = "Twilio error: " . $result["response"]["message"];	
-	}
-	else
-	{
-		$result["error"] = $response["error"];
-	}
-
-	return $result;	
 }
 
 /**
  * @intellisense
  */
-function getLatLngByAddr($addr)
+function getLatLngByAddr($addr) 
 {
-	switch( getMapProvider() ){
-		case GOOGLE_MAPS:	$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.rawurlencode($addr).'&sensor=false';
-				$result = my_json_decode(myurl_get_contents($url));
-				if($result['status'] == 'OK')
-				{
-					return $result['results'][0]['geometry']['location'];
-				}
-				break;
-		case OPEN_STREET_MAPS: $url = 'http://nominatim.openstreetmap.org/search/'.rawurlencode($addr).'?format=json&addressdetails=1&limit=1';
-				$result = my_json_decode(myurl_get_contents($url));
-				if($result)
-				{
-					$lat = $result[0]['lat'];
-					if( !$lat )
-						$lat = 0;
-					$lng = $result[0]['lon'];
-					if( !$lng )
-						$lng = 0;
-					return array("lat"=>$lat,"lng"=>$lng);
-				}
-				break;
-		case BING_MAPS:
-				if( !GetGlobalData("apiGoogleMapsCode","") )
-					return false;
-				$url = 'http://dev.virtualearth.net/REST/v1/Locations?query='.rawurlencode( $addr ).'&output=json&key='.GetGlobalData("apiGoogleMapsCode","");
-				$result = my_json_decode(myurl_get_contents($url));
-				if($result)
-				{
-					$lat = $result["resourceSets"][0]["resources"][0]["geocodePoints"][0]["coordinates"][0];
-					if( !$lat )
-						$lat = 0;
-					$lng = $result["resourceSets"][0]["resources"][0]["geocodePoints"][0]["coordinates"][1];
-					if( !$lng )
-						$lng = 0;
-					return array("lat"=>$lat,"lng"=>$lng);
-				}
-				break;
+	$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.rawurlencode($addr).'&sensor=false';
+	$result = my_json_decode(myurl_get_contents($url));
+	if($result['status'] == 'OK') 
+	{
+		$location = $result['results'][0]['geometry']['location'];
+		return $location;
 	}
-	return false;
-}
+	return false;	
+} 
 
 /**
  * @intellisense
  */
 function isLoggedAsGuest()
 {
-	return Security::isGuest();
+	if($_SESSION["UserID"] == "Guest" && $_SESSION["AccessLevel"] == ACCESS_LEVEL_GUEST)
+		return true;
+		
+	return false;
 }
 
 /**
- * Check if the "Login as Guest" option is turned on
+ * Check if the "Login as Guest" option is turned on 
  * @return Boolean
  */
 function isGuestLoginAvailable()
@@ -2996,7 +2708,7 @@ function Label($field,$table="")
 			$table = $strTableName;
 		}
 		$newSet = new ProjectSettings($table);
-		$result = $newSet->label($field);
+		$result = $newSet->label($field); 
 	}
 	else
 		$result = $pageObject->pSet->label($field);
@@ -3137,7 +2849,7 @@ function initArray(&$array, $key)
 		$array[$key] = array();
 	}
 }
-
+		
 /**
  * GetKeysArray
  * Form aray of primary keys and their values for audit
@@ -3172,20 +2884,14 @@ function GetBaseScriptsForPage($isDisplayLoading, $additionalScripts = "", $cust
 	$result .= "<script type=\"text/javascript\" src=\"".GetRootPathForResources("include/loadfirst.js")."\"></script>";
 	$result .= $additionalScripts;
 	$result .= "<script type=\"text/javascript\" src=\"".GetRootPathForResources("include/lang/".getLangFileName(mlang_getcurrentlang()).".js")."\"></script>";
-
-	if( getMapProvider() == BING_MAPS )
-	{
-		//$result .= "<script type=\"text/javascript\" src=\"http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&mkt=".getBingMapsLang()."\"></script>";
-		$result .= "<script type=\"text/javascript\" src=\"http://www.bing.com/api/maps/mapcontrol?&setMkt=".getBingMapsLang()."\"></script>";
-	}
-
+	
 	if($isDisplayLoading)
 	{
 		$result .= "<script type=\"text/javascript\">Runner.runLoading('".$customText."');</script>";
 	}
-
+	
 	return $result;
-}
+}		
 
 /**
  * @param Mixed data
@@ -3195,7 +2901,7 @@ function GetBaseScriptsForPage($isDisplayLoading, $additionalScripts = "", $cust
 function printJSON($data, $returnPlainJSON = false)
 {
 	$rJSON = my_json_encode( $data );
-
+		
 	return $returnPlainJSON ? $rJSON : runner_htmlspecialchars( $rJSON );
 }
 
@@ -3213,7 +2919,7 @@ function getIntervalLimitsExprs($table, $field, $idx, $isLowerBound)
 
 }
 
-function import_error_handler($errno, $errstr, $errfile, $errline)
+function import_error_handler($errno, $errstr, $errfile, $errline) 
 {
 	/*global $error_happened;
 
@@ -3222,7 +2928,7 @@ function import_error_handler($errno, $errstr, $errfile, $errline)
 function PrepareForExcel($ret)
 {
 	//$ret = htmlspecialchars($str); commented for bug #6823
-	if (substr($ret,0,1)== "=")
+	if (substr($ret,0,1)== "=") 
 		$ret = "&#61;".substr($ret,1);
 	return $ret;
 
@@ -3230,18 +2936,18 @@ function PrepareForExcel($ret)
 
 function countTotals(&$totals, $totalsFields, $data)
 {
-	for($i = 0; $i < count($totalsFields); $i ++)
+	for($i = 0; $i < count($totalsFields); $i ++) 
 	{
-		if($totalsFields[$i]['totalsType'] == 'COUNT')
+		if($totalsFields[$i]['totalsType'] == 'COUNT') 
 			$totals[$totalsFields[$i]['fName']]["value"] += ($data[$totalsFields[$i]['fName']]!= "");
-		else if($totalsFields[$i]['viewFormat'] == "Time")
+		else if($totalsFields[$i]['viewFormat'] == "Time") 
 		{
 			$time = GetTotalsForTime($data[$totalsFields[$i]['fName']]);
 			$totals[$totalsFields[$i]['fName']]["value"] += $time[2]+$time[1]*60 + $time[0]*3600;
-		}
-		else
+		} 
+		else 
 			$totals[$totalsFields[$i]['fName']]["value"] += ($data[$totalsFields[$i]['fName']]+ 0);
-
+		
 		if($totalsFields[$i]['totalsType'] == 'AVERAGE')
 		{
 			if(!is_null($data[$totalsFields[$i]['fName']]) && $data[$totalsFields[$i]['fName']]!=="")
@@ -3251,7 +2957,7 @@ function countTotals(&$totals, $totalsFields, $data)
 }
 
 function XMLNameEncode($strValue)
-{
+{	
 	$search=array(" ","#","'","/","\\","(",")",",","[");
 	$ret=str_replace($search,"",$strValue);
 	$search=array("]","+","\"","-","_","|","}","{","=");
@@ -3267,9 +2973,9 @@ function XMLNameEncode($strValue)
 function getFileExtension($fileName)
 {
 	$pos = strrpos($fileName, ".");
-	if( $pos === FALSE )
+	if( $pos === FALSE ) 
 		return "";
-
+		
 	return substr($fileName, $pos + 1);
 }
 
@@ -3285,474 +2991,9 @@ function getDefaultConnection()
 
 function isIOS()
 {
-	return stripos($_SERVER['HTTP_USER_AGENT'],"iPod") !== false
-		|| stripos($_SERVER['HTTP_USER_AGENT'],"iPad") !== false
+	return stripos($_SERVER['HTTP_USER_AGENT'],"iPod") !== false 
+		|| stripos($_SERVER['HTTP_USER_AGENT'],"iPad") !== false 
 		|| stripos($_SERVER['HTTP_USER_AGENT'],"iPhone") !== false;
-}
-
-
-/* Get map provider google = 0, openStreetMap = 1*/
-function getMapProvider(){
-	return GetGlobalData("mapProvider", true);
-}
-
-function getBingMapsLang()
-{
-	$arrBimgMapLang = array();
-	$arrBimgMapLang["Czech"] = "cs-CZ";
-	$arrBimgMapLang["Danish"] = "da-DK";
-	$arrBimgMapLang["Dutch"] = "nl-NL";
-	$arrBimgMapLang["English"] = "en-US";
-	$arrBimgMapLang["French"] = "fr-FR";
-	$arrBimgMapLang["German"] = "de-DE";
-	$arrBimgMapLang["Italian"] = "it-IT";
-	$arrBimgMapLang["Japanese"] = "ja-JP";
-	$arrBimgMapLang["Norwegian"] = "nb-NO";
-	$arrBimgMapLang["Polish"] = "pl-PL";
-	$arrBimgMapLang["Portugal"] = "pt-PT";
-	$arrBimgMapLang["Portuguese"] = "pt-BR";
-	$arrBimgMapLang["Russian"] = "ru-RU";
-	$arrBimgMapLang["Spanish"] = "es-ES";
-	$arrBimgMapLang["Swedish"] = "sw-SE";
-	$arrBimgMapLang["Chinese"] = "zh-TW";
-	$arrBimgMapLang["Hongkong"] = "zh-HK";
-	if( array_key_exists( mlang_getcurrentlang(), $arrBimgMapLang ) )
-		return $arrBimgMapLang[mlang_getcurrentlang()];
-
-	return	$arrBimgMapLang["English"];
-}
-
-function getDefaultLanguage()
-{
-	if( strlen($_SESSION["language"]) == 0 && $_SERVER['HTTP_ACCEPT_LANGUAGE'] )
-	{
-		$arrWizardLang = array();
-		$arrWizardLang[] = "English";
-		$arrLang = array();
-		$arrLang["af"] = "Afrikaans";
-		$arrLang["ar"] = "Arabic";
-		$arrLang["bs"] = "Bosnian"; //?
-		$arrLang["bg"] = "Bulgarian";
-		$arrLang["ca"] = "Catalan";
-		$arrLang["zh"] = "Chinese";// 1
-		$arrLang["hr"] = "Croatian";
-		$arrLang["cs"] = "Czech";
-		$arrLang["da"] = "Danish";
-		$arrLang["nl"] = "Dutch";
-		$arrLang["en"] = "English";
-		$arrLang["fa"] = "Farsi"; //?
-		$arrLang["fr"] = "French";
-		$arrLang["ka"] = "Georgian";
-		$arrLang["de"] = "German";
-		$arrLang["el"] = "Greek";
-		$arrLang["he"] = "Hebrew";//?
-		$arrLang["hk"] = "Hongkong";// 1
-		$arrLang["hu"] = "Hungarian";
-		$arrLang["id"] = "Indonesian";//?
-		$arrLang["it"] = "Italian";
-		$arrLang["ja"] = "Japanese";
-		$arrLang["ms"] = "Malay";
-		$arrLang["no"] = "Norwegian";
-		$arrLang["fl"] = "Phillipines";//?
-		$arrLang["pl"] = "Polish";
-		$arrLang["pt"] = "Portugal"; // 2
-		$arrLang["br"] = "Portuguese"; // 2
-		$arrLang["ro"] = "Romanian";
-		$arrLang["ru"] = "Russian";
-		$arrLang["sk"] = "Slovak";
-		$arrLang["es"] = "Spanish";
-		$arrLang["sv"] = "Swedish";
-		$arrLang["tw"] = "Taiwan";//??
-		$arrLang["th"] = "Thai";
-		$arrLang["tr"] = "Turkish";
-		$arrLang["ur"] = "Urdu";
-		$arrLang["cy"] = "Welsh";
-
-		$http_lang = strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE']); //return string ex.:fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
-		$http_lang = str_replace(";",",",$http_lang);
-		$http_lang = str_replace("-",",",$http_lang);
-
-		$langcode = array();
-		$langcode = explode(",", $http_lang);
-
-		foreach($langcode as $lang)
-		{
-			if( in_array($arrLang[$lang], $arrWizardLang) )
-				return $arrLang[$lang];
-		}
-	}
-	return "English";
-}
-
-function xt_showchart($params)
-{
-	$width = 700;
-	$height = 530;
-
-	$chartPreview = "";
-	if( $params["chartPreview"] )
-		$chartPreview = "&chartPreview=true";
-
-	if( isset($params["custom1"]) )
-		$width = $params["custom1"];
-
-	if( isset($params["custom2"]) )
-		$height = $params["custom2"];
-
-	if( $params["dashResize"] )
-	{
-		if( $params["dashWidth"] && $params["dashHeight"] )
-		{
-			$width = $params["dashWidth"];
-			$height = $params["dashHeight"];
-		}
-		elseif( $params["dashWidth"] )
-		{
-			$height = round( $height * $params["dashWidth"] / $width );
-			$width = $params["dashWidth"];
-		}
-		elseif( $params["dashHeight"] )
-		{
-			$width = round( $width * $params["dashHeight"] / $height );
-			$height = $params["dashHeight"];
-		}
-
-		// adjust the chart size to fit it in the dash cell
-		$width*= 0.95;
-		$height*= 0.95;
-	}
-	elseif( $params["resize"] )
-	{
-		$maxWidth = 400;
-		$maxHeight = 280;
-		$r = $maxWidth / $maxHeight;
-		$r2 = $width / $height;
-		if (($width > $maxWidth) || ($height > $maxHeight))
-		{
-			if ($r2 >= $r)
-			{ // width
-				$height = round( $height * $maxWidth / $width );
-				$width = $maxWidth;
-			}
-			else
-			{
-				$width = round ( $width * $maxHeight / $height );
-				$height = $maxHeight;
-			}
-		}
-	}
-
-	$showDetails = isset( $params["showDetails"] ) ? $params["showDetails"] : true;
-
-	$settings = new ProjectSettings(GetTableByShort($params["chartName"]));
-	$refresh = $settings->getChartRefreshTime();
-
-	$chartParams = array();
-	$chartParams['width'] = $width;
-	$chartParams['height'] = $height;
-	$chartParams['showDetails'] = $showDetails;
-	$chartParams['chartName'] = $params["chartName"];
-	//css id identifiers are not allowed to start with a number or underscore
-	$chartParams['containerId'] = "rnr".$params["chartName"].$params["id"];
-	$chartParams['chartType'] = $params["ctype"];
-	$chartParams['refreshTime'] = $refresh;
-	$chartParams['xmlFile'] = GetTableLink("dchartdata") . '?chartname=' . $params["chartName"] . $chartPreview .
-		'&ctype=' . $params["ctype"] .
-		'&showDetails=' . $showDetails;
-
-	if( isset( $params["dash"] ) && $params["dash"] )
-	{
-		$chartParams['xmlFile'] .= '&dashChart=' . $params["dash"];
-		$chartParams['dashChart'] = !!$params["dash"];
-	}
-
-	$chartParams['pageId'] = $params["id"];
-
-	if( isset( $params["dashTName"] ) && $params["dashTName"] )
-	{
-		$chartParams['dashTName'] = $params["dashTName"];
-		$chartParams['dashElementName'] = $params["dashElementName"];
-		$chartParams['pageId'] = $params["id"];
-
-		$chartParams['xmlFile'] .= '&dashTName=' . $params["dashTName"];
-		$chartParams['xmlFile'] .= '&dashElName=' . $params["dashElementName"];
-		$chartParams['xmlFile'] .= '&pageId=' . $params["id"];
-		$dashSet = new ProjectSettings( $params["dashTName"] );
-		$dashElement = $dashSet->getDashboardElementData( $params["dashElementName"] );
-		if( $dashElement )
-		{
-			if( $dashElement["reload"] )
-			{
-				$chartParams['refreshTime'] = $dashElement["reload"];
-			}
-		}
-	}
-
-	if ( isset($params["refreshTime"]) )
-	{
-		$chartParams['refreshTime'] = $params["refreshTime"];
-	}
-
-	echo '	<style>	@media (min-width:768px) { #' . $chartParams['containerId'] . ' {width:' . $width . 'px;height:' . $height . 'px; } } </style>';
-	
-	echo '<div class="bs-chart" id="' . $chartParams['containerId'] . '"></div>';
-	if( true || !$params["singlePage"] )
-	{
-		$chartParams["webRootPath"] = GetWebRootPath();
-
-		echo '<div data-runner-chart-params="' . runner_htmlspecialchars( my_json_encode( $chartParams ) ) . '"></div>';
-	}
-}
-
-function setHomePage( $url )
-{
-	global $globalSettings;
-	$globalSettings["LandingPageType"] = 2;
-	$globalSettings["LandingURL"] = $url;
-}
-
-function getHomePage()
-{
-	global $globalSettings;
-	if( $globalSettings["LandingPageType"] == 2 )
-	{
-		return $globalSettings["LandingURL"];
-	}
-
-//	GetLocalLink makes any difference with GetTableLink in ASP.NET only
-	if( $globalSettings["LandingPageType"] == 0 )
-		return GetLocalLink("menu");
-
-	if( $globalSettings["LandingPage"]=="" || $globalSettings["LandingPage"] == "login" || $globalSettings["LandingPage"] == "register" )
-		return GetLocalLink("menu");
-	
-	if( strlen($globalSettings["LandingTable"]) )
-		return GetLocalLink( GetTableURL($globalSettings["LandingTable"]), $globalSettings["LandingPage"] );
-	else
-		return GetLocalLink( $globalSettings["LandingPage"] );
-}
-
-
-
-function printHomeLink( $params )
-{
-	echo runner_htmlspecialchars( getHomePage() );
-}
-
-
-function setProjectLogo( $html, $lng="" )
-{
-	global $globalSettings;
-	if(strlen($lng) == 0)
-		$lng = mlang_getcurrentlang();
-	$globalSettings["ProjectLogo"][$lng] = $html;
-}
-
-function getProjectLogo($lng="")
-{
-	global $globalSettings;
-	if(strlen($lng) == 0)
-		$lng = mlang_getcurrentlang();
-	return $globalSettings["ProjectLogo"][$lng];
-}
-
-function printProjectLogo( $params )
-{
-	echo getProjectLogo(mlang_getcurrentlang());
-}
-
-
-function xt_pagetitlelabel($params)
-{
-	global $pageObject;
-	
-	$record = isset($params["record"]) ? $params["record"] : null;
-	$settings = isset($params["settings"]) ? $params["settings"] : null;
-	
-	if( isset($params["custom2"]) )
-		echo $pageObject->getPageTitle( $params["custom2"], $params["custom1"] , $record, $settings );
-	else
-		echo $pageObject->getPageTitle( $params["custom1"], "", $record, $settings );
-}
-
-function xt_label($params)
-{
-	echo GetFieldLabel($params["custom1"],$params["custom2"]);
-}
-
-function xt_tooltip($params)
-{
-	echo GetFieldToolTip( $params["custom1"], $params["custom2"] );
-}
-
-function xt_custom($params)
-{
-	echo GetCustomLabel($params["custom1"]);
-}
-
-function xt_caption($params)
-{
-	echo GetTableCaption($params["custom1"]);
-}
-
-// display tabs in group or simple section
-function xt_displaytabs( $tabparams )
-{
-	global $pageObject;
-	if(!isset( $pageObject ) || !isset( $tabparams[ "custom1" ] ) )
-		return;
-	
-	$pageObject->displayTabsSections( $tabparams[ "custom1" ] );
-}
-
-//	BuildEditControl wrapper
-function xt_buildeditcontrol(&$params)
-{
-	$pageObj = $params["pageObj"];
-	$data = $pageObj->getFieldControlsData();
-	
-	$field = $params["field"];
-	
-	if($params["mode"] == "edit")
-		$mode = MODE_EDIT;
-	else if($params["mode"] == "add")
-		$mode = MODE_ADD;
-	else if($params["mode"]=="inline_edit")
-		$mode = MODE_INLINE_EDIT;
-	else if($params["mode"]=="inline_add")
-		$mode = MODE_INLINE_ADD;
-	else
-		$mode = MODE_SEARCH;
-	
-	$fieldNum = 0;
-	if(@$params["fieldNum"])
-		$fieldNum = $params["fieldNum"];
-	
-	$id = "";
-	if(@$params["id"] !== "")
-		$id = $params["id"];
-	
-	$validate = array();
-	if(count(@$params["validate"]))
-		$validate = @$params["validate"];
-	
-	$additionalCtrlParams = array();
-	if(count(@$params["additionalCtrlParams"]))
-		$additionalCtrlParams = @$params["additionalCtrlParams"];
-	
-	$extraParams = array();
-	if( count(@$params["extraParams"]) )
-		$extraParams = @$params["extraParams"];	
-	
-	$pageObj->getControl($field, $id, $extraParams)->buildControl(@$params["value"], $mode, $fieldNum, $validate, $additionalCtrlParams, $data);
-}
-
-function getArrayElementNC( &$arr, $key ) 
-{
-	if( isset( $arr[ $key ] ) )
-		return $arr[ $key ];
-	$keys = array_keys( $arr );
-	$uKey = strtoupper( $key );
-	foreach( $keys as $k )
-	{
-		if( strtoupper($k) == $uKey )
-			return $arr[ $k ];
-	}
-	return null;
-}
-
-/**
- * 	This function is needed for conversion to ASP & ASP.NET 
- */
-function getSessionElementNC( $key ) 
-{
-	if( isset( $_SESSION[ $key ] ) )
-		return $_SESSION[ $key ];
-	$ukey = strtoupper( $key );
-	foreach( $_SESSION as $k => $v )
-	{
-		if( strtoupper($k) == $ukey )
-			return $v;
-	}
-	return null;
-}
-
-
-
-/**
- *  Returns ready-to-use additional lookup wizard WHERE expression
- *  @param String field - field name
- *  @param Object pSet - ProjectSettings object
- *  @return String
- */
-function prepareLookupWhere( $field, $pSet ) {
-	
-	$where = $pSet->getLookupWhere( $field );
-	if( $pSet->isLookupWhereCode( $field ) )
-		return $where;
-	
-	return DB::PrepareSQL( $pSet->getLookupWhere( $field ) );
-}
-
-function verifyRecaptchaResponse( $response ) {
-	
-	$verifyUrl = "https://www.google.com/recaptcha/api/siteverify?";
-	
-	$errors = array();
-	$errors["missing-input-response"] = "Invalid security code.";
-	$errors["invalid-input-response"] = "Invalid security code.";
-	$errors["missing-input-secret"] = "The secret parameter is missing";
-	$errors["invalid-input-secret"] = "The secret parameter is invalid or malformed";
-	$errors["bad-request"] = "The request is invalid or malformed";
-	
-	$captchaSettings = GetGlobalData("CaptchaSettings", "");
-	
-	$data = array();
-	$data['secret'] = $captchaSettings["secretKey"];
-	$data['response'] = $response;
-	$data['remoteIp'] = $_SERVER["REMOTE_ADDR"];
-
-	$req = array();
-	foreach ($data as $key => $value) {
-		$req []= $key . '=' . rawurlencode($value);
-	}
-
-	$response = myurl_get_contents($verifyUrl . implode('&', $req) );
-	$answers = my_json_decode($response);
-
-	$message = '';
-	if ( $response == "" )
-	{		
-		$success = false;
-		$message = "Unable to contact reCaptcha server";	
-	}
-	else if ( !isset($answers['success']) )
-	{
-		$success = false;
-		$message = "Unable to contact reCaptcha server<br>" . runner_htmlspecialchars( substr( $response, 0, 100 ) );
-	}
-	else
-	{
-		$success = $answers['success'];
-		//	form message
-		for( $i=0; $i < count( $answers['error-codes'] ); ++$i )
-		{
-			$code = $answers['error-codes'][$i];
-			
-			//	beautify and sanitize error messages
-			if( isset( $errors[ $code ] ) )
-				$answers['error-codes'][$i] = $errors[ $code ];
-			else
-				$answers['error-codes'][$i] = runner_htmlspecialchars( $code );
-			
-			$message = implode( '<br>', $answers['error-codes'] );
-		}
-	}
-	
-	return array(
-		'success' => $success,
-		'message' => $message
-	);
 }
 
 ?>

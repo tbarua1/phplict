@@ -13,9 +13,9 @@ class FileField extends EditControl
 	 */
 	var $formStamp = "";
 	
-	function __construct($field, $pageObject, $id, $connection)
+	function FileField($field, $pageObject, $id, $connection)
 	{
-		parent::__construct($field, $pageObject, $id, $connection);
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = EDIT_FORMAT_FILE;
 	}
 	
@@ -44,15 +44,12 @@ class FileField extends EditControl
 		
 		if($this->pageObject->pageType == PAGE_SEARCH || $this->pageObject->pageType == PAGE_LIST)
 		{
-			$classString = "";
-			if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-				$classString = " class=\"form-control\"";
-			echo '<input id="'.$this->cfield.'" '.$classString.$this->inputStyle.' type="text" '
+			echo '<input id="'.$this->cfield.'" '.$this->inputStyle.' type="text" '
 				.($mode == MODE_SEARCH ? 'autocomplete="off" ' : '')
 				.(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508==true ? 'alt="'.$this->strLabel.'" ' : '')
 				.'name="'.$this->cfield.'" '.$this->pageObject->pSetEdit->getEditParams($this->field).' value="'
 				.runner_htmlspecialchars($value).'">';	
-			$this->buildControlEnd($validate, $mode);
+			$this->buildControlEnd($validate);
 			return;
 		}
 		
@@ -124,24 +121,37 @@ class FileField extends EditControl
     <input type="hidden" id="value_'.$this->cfieldname.'" name="value_'.$this->cfieldname.'" value="'.runner_htmlspecialchars($jsonValue).'" />
     
     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-        <div class="fileupload-buttonbar">
+        <div class="row fileupload-buttonbar">
             <div class="span7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
- 				<SPAN class="btn btn-primary btn-sm fileinput-button">
+ 				<SPAN class="btn btn-success fileinput-button">
 					<A class="rnr-button filesUpload button" href="#" ><input class="fileinput-button-input" type="file" name="files[]" value="'
 				."Add files"
 				.'" '. $multiple .' />'
 				."Add files"
 				.'</A>
 				</SPAN>'
+		
+		.($this->pageObject->pSetEdit->isAutoUpload($this->field) ? '' : '
+                <SPAN class="btn btn-primary start">
+				<A class="rnr-button" href="#" >'
+				."Upload"
+				.'</A> 
+				</SPAN>
+				<SPAN class="btn btn-warning cancel">
+				<A class="rnr-button" href="#" >'
+				."Cancel"
+				.'</A> 
+				</SPAN>')
+		
 		.'
                 
             </div>
             <!-- The global progress information -->
             <div class="fileupload-progress fade">
                 <!-- The global progress bar -->
-                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
-                    <div style="width:0;" class="bar progress-bar progress-bar-info progress-bar-striped active"  ></div>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="bar" style="width:0;"></div>
                 </div>
                 <!-- The extended global progress information -->
                 <div class="progress-extended">&nbsp;</div>
@@ -149,8 +159,11 @@ class FileField extends EditControl
         </div>
         <!-- The loading indicator is shown during file processing -->
         <div class="fileupload-loading"></div>
+        <!-- The dummy for FireFox -->
+        <input type="text" name="focusDummy" class="rnr-focusDummy" />
+        <br>
         <!-- The table listing the files available for upload/download -->
-        <table class="mupload-files"><tbody class="files"></tbody></table>
+        <table><tbody class="files"></tbody></table>
     </form>
     ';
 		if(!isset($this->container->globalVals["muploadTemplateIncluded"]))
@@ -159,61 +172,66 @@ class FileField extends EditControl
     <tr class="template-download fade">
         {% if (file.error) { %}
             <td></td>
-            <td class="name"><span class="text-muted">{%=file.name%}</span></td>
-            <td class="size"><span class="text-muted" dir="LTR">{%=o.formatFileSize(file.size)%}</span></td>
-            <td colspan=2 class="error"><span class="text-danger rnr-error">'
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span dir="LTR">{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">'
 			.""
-			.' {%=locale.fileupload.errors[file.error] || file.error%}</span></td>
+			.'</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}" 
                 	{% if (!file.isIco) { %} class="zoombox zgallery" {% } %} 
-                	><img class="mupload-preview-img" src="{%=file.thumbnail_url%}&src=1"></a>
+                	><img src="{%=file.thumbnail_url%}&src=1"></a>
             {% } else { %}
             	{% if (file.isImg) { %}
-            		<a href="{%=file.url%}&nodisp=1" title="{%=file.name%}" rel="gallery" download="{%=file.name%}" class="zoombox zgallery"><img class="mupload-preview-img" src="{%=file.url%}&src=1"></a>
+            		<a href="{%=file.url%}&nodisp=1" title="{%=file.name%}" rel="gallery" download="{%=file.name%}" class="zoombox zgallery"><img src="{%=file.url%}&src=1"></a>
             	{% } %}
             {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&\'gallery\'%}" download="{%=file.name%}">{%=file.name%}</a>
             </td>
             <td class="size"><span dir="LTR">{%=o.formatFileSize(file.size)%}</span></td>
-			<td></td>
-			<td class="delete">
-				{% if (!file.error) { %}
-				<SPAN class="btn btn-xs btn-default delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}" data-name="{%=file.name%}">
-					<A href="#" >'
-				."Delete"
-				.'</A>
-					</SPAN>
-				{% } %}
-			</td>
+            <td colspan="2"></td>
         {% } %}
+        <td class="delete">
+        	{% if (!file.error) { %}
+        	<SPAN class="btn btn-danger delete" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}" data-name="{%=file.name%}">
+				<A href="#" >'
+			."Delete"
+			.'</A>
+				</SPAN>
+			{% } %}
+        </td>
     </tr>
 {% } %}
 </script>
 <script type="text/x-tmpl" id="template-upload">{% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
         <td class="preview"><span class="fade"></span></td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
         {% if (file.error) { %}
-			<td class="name"><span class="text-muted">{%=file.name%}</span></td>
-			<td class="size"><span class="text-muted">{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="error" colspan="2"><span class="text-danger rnr-error">'
+            <td class="error" colspan="2"><span class="label label-important">'
 			.""
-			.' {%=locale.fileupload.errors[file.error] || file.error%}</span></td>
+			.'</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
-			<td class="name"><span>{%=file.name%}</span></td>
-			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
             <td>
                 <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" 
-                	aria-valuemax="100" aria-valuenow="0"><div class="progress-bar bar" style="width:0;"></div></div>
+                	aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0;"></div></div>
             </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+        	<SPAN class="btn btn-primary">
+				<A href="#" >'
+			."Upload"
+			.'</A>   
+				</SPAN>       
+            {% } %}</td>
         {% } else { %}
-            <td></td>
+            <td colspan="2"></td>
         {% } %}
         <td class="cancel">{% if (!i) { %}
         	{% if (!file.error) { %}
-        	<SPAN class="btn btn-default btn-xs">
+        	<SPAN class="btn btn-warning">
 				<A href="#" >'
 			."Cancel"
 			.'</A>
@@ -224,7 +242,7 @@ class FileField extends EditControl
 {% } %}</script>';
 			$this->container->globalVals["muploadTemplateIncluded"] = true;
 		}
-		$this->buildControlEnd($validate, $mode);
+		$this->buildControlEnd($validate);
 	}
 
 	/** 
@@ -336,13 +354,13 @@ class FileField extends EditControl
 			$userFile = $this->upload_handler->buildUserFile($imageFile);
 			if($this->pageObject->pSetEdit->getViewFormat($this->field) == FORMAT_FILE)
 			{
-				$imageValue .= ($imageValue != "" ? "<br>" : "");
+				$imageValue .= ($imageValue != "" ? "</br>" : "");
 				$imageValue .= '<a href="'.runner_htmlspecialchars($userFile["url"]).'">'
 					.runner_htmlspecialchars($imageFile["usrName"] != "" ? $imageFile["usrName"] : $imageFile["name"]).'</a>';
 			}
 			else if(CheckImageExtension($imageFile["name"])) 
 			{
-				$imageValue .= ($imageValue != "" ? "<br>" : "");
+				$imageValue .= ($imageValue != "" ? "</br>" : "");
 				if($this->pageObject->pSetEdit->showThumbnail($this->field)) 
 				{
 					$thumbname = $userFile["thumbnail_url"];
@@ -397,7 +415,7 @@ class FileField extends EditControl
 		{
 			$gstrField = $this->getFieldSQLDecrypt();
 			
-			if( !$this->btexttype && !$this->pageObject->cipherer->isFieldPHPEncrypted($this->field) && $this->pageObject->pSetEdit->getNCSearch() )
+			if( !$this->pageObject->cipherer->isFieldPHPEncrypted($this->field) && $this->pageObject->pSetEdit->getNCSearch() )
 			{
 				// search is case-insensitive	
 				$gstrField = $this->connection->upper( $gstrField );
@@ -431,7 +449,7 @@ class FileField extends EditControl
 		$likeVal = $this->connection->prepareString('%searchStr":"'.$value.':sStrEnd"%');
 		$notLikeVal = $this->connection->prepareString($value);
 		
-		if( !$this->btexttype && IsCharType($this->type) && $this->pageObject->pSetEdit->getNCSearch() )
+		if( IsCharType($this->type) && $this->pageObject->pSetEdit->getNCSearch() )
 		{
 			// search is case-insensitive
 			$likeVal = $this->connection->upper( $likeVal );

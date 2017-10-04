@@ -8,11 +8,10 @@ class PostgreFunctions extends DBFunctions
 	protected $postgreDbVersion;
 	
 	
-	function __construct( $params )
+	function PostgreFunctions( $leftWrapper, $rightWrapper, $extraParams )
 	{
-		parent::__construct( $params  );
+		parent::DBFunctions(  $leftWrapper, $rightWrapper, $extraParams  );
 		
-		$this->escapeChars[ '\\' ] = true;
 		$this->postgreDbVersion = $extraParams["postgreDbVersion"];
 	}
 	
@@ -25,6 +24,14 @@ class PostgreFunctions extends DBFunctions
 		return $str;
 	}
 	
+	/**
+	 * @param String str
+	 * @return String
+	 */
+	public function prepareString( $str )
+	{
+		return "'".$this->addSlashes( $str )."'";
+	}
 	
 	/**
 	 * @param String str
@@ -87,6 +94,14 @@ class PostgreFunctions extends DBFunctions
 		return "upper(".$dbval.")";
 	}
 	
+	/**
+	 * @param Mixed val
+	 * @return String
+	 */
+	public function addDateQuotes( $val )
+	{
+		return "'".$val."'";
+	}
 
 	/**
 	 * It's called for Contains and Starts with searches
@@ -110,23 +125,6 @@ class PostgreFunctions extends DBFunctions
 	public function field2time($value, $type)
 	{
 		return $value;
-	}
-
-	/**
-	 * Get the auto generated SQL string used in the last query
-	 * @param String key (optional)
-	 * @param String table (optional)
-	 * @param String oraSequenceName (optional)
-	 * @return String
-	 */
-	public function getInsertedIdSQL( $key = null, $table = null, $oraSequenceName = false )
-	{
-		return "SELECT LASTVAL()";
 	}	
-
-	public function crossDbSupported()
-	{
-		return false;
-	}
 }
 ?>

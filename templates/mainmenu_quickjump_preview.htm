@@ -1,12 +1,12 @@
 {BEGIN mainmenu_block}
 ##foreach @MENU.MenuNodes as @menu##
 	{BEGIN item##@menu.id##_menulink}
-	<option ##if exists(@TABLE) && @menu.table==@TABLE.strDataSourceTable##selected##endif##
+	<option ##if exists(@TABLE) && @menu.table==@TABLE.strDataSourceTable##selected##endif## 
 		originalMenuTag="$$originalMenuTag" menuID="$$menuID">
-		##if @menu.name.text && @menu.name.nameType=="CustomID"##
-			##custom @menu.name.text##
-		##elseif @menu.name.text##
-			##@menu.name.text 8h##
+		##if @menu.name && @menu.nameType=="CustomID"##
+			##custom @menu.name##
+		##elseif @menu.name##
+			##@menu.name 8h##
 		##elseif @menu.PageType=="WebReports"##
 			##message WEBREPORTS_SHORT##
 		##else##

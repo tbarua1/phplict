@@ -17,23 +17,8 @@ class QueryResult
 	 */
 	protected $handle;
 	
-	protected $data;
 	
-	//	list of column names in the fetched query
-	protected $fieldNames = array();
-	
-	protected $upperMap = array();
-	protected $fieldMap = array();
-	
-	/**
-	 *	-1 - no data fetched. This is initial state. 
-	 *	0 - some data fetched
-	 *	1 - unsuccessful attempt to fetch data made. EOF
-	 */
-	protected $state = -1;
-	
-	
-	function __construct( $connectionObj, $qHandle )
+	function QueryResult( $connectionObj, $qHandle )
 	{
 		$this->connectionObj = $connectionObj;
 		$this->handle = $qHandle;
@@ -58,18 +43,7 @@ class QueryResult
 	 */
 	public function fetchAssoc()
 	{
-		if( $this->state == 1 )
-			return null;
-		
-		if( $this->state == 0 )
-		{
-			$this->state = -1;
-			return $this->numericToAssoc( $this->data );
-		}
-		
-		$ret = $this->connectionObj->fetch_array( $this->handle );
-		$this->state = $ret ? -1 : 1;
-		return $ret;
+		return $this->connectionObj->fetch_array( $this->handle );
 	}
 	
 	/**
@@ -79,18 +53,7 @@ class QueryResult
 	 */	
 	public function fetchNumeric()
 	{
-		if( $this->state == 1 )
-			return null;
-		
-		if( $this->state == 0 )
-		{
-			$this->state = -1;
-			return $this->data;
-		}
-		
-		$ret = $this->connectionObj->fetch_numarray( $this->handle );
-		$this->state = $ret ? -1 : 1;
-		return $ret;
+		return $this->connectionObj->fetch_numarray( $this->handle );
 	}
 	
 	/**
@@ -123,83 +86,6 @@ class QueryResult
 	public function seekPage( $pageSize, $pageStart )
 	{
 		$this->connectionObj->seekPage($this->handle, $pageSize, $pageStart);
-	}
-	
-	public function eof() 
-	{
-		$this->prepareRecord();
-		return $this->state == 1;
-	}
-	
-	protected function internalFetch()
-	{
-		if( $this->state == 1 )
-			return;
-		$this->fillColumnNames();
-		$this->data = $this->connectionObj->fetch_numarray( $this->handle );
-		$this->state = $this->data ? 0 : 1;
-	}
-	
-	protected function numericToAssoc( $data ) {
-		$ret = array();
-		$nFields = $this->numFields();
-		for( $i = 0; $i < $nFields; ++$i )
-			$ret[ $this->fieldNames[ $i ] ] = $data[ $i ];
-		return $ret;
-	}
-	
-	protected function fillColumnNames()
-	{
-		if( $this->fieldNames )
-			return;
-		$nFields = $this->numFields();
-		for( $i = 0; $i < $nFields; ++$i )
-		{
-			$fname = $this->fieldName( $i );
-			$this->fieldNames[] = $fname;
-			$this->fieldMap[ $fname ] = $i;
-			$this->upperMap[ strtoupper( $fname ) ] = $i;
-		}
-	}
-	
-	public function next()
-	{
-		$this->prepareRecord();
-		$this->internalFetch();
-	}
-	
-	protected function prepareRecord() 
-	{
-		if( $this->state == -1 )
-			$this->internalFetch();
-		return $this->state != 1;
-	}
-	
-	public function value( $field ) 
-	{
-		if( !$this->prepareRecord() )
-			return null;
-		if( is_int($field) )
-			return $this->data[ $field ];
-		if( isset( $this->fieldMap[ $field ] ) )
-			return $this->data[ $this->fieldMap[ $field ] ];
-		if( isset( $this->upperMap[ strtoupper( $field ) ] ) )
-			return $this->data[ $this->upperMap[ strtoupper( $field ) ] ];
-		return null;
-	}
-	
-	public function getData()
-	{
-		if( !$this->prepareRecord() )
-			return null;
-		return $this->numericToAssoc( $this->data );
-	}
-
-	public function getNumData()
-	{
-		if( !$this->prepareRecord() )
-			return null;
-		return $this->data;
 	}
 }
 ?>

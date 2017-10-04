@@ -1,6 +1,17 @@
 <?php
 class ChartPage extends RunnerPage
 {
+	/**
+	 * The name of the dashboard the List is displayed on
+	 * It's set up correctly in dash mode only
+	 */
+	public $dashElementName = "";
+	
+	/**
+	 * The corresponding dashboard name
+	 * It's set up correctly in dash mode only	 
+	 */
+	public $dashTName = "";
 	
 	/**
 	 * show message block
@@ -10,12 +21,11 @@ class ChartPage extends RunnerPage
 	/**
 	 * @constructor
 	 */
-	function __construct(&$params = "")
+	function ChartPage(&$params = "")
 	{
-		parent::__construct($params);
+		parent::RunnerPage($params);
 		
 		$this->jsSettings['tableSettings'][ $this->tName ]['simpleSearchActive'] = $this->searchClauseObj->simpleSearchActive;
-		$this->jsSettings['tableSettings'][ $this->tName ]['startMasterKeys'] = $this->getStartMasterKeys();
 	}
 
 	/**
@@ -28,6 +38,19 @@ class ChartPage extends RunnerPage
 		else
 			$this->sessionPrefix = $this->tName;
 	}	
+
+	/**
+	 * Set session variables
+	 */
+	public function setSessionVariables()
+	{
+		parent::setSessionVariables();
+		
+		// SearchClause class stuff
+		$agregateFields = $this->pSet->getListOfFieldsByExprType(true);
+		$this->searchClauseObj->haveAgregateFields = count($agregateFields) > 0;
+		$_SESSION[ $this->sessionPrefix.'_advsearch' ] = serialize( $this->searchClauseObj );		
+	}
 
 	/**
 	 * Build the activated Search panel
@@ -45,130 +68,31 @@ class ChartPage extends RunnerPage
 	 */
 	public function process()
 	{
-		if( $this->mode == CHART_DASHDETAILS
-			|| $this->mode == CHART_DETAILS && ( $this->masterPageType == PAGE_LIST || $this->masterPageType == PAGE_REPORT ))
-			$this->updateDetailsTabTitles();
-
-
 		//	Before Process event
 		if( $this->eventsObject->exists("BeforeProcessChart") )
 			$this->eventsObject->BeforeProcessChart( $this );
-					
-		
-		// build tabs and set current
-		$this->processGridTabs();
-
+			
 		$this->doCommonAssignments();
 		$this->addButtonHandlers();
 		$this->addCommonJs();
 		$this->commonAssign();
 
-		$this->buildSearchPanel();
-		
-		// to restore correctly within a chart class
-		$_SESSION[ $this->sessionPrefix.'_advsearch' ] = serialize( $this->searchClauseObj );
-		
 		// display the 'Back to Master' link and master table info
 		$this->displayMasterTableInfo();
 
 		$this->showPage();		
 	}
-
 	
-	protected function getRowCountByTab($tab)
-	{
-		$sql = $this->getTabSQLComponents( $tab );
-		
-		//	build SQL
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-		$countSQL = $strSQL;
-				
-		
-		if( $this->eventsObject->exists("BeforeQueryChart") )
-		{
-			//	do Before SQL Query event
-			$strSQLbak = $strSQL;
-			$sqlModifiedInEvent = false;
-			$whereModifiedInEvent = false;
-
-			$tstrWhereClause = SQLQuery::combineCases( array( 
-					SQLQuery::combineCases( $sql["mandatoryWhere"], "and" ),
-					SQLQuery::combineCases( $sql["optionalWhere"], "or" )
-				), "and" );
-				
-			$strWhereBak = $tstrWhereClause;
-
-			$this->eventsObject->BeforeQueryChart( $strSQL, $tstrWhereClause, "" );
-			$whereModifiedInEvent = ( $tstrWhereClause != $strWhereBak );
-			$sqlModifiedInEvent = ( $strSQL != $strSQLbak );
-		
-			//	Rebuild SQL if needed
-			if( $sqlModifiedInEvent ) 
-			{
-				return $this->limitRowCount( GetRowCount($strSQL, $this->connection) );
-			}
-			
-			if( $whereModifiedInEvent )
-			{
-				$countSQL = SQLQuery::buildSQL($sql["sqlParts"], array( $tstrWhereClause ), $sql["mandatoryHaving"] );
-			}
-		}
-
-		//	normal mode row count
-		return $this->limitRowCount( $this->connection->getFetchedRowsNumber( $countSQL ) );
-	}
-
 	/**
 	 * Get where clause for an active master-detail relationship
 	 * @return string
 	 */
-	public function getMasterTableSQLClause( $basedOnProp = false ) 
+	public function getMasterTableSQLClause() 
 	{
 		if( $this->mode == CHART_DASHBOARD )
 			return "";		
 		return parent::getMasterTableSQLClause(); 
 	}	
-
-	protected function getSubsetSQLComponents() {
-
-		$sql = parent::getSubsetSQLComponents();
-		
-		if( $this->connection->dbType == nDATABASE_DB2 ) 
-			$sql["sqlParts"]["head"] .= ", ROW_NUMBER() over () as DB2_ROW_NUMBER ";
-		
-		//	security
-		$sql["mandatoryWhere"][] = $this->SecuritySQL("Search", $this->tName);
-		
-		return $sql;
-	}
-	
-	
-	/**
-	 * Get started master keys
-	 * @return Array
-	 */
-	public function getStartMasterKeys()
-	{		
-		$sql = $this->getSubsetSQLComponents();
-		$strSQL = SQLQuery::buildSQL( $sql["sqlParts"], $sql["mandatoryWhere"], $sql["mandatoryHaving"], $sql["optionalWhere"], $sql["optionalHaving"] );
-		$strSQL .= $this->getOrderByClause();
-		$rs = $this->connection->queryPage( $strSQL, 1, 1, true );
-
-		$fetchedArray = $rs->fetchAssoc();
-		$data = $this->cipherer->DecryptFetchedArray( $fetchedArray );
-
-		$detailTablesData = $this->pSet->getDetailTablesArr();
-		$masterKeysArr = array();
-		foreach ( $detailTablesData as $detailId => $detail )
-		{
-			foreach( $detail['masterKeys'] as $idx => $mk ) 
-			{
-				$masterKeysArr[ $detail['dDataSourceTable'] ] = array( 'masterkey'.($idx + 1) => $data[$mk] );
-			}
-		}
-
-		return $masterKeysArr;
-	}
 	
 	/**
 	 *
@@ -192,34 +116,33 @@ class ChartPage extends RunnerPage
 		if( !GetChartXML( $this->shortTableName ) )
 			$this->xt->assign("chart_block", false);			
 		
-		$this->xt->assign("message_block", true);
-		
 		if( ($this->mode == CHART_SIMPLE || $this->mode == CHART_DASHBOARD) && $this->pSet->noRecordsOnFirstPage() && !$this->searchClauseObj->isSearchFunctionalityActivated() )
 		{
 			$this->show_message_block = true;
 			$this->xt->displayBrickHidden("chart");
 			$this->xt->assign("chart_block", false);
-
-			$this->xt->assign("message", $this->noRecordsMessage());
-			$this->xt->assign( "message_class", "alert-warning");
+			$this->xt->assign("message_block", true);
+			$this->xt->assign("message", "No records found");
 		}		
-
-		if( !$this->show_message_block )
-			$this->xt->displayBrickHidden("message");
-
-		if( $this->mobileTemplateMode() )
-			$this->xt->assign('tableinfomobile_block', true);
-
-		$this->prepareBreadcrumbs("main");
 		
 		$this->assignChartElement();
 		
+		if( $this->isDynamicPerm && IsAdmin() ) 
+		{
+			$this->xt->assign("adminarea_link", true);
+			$this->xt->assign("adminarealink_attrs", "id=\"adminArea".$id."\"");
+		}
+
+		$this->xt->assign("changepwd_link", $_SESSION["AccessLevel"] != ACCESS_LEVEL_GUEST && $_SESSION["fromFacebook"] == false);
+		$this->xt->assign("changepwdlink_attrs", "onclick=\"window.location.href='".GetTableLink("changepwd")."';return false;\"");
+		
 		$this->body['begin'].= GetBaseScriptsForPage( $this->isDisplayLoading );
-		if( !$this->isDashboardElement() && !$this->mobileTemplateMode() )
+		if( !isMobile() )
 			$this->body['begin'].= "<div id=\"search_suggest\" class=\"search_suggest\"></div>";
 
 		// assign body end
-		$this->body['end'] = XTempl::create_method_assignment( "assignBodyEnd", $this);
+		$this->body['end'] = array();
+		AssignMethod($this->body['end'], "assignBodyEnd", $this);
 
 		$this->xt->assignbyref('body', $this->body);	
 	}	
@@ -229,29 +152,26 @@ class ChartPage extends RunnerPage
 	 */
 	public function assignChartElement()
 	{
-		$resizeChart = true;
-		if( $this->mode == CHART_SIMPLE || 
-			$this->mode == CHART_DASHBOARD || 
-			$this->mode == CHART_DETAILS && ( $this->masterPageType == PAGE_VIEW || $this->masterPageType == PAGE_EDIT ) )
-			$resizeChart = false;
-			
 		//set params for the 'xt_showchart' method showing the chart
 		$chartXtParams = array(
 			"id" => $this->id,
 			"table" => $this->tName, 
 			"ctype" => $this->pSet->getChartType(), 
-			"resize" => $resizeChart,
-			"chartName" => $this->shortTableName,
+			"resize" => $this->mode !== CHART_SIMPLE && $this->mode != CHART_DASHBOARD,
+			"chartname" => $this->shortTableName,
 			"chartPreview" => $this->mode !== CHART_SIMPLE && $this->mode != CHART_DASHBOARD
 		);
 
 		if( $this->mode == CHART_DASHBOARD || $this->mode == CHART_DASHDETAILS)
 		{
-			if( isset($this->dashElementData["width"]) || isset($this->dashElementData["height"]) ) //#10119
+			$dashSet = new ProjectSettings( $this->dashTName );
+			$dashElementData = $dashSet->getDashboardElementData( $this->dashElementName );
+			
+			if( isset($dashElementData["width"]) || isset($dashElementData["height"]) ) //#10119
 			{
 				$chartXtParams["dashResize"] = true;
-				$chartXtParams["dashWidth"] = $this->dashElementData["width"];
-				$chartXtParams["dashHeight"] = $this->dashElementData["height"];			
+				$chartXtParams["dashWidth"] = $dashElementData["width"];
+				$chartXtParams["dashHeight"] = $dashElementData["height"];			
 			}
 
 			if( $this->mode == CHART_DASHBOARD )
@@ -260,64 +180,34 @@ class ChartPage extends RunnerPage
 				$chartXtParams["dashTName"] = $this->dashTName;
 				$chartXtParams["dashElementName"] = $this->dashElementName;
 			}
-			else
-			{
-				$chartXtParams["refreshTime"] = $this->dashElementData["reload"];
-			}
 		}
 		
 		$this->xt->assign_function( $this->shortTableName."_chart", "xt_showchart", $chartXtParams );
 	}
 	
-	/**
-	 *
-	 */
-	public function prepareDetailsForEditViewPage()
-	{
-		$this->addButtonHandlers();
-		
-		$this->xt->assign("body", $this->body);
-		$this->xt->assign("chart_block", true);
-		$this->xt->assign("message_block", true);		
-	}
-	
-	protected function getExtraAjaxPageParams()
-	{
-		$returnJSON = array();
-		if( $this->mode == REPORT_DETAILS )
-		{		
-			$returnJSON['headerCont'] = $this->getProceedLink()	. $returnJSON['headerCont'];
-		}		
-		
-		return $returnJSON;
-	}
-	
-	public function beforeShowChart()
-	{
-		if( $this->eventsObject->exists("BeforeShowChart") )
-			$this->eventsObject->BeforeShowChart($this->xt, $this->templatefile, $this);	
-	}
 	
 	public function showPage()
 	{
-		$this->beforeShowChart();
+		if( $this->eventsObject->exists("BeforeShowChart") )
+			$this->eventsObject->BeforeShowChart($this->xt, $this->templatefile, $this);
 	
 		if( $this->mode == CHART_DETAILS || $this->mode == CHART_DASHBOARD || $this->mode == CHART_DASHDETAILS )
 		{
 			$this->addControlsJSAndCSS();
 			$this->fillSetCntrlMaps();
 			
-			$this->xt->assign("header", false);
-			$this->xt->assign("footer", false);
+			$this->xt->unassign("header");
+			$this->xt->unassign("footer");
 			
 			$this->body["begin"] = "";
 			$this->body["end"] = "";
 			$this->xt->assign("body", $this->body);	
 
-			$bricksExcept = array("chart", "message");
-			if( $this->displayTabsInPage() )
-				$bricksExcept[] = "bsgrid_tabs";
+			$bricksExcept = array("chart");
 			$this->xt->hideAllBricksExcept($bricksExcept);
+			
+			if( $this->show_message_block )
+				$this->xt->assign("message_block", true);
 			
 			$this->displayAJAX($this->templatefile, $this->id + 1);
 			exit();
@@ -326,8 +216,8 @@ class ChartPage extends RunnerPage
 		if( $this->mode == CHART_POPUPDETAILS ) //currently unused
 		{
 			$bricksExcept = array("grid","pagination");
-			$this->xt->assign("header", false);
-			$this->xt->assign("footer", false);
+			$this->xt->unassign('header');
+			$this->xt->unassign('footer');
 			$this->body["begin"] = '';
 			$this->body["end"] = '';
 			
@@ -344,28 +234,6 @@ class ChartPage extends RunnerPage
 		}
 			
 		$this->display( $this->templatefile );			
-	}
-	
-	/**
-	 *
-	 */
-	function processGridTabs() 
-	{	
-		$ctChanged = parent::processGridTabs();
-		$_SESSION[ $this->sessionPrefix . "_chartTabWhere" ] = $this->getCurrentTabWhere();
-		
-		return $ctChanged;
-	}
-
-	function gridTabsAvailable() {
-		return true;
-	}
-	
-	function displayTabsInPage() 
-	{
-		return $this->simpleMode() || ( $this->mode == CHART_DETAILS && ($this->masterPageType == PAGE_VIEW || $this->masterPageType == PAGE_EDIT));
-	}
-	
-	
+	}	
 }
 ?>

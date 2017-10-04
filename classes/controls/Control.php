@@ -67,7 +67,7 @@ class EditControl
 	protected $connection;
 	
 	
-	function __construct($field, $pageObject, $id, $connection)
+	function EditControl($field, $pageObject, $id, $connection)
 	{
 		$this->field = $field;
 		$this->goodFieldName = GoodFieldName($field);
@@ -149,13 +149,13 @@ class EditControl
 	
 	function addJSSetting($key, $value)
 	{
-		$this->pageObject->jsSettings['tableSettings'][ $this->pageObject->tName ]['fieldSettings'][ $this->field ][ $this->container->pageType ][ $key ] = $value;
+		$this->pageObject->jsSettings['tableSettings'][$this->pageObject->tName]['fieldSettings'][$this->field][$this->container->pageType][$key] = $value;
 	}
 	
 	function buildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data)
 	{
 		$this->searchPanelControl = $this->isSearchPanelControl( $mode, $additionalCtrlParams );
-		$this->inputStyle = $this->getInputStyle( $mode );
+		$this->inputStyle = $this->getInputStyle();
 	
 		if($fieldNum)
 		{
@@ -168,51 +168,28 @@ class EditControl
 		$arrKeys = $this->pageObject->pSetEdit->getTableKeys();
 		for ($j = 0; $j < count($arrKeys); $j++) 
 		{
-			$this->keylink .= "&key".($j+1)."=".rawurlencode( $data[ $arrKeys[$j] ] );
+			$this->keylink .= "&key".($j+1)."=".rawurlencode($data[$arrKeys[$j]]);
 		}
 		$this->iquery .= $this->keylink;
-					
+		
 		$isHidden = (isset($additionalCtrlParams['hidden']) && $additionalCtrlParams['hidden']);
-
-		$additionalClass = "";
-		if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{		
-			$additionalClass.= "bs-ctrlspan rnr-nowrap ";
-			if( $this->format == EDIT_FORMAT_READONLY )
-				$additionalClass.= "form-control-static ";
-			
-			if( count($validate['basicValidate']) && array_search('IsRequired', $validate['basicValidate']) !== false )	
-				$additionalClass.= "bs-inlinerequired";
-		}
-		else
-		{
-			$additionalClass.= "rnr-nowrap ";
-		}
-
-		echo '<span id="edit'.$this->id.'_'.$this->goodFieldName.'_'.$fieldNum.'" class="'.$additionalClass.'"'.($isHidden ? ' style="display:none"' : '').'>';
-	}
-
-	function getFirstElementId()
-	{
-		return false;
+		echo '<span id="edit'.$this->id.'_'.$this->goodFieldName.'_'.$fieldNum.'" class="rnr-nowrap"'.($isHidden ? ' style="display:none"' : '').'>';
 	}
 	
 	/**
-	 * Check if the control belongs to the Search Panel
+	 * Check if the contril belongs to the Search Panel
 	 * @param Number mode
 	 * @param Array additionalCtrlParams
 	 * @return Boolean
 	 */
 	function isSearchPanelControl( $mode, $additionalCtrlParams )
 	{
-		return $mode == MODE_SEARCH && isset( $additionalCtrlParams['searchPanelControl'] ) && $additionalCtrlParams['searchPanelControl'] && !$this->pageObject->mobileTemplateMode();
+		return $mode == MODE_SEARCH && isset( $additionalCtrlParams['searchPanelControl'] ) && $additionalCtrlParams['searchPanelControl'] && !isMobile();
 	}
 	
-	function buildControlEnd($validate, $mode)
+	function buildControlEnd($validate)
 	{
-		if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			echo '</span>';
-		else if(count($validate['basicValidate']) && array_search('IsRequired', $validate['basicValidate'])!==false)
+		if(count($validate['basicValidate']) && array_search('IsRequired', $validate['basicValidate'])!==false)
 			echo'&nbsp;<font color="red">*</font></span>';
 		else
 			echo '</span>';
@@ -232,7 +209,6 @@ class EditControl
 	function readWebValue(&$avalues, &$blobfields, $legacy1, $legacy2, &$filename_values)
 	{
 		$this->getPostValueAndType();
-		
 		if (FieldSubmitted($this->goodFieldName."_".$this->id))
 			$this->webValue = prepare_for_db($this->field, $this->webValue, $this->webType);
 		else
@@ -254,7 +230,7 @@ class EditControl
 				if(IsTextType($this->pageObject->pSetEdit->getFieldType($this->field)))
 					$blobfields[] = $this->field;
 			}
-			$avalues[ $this->field ] = $this->webValue;
+			$avalues[$this->field] = $this->webValue;
 		}
 	} 
 	
@@ -308,7 +284,7 @@ class EditControl
 		if( $baseResult != "" )
 			return $baseResult;
 		
-		if( !strlen($SearchFor) && !strlen($SearchFor2) )
+		if( !strlen($SearchFor) )
 			return "";
 		
 		$value1 = $this->pageObject->cipherer->MakeDBValue($this->field, $SearchFor, $etype, true);
@@ -321,7 +297,7 @@ class EditControl
 			$value2 = make_db_value($this->field, $SearchFor2, $etype);
 		}
 			
-		if( $strSearchOption != "Contains" && $strSearchOption != "Starts with" && ($value1 === "null" && $value2 === "null" )
+		if( $strSearchOption != "Contains" && $strSearchOption != "Starts with" && ($value1 === "null" || $value2 === "null" )
 			&& !$this->pageObject->cipherer->isFieldPHPEncrypted($this->field) )
 		{	
 			return "";
@@ -338,10 +314,8 @@ class EditControl
 			
 			if( !$this->pageObject->cipherer->isFieldPHPEncrypted($this->field) && $searchIsCaseInsensitive )
 			{
-				if ( strlen($SearchFor) )
-					$value1 = $this->connection->upper( $value1 );
-				if ( strlen($SearchFor2) )
-					$value2 = $this->connection->upper( $value2 );
+				$value1 = $this->connection->upper( $value1 );
+				$value2 = $this->connection->upper( $value2 );
 				$gstrField = $this->connection->upper( $gstrField );
 			}
 		}	
@@ -399,38 +373,29 @@ class EditControl
 			
 		if( $strSearchOption == "Between" )
 		{
-			$betweenRange = array();
-			if ( $value1 !== "null" && strlen($SearchFor) )
+			$ret = $gstrField.">=".$value1." and ";
+			if (IsDateFieldType($this->type))
 			{
-				$betweenRange["from"] = $gstrField.">=".$value1;
-			}
-
-			if ( $value2 !== "null" && strlen($SearchFor2) )
-			{
-				if (IsDateFieldType($this->type))
+				$timeArr = db2time($cleanvalue2);
+				// for dates without time, add one day
+				if ($timeArr[3] == 0 && $timeArr[4] == 0 && $timeArr[5] == 0)
 				{
-					$timeArr = db2time($cleanvalue2);
-					// for dates without time, add one day
-					if ($timeArr[3] == 0 && $timeArr[4] == 0 && $timeArr[5] == 0)
-					{
-						$timeArr = adddays($timeArr, 1);
-
-						$value2 = mysprintf("%02d-%02d-%02d",$timeArr);
-						$value2 = add_db_quotes($this->field, $value2, $this->pageObject->tName);
-						$betweenRange["to"] = $gstrField . "<" . $value2;
-					}
-					else
-					{
-						$betweenRange["to"] = $gstrField . "<=" . $value2;
-					}
+					$timeArr = adddays($timeArr, 1);
+					$value2 = mysprintf("%02d-%02d-%02d",$timeArr);
+					$value2 = add_db_quotes($this->field, $value2, $this->pageObject->tName);
+					$ret .= $gstrField."<".$value2;
 				}
-				else 
+				else
 				{
-					$betweenRange["to"] = $gstrField . "<=" . $value2;
+					$ret.=$gstrField."<=".$value2;
 				}
 			}
-
-			return implode(" and ", $betweenRange);
+			else 
+			{
+				$ret.=$gstrField."<=".$value2;
+			}
+			
+			return $ret;
 		}
 		
 		return "";
@@ -491,15 +456,6 @@ class EditControl
 	}
 	
 	/**
-	 * @param String strSearchOption
-	 * @return Boolean
-	 */
-	public function checkIfDisplayFieldSearch( $strSearchOption )
-	{
-		return false;
-	}	
-	
-	/**
 	 * Form the control's search options markup basing on user's search options settings
 	 * @param Array optionsArray	Control specified search options
 	 * @param String selOpt		 	The control selected search option
@@ -512,7 +468,7 @@ class EditControl
 		$userSearchOptions = $this->pageObject->pSetEdit->getSearchOptionsList( $this->field );
 		
 		$currentOption = $not ? 'NOT '.$selOpt : $selOpt;
-		if( count($userSearchOptions) && isset( $this->searchOptions[ $currentOption ] ) )
+		if( count($userSearchOptions) && isset( $this->searchOptions[$currentOption] ) )
 			$userSearchOptions[] = $currentOption;
 			
 		if( count($userSearchOptions) ) 
@@ -525,12 +481,12 @@ class EditControl
 		$result = ''; 
 		foreach($optionsArray as $option)
 		{
-			if( !isset( $this->searchOptions[ $option ] ) || !$both && substr($option, 0, 4) == 'NOT ' )
+			if( !isset( $this->searchOptions[$option] ) || !$both && substr($option, 0, 4) == 'NOT ' )
 				continue;
 
 			$selected = $currentOption == $option ? 'selected' : '';
 			$dataAttr = $defaultOption == $option ? ' data-default-option="true"' : '';
-			$result.= '<option value="'.$option.'" '.$selected.$dataAttr.'>'.$this->searchOptions[ $option ].'</option>';
+			$result.= '<option value="'.$option.'" '.$selected.$dataAttr.'>'.$this->searchOptions[$option].'</option>';
 		}
 		return $result;
 	}
@@ -761,15 +717,8 @@ class EditControl
 	 * Get the displayed control elemnt's style attribute string
 	 * @return String
 	 */
-	function getInputStyle( $mode )
+	function getInputStyle()
 	{
-		if( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT 
-			&& ($this->pageObject->pageType != PAGE_ADD || $this->pageObject->mode != ADD_INLINE) 
-			&& ($this->pageObject->pageType != PAGE_EDIT || $this->pageObject->mode != EDIT_INLINE) )
-		{
-			return "";
-		}
-		
 		$width = $this->searchPanelControl ? 150 : $this->pageObject->pSetEdit->getControlWidth( $this->field );
 		$style = $this->makeWidthStyle( $width );
 		
@@ -788,12 +737,7 @@ class EditControl
 		return "width: ".$widthPx."px;";
 	}
 	
-	public function loadLookupContent( $parentValuesData, $childVal = "", $doCategoryFilter = true, $initialLoad = true )
-	{
-		return ""; // .net compatibility
-	}
-
-	public function getLookupContentToReload( $isExistParent, $mode, $parentCtrlsData )
+	public function loadLookupContent( $parentVal,  $childVal = "", $doCategoryFilter = true, $initialLoad = true )
 	{
 		return ""; // .net compatibility
 	}
@@ -810,24 +754,43 @@ class EditControl
 	{
 		return RunnerPage::_getFieldSQLDecrypt( $this->field, $this->connection, $this->pageObject->pSetEdit,  $this->pageObject->cipherer );
 	}
-	
-	/**
-	 * @return String
-	 */
-	protected function getPlaceholderAttr()
+}
+
+class ControlTypes
+{
+	public $forEdit = null;
+		
+	public $forSearch = null;
+		
+	function ControlTypes() 
 	{
-		if( !$this->searchPanelControl && $this->container->pageType != PAGE_SEARCH )
-			return ' placeholder="'.GetFieldPlaceHolder( GoodFieldname( $this->pageObject->tName ), GoodFieldname( $this->field ) ).'"';
+		$this->forEdit = array();
+		$this->forEdit[EDIT_FORMAT_TEXT_FIELD] = "TextField";
+		$this->forEdit[EDIT_FORMAT_TIME] = "TimeField";
+		$this->forEdit[EDIT_FORMAT_TEXT_AREA] = "TextAreaField";
+		$this->forEdit[EDIT_FORMAT_PASSWORD] = "PasswordField";
+		$this->forEdit[EDIT_FORMAT_DATE] = "DateField";
+		$this->forEdit[EDIT_FORMAT_CHECKBOX] = "CheckboxField";
+		$this->forEdit[EDIT_FORMAT_DATABASE_IMAGE] = "DatabaseFileField";
+		$this->forEdit[EDIT_FORMAT_DATABASE_FILE] = "DatabaseFileField";
+		$this->forEdit[EDIT_FORMAT_HIDDEN] = "HiddenField";
+		$this->forEdit[EDIT_FORMAT_READONLY] = "ReadOnlyField";
+		$this->forEdit[EDIT_FORMAT_FILE] = "FileField";
+		$this->forEdit[EDIT_FORMAT_LOOKUP_WIZARD] = "LookupField";
 			
-		return "";
-	}
-	
-	/**
-	 *
-	 */
-	public function getConnection()
-	{
-		return $this->connection();
+		$this->forSearch = array();
+		$this->forSearch[EDIT_FORMAT_TEXT_FIELD] = "TextField";
+		$this->forSearch[EDIT_FORMAT_TIME] = "TimeField";
+		$this->forSearch[EDIT_FORMAT_TEXT_AREA] = "TextField";
+		$this->forSearch[EDIT_FORMAT_PASSWORD] = "TextField";
+		$this->forSearch[EDIT_FORMAT_DATE] = "DateField";
+		$this->forSearch[EDIT_FORMAT_CHECKBOX] = "CheckboxField";
+		$this->forSearch[EDIT_FORMAT_DATABASE_IMAGE] = "TextField";
+		$this->forSearch[EDIT_FORMAT_DATABASE_FILE] = "TextField";
+		$this->forSearch[EDIT_FORMAT_HIDDEN] = "TextField";
+		$this->forSearch[EDIT_FORMAT_READONLY] = "TextField";
+		$this->forSearch[EDIT_FORMAT_FILE] = "FileField";
+		$this->forSearch[EDIT_FORMAT_LOOKUP_WIZARD] = "LookupField";
 	}
 }
 ?>

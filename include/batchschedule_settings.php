@@ -4,9 +4,9 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdatabatchschedule = array();
+$tdatabatchschedule = array();	
 	$tdatabatchschedule[".truncateText"] = true;
-	$tdatabatchschedule[".NumberOfChars"] = 80;
+	$tdatabatchschedule[".NumberOfChars"] = 80; 
 	$tdatabatchschedule[".ShortName"] = "batchschedule";
 	$tdatabatchschedule[".OwnerID"] = "";
 	$tdatabatchschedule[".OriginalTable"] = "batchschedule";
@@ -15,44 +15,32 @@ $tdatabatchschedule = array();
 $fieldLabelsbatchschedule = array();
 $fieldToolTipsbatchschedule = array();
 $pageTitlesbatchschedule = array();
-$placeHoldersbatchschedule = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelsbatchschedule["English"] = array();
 	$fieldToolTipsbatchschedule["English"] = array();
-	$placeHoldersbatchschedule["English"] = array();
 	$pageTitlesbatchschedule["English"] = array();
 	$fieldLabelsbatchschedule["English"]["sid"] = "Sid";
 	$fieldToolTipsbatchschedule["English"]["sid"] = "";
-	$placeHoldersbatchschedule["English"]["sid"] = "";
 	$fieldLabelsbatchschedule["English"]["Batchcode"] = "Batchcode";
 	$fieldToolTipsbatchschedule["English"]["Batchcode"] = "";
-	$placeHoldersbatchschedule["English"]["Batchcode"] = "";
 	$fieldLabelsbatchschedule["English"]["sdate"] = "Sdate";
 	$fieldToolTipsbatchschedule["English"]["sdate"] = "";
-	$placeHoldersbatchschedule["English"]["sdate"] = "";
 	$fieldLabelsbatchschedule["English"]["stime"] = "Stime";
 	$fieldToolTipsbatchschedule["English"]["stime"] = "";
-	$placeHoldersbatchschedule["English"]["stime"] = "";
 	$fieldLabelsbatchschedule["English"]["etime"] = "Etime";
 	$fieldToolTipsbatchschedule["English"]["etime"] = "";
-	$placeHoldersbatchschedule["English"]["etime"] = "";
-	$fieldLabelsbatchschedule["English"]["realstime"] = "Realstime";
-	$fieldToolTipsbatchschedule["English"]["realstime"] = "";
-	$placeHoldersbatchschedule["English"]["realstime"] = "";
-	$fieldLabelsbatchschedule["English"]["realetime"] = "Realetime";
-	$fieldToolTipsbatchschedule["English"]["realetime"] = "";
-	$placeHoldersbatchschedule["English"]["realetime"] = "";
 	$fieldLabelsbatchschedule["English"]["status"] = "Status";
 	$fieldToolTipsbatchschedule["English"]["status"] = "";
-	$placeHoldersbatchschedule["English"]["status"] = "";
 	$fieldLabelsbatchschedule["English"]["remark"] = "Remark";
 	$fieldToolTipsbatchschedule["English"]["remark"] = "";
-	$placeHoldersbatchschedule["English"]["remark"] = "";
+	$fieldLabelsbatchschedule["English"]["realstime"] = "Realstime";
+	$fieldToolTipsbatchschedule["English"]["realstime"] = "";
+	$fieldLabelsbatchschedule["English"]["realetime"] = "Realetime";
+	$fieldToolTipsbatchschedule["English"]["realetime"] = "";
 	$fieldLabelsbatchschedule["English"]["attendance"] = "Attendance";
 	$fieldToolTipsbatchschedule["English"]["attendance"] = "";
-	$placeHoldersbatchschedule["English"]["attendance"] = "";
 	if (count($fieldToolTipsbatchschedule["English"]))
 		$tdatabatchschedule[".isUseToolTips"] = true;
 }
@@ -60,27 +48,25 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelsbatchschedule[""] = array();
 	$fieldToolTipsbatchschedule[""] = array();
-	$placeHoldersbatchschedule[""] = array();
 	$pageTitlesbatchschedule[""] = array();
 	if (count($fieldToolTipsbatchschedule[""]))
 		$tdatabatchschedule[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdatabatchschedule[".NCSearch"] = true;
 
 
 
 $tdatabatchschedule[".shortTableName"] = "batchschedule";
 $tdatabatchschedule[".nSecOptions"] = 0;
-$tdatabatchschedule[".recsPerRowPrint"] = 1;
+$tdatabatchschedule[".recsPerRowList"] = 1;
 $tdatabatchschedule[".mainTableOwnerID"] = "";
 $tdatabatchschedule[".moveNext"] = 1;
-$tdatabatchschedule[".entityType"] = 0;
+$tdatabatchschedule[".nType"] = 0;
 
 $tdatabatchschedule[".strOriginalTableName"] = "batchschedule";
 
-	
 
 
 
@@ -104,25 +90,11 @@ $tdatabatchschedule[".listAjax"] = false;
 	$tdatabatchschedule[".locking"] = false;
 
 $tdatabatchschedule[".edit"] = true;
-$tdatabatchschedule[".afterEditAction"] = 1;
-$tdatabatchschedule[".closePopupAfterEdit"] = 1;
-$tdatabatchschedule[".afterEditActionDetTable"] = "";
-
-$tdatabatchschedule[".add"] = true;
-$tdatabatchschedule[".afterAddAction"] = 1;
-$tdatabatchschedule[".closePopupAfterAdd"] = 1;
-$tdatabatchschedule[".afterAddActionDetTable"] = "";
 
 $tdatabatchschedule[".list"] = true;
 
-
-
-$tdatabatchschedule[".reorderRecordsByHeader"] = true;
-
-
-$tdatabatchschedule[".exportFormatting"] = 2;
-$tdatabatchschedule[".exportDelimiter"] = ",";
-		
+$tdatabatchschedule[".inlineEdit"] = true;
+$tdatabatchschedule[".inlineAdd"] = true;
 $tdatabatchschedule[".view"] = true;
 
 $tdatabatchschedule[".import"] = true;
@@ -135,32 +107,21 @@ $tdatabatchschedule[".delete"] = true;
 
 $tdatabatchschedule[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdatabatchschedule[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdatabatchschedule[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdatabatchschedule[".searchSaving"] = false;
 //
 
 $tdatabatchschedule[".showSearchPanel"] = true;
-		$tdatabatchschedule[".flexibleSearch"] = true;
+		$tdatabatchschedule[".flexibleSearch"] = true;		
 
-$tdatabatchschedule[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdatabatchschedule[".isUseAjaxSuggest"] = false;
+else 
+	$tdatabatchschedule[".isUseAjaxSuggest"] = true;
 
 $tdatabatchschedule[".rowHighlite"] = true;
 
 
-
-
-
-$tdatabatchschedule[".ajaxCodeSnippetAdded"] = false;
-
-$tdatabatchschedule[".buttonsAdded"] = false;
 
 $tdatabatchschedule[".addPageEvents"] = false;
 
@@ -169,7 +130,6 @@ $tdatabatchschedule[".isUseTimeForSearch"] = false;
 
 
 
-$tdatabatchschedule[".badgeColor"] = "778899";
 
 
 $tdatabatchschedule[".allSearchFields"] = array();
@@ -181,10 +141,10 @@ $tdatabatchschedule[".allSearchFields"][] = "sid";
 	$tdatabatchschedule[".allSearchFields"][] = "sdate";
 	$tdatabatchschedule[".allSearchFields"][] = "stime";
 	$tdatabatchschedule[".allSearchFields"][] = "etime";
-	$tdatabatchschedule[".allSearchFields"][] = "realstime";
-	$tdatabatchschedule[".allSearchFields"][] = "realetime";
 	$tdatabatchschedule[".allSearchFields"][] = "status";
 	$tdatabatchschedule[".allSearchFields"][] = "remark";
+	$tdatabatchschedule[".allSearchFields"][] = "realstime";
+	$tdatabatchschedule[".allSearchFields"][] = "realetime";
 	$tdatabatchschedule[".allSearchFields"][] = "attendance";
 	
 
@@ -194,10 +154,10 @@ $tdatabatchschedule[".googleLikeFields"][] = "Batchcode";
 $tdatabatchschedule[".googleLikeFields"][] = "sdate";
 $tdatabatchschedule[".googleLikeFields"][] = "stime";
 $tdatabatchschedule[".googleLikeFields"][] = "etime";
-$tdatabatchschedule[".googleLikeFields"][] = "realstime";
-$tdatabatchschedule[".googleLikeFields"][] = "realetime";
 $tdatabatchschedule[".googleLikeFields"][] = "status";
 $tdatabatchschedule[".googleLikeFields"][] = "remark";
+$tdatabatchschedule[".googleLikeFields"][] = "realstime";
+$tdatabatchschedule[".googleLikeFields"][] = "realetime";
 $tdatabatchschedule[".googleLikeFields"][] = "attendance";
 
 
@@ -207,10 +167,10 @@ $tdatabatchschedule[".advSearchFields"][] = "Batchcode";
 $tdatabatchschedule[".advSearchFields"][] = "sdate";
 $tdatabatchschedule[".advSearchFields"][] = "stime";
 $tdatabatchschedule[".advSearchFields"][] = "etime";
-$tdatabatchschedule[".advSearchFields"][] = "realstime";
-$tdatabatchschedule[".advSearchFields"][] = "realetime";
 $tdatabatchschedule[".advSearchFields"][] = "status";
 $tdatabatchschedule[".advSearchFields"][] = "remark";
+$tdatabatchschedule[".advSearchFields"][] = "realstime";
+$tdatabatchschedule[".advSearchFields"][] = "realetime";
 $tdatabatchschedule[".advSearchFields"][] = "attendance";
 
 $tdatabatchschedule[".tableType"] = "list";
@@ -224,13 +184,9 @@ $tdatabatchschedule[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdatabatchschedule[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdatabatchschedule[".listGridLayout"] = 3;
+	
 
 
 
@@ -254,18 +210,10 @@ $tdatabatchschedule[".strOrderBy"] = $tstrOrderBy;
 
 $tdatabatchschedule[".orderindexes"] = array();
 
-$tdatabatchschedule[".sqlHead"] = "SELECT sid,  	Batchcode,  	sdate,  	stime,  	etime,  	realstime,  	realetime,  	status,  	remark,  	attendance";
+$tdatabatchschedule[".sqlHead"] = "SELECT sid,  	Batchcode,  	sdate,  	stime,  	etime,  	status,  	remark,  	realstime,  	realetime,  	attendance";
 $tdatabatchschedule[".sqlFrom"] = "FROM batchschedule";
 $tdatabatchschedule[".sqlWhereExpr"] = "";
 $tdatabatchschedule[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -304,10 +252,10 @@ $tdatabatchschedule[".listFields"][] = "Batchcode";
 $tdatabatchschedule[".listFields"][] = "sdate";
 $tdatabatchschedule[".listFields"][] = "stime";
 $tdatabatchschedule[".listFields"][] = "etime";
-$tdatabatchschedule[".listFields"][] = "realstime";
-$tdatabatchschedule[".listFields"][] = "realetime";
 $tdatabatchschedule[".listFields"][] = "status";
 $tdatabatchschedule[".listFields"][] = "remark";
+$tdatabatchschedule[".listFields"][] = "realstime";
+$tdatabatchschedule[".listFields"][] = "realetime";
 $tdatabatchschedule[".listFields"][] = "attendance";
 
 $tdatabatchschedule[".hideMobileList"] = array();
@@ -319,10 +267,10 @@ $tdatabatchschedule[".viewFields"][] = "Batchcode";
 $tdatabatchschedule[".viewFields"][] = "sdate";
 $tdatabatchschedule[".viewFields"][] = "stime";
 $tdatabatchschedule[".viewFields"][] = "etime";
-$tdatabatchschedule[".viewFields"][] = "realstime";
-$tdatabatchschedule[".viewFields"][] = "realetime";
 $tdatabatchschedule[".viewFields"][] = "status";
 $tdatabatchschedule[".viewFields"][] = "remark";
+$tdatabatchschedule[".viewFields"][] = "realstime";
+$tdatabatchschedule[".viewFields"][] = "realetime";
 $tdatabatchschedule[".viewFields"][] = "attendance";
 
 $tdatabatchschedule[".addFields"] = array();
@@ -330,49 +278,44 @@ $tdatabatchschedule[".addFields"][] = "Batchcode";
 $tdatabatchschedule[".addFields"][] = "sdate";
 $tdatabatchschedule[".addFields"][] = "stime";
 $tdatabatchschedule[".addFields"][] = "etime";
-$tdatabatchschedule[".addFields"][] = "realstime";
-$tdatabatchschedule[".addFields"][] = "realetime";
 $tdatabatchschedule[".addFields"][] = "status";
 $tdatabatchschedule[".addFields"][] = "remark";
-
-$tdatabatchschedule[".masterListFields"] = array();
-$tdatabatchschedule[".masterListFields"][] = "sid";
-$tdatabatchschedule[".masterListFields"][] = "Batchcode";
-$tdatabatchschedule[".masterListFields"][] = "sdate";
-$tdatabatchschedule[".masterListFields"][] = "stime";
-$tdatabatchschedule[".masterListFields"][] = "etime";
-$tdatabatchschedule[".masterListFields"][] = "realstime";
-$tdatabatchschedule[".masterListFields"][] = "realetime";
-$tdatabatchschedule[".masterListFields"][] = "status";
-$tdatabatchschedule[".masterListFields"][] = "remark";
-$tdatabatchschedule[".masterListFields"][] = "attendance";
+$tdatabatchschedule[".addFields"][] = "realstime";
+$tdatabatchschedule[".addFields"][] = "realetime";
+$tdatabatchschedule[".addFields"][] = "attendance";
 
 $tdatabatchschedule[".inlineAddFields"] = array();
+$tdatabatchschedule[".inlineAddFields"][] = "Batchcode";
+$tdatabatchschedule[".inlineAddFields"][] = "sdate";
+$tdatabatchschedule[".inlineAddFields"][] = "stime";
+$tdatabatchschedule[".inlineAddFields"][] = "etime";
+$tdatabatchschedule[".inlineAddFields"][] = "status";
+$tdatabatchschedule[".inlineAddFields"][] = "remark";
+$tdatabatchschedule[".inlineAddFields"][] = "realstime";
+$tdatabatchschedule[".inlineAddFields"][] = "realetime";
+$tdatabatchschedule[".inlineAddFields"][] = "attendance";
 
 $tdatabatchschedule[".editFields"] = array();
 $tdatabatchschedule[".editFields"][] = "Batchcode";
 $tdatabatchschedule[".editFields"][] = "sdate";
 $tdatabatchschedule[".editFields"][] = "stime";
 $tdatabatchschedule[".editFields"][] = "etime";
-$tdatabatchschedule[".editFields"][] = "realstime";
-$tdatabatchschedule[".editFields"][] = "realetime";
 $tdatabatchschedule[".editFields"][] = "status";
 $tdatabatchschedule[".editFields"][] = "remark";
+$tdatabatchschedule[".editFields"][] = "realstime";
+$tdatabatchschedule[".editFields"][] = "realetime";
 $tdatabatchschedule[".editFields"][] = "attendance";
 
 $tdatabatchschedule[".inlineEditFields"] = array();
-
-$tdatabatchschedule[".updateSelectedFields"] = array();
-$tdatabatchschedule[".updateSelectedFields"][] = "Batchcode";
-$tdatabatchschedule[".updateSelectedFields"][] = "sdate";
-$tdatabatchschedule[".updateSelectedFields"][] = "stime";
-$tdatabatchschedule[".updateSelectedFields"][] = "etime";
-$tdatabatchschedule[".updateSelectedFields"][] = "realstime";
-$tdatabatchschedule[".updateSelectedFields"][] = "realetime";
-$tdatabatchschedule[".updateSelectedFields"][] = "status";
-$tdatabatchschedule[".updateSelectedFields"][] = "remark";
-$tdatabatchschedule[".updateSelectedFields"][] = "attendance";
-
+$tdatabatchschedule[".inlineEditFields"][] = "Batchcode";
+$tdatabatchschedule[".inlineEditFields"][] = "sdate";
+$tdatabatchschedule[".inlineEditFields"][] = "stime";
+$tdatabatchschedule[".inlineEditFields"][] = "etime";
+$tdatabatchschedule[".inlineEditFields"][] = "status";
+$tdatabatchschedule[".inlineEditFields"][] = "remark";
+$tdatabatchschedule[".inlineEditFields"][] = "realstime";
+$tdatabatchschedule[".inlineEditFields"][] = "realetime";
+$tdatabatchschedule[".inlineEditFields"][] = "attendance";
 
 $tdatabatchschedule[".exportFields"] = array();
 $tdatabatchschedule[".exportFields"][] = "sid";
@@ -380,10 +323,10 @@ $tdatabatchschedule[".exportFields"][] = "Batchcode";
 $tdatabatchschedule[".exportFields"][] = "sdate";
 $tdatabatchschedule[".exportFields"][] = "stime";
 $tdatabatchschedule[".exportFields"][] = "etime";
-$tdatabatchschedule[".exportFields"][] = "realstime";
-$tdatabatchschedule[".exportFields"][] = "realetime";
 $tdatabatchschedule[".exportFields"][] = "status";
 $tdatabatchschedule[".exportFields"][] = "remark";
+$tdatabatchschedule[".exportFields"][] = "realstime";
+$tdatabatchschedule[".exportFields"][] = "realetime";
 $tdatabatchschedule[".exportFields"][] = "attendance";
 
 $tdatabatchschedule[".importFields"] = array();
@@ -392,10 +335,10 @@ $tdatabatchschedule[".importFields"][] = "Batchcode";
 $tdatabatchschedule[".importFields"][] = "sdate";
 $tdatabatchschedule[".importFields"][] = "stime";
 $tdatabatchschedule[".importFields"][] = "etime";
-$tdatabatchschedule[".importFields"][] = "realstime";
-$tdatabatchschedule[".importFields"][] = "realetime";
 $tdatabatchschedule[".importFields"][] = "status";
 $tdatabatchschedule[".importFields"][] = "remark";
+$tdatabatchschedule[".importFields"][] = "realstime";
+$tdatabatchschedule[".importFields"][] = "realetime";
 $tdatabatchschedule[".importFields"][] = "attendance";
 
 $tdatabatchschedule[".printFields"] = array();
@@ -404,12 +347,11 @@ $tdatabatchschedule[".printFields"][] = "Batchcode";
 $tdatabatchschedule[".printFields"][] = "sdate";
 $tdatabatchschedule[".printFields"][] = "stime";
 $tdatabatchschedule[".printFields"][] = "etime";
-$tdatabatchschedule[".printFields"][] = "realstime";
-$tdatabatchschedule[".printFields"][] = "realetime";
 $tdatabatchschedule[".printFields"][] = "status";
 $tdatabatchschedule[".printFields"][] = "remark";
+$tdatabatchschedule[".printFields"][] = "realstime";
+$tdatabatchschedule[".printFields"][] = "realetime";
 $tdatabatchschedule[".printFields"][] = "attendance";
-
 
 //	sid
 //	Custom field settings
@@ -418,128 +360,122 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "sid";
 	$fdata["GoodName"] = "sid";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","sid");
+	$fdata["Label"] = GetFieldLabel("batchschedule","sid"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "sid";
-
+		$fdata["strField"] = "sid"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "sid";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["sid"] = $fdata;
 //	Batchcode
 //	Custom field settings
@@ -548,153 +484,123 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "Batchcode";
 	$fdata["GoodName"] = "Batchcode";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","Batchcode");
+	$fdata["Label"] = GetFieldLabel("batchschedule","Batchcode"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "Batchcode";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "Batchcode"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "Batchcode";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Lookup wizard");
-
 	
-	
-		
-	
-// Begin Lookup settings
-				$edata["LookupType"] = 2;
-	$edata["LookupTable"] = "batch";
-		$edata["autoCompleteFieldsOnEdit"] = 0;
-	$edata["autoCompleteFields"] = array();
-		$edata["LCType"] = 0;
-
-	
-		
-	$edata["LinkField"] = "Batchcode";
-	$edata["LinkFieldType"] = 200;
-	$edata["DisplayField"] = "Batchcode";
-	
-	
-
-	
-	$edata["LookupOrderBy"] = "";
-
-	
-	
-	
-	
-
-	
-	
-		$edata["SelectSize"] = 1;
-
-// End Lookup Settings
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
+	$edata = array("EditFormat" => "Text field");
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["Batchcode"] = $fdata;
 //	sdate
 //	Custom field settings
@@ -703,128 +609,123 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "sdate";
 	$fdata["GoodName"] = "sdate";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","sdate");
+	$fdata["Label"] = GetFieldLabel("batchschedule","sdate"); 
 	$fdata["FieldType"] = 7;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "sdate";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "sdate"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "sdate";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Short Date");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Date");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-		$edata["DateEditType"] = 13;
-	$edata["InitialYearFactor"] = 100;
-	$edata["LastYearFactor"] = 10;
-
-	
-	
-	
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		$edata["DateEditType"] = 13; 
+	$edata["InitialYearFactor"] = 100; 
+	$edata["LastYearFactor"] = 10; 
+	
+		
+		
+		
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["sdate"] = $fdata;
 //	stime
 //	Custom field settings
@@ -833,131 +734,126 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "stime";
 	$fdata["GoodName"] = "stime";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","stime");
+	$fdata["Label"] = GetFieldLabel("batchschedule","stime"); 
 	$fdata["FieldType"] = 134;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "stime";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "stime"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "stime";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Time");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Time");
+	
+			
+	
+	
 
-	
-	
+
 		
-	
-
-
-	
-	
-	
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-		$edata["EditParams"] = "";
 		
+		
+		
+		
+		
+		$edata["EditParams"] = "";
+			
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
-	
+		
+		
 	//	End validation
-
 	
-			
+		
+				
 				$hours = 24;
 	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
 									  "hours" => $hours,
 									  "minutes" => 1,
 									  "showSeconds" => 0);
-
 	
 	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["stime"] = $fdata;
 //	etime
 //	Custom field settings
@@ -966,658 +862,633 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "etime";
 	$fdata["GoodName"] = "etime";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","etime");
+	$fdata["Label"] = GetFieldLabel("batchschedule","etime"); 
 	$fdata["FieldType"] = 134;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "etime";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "etime"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "etime";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "Time");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Time");
+	
+			
+	
+	
 
-	
-	
+
 		
-	
-
-
-	
-	
-	
+		
+		
+		
 			$edata["acceptFileTypes"] = ".+$";
-
+	
 		$edata["maxNumberOfFiles"] = 1;
-
 	
-	
-	
-	
-	
-		$edata["EditParams"] = "";
 		
+		
+		
+		
+		
+		$edata["EditParams"] = "";
+			
 		$edata["controlWidth"] = 200;
-
+	
 //	Begin validation
 	$edata["validateAs"] = array();
 	$edata["validateAs"]["basicValidate"] = array();
 	$edata["validateAs"]["customMessages"] = array();
-	
-	
+		
+		
 	//	End validation
-
 	
-			
+		
+				
 				$hours = 24;
 	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
 									  "hours" => $hours,
 									  "minutes" => 1,
 									  "showSeconds" => 0);
-
 	
 	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["etime"] = $fdata;
-//	realstime
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 6;
-	$fdata["strName"] = "realstime";
-	$fdata["GoodName"] = "realstime";
-	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","realstime");
-	$fdata["FieldType"] = 134;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-	
-		$fdata["bEditPage"] = true;
-
-	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "realstime";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "realstime";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "Time");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Time");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-	
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-				$hours = 24;
-	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
-									  "hours" => $hours,
-									  "minutes" => 1,
-									  "showSeconds" => 0);
-
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
-
-
-
-
-	$tdatabatchschedule["realstime"] = $fdata;
-//	realetime
-//	Custom field settings
-	$fdata = array();
-	$fdata["Index"] = 7;
-	$fdata["strName"] = "realetime";
-	$fdata["GoodName"] = "realetime";
-	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","realetime");
-	$fdata["FieldType"] = 134;
-
-	
-	
-	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-	
-		$fdata["bEditPage"] = true;
-
-	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "realetime";
-
-		$fdata["isSQLExpression"] = true;
-	$fdata["FullName"] = "realetime";
-
-	
-	
-				$fdata["FieldPermissions"] = true;
-
-				$fdata["UploadFolder"] = "files";
-
-//  Begin View Formats
-	$fdata["ViewFormats"] = array();
-
-	$vdata = array("ViewFormat" => "Time");
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
-		
-	
-	$fdata["ViewFormats"]["view"] = $vdata;
-//  End View Formats
-
-//	Begin Edit Formats
-	$fdata["EditFormats"] = array();
-
-	$edata = array("EditFormat" => "Time");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-	
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
-	
-			
-				$hours = 24;
-	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
-									  "hours" => $hours,
-									  "minutes" => 1,
-									  "showSeconds" => 0);
-
-	
-	
-	$fdata["EditFormats"]["edit"] = $edata;
-//	End Edit Formats
-
-
-	$fdata["isSeparate"] = false;
-
-
-
-
-// the field's search options settings
-		$fdata["defaultSearchOption"] = "Equals";
-
-			// the default search options list
-				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between", EMPTY_SEARCH, NOT_EMPTY );
-// the end of search options settings
-
-
-
-
-	$tdatabatchschedule["realetime"] = $fdata;
 //	status
 //	Custom field settings
 	$fdata = array();
-	$fdata["Index"] = 8;
+	$fdata["Index"] = 6;
 	$fdata["strName"] = "status";
 	$fdata["GoodName"] = "status";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","status");
+	$fdata["Label"] = GetFieldLabel("batchschedule","status"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "status";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "status"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "status";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["status"] = $fdata;
 //	remark
 //	Custom field settings
 	$fdata = array();
-	$fdata["Index"] = 9;
+	$fdata["Index"] = 7;
 	$fdata["strName"] = "remark";
 	$fdata["GoodName"] = "remark";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","remark");
+	$fdata["Label"] = GetFieldLabel("batchschedule","remark"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "remark";
-
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "remark"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "remark";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["remark"] = $fdata;
+//	realstime
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 8;
+	$fdata["strName"] = "realstime";
+	$fdata["GoodName"] = "realstime";
+	$fdata["ownerTable"] = "batchschedule";
+	$fdata["Label"] = GetFieldLabel("batchschedule","realstime"); 
+	$fdata["FieldType"] = 134;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "realstime"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "realstime";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "Time");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Time");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+		
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+				$hours = 24;
+	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
+									  "hours" => $hours,
+									  "minutes" => 1,
+									  "showSeconds" => 0);
+	
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
+
+	
+
+	
+	$tdatabatchschedule["realstime"] = $fdata;
+//	realetime
+//	Custom field settings
+	$fdata = array();
+	$fdata["Index"] = 9;
+	$fdata["strName"] = "realetime";
+	$fdata["GoodName"] = "realetime";
+	$fdata["ownerTable"] = "batchschedule";
+	$fdata["Label"] = GetFieldLabel("batchschedule","realetime"); 
+	$fdata["FieldType"] = 134;
+	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
+	
+		$fdata["bAddPage"] = true; 
+	
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "realetime"; 
+	
+		$fdata["isSQLExpression"] = true;
+	$fdata["FullName"] = "realetime";
+	
+		
+		
+				$fdata["FieldPermissions"] = true;
+	
+				$fdata["UploadFolder"] = "files";
+		
+//  Begin View Formats
+	$fdata["ViewFormats"] = array();
+	
+	$vdata = array("ViewFormat" => "Time");
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
+	
+	$fdata["ViewFormats"]["view"] = $vdata;
+//  End View Formats
+
+//	Begin Edit Formats 	
+	$fdata["EditFormats"] = array();
+	
+	$edata = array("EditFormat" => "Time");
+	
+			
+	
+	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+		
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+				$hours = 24;
+	$edata["FormatTimeAttrs"] = array("useTimePicker" => 0,
+									  "hours" => $hours,
+									  "minutes" => 1,
+									  "showSeconds" => 0);
+	
+	
+		
+	$fdata["EditFormats"]["edit"] = $edata;
+//	End Edit Formats
+	
+	
+	$fdata["isSeparate"] = false;
+	
+	
+	
+	
+// the field's search options settings
+		
+			// the default search options list
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
+
+	
+
+	
+	$tdatabatchschedule["realetime"] = $fdata;
 //	attendance
 //	Custom field settings
 	$fdata = array();
@@ -1625,172 +1496,139 @@ $tdatabatchschedule[".printFields"][] = "attendance";
 	$fdata["strName"] = "attendance";
 	$fdata["GoodName"] = "attendance";
 	$fdata["ownerTable"] = "batchschedule";
-	$fdata["Label"] = GetFieldLabel("batchschedule","attendance");
-	$fdata["FieldType"] = 3;
-
+	$fdata["Label"] = GetFieldLabel("batchschedule","attendance"); 
+	$fdata["FieldType"] = 200;
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
+		$fdata["bInlineAdd"] = true; 
 	
+		$fdata["bEditPage"] = true; 
 	
-		$fdata["bEditPage"] = true;
-
+		$fdata["bInlineEdit"] = true; 
 	
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "attendance";
-
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "attendance"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "attendance";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-							
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatabatchschedule["attendance"] = $fdata;
 
-
+	
 $tables_data["batchschedule"]=&$tdatabatchschedule;
 $field_labels["batchschedule"] = &$fieldLabelsbatchschedule;
 $fieldToolTips["batchschedule"] = &$fieldToolTipsbatchschedule;
-$placeHolders["batchschedule"] = &$placeHoldersbatchschedule;
 $page_titles["batchschedule"] = &$pageTitlesbatchschedule;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
 // tables which are detail tables for current table (master)
 $detailsTablesData["batchschedule"] = array();
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["batchschedule"] = array();
 
 
-	
-				$strOriginalDetailsTable="batch";
-	$masterParams = array();
-	$masterParams["mDataSourceTable"]="batch";
-	$masterParams["mOriginalTable"]= $strOriginalDetailsTable;
-	$masterParams["mShortTable"]= "batch";
-	$masterParams["masterKeys"]= array();
-	$masterParams["detailKeys"]= array();
-	
-		$masterParams["dispChildCount"]= "1";
-	$masterParams["hideChild"]= "0";
-	$masterParams["dispMasterInfo"] = array();
-				$masterParams["dispMasterInfo"][PAGE_LIST] = true;
-			$masterParams["dispMasterInfo"][PAGE_PRINT] = true;
-		
-	$masterParams["previewOnList"]= 1;
-	$masterParams["previewOnAdd"]= 0;
-	$masterParams["previewOnEdit"]= 0;
-	$masterParams["previewOnView"]= 0;
-	$masterParams["proceedLink"]= 1;
-
-	$masterParams["type"] = PAGE_LIST;
-					$masterTablesData["batchschedule"][0] = $masterParams;
-				$masterTablesData["batchschedule"][0]["masterKeys"] = array();
-	$masterTablesData["batchschedule"][0]["masterKeys"][]="Batchcode";
-				$masterTablesData["batchschedule"][0]["detailKeys"] = array();
-	$masterTablesData["batchschedule"][0]["detailKeys"][]="Batchcode";
-		
 // -----------------end  prepare master-details data arrays ------------------------------//
 
 require_once(getabspath("classes/sql.php"));
@@ -1808,226 +1646,225 @@ function createSqlQuery_batchschedule()
 {
 $proto0=array();
 $proto0["m_strHead"] = "SELECT";
-$proto0["m_strFieldList"] = "sid,  	Batchcode,  	sdate,  	stime,  	etime,  	realstime,  	realetime,  	status,  	remark,  	attendance";
+$proto0["m_strFieldList"] = "sid,  	Batchcode,  	sdate,  	stime,  	etime,  	status,  	remark,  	realstime,  	realetime,  	attendance";
 $proto0["m_strFrom"] = "FROM batchschedule";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "sid",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto6["m_sql"] = "sid";
-$proto6["m_srcTableName"] = "batchschedule";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "sid";
+$proto5["m_srcTableName"] = "batchschedule";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "Batchcode",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto8["m_sql"] = "Batchcode";
-$proto8["m_srcTableName"] = "batchschedule";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
+$proto7["m_sql"] = "Batchcode";
+$proto7["m_srcTableName"] = "batchschedule";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto10=array();
+						$proto9=array();
 			$obj = new SQLField(array(
 	"m_strName" => "sdate",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto10["m_sql"] = "sdate";
-$proto10["m_srcTableName"] = "batchschedule";
-$proto10["m_expr"]=$obj;
-$proto10["m_alias"] = "";
-$obj = new SQLFieldListItem($proto10);
+$proto9["m_sql"] = "sdate";
+$proto9["m_srcTableName"] = "batchschedule";
+$proto9["m_expr"]=$obj;
+$proto9["m_alias"] = "";
+$obj = new SQLFieldListItem($proto9);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto12=array();
+						$proto11=array();
 			$obj = new SQLField(array(
 	"m_strName" => "stime",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto12["m_sql"] = "stime";
-$proto12["m_srcTableName"] = "batchschedule";
-$proto12["m_expr"]=$obj;
-$proto12["m_alias"] = "";
-$obj = new SQLFieldListItem($proto12);
+$proto11["m_sql"] = "stime";
+$proto11["m_srcTableName"] = "batchschedule";
+$proto11["m_expr"]=$obj;
+$proto11["m_alias"] = "";
+$obj = new SQLFieldListItem($proto11);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto14=array();
+						$proto13=array();
 			$obj = new SQLField(array(
 	"m_strName" => "etime",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto14["m_sql"] = "etime";
-$proto14["m_srcTableName"] = "batchschedule";
-$proto14["m_expr"]=$obj;
-$proto14["m_alias"] = "";
-$obj = new SQLFieldListItem($proto14);
+$proto13["m_sql"] = "etime";
+$proto13["m_srcTableName"] = "batchschedule";
+$proto13["m_expr"]=$obj;
+$proto13["m_alias"] = "";
+$obj = new SQLFieldListItem($proto13);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto16=array();
-			$obj = new SQLField(array(
-	"m_strName" => "realstime",
-	"m_strTable" => "batchschedule",
-	"m_srcTableName" => "batchschedule"
-));
-
-$proto16["m_sql"] = "realstime";
-$proto16["m_srcTableName"] = "batchschedule";
-$proto16["m_expr"]=$obj;
-$proto16["m_alias"] = "";
-$obj = new SQLFieldListItem($proto16);
-
-$proto0["m_fieldlist"][]=$obj;
-						$proto18=array();
-			$obj = new SQLField(array(
-	"m_strName" => "realetime",
-	"m_strTable" => "batchschedule",
-	"m_srcTableName" => "batchschedule"
-));
-
-$proto18["m_sql"] = "realetime";
-$proto18["m_srcTableName"] = "batchschedule";
-$proto18["m_expr"]=$obj;
-$proto18["m_alias"] = "";
-$obj = new SQLFieldListItem($proto18);
-
-$proto0["m_fieldlist"][]=$obj;
-						$proto20=array();
+						$proto15=array();
 			$obj = new SQLField(array(
 	"m_strName" => "status",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto20["m_sql"] = "status";
-$proto20["m_srcTableName"] = "batchschedule";
-$proto20["m_expr"]=$obj;
-$proto20["m_alias"] = "";
-$obj = new SQLFieldListItem($proto20);
+$proto15["m_sql"] = "status";
+$proto15["m_srcTableName"] = "batchschedule";
+$proto15["m_expr"]=$obj;
+$proto15["m_alias"] = "";
+$obj = new SQLFieldListItem($proto15);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto22=array();
+						$proto17=array();
 			$obj = new SQLField(array(
 	"m_strName" => "remark",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto22["m_sql"] = "remark";
-$proto22["m_srcTableName"] = "batchschedule";
-$proto22["m_expr"]=$obj;
-$proto22["m_alias"] = "";
-$obj = new SQLFieldListItem($proto22);
+$proto17["m_sql"] = "remark";
+$proto17["m_srcTableName"] = "batchschedule";
+$proto17["m_expr"]=$obj;
+$proto17["m_alias"] = "";
+$obj = new SQLFieldListItem($proto17);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto24=array();
+						$proto19=array();
+			$obj = new SQLField(array(
+	"m_strName" => "realstime",
+	"m_strTable" => "batchschedule",
+	"m_srcTableName" => "batchschedule"
+));
+
+$proto19["m_sql"] = "realstime";
+$proto19["m_srcTableName"] = "batchschedule";
+$proto19["m_expr"]=$obj;
+$proto19["m_alias"] = "";
+$obj = new SQLFieldListItem($proto19);
+
+$proto0["m_fieldlist"][]=$obj;
+						$proto21=array();
+			$obj = new SQLField(array(
+	"m_strName" => "realetime",
+	"m_strTable" => "batchschedule",
+	"m_srcTableName" => "batchschedule"
+));
+
+$proto21["m_sql"] = "realetime";
+$proto21["m_srcTableName"] = "batchschedule";
+$proto21["m_expr"]=$obj;
+$proto21["m_alias"] = "";
+$obj = new SQLFieldListItem($proto21);
+
+$proto0["m_fieldlist"][]=$obj;
+						$proto23=array();
 			$obj = new SQLField(array(
 	"m_strName" => "attendance",
 	"m_strTable" => "batchschedule",
 	"m_srcTableName" => "batchschedule"
 ));
 
-$proto24["m_sql"] = "attendance";
-$proto24["m_srcTableName"] = "batchschedule";
-$proto24["m_expr"]=$obj;
-$proto24["m_alias"] = "";
-$obj = new SQLFieldListItem($proto24);
+$proto23["m_sql"] = "attendance";
+$proto23["m_srcTableName"] = "batchschedule";
+$proto23["m_expr"]=$obj;
+$proto23["m_alias"] = "";
+$obj = new SQLFieldListItem($proto23);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto26=array();
-$proto26["m_link"] = "SQLL_MAIN";
-			$proto27=array();
-$proto27["m_strName"] = "batchschedule";
-$proto27["m_srcTableName"] = "batchschedule";
-$proto27["m_columns"] = array();
-$proto27["m_columns"][] = "sid";
-$proto27["m_columns"][] = "Batchcode";
-$proto27["m_columns"][] = "sdate";
-$proto27["m_columns"][] = "stime";
-$proto27["m_columns"][] = "etime";
-$proto27["m_columns"][] = "realstime";
-$proto27["m_columns"][] = "realetime";
-$proto27["m_columns"][] = "status";
-$proto27["m_columns"][] = "remark";
-$proto27["m_columns"][] = "attendance";
-$obj = new SQLTable($proto27);
-
-$proto26["m_table"] = $obj;
-$proto26["m_sql"] = "batchschedule";
-$proto26["m_alias"] = "";
+												$proto25=array();
+$proto25["m_link"] = "SQLL_MAIN";
+			$proto26=array();
+$proto26["m_strName"] = "batchschedule";
 $proto26["m_srcTableName"] = "batchschedule";
-$proto28=array();
-$proto28["m_sql"] = "";
-$proto28["m_uniontype"] = "SQLL_UNKNOWN";
+$proto26["m_columns"] = array();
+$proto26["m_columns"][] = "sid";
+$proto26["m_columns"][] = "Batchcode";
+$proto26["m_columns"][] = "sdate";
+$proto26["m_columns"][] = "stime";
+$proto26["m_columns"][] = "etime";
+$proto26["m_columns"][] = "status";
+$proto26["m_columns"][] = "remark";
+$proto26["m_columns"][] = "realstime";
+$proto26["m_columns"][] = "realetime";
+$proto26["m_columns"][] = "attendance";
+$obj = new SQLTable($proto26);
+
+$proto25["m_table"] = $obj;
+$proto25["m_sql"] = "batchschedule";
+$proto25["m_alias"] = "";
+$proto25["m_srcTableName"] = "batchschedule";
+$proto27=array();
+$proto27["m_sql"] = "";
+$proto27["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto28["m_column"]=$obj;
-$proto28["m_contained"] = array();
-$proto28["m_strCase"] = "";
-$proto28["m_havingmode"] = false;
-$proto28["m_inBrackets"] = false;
-$proto28["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto28);
+$proto27["m_column"]=$obj;
+$proto27["m_contained"] = array();
+$proto27["m_strCase"] = "";
+$proto27["m_havingmode"] = false;
+$proto27["m_inBrackets"] = false;
+$proto27["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto27);
 
-$proto26["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto26);
+$proto25["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto25);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -2041,10 +1878,8 @@ $queryData_batchschedule = createSqlQuery_batchschedule();
 
 
 	
-		;
-
 										
-
+	
 $tdatabatchschedule[".sqlquery"] = $queryData_batchschedule;
 
 $tableEvents["batchschedule"] = new eventsBase;

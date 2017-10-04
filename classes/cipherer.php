@@ -2,15 +2,13 @@
 class RunnerCipherer
 {
 	public $key = '';
-	public $alg = '';
-	public $mode = '';
 	
 	protected $strTableName = '';
 	
 	/**
-	 * Instance of RunnerCiphererES class for code-based ciphering
+	 * Instance of RunnerCiphererDES class for code-based ciphering
 	 */
-	protected $ESFunctions = null;
+	protected $DESFunctions = null;
 	
 	/**
 	 * Instance of ProjectSettings class
@@ -28,15 +26,12 @@ class RunnerCipherer
 	protected $connection;
 	
 	
-	function __construct($strTableName, $pSet = null)
+	function RunnerCipherer($strTableName, $pSet = null)
 	{
-		
+		$this->key = GetGlobalData("encryptionKey", 'emptykey');
 		$this->strTableName = $strTableName;
 
 		$this->setConnection();
-		$this->key = $this->connection->_encryptInfo["key"];
-		$this->alg = $this->connection->_encryptInfo["alg"];
-		$this->mode = $this->connection->_encryptInfo["mode"];
 		
 		if($pSet != null)
 			$this->pSet = $pSet;
@@ -55,19 +50,8 @@ class RunnerCipherer
 			$this->connection = $cman->byTable( $this->strTableName );
 		else
 			$this->connection = getDefaultConnection();
-
-		if ( $this->connection->dbType == nDATABASE_MSSQLServer && $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_AES && $this->connection->_encryptInfo["mode"] == ENCRYPTION_DB )
-		{
-			$symmetricSql = mysprintf("OPEN SYMMETRIC KEY %s DECRYPTION BY CERTIFICATE %s;", array($this->connection->_encryptInfo["slqserverkey"], $this->connection->_encryptInfo["slqservercert"]));
-			$this->connection->setInitializingSQL($symmetricSql);
-		}
 	}
-
-	function isEncryptionByPHPEnabled() 
-	{
-		return $this->connection->isEncryptionByPHPEnabled();
-	}
-
+	
 	/**
 	 * DecryptFetchedArray
 	 * Fetching record from sql result, looking through array of fetched values and decrypted all encrypted fields
@@ -80,7 +64,7 @@ class RunnerCipherer
 
 		if($fetchedArray)
 		{
-			if( !$this->pSet->hasEncryptedFields() || !$this->connection->isEncryptionByPHPEnabled() )
+			if( !$this->pSet->hasEncryptedFields() || !isEncryptionByPHPEnabled() )
 				return $fetchedArray;
 				
 			foreach ($fetchedArray as $fieldName => $fieldValue)
@@ -116,7 +100,7 @@ class RunnerCipherer
 	 */	
 	public function isFieldPHPEncrypted($field)
 	{
-		return $this->connection->isEncryptionByPHPEnabled() && $this->isFieldEncrypted($field);
+		return isEncryptionByPHPEnabled() && $this->isFieldEncrypted($field);
 	}
 	
 	/**
@@ -153,15 +137,10 @@ class RunnerCipherer
 	 */
 	public function GetLikeClause($field, $value)
 	{
-		global $ajaxSearchStartsWith;
-		if( $this->connection->isEncryptionByPHPEnabled() && $this->isFieldEncrypted($field) )
+		if( isEncryptionByPHPEnabled() && $this->isFieldEncrypted($field) )
 			return "=".$this->connection->prepareString( $this->EncryptField($field, $value) );
 		
-		if( $ajaxSearchStartsWith )
-			$searchPattern = $value."%";
-		else
-			$searchPattern = "%".$value."%";
-		return " LIKE ".$this->connection->prepareString( $searchPattern );
+		return " LIKE ".$this->connection->prepareString($value."%");
 	}
 	
 	/**
@@ -175,7 +154,7 @@ class RunnerCipherer
 	 */
 	public function GetLookupFieldName($field, $fieldForCheck, $alias = null, $addAs = false)
 	{			
-		if( $this->connection->isEncryptionByPHPEnabled() || !$this->isFieldEncrypted($fieldForCheck) )
+		if( isEncryptionByPHPEnabled() || !$this->isFieldEncrypted($fieldForCheck) )
 			return $field;
 
 		return $this->GetEncryptedFieldName($field, $alias, $addAs);
@@ -191,7 +170,7 @@ class RunnerCipherer
 	 */
 	public function GetFieldName($field, $alias = null, $addAs = false)
 	{
-		if($this->connection->isEncryptionByPHPEnabled() || !$this->isFieldEncrypted($alias != null ? $alias : $field))
+		if(isEncryptionByPHPEnabled() || !$this->isFieldEncrypted($alias != null ? $alias : $field))
 			return $field;
 
 		return $this->GetEncryptedFieldName($field, $alias, $addAs);
@@ -208,34 +187,15 @@ class RunnerCipherer
 	public function GetEncryptedFieldName($field, $alias = null, $addAs = false)
 	{
 		$result = "";
-		if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_DES)
-		{
-			if( $this->connection->dbType == nDATABASE_Oracle )	
-				$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.DECRYPT(utl_raw.cast_to_raw(%s), 4353, utl_raw.cast_to_raw('%s')))";
-			elseif( $this->connection->dbType == nDATABASE_MSSQLServer )	
-				$result = "CAST(DecryptByPassPhrase(N'%s', %s) as nvarchar)";
-			elseif( $this->connection->dbType == nDATABASE_MySQL )
-				$result = "cast(DES_DECRYPT(unhex(%s), '%s') as char)";
-			elseif( $this->connection->dbType == nDATABASE_PostgreSQL )
-				$result = "pgp_sym_decrypt(CAST(%s as bytea), '%s')";
-		}
-		else if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_AES)
-		{
-			if( $this->connection->dbType == nDATABASE_Oracle )
-			{
-				$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.DECRYPT(utl_raw.cast_to_raw(%s), 4358, utl_raw.cast_to_raw('%s')))";
-				$this->key = substr($this->key, 0, 16);
-			}
-			elseif( $this->connection->dbType == nDATABASE_MSSQLServer )
-			{	
-				$result = "CAST(DecryptByKey(%s) as nvarchar)";
-				$this->key = $field; // for use in first as parametr in mysprintf func
-			}
-			elseif( $this->connection->dbType == nDATABASE_MySQL )
-				$result = "cast(AES_DECRYPT(unhex(%s), '%s') as char)";
-			elseif( $this->connection->dbType == nDATABASE_PostgreSQL )
-				$result = "pgp_sym_decrypt(CAST(%s as bytea), '%s', 'cipher-algo=aes128')";
-		}
+		
+		if( $this->connection->dbType == nDATABASE_Oracle )	
+			$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.DECRYPT(utl_raw.cast_to_raw(%s), 4353, utl_raw.cast_to_raw('%s')))";	
+		elseif( $this->connection->dbType == nDATABASE_MSSQLServer )		
+			$result = "CAST(DecryptByPassPhrase(N'%s', %s) as nvarchar)";		
+		elseif( $this->connection->dbType == nDATABASE_MySQL )	
+			$result = "cast(DES_DECRYPT(unhex(%s), '%s') as char)";			
+		elseif( $this->connection->dbType == nDATABASE_PostgreSQL )	
+			$result = "pgp_sym_decrypt(CAST(%s as bytea), '%s')";	
 		
 		if($result == "")
 			return $field;
@@ -258,39 +218,19 @@ class RunnerCipherer
 	 */
 	public function EncryptValueByDB($field, $value)
 	{
-		if( !$this->isFieldEncrypted($field) || $this->connection->isEncryptionByPHPEnabled() )
+		if( !$this->isFieldEncrypted($field) || isEncryptionByPHPEnabled() )
 			return $value;
 			
 		$result = "";
 		
-		if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_DES)
-		{
-			if( $this->connection->dbType == nDATABASE_Oracle )
-				$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.ENCRYPT(utl_raw.cast_to_raw(%s), 4353, utl_raw.cast_to_raw('%s')))";	
-			elseif( $this->connection->dbType == nDATABASE_MSSQLServer )
-				$result = "EncryptByPassPhrase(N'%s', %s)";	
-			elseif( $this->connection->dbType == nDATABASE_MySQL )	
-				$result = "hex(DES_ENCRYPT(%s, '%s'))";			
-			elseif( $this->connection->dbType == nDATABASE_PostgreSQL )	
-				$result = "pgp_sym_encrypt(%s, '%s')";
-		}
-		else if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_AES)
-		{
-			if( $this->connection->dbType == nDATABASE_Oracle )
-			{
-				$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.ENCRYPT(utl_raw.cast_to_raw(%s), 4358, utl_raw.cast_to_raw('%s')))";	
-				$this->key = substr($this->key, 0, 16);
-			}
-			elseif( $this->connection->dbType == nDATABASE_MSSQLServer )
-			{			
-				$result = "EncryptByKey(Key_GUID('%s'), %s)";
-				$this->key = $this->connection->_encryptInfo["slqserverkey"];
-			}
-			elseif( $this->connection->dbType == nDATABASE_MySQL )	
-				$result = "hex(AES_ENCRYPT(%s, '%s'))";			
-			elseif( $this->connection->dbType == nDATABASE_PostgreSQL )	
-				$result = "pgp_sym_encrypt(%s, '%s', 'cipher-algo=aes128')";
-		}
+		if( $this->connection->dbType == nDATABASE_Oracle )
+			$result = "utl_raw.cast_to_varchar2(DBMS_CRYPTO.ENCRYPT(utl_raw.cast_to_raw(%s), 4353, utl_raw.cast_to_raw('%s')))";	
+		elseif( $this->connection->dbType == nDATABASE_MSSQLServer )
+			$result = "EncryptByPassPhrase(N'%s', %s)";	
+		elseif( $this->connection->dbType == nDATABASE_MySQL )	
+			$result = "hex(DES_ENCRYPT(%s, '%s'))";			
+		elseif( $this->connection->dbType == nDATABASE_PostgreSQL )	
+			$result = "pgp_sym_encrypt(%s, '%s')";	
 		
 		if($result != "")
 		{
@@ -314,12 +254,12 @@ class RunnerCipherer
 	 */
 	public function EncryptField($field, $value)
 	{		
-		if( $this->isFieldEncrypted($field) && $this->connection->isEncryptionByPHPEnabled() )
+		if( $this->isFieldEncrypted($field) && isEncryptionByPHPEnabled() )
 		{
-			if( is_null($this->ESFunctions) )
-				$this->ESFunctions = $this->getESFunctions();
+			if( is_null($this->DESFunctions) )
+				$this->DESFunctions = new RunnerCiphererDES($this->key);
 				
-			return $this->ESFunctions->Encrypt($value);
+			return $this->DESFunctions->DESEncrypt($value);
 		}
 		
 		return $value; 
@@ -335,22 +275,14 @@ class RunnerCipherer
 	 */
 	public function DecryptField($field, $value)
 	{
-		if($this->isFieldEncrypted($field) && $this->connection->isEncryptionByPHPEnabled())
+		if($this->isFieldEncrypted($field) && isEncryptionByPHPEnabled())
 		{
-			if(is_null($this->ESFunctions))
-				$this->ESFunctions = $this->getESFunctions();
+			if(is_null($this->DESFunctions))
+				$this->DESFunctions = new RunnerCiphererDES($this->key);
 			
-			return $this->ESFunctions->Decrypt($value);
+			return $this->DESFunctions->DESDecrypt($value);
 		}
 		return $value; 
-	}
-
-	function getESFunctions()
-	{
-		if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_DES )
-			return new RunnerCiphererDES($this->key);
-		if ( $this->connection->_encryptInfo["alg"] == ENCRYPTION_ALG_AES )
-			return new RunnerCiphererAES($this->key);
 	}
 	
 	/**

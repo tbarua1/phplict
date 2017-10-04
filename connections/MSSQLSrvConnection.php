@@ -12,9 +12,9 @@ class MSSQLSrvConnection extends Connection
 	protected $options;	
 	
 	
-	function __construct( $params )
+	function MSSQLSrvConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -47,9 +47,9 @@ class MSSQLSrvConnection extends Connection
 	{
 		$error = $this->lastError();
 		if( !strlen($error) )
-			$this->triggerError("Udefined MSSQL Server Error");
+			trigger_error("Udefined MSSQL Server Error", E_USER_ERROR);
 		else 
-			$this->triggerError($error);
+			trigger_error($error, E_USER_ERROR);
 	}
 	
 	/**
@@ -108,12 +108,29 @@ class MSSQLSrvConnection extends Connection
 			$this->triggerErrorMSSQL();
 		return $ret;	
 	}
-
+	
+	/**	
+	 * Get a description of the last error
+	 * @return String
+	 */
+	public function lastError()
+	{
+		$errMess = "";
+		if( ($errors = sqlsrv_errors() ) != null )
+		{
+			foreach( $errors as $error)
+			{			
+				$errMess.= "SQLSTATE: ".$error['SQLSTATE']." code: ".$error['code']." message: ".$error['message']."</br>";
+			}
+		}		
+		return $errMess;
+	}
+	
 	/**	
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
 		$qResult = $this->query( "select @@IDENTITY as indent" );
 		if( $qResult )
@@ -129,11 +146,11 @@ class MSSQLSrvConnection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
 		$rowArray = array();	
-		$metaData = sqlsrv_field_metadata($qHandle);
-		$fetchRes = sqlsrv_fetch($qHandle);
+		$metaData = sqlsrv_field_metadata($qHanle);
+		$fetchRes = sqlsrv_fetch($qHanle);
 		
 		if( $fetchRes === false )
 		{
@@ -153,15 +170,12 @@ class MSSQLSrvConnection extends Connection
 				// Date
 				case 93:
 				case 91:
-				case -154: // for type Time
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR) );
-					if ( $pointPosition = strrpos($fieldVal, ".") )
-						$fieldVal = substr( $fieldVal, 0, $pointPosition );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR) );			 
+					$fieldVal = substr( $fieldVal, 0, strrpos($fieldVal, ".") );
 				break;
 				// ntext
 				case -10:
-				case -9:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -172,7 +186,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// image
 				case -4:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -183,7 +197,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// text
 				case -1:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -194,7 +208,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// need to check, may be int data should be retrieved in another type		
 				default:   				
-					$fieldVal = sqlsrv_get_field( $qHandle, $j );						    
+					$fieldVal = sqlsrv_get_field( $qHanle, $j );						    
 			}	
 			
 			$rowArray[ $fieldMetadata['Name'] ] = $fieldVal;
@@ -208,11 +222,11 @@ class MSSQLSrvConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
 		$rowArray = array();	
-		$metaData = sqlsrv_field_metadata($qHandle);
-		$fetchRes = sqlsrv_fetch($qHandle);
+		$metaData = sqlsrv_field_metadata($qHanle);
+		$fetchRes = sqlsrv_fetch($qHanle);
 				
 		if( $fetchRes === false )
 		{
@@ -231,12 +245,12 @@ class MSSQLSrvConnection extends Connection
 			{
 				//dateTime	
 				case 93:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR) );			 
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR) );			 
 					$fieldVal = substr( $fieldVal, 0, strrpos($fieldVal, ".") );
 				break;
 				// ntext
 				case -10:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -247,7 +261,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// image
 				case -4:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_BINARY) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -258,7 +272,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// text
 				case -1:
-					$fieldVal = sqlsrv_get_field( $qHandle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
+					$fieldVal = sqlsrv_get_field( $qHanle, $j, SQLSRV_PHPTYPE_STREAM(SQLSRV_ENC_CHAR) );
 					$buffer = null;
 					while( !feof($fieldVal) ) 
 					{
@@ -269,7 +283,7 @@ class MSSQLSrvConnection extends Connection
 				break;
 				// need to check, may be int data should be retrieved in another type		
 				default:   				
-					$fieldVal = sqlsrv_get_field( $qHandle, $j );				    
+					$fieldVal = sqlsrv_get_field( $qHanle, $j );				    
 			}
 			
 			$rowArray[] = $fieldVal;
@@ -283,9 +297,9 @@ class MSSQLSrvConnection extends Connection
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@sqlsrv_free_stmt($qHandle);
+		@sqlsrv_free_stmt($qHanle);
 	}
 
 	/**	
@@ -304,9 +318,9 @@ class MSSQLSrvConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		$metaData = @sqlsrv_field_metadata($qHandle);
+		$metaData = @sqlsrv_field_metadata($qHanle);
 		
 		if( $metaData !== false )
 			return $metaData[ $offset ]['Name'];
@@ -342,17 +356,6 @@ class MSSQLSrvConnection extends Connection
 	{
 		$this->debugInfo($sql);
 		return @sqlsrv_query($this->conn, $sql);
-	}
-	
-	function lastError() {
-		$errors = @sqlsrv_errors( SQLSRV_ERR_ERRORS );
-		if( !$errors ) 
-			return "";
-		$message = "";
-		foreach( $errors as $error ) {
-			$message .= @$error["code"] . " " . @$error["message"] . "<br>";
-		}
-		return $message;
 	}
 }
 ?>

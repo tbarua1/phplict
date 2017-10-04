@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,425 +12,373 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-view" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_viewpage}
-<div {$viewpage_chiddenattr} data-pageid="{$pageid}" data-container="viewpage" class="container    "> 
+{BEGIN container_all}
+<div class="rnr-c rnr-cv rnr-c-all">
 
 
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_main} rnr-wrapper rnr-cbw-main">
+
+{BEGIN container_main}
+<div class="rnr-c rnr-cv rnr-c-main">
 
 
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-12 "> 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_view} rnr-wrapper rnr-cbw-view">
+
+{BEGIN container_view}
+<div class="rnr-c rnr-cv rnr-c-view">
 
 {BEGIN viewheader}
-	<h2 {$viewheader_hiddenattr} data-pageid="{$pageid}" data-brick="viewheader" >{$pagetitlelabel employees view}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END viewheader}
+<div  class="rnr-brickcontents style2 rnr-b-viewheader {$brickclass_viewheader}"><span>	<h1>{$pagetitlelabel employees view}</h1>
+</span></div>{END viewheader}
 
 
 
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_viewpage}
-
-
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class=" form-horizontal  col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$viewfields_hiddenattr} data-pageid="{$pageid}" data-brick="viewfields" >
-
-	<div class="container">
-					{BEGIN eid_fieldblock}
-	<div class="{$fielddispclass_eid} col-md-6 bs-viewcontrolgroup" data-fieldname="eid">
-		<label class="control-label" for="{$labelfor_eid}">
-			{$label employees eid}
-		</label>
-		<div class="" >
-			{$eid_value}&nbsp;
-		</div>
-	</div>
+<div  class="rnr-brickcontents style1 rnr-b-viewfields {$brickclass_viewfields}"><table class="fieldGrid">
+	{BEGIN eid_fieldblock}
+<tr class="{$fielddispclass_eid}" data-fieldname="eid">
+	<td class="rnr-label">
+		{$label employees eid}
+	</td>
+	<td class="rnr-control style3">
+		{$eid_value}&nbsp;
+	</td>
+</tr>
 {END eid_fieldblock}
-					{BEGIN ename_fieldblock}
-	<div class="{$fielddispclass_ename} col-md-6 bs-viewcontrolgroup" data-fieldname="ename">
-		<label class="control-label" for="{$labelfor_ename}">
-			{$label employees ename}
-		</label>
-		<div class="" >
-			{$ename_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN ename_fieldblock}
+<tr class="{$fielddispclass_ename}" data-fieldname="ename">
+	<td class="rnr-label">
+		{$label employees ename}
+	</td>
+	<td class="rnr-control style3">
+		{$ename_value}&nbsp;
+	</td>
+</tr>
 {END ename_fieldblock}
-					{BEGIN emppic_fieldblock}
-	<div class="{$fielddispclass_emppic} col-md-6 bs-viewcontrolgroup" data-fieldname="emppic">
-		<label class="control-label" for="{$labelfor_emppic}">
-			{$label employees emppic}
-		</label>
-		<div class="" >
-			{$emppic_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN emppic_fieldblock}
+<tr class="{$fielddispclass_emppic}" data-fieldname="emppic">
+	<td class="rnr-label">
+		{$label employees emppic}
+	</td>
+	<td class="rnr-control style3">
+		{$emppic_value}&nbsp;
+	</td>
+</tr>
 {END emppic_fieldblock}
-					{BEGIN designation_fieldblock}
-	<div class="{$fielddispclass_designation} col-md-6 bs-viewcontrolgroup" data-fieldname="designation">
-		<label class="control-label" for="{$labelfor_designation}">
-			{$label employees designation}
-		</label>
-		<div class="" >
-			{$designation_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN designation_fieldblock}
+<tr class="{$fielddispclass_designation}" data-fieldname="designation">
+	<td class="rnr-label">
+		{$label employees designation}
+	</td>
+	<td class="rnr-control style3">
+		{$designation_value}&nbsp;
+	</td>
+</tr>
 {END designation_fieldblock}
-					{BEGIN whtasapp_fieldblock}
-	<div class="{$fielddispclass_whtasapp} col-md-6 bs-viewcontrolgroup" data-fieldname="whtasapp">
-		<label class="control-label" for="{$labelfor_whtasapp}">
-			{$label employees whtasapp}
-		</label>
-		<div class="" >
-			{$whtasapp_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN whtasapp_fieldblock}
+<tr class="{$fielddispclass_whtasapp}" data-fieldname="whtasapp">
+	<td class="rnr-label">
+		{$label employees whtasapp}
+	</td>
+	<td class="rnr-control style3">
+		{$whtasapp_value}&nbsp;
+	</td>
+</tr>
 {END whtasapp_fieldblock}
-					{BEGIN localnum_fieldblock}
-	<div class="{$fielddispclass_localnum} col-md-6 bs-viewcontrolgroup" data-fieldname="localnum">
-		<label class="control-label" for="{$labelfor_localnum}">
-			{$label employees localnum}
-		</label>
-		<div class="" >
-			{$localnum_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN localnum_fieldblock}
+<tr class="{$fielddispclass_localnum}" data-fieldname="localnum">
+	<td class="rnr-label">
+		{$label employees localnum}
+	</td>
+	<td class="rnr-control style3">
+		{$localnum_value}&nbsp;
+	</td>
+</tr>
 {END localnum_fieldblock}
-					{BEGIN skype_fieldblock}
-	<div class="{$fielddispclass_skype} col-md-6 bs-viewcontrolgroup" data-fieldname="skype">
-		<label class="control-label" for="{$labelfor_skype}">
-			{$label employees skype}
-		</label>
-		<div class="" >
-			{$skype_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN skype_fieldblock}
+<tr class="{$fielddispclass_skype}" data-fieldname="skype">
+	<td class="rnr-label">
+		{$label employees skype}
+	</td>
+	<td class="rnr-control style3">
+		{$skype_value}&nbsp;
+	</td>
+</tr>
 {END skype_fieldblock}
-					{BEGIN dropbox_fieldblock}
-	<div class="{$fielddispclass_dropbox} col-md-6 bs-viewcontrolgroup" data-fieldname="dropbox">
-		<label class="control-label" for="{$labelfor_dropbox}">
-			{$label employees dropbox}
-		</label>
-		<div class="" >
-			{$dropbox_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN dropbox_fieldblock}
+<tr class="{$fielddispclass_dropbox}" data-fieldname="dropbox">
+	<td class="rnr-label">
+		{$label employees dropbox}
+	</td>
+	<td class="rnr-control style3">
+		{$dropbox_value}&nbsp;
+	</td>
+</tr>
 {END dropbox_fieldblock}
-					{BEGIN email_fieldblock}
-	<div class="{$fielddispclass_email} col-md-6 bs-viewcontrolgroup" data-fieldname="email">
-		<label class="control-label" for="{$labelfor_email}">
-			{$label employees email}
-		</label>
-		<div class="" >
-			{$email_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN email_fieldblock}
+<tr class="{$fielddispclass_email}" data-fieldname="email">
+	<td class="rnr-label">
+		{$label employees email}
+	</td>
+	<td class="rnr-control style3">
+		{$email_value}&nbsp;
+	</td>
+</tr>
 {END email_fieldblock}
-					{BEGIN dob_fieldblock}
-	<div class="{$fielddispclass_dob} col-md-6 bs-viewcontrolgroup" data-fieldname="dob">
-		<label class="control-label" for="{$labelfor_dob}">
-			{$label employees dob}
-		</label>
-		<div class="" >
-			{$dob_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN dob_fieldblock}
+<tr class="{$fielddispclass_dob}" data-fieldname="dob">
+	<td class="rnr-label">
+		{$label employees dob}
+	</td>
+	<td class="rnr-control style3">
+		{$dob_value}&nbsp;
+	</td>
+</tr>
 {END dob_fieldblock}
-					{BEGIN password_fieldblock}
-	<div class="{$fielddispclass_password} col-md-6 bs-viewcontrolgroup" data-fieldname="password">
-		<label class="control-label" for="{$labelfor_password}">
-			{$label employees password}
-		</label>
-		<div class="" >
-			{$password_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN password_fieldblock}
+<tr class="{$fielddispclass_password}" data-fieldname="password">
+	<td class="rnr-label">
+		{$label employees password}
+	</td>
+	<td class="rnr-control style3">
+		{$password_value}&nbsp;
+	</td>
+</tr>
 {END password_fieldblock}
-					{BEGIN passportno_fieldblock}
-	<div class="{$fielddispclass_passportno} col-md-6 bs-viewcontrolgroup" data-fieldname="passportno">
-		<label class="control-label" for="{$labelfor_passportno}">
-			{$label employees passportno}
-		</label>
-		<div class="" >
-			{$passportno_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN passportno_fieldblock}
+<tr class="{$fielddispclass_passportno}" data-fieldname="passportno">
+	<td class="rnr-label">
+		{$label employees passportno}
+	</td>
+	<td class="rnr-control style3">
+		{$passportno_value}&nbsp;
+	</td>
+</tr>
 {END passportno_fieldblock}
-					{BEGIN passport_expiry_fieldblock}
-	<div class="{$fielddispclass_passport_expiry} col-md-6 bs-viewcontrolgroup" data-fieldname="passport_expiry">
-		<label class="control-label" for="{$labelfor_passport_expiry}">
-			{$label employees passport_expiry}
-		</label>
-		<div class="" >
-			{$passport_expiry_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN passport_expiry_fieldblock}
+<tr class="{$fielddispclass_passport_expiry}" data-fieldname="passport_expiry">
+	<td class="rnr-label">
+		{$label employees passport_expiry}
+	</td>
+	<td class="rnr-control style3">
+		{$passport_expiry_value}&nbsp;
+	</td>
+</tr>
 {END passport_expiry_fieldblock}
-					{BEGIN visa_no_fieldblock}
-	<div class="{$fielddispclass_visa_no} col-md-6 bs-viewcontrolgroup" data-fieldname="visa_no">
-		<label class="control-label" for="{$labelfor_visa_no}">
-			{$label employees visa_no}
-		</label>
-		<div class="" >
-			{$visa_no_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN visa_no_fieldblock}
+<tr class="{$fielddispclass_visa_no}" data-fieldname="visa_no">
+	<td class="rnr-label">
+		{$label employees visa_no}
+	</td>
+	<td class="rnr-control style3">
+		{$visa_no_value}&nbsp;
+	</td>
+</tr>
 {END visa_no_fieldblock}
-					{BEGIN visa_expiry_fieldblock}
-	<div class="{$fielddispclass_visa_expiry} col-md-6 bs-viewcontrolgroup" data-fieldname="visa_expiry">
-		<label class="control-label" for="{$labelfor_visa_expiry}">
-			{$label employees visa_expiry}
-		</label>
-		<div class="" >
-			{$visa_expiry_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN visa_expiry_fieldblock}
+<tr class="{$fielddispclass_visa_expiry}" data-fieldname="visa_expiry">
+	<td class="rnr-label">
+		{$label employees visa_expiry}
+	</td>
+	<td class="rnr-control style3">
+		{$visa_expiry_value}&nbsp;
+	</td>
+</tr>
 {END visa_expiry_fieldblock}
-					{BEGIN division_id_fieldblock}
-	<div class="{$fielddispclass_division_id} col-md-6 bs-viewcontrolgroup" data-fieldname="division_id">
-		<label class="control-label" for="{$labelfor_division_id}">
-			{$label employees division_id}
-		</label>
-		<div class="" >
-			{$division_id_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN division_id_fieldblock}
+<tr class="{$fielddispclass_division_id}" data-fieldname="division_id">
+	<td class="rnr-label">
+		{$label employees division_id}
+	</td>
+	<td class="rnr-control style3">
+		{$division_id_value}&nbsp;
+	</td>
+</tr>
 {END division_id_fieldblock}
-					{BEGIN doj_fieldblock}
-	<div class="{$fielddispclass_doj} col-md-6 bs-viewcontrolgroup" data-fieldname="doj">
-		<label class="control-label" for="{$labelfor_doj}">
-			{$label employees doj}
-		</label>
-		<div class="" >
-			{$doj_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN doj_fieldblock}
+<tr class="{$fielddispclass_doj}" data-fieldname="doj">
+	<td class="rnr-label">
+		{$label employees doj}
+	</td>
+	<td class="rnr-control style3">
+		{$doj_value}&nbsp;
+	</td>
+</tr>
 {END doj_fieldblock}
-					{BEGIN dor_fieldblock}
-	<div class="{$fielddispclass_dor} col-md-6 bs-viewcontrolgroup" data-fieldname="dor">
-		<label class="control-label" for="{$labelfor_dor}">
-			{$label employees dor}
-		</label>
-		<div class="" >
-			{$dor_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN dor_fieldblock}
+<tr class="{$fielddispclass_dor}" data-fieldname="dor">
+	<td class="rnr-label">
+		{$label employees dor}
+	</td>
+	<td class="rnr-control style3">
+		{$dor_value}&nbsp;
+	</td>
+</tr>
 {END dor_fieldblock}
-					{BEGIN status_id_fieldblock}
-	<div class="{$fielddispclass_status_id} col-md-6 bs-viewcontrolgroup" data-fieldname="status_id">
-		<label class="control-label" for="{$labelfor_status_id}">
-			{$label employees status_id}
-		</label>
-		<div class="" >
-			{$status_id_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN status_id_fieldblock}
+<tr class="{$fielddispclass_status_id}" data-fieldname="status_id">
+	<td class="rnr-label">
+		{$label employees status_id}
+	</td>
+	<td class="rnr-control style3">
+		{$status_id_value}&nbsp;
+	</td>
+</tr>
 {END status_id_fieldblock}
-					{BEGIN experence_fieldblock}
-	<div class="{$fielddispclass_experence} col-md-6 bs-viewcontrolgroup" data-fieldname="experence">
-		<label class="control-label" for="{$labelfor_experence}">
-			{$label employees experence}
-		</label>
-		<div class="" >
-			{$experence_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN experence_fieldblock}
+<tr class="{$fielddispclass_experence}" data-fieldname="experence">
+	<td class="rnr-label">
+		{$label employees experence}
+	</td>
+	<td class="rnr-control style3">
+		{$experence_value}&nbsp;
+	</td>
+</tr>
 {END experence_fieldblock}
-					{BEGIN nationality_fieldblock}
-	<div class="{$fielddispclass_nationality} col-md-6 bs-viewcontrolgroup" data-fieldname="nationality">
-		<label class="control-label" for="{$labelfor_nationality}">
-			{$label employees nationality}
-		</label>
-		<div class="" >
-			{$nationality_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN nationality_fieldblock}
+<tr class="{$fielddispclass_nationality}" data-fieldname="nationality">
+	<td class="rnr-label">
+		{$label employees nationality}
+	</td>
+	<td class="rnr-control style3">
+		{$nationality_value}&nbsp;
+	</td>
+</tr>
 {END nationality_fieldblock}
-					{BEGIN qulification_fieldblock}
-	<div class="{$fielddispclass_qulification} col-md-6 bs-viewcontrolgroup" data-fieldname="qulification">
-		<label class="control-label" for="{$labelfor_qulification}">
-			{$label employees qulification}
-		</label>
-		<div class="" >
-			{$qulification_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN qulification_fieldblock}
+<tr class="{$fielddispclass_qulification}" data-fieldname="qulification">
+	<td class="rnr-label">
+		{$label employees qulification}
+	</td>
+	<td class="rnr-control style3">
+		{$qulification_value}&nbsp;
+	</td>
+</tr>
 {END qulification_fieldblock}
-					{BEGIN skillset_fieldblock}
-	<div class="{$fielddispclass_skillset} col-md-6 bs-viewcontrolgroup" data-fieldname="skillset">
-		<label class="control-label" for="{$labelfor_skillset}">
-			{$label employees skillset}
-		</label>
-		<div class="" >
-			{$skillset_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN skillset_fieldblock}
+<tr class="{$fielddispclass_skillset}" data-fieldname="skillset">
+	<td class="rnr-label">
+		{$label employees skillset}
+	</td>
+	<td class="rnr-control style3">
+		{$skillset_value}&nbsp;
+	</td>
+</tr>
 {END skillset_fieldblock}
-					{BEGIN cid_fieldblock}
-	<div class="{$fielddispclass_cid} col-md-6 bs-viewcontrolgroup" data-fieldname="cid">
-		<label class="control-label" for="{$labelfor_cid}">
-			{$label employees cid}
-		</label>
-		<div class="" >
-			{$cid_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN cid_fieldblock}
+<tr class="{$fielddispclass_cid}" data-fieldname="cid">
+	<td class="rnr-label">
+		{$label employees cid}
+	</td>
+	<td class="rnr-control style3">
+		{$cid_value}&nbsp;
+	</td>
+</tr>
 {END cid_fieldblock}
-					{BEGIN reset_token_fieldblock}
-	<div class="{$fielddispclass_reset_token} col-md-6 bs-viewcontrolgroup" data-fieldname="reset_token">
-		<label class="control-label" for="{$labelfor_reset_token}">
-			{$label employees reset_token}
-		</label>
-		<div class="" >
-			{$reset_token_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN reset_token_fieldblock}
+<tr class="{$fielddispclass_reset_token}" data-fieldname="reset_token">
+	<td class="rnr-label">
+		{$label employees reset_token}
+	</td>
+	<td class="rnr-control style3">
+		{$reset_token_value}&nbsp;
+	</td>
+</tr>
 {END reset_token_fieldblock}
-					{BEGIN reset_date_fieldblock}
-	<div class="{$fielddispclass_reset_date} col-md-6 bs-viewcontrolgroup" data-fieldname="reset_date">
-		<label class="control-label" for="{$labelfor_reset_date}">
-			{$label employees reset_date}
-		</label>
-		<div class="" >
-			{$reset_date_value}&nbsp;
-		</div>
-	</div>
+	{BEGIN reset_date_fieldblock}
+<tr class="{$fielddispclass_reset_date}" data-fieldname="reset_date">
+	<td class="rnr-label">
+		{$label employees reset_date}
+	</td>
+	<td class="rnr-control style3">
+		{$reset_date_value}&nbsp;
+	</td>
+</tr>
 {END reset_date_fieldblock}
-	</div>
+</table></div>
+
+
+{BEGIN viewbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-viewbuttons {$brickclass_viewbuttons}"><div class="rnr-buttons-right">
+{BEGIN prev_button}
+<a href="#" class="rnr-button {$prevbutton_class}" {$prevbutton_attrs}>&lt;&lt;&lt;</a>
+{END prev_button}
+{BEGIN next_button}
+<a href="#" class="rnr-button {$nextbutton_class}" {$nextbutton_attrs}>&gt;&gt;&gt;</a>
+{END next_button}
 </div>
-
-
+<div class="rnr-buttons-left">
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}
+{BEGIN close_button}
+<a href="#" class="rnr-button" {$closebutton_attrs}>Close window</a>
+{END close_button}
+{BEGIN edit_page_button}
+<a href="#" class="rnr-button" {$edit_page_button_attrs}>Edit</a>
+{END edit_page_button}
+</div>
+</div>{END viewbuttons}
 
 
 </div>
 {END container_fields}
 
+</div>
 
 
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container    "> 
+</div>
+{END container_view}
+
+</div>
 
 
+</div>
+{END container_main}
 
-
-{BEGIN container_buttons}
-<div {$buttons_chiddenattr} data-pageid="{$pageid}" data-container="buttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-6 "> 
-
-{BEGIN viewbuttons}
-{BEGIN back_button}
-<button class="btn btn-primary" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{BEGIN close_button}
-<button href="#" class="btn btn-primary" {$closebutton_attrs}>Close window</button>
-{END close_button}
-{END viewbuttons}
+</div>
 
 
 
 </div>
-{END container_leftbuttons}
+{END container_all}
 
 
-
-
-
-
-
-
-{BEGIN container_leftbuttons_1}
-<div {$leftbuttons_1_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons_1" class="   col-md-4 "> 
-
-{BEGIN rightviewbuttons}
-<div class="btn-group" role="group">
-		{BEGIN prev_button}
-	<button class="btn btn-default {$prevbutton_class}" {$prevbutton_attrs}><span class="glyphicon glyphicon-chevron-left"></span></button>
-	{END prev_button}
-	{BEGIN next_button}
-	<button class="btn btn-default {$nextbutton_class}" {$nextbutton_attrs}><span class="glyphicon glyphicon-chevron-right"></span></button>
-	{END next_button}
-		{BEGIN view_menu_button}
-	<div class="btn-group dropup" role="group">
-		<button class="btn btn-default dropdown-toggle {$groupbutton_class}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-		<ul class="dropdown-menu dropdown-left">
-									{BEGIN edit_page_button}
-				<li><a href=# {$edit_page_button_attrs}>Edit</a></li>
-			{END edit_page_button}
-		</ul>
+		</div>
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
+				
+			</div>
+			<div class="rnr-center {$blockclass_center}">
+				
+			</div>
+			<div class="rnr-right {$blockclass_right}">
+				
+			</div>
+		</div>
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
+		</div>
 	</div>
-	{END view_menu_button}
-</div>
-{END rightviewbuttons}
-
-
-
-</div>
-{END container_leftbuttons_1}
-
-
-
-
-
-
-</div>
-{END container_buttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
-
-
-		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
-				
-			</div>
-			<div class="bs-left" {$blockattr_left}>
-				
-			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
-				
-			</div>
-		</div>
-		<DIV class="bs-bottom">
-        
-		</div>
+		
 		{$footer}
 	{END body}
 	</body>

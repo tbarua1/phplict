@@ -3,28 +3,25 @@ class ViewCustomField extends ViewControl
 {
 	public function showDBValue(&$data, $keylink)
 	{
-		$fieldData = $data[ $this->field ];
-		if( !is_null( $this->displayField ) )
+		$fieldData = $data[$this->field];
+		if(!is_null($this->displayField))
 		{
 			$fieldData = $this->displayField;
 		}
-		
 		$pageType = $this->container->pageType;
-		if( $this->pageObject )
+		if($this->pageObject)
 		{
-			if( $this->pageObject->mode == EDIT_INLINE && $this->pageObject->pageType != PAGE_VIEW ) 
+			if($this->pageObject->mode == EDIT_INLINE) 
 			{
 				$pageType = PAGE_LIST;
 			}
 		}
+		$result = CustomExpression($fieldData, $data, $this->field, $pageType, $this->container->tName);
 		
-		$result = CustomExpression( $fieldData, $data, $this->field, $pageType, $this->container->tName );
-		
-		if( $this->searchHighlight )
+		if($this->searchHighlight)
 		{		
-			$result = $this->highlightSearchWord( $result, false, "" ); 
+			$result = $this->highlightSearchWord($result, false, ""); 
 		}
-		
 		return $result;
 	}
 

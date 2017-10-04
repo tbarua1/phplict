@@ -10,11 +10,9 @@ class FilterIntervalSlider extends FilterControl
 	protected $minKnobValue;	
 	protected $maxKnobValue;
 	
-	protected $showCollapsed = false;
-	
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterIntervalSlider($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterControl($fName, $pageObject, $id, $viewControls);
 	
 		$this->filterFormat = FF_INTERVAL_SLIDER;
 	
@@ -28,8 +26,7 @@ class FilterIntervalSlider extends FilterControl
 		
 		if( $this->filtered )
 			$this->assignKnobsValues();
-
-		$this->showCollapsed = $this->pSet->showCollapsed($fName);
+	
 		
 		$this->separator = $this->getSeparator();
 	}
@@ -75,22 +72,32 @@ class FilterIntervalSlider extends FilterControl
 	/**
 	 * Form the SQL query string to get then the filter's data 
 	 */
-	
 	protected function buildSQL()
 	{
-
-		//	build query of the following form:
-		//  select min(field) as sliderMin, max(field) as sliderMax from ( <original query with search, security and filters> )
-
-		$wName = $this->connection->addFieldWrappers( $this->fName );
-
-		$this->strSQL = "select min(".$wName.") as " .$this->connection->addFieldWrappers("sliderMin"). ", max(".$wName.") as " .$this->connection->addFieldWrappers("sliderMax");	
-		$this->strSQL .= " from ( " . $this->buildBasicSQL() . " ) a";
-
-//	NOT NULL clause
-		$this->strSQL .= " where " . implode( ' and ', $this->getNotNullWhere() );
-	}
+		$dbfName = $this->getDbFieldName($this->fName);
+		$sqlHead = "SELECT MIN(".$dbfName.") as " .$this->connection->addFieldWrappers("sliderMin"). ", MAX(".$dbfName.") as " .$this->connection->addFieldWrappers("sliderMax");	
+		
+		$whereComponents = $this->whereComponents;
+		
+		$gQuery = $this->pSet->getSQLQuery();
+		$sqlFrom = $gQuery->FromToSql().$whereComponents["joinFromPart"];
+		$sqlWhere = $this->getCombinedFilterWhere();		
+		$sqlGroupBy = "GROUP BY ".$dbfName;	
+		$sqlHaving =  $this->getCombinedFilterHaving();
+		
+		$notNullWhere = $dbfName." is not NULL";
+		if( $this->connection->dbType != nDATABASE_Oracle )
+		{	
+			if( IsCharType($this->fieldType) )
+				$notNullWhere = $dbfName."<>'' and ".$notNullWhere;
+		}	
 	
+		$sqlWhere = whereAdd($sqlWhere, $notNullWhere);	
+		
+		$searchCombineType = $whereComponents["searchUnionRequired"] ? "or" : "and";
+		
+		$this->strSQL = SQLQuery::gSQLWhere_having($sqlHead, $sqlFrom, $sqlWhere, "", "", $whereComponents["searchWhere"], $whereComponents["searchHaving"], $strSearchCriteria);
+	}
 
 	/**
 	 * Get the filter blocks data using the database query
@@ -331,7 +338,6 @@ class FilterIntervalSlider extends FilterControl
 		$ctrlsMap['knobsType'] = $this->knobsType;
 		$ctrlsMap['useApllyBtn'] = $this->useApllyBtn;
 		$ctrlsMap['step'] = $this->getStepValue();
-		$ctrlsMap['collapsed'] = $this->showCollapsed;
 			
 		return $ctrlsMap;	
 	}
@@ -367,7 +373,8 @@ class FilterIntervalSlider extends FilterControl
 	 */	
 	protected function addJS_CSSfiles($pageObject)
 	{
-		$pageObject->AddCSSFile("include/jquery-ui/smoothness/jquery-ui.min.css");
+		$pageObject->AddJSFile("include/jquery-ui/jquery-ui-1.10.4.custom.min.js");
+		$pageObject->AddCSSFile("include/jquery-ui/smoothness/jquery-ui-1.10.4.custom.min.css");
 	}
 
 	/**

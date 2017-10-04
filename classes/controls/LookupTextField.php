@@ -4,16 +4,16 @@ class LookupTextField extends LookupField
 {
 	var $localPSet;
 	var $linkAndDisplaySame = false;
-	var $ciphererLink = null;
-	function __construct($field, $pageObject, $id, $connection)
+	
+	function LookupTextField($field, $pageObject, $id, $connection)
 	{
-		EditControl::__construct($field, $pageObject, $id, $connection);
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = EDIT_FORMAT_LOOKUP_WIZARD;
-
+		
 		$this->lookupPageType = $this->pageObject->pSetEdit->getPageTypeByFieldEditFormat($this->field, EDIT_FORMAT_LOOKUP_WIZARD);
-
+		
 		$this->localPSet = new ProjectSettings($this->pageObject->tName, $this->lookupPageType);
-
+			
 		$this->lookupTable = $this->localPSet->getLookupTable($this->field);
 		$this->lookupType = $this->localPSet->getLookupType($this->field);
 		if($this->lookupType == LT_QUERY)
@@ -21,24 +21,21 @@ class LookupTextField extends LookupField
 		$this->displayFieldName = $this->localPSet->getDisplayField($this->field);
 		$this->linkFieldName = $this->localPSet->getLinkField($this->field);
 		$this->linkAndDisplaySame = $this->displayFieldName == $this->linkFieldName;
-		$this->setLookupConnection();
-
+		
 		$this->ciphererLink = new RunnerCipherer($this->pageObject->tName);
 		if($this->lookupType == LT_QUERY)
 			$this->ciphererDisplay = new RunnerCipherer($this->lookupTable);
-		else
+		else 
 			$this->ciphererDisplay = $this->ciphererLink;
-
+			
 		$this->LCType = $this->localPSet->lookupControlType($this->field);
-		if( $this->pageObject->mobileTemplateMode() && $this->LCType == LCT_AJAX )
-			$this->LCType = LCT_DROPDOWN;
-
+		
 		$this->multiselect = $this->localPSet->multiSelect($this->field);
 		$this->lwLinkField = $connection->addFieldWrappers($this->localPSet->getLinkField($this->field));
 		$this->lwDisplayFieldWrapped = RunnerPage::sqlFormattedDisplayField($this->field, $connection, $this->localPSet);
 		$this->customDisplay = $this->localPSet->getCustomDisplay($this->field);
 	}
-
+	
 	function buildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data)
 	{
 		parent::parentBuildControl($value, $mode, $fieldNum, $validate, $additionalCtrlParams, $data);
@@ -46,24 +43,24 @@ class LookupTextField extends LookupField
 			.($mode == MODE_SEARCH ? 'autocomplete="off" ' : '')
 			.(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508==true ? 'alt="'.$this->strLabel.'" ' : '')
 			.'name="'.$this->cfield.'" '.$this->pageObject->pSetEdit->getEditParams($this->field).' value="'
-			.runner_htmlspecialchars($value).'">';
-		$this->buildControlEnd($validate, $mode);
+			.runner_htmlspecialchars($value).'">';	
+		$this->buildControlEnd($validate);
 	}
-
+	
 	public function fillLookupFieldsIndexes()
 	{
 		$lookupIndexes = GetLookupFieldsIndexes($this->localPSet, $this->field);
 		$this->linkFieldIndex = $lookupIndexes["linkFieldIndex"];
 		$this->displayFieldIndex = $lookupIndexes["displayFieldIndex"];
 	}
-
+	
 	/**
 	 * Form the control specified search options array and built the control's search options markup
-	 * @param String selOpt		The search option value
-	 * @param Boolean not		It indicates if the search option negation is set
+	 * @param String selOpt		The search option value	
+	 * @param Boolean not		It indicates if the search option negation is set 	
 	 * @param Boolean both		It indicates if the control needs 'NOT'-options
 	 * @return String			A string containing options markup
-	 */
+	 */	
 	function getSearchOptions($selOpt, $not, $both)
 	{
 		$optionsArray = array();
@@ -93,7 +90,7 @@ class LookupTextField extends LookupField
 			}
 			$optionsArray[] = NOT_EMPTY;
 		}
-		return $this->buildSearchOptions($optionsArray, $selOpt, $not, $both);
+		return $this->buildSearchOptions($optionsArray, $selOpt, $not, $both);		
 	}
 }
 ?>

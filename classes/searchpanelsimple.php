@@ -13,19 +13,11 @@ class SearchPanelSimple extends SearchPanel {
 	
 	var $searchOptions = array();
 	
-	function __construct(&$params) 
+	function SearchPanelSimple(&$params) 
 	{
-		parent::__construct($params);
+		parent::SearchPanel($params);
 		
 		$this->isDisplaySearchPanel = $this->pSet->showSearchPanel();
-		if( $this->pageObj->mobileTemplateMode() && !$this->isDisplaySearchPanel ) 
-		{
-			$advSearchFields = $this->pSet->getAdvSearchFields();
-			if( count( $advSearchFields ) )
-				$this->isDisplaySearchPanel = true;
-		}
-
-
 		$this->isFlexibleSearch = $this->pSet->isFlexibleSearch();
 	}
 	
@@ -34,6 +26,10 @@ class SearchPanelSimple extends SearchPanel {
 		parent::buildSearchPanel();
 		if ($this->isDisplaySearchPanel)
 		{
+			// create search panel
+			$searchPanel = array();
+			AssignMethod($searchPanel, "DisplaySearchPanel", $this);
+			
 			$this->srchPanelAttrs = $this->searchClauseObj->getSrchPanelAttrs();
 			$this->searchOptions = $this->pSet->getSearchPanelOptions();
 			$this->DisplaySearchPanel();
@@ -53,30 +49,27 @@ class SearchPanelSimple extends SearchPanel {
 		
 		$searchforAttrs = "name=\"ctlSearchFor".$this->id."\" id=\"ctlSearchFor".$this->id."\"";
 		if($this->isUseAjaxSuggest)
-			$searchforAttrs .= " autocomplete=off ";		
+			$searchforAttrs .= "autocomplete=off ";		
 	
 		$searchforAttrs.= ' placeholder="'."search".'"';
-		if( $this->searchClauseObj->isUsedSrch() || strlen( $searchGlobalParams["simpleSrch"] ) )
+		if($this->searchClauseObj->isUsedSrch())
 		{
 			$valSrchFor = $searchGlobalParams["simpleSrch"];
 			$searchforAttrs.= " value=\"".runner_htmlspecialchars($valSrchFor)."\"";
 		}
-		
+
 		$this->xt->assignbyref("searchfor_attrs", $searchforAttrs);
 		$this->xt->assign('searchPanelTopButtons', $this->isDisplaySearchPanel);
 		
-		$selectClass = "";
-		if( $this->pageObj->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-			$selectClass = "form-control";
 		if ($this->pSet->showSimpleSearchOptions())
 		{
-			$simpleSearchTypeCombo = '<select class="' . $selectClass . '" id="simpleSrchTypeCombo'.$this->id.'" name="simpleSrchTypeCombo'.$this->id.'" size="1">';
+			$simpleSearchTypeCombo = '<select id="simpleSrchTypeCombo'.$this->id.'" name="simpleSrchTypeCombo'.$this->id.'" size="1">';
 			$simpleSearchTypeCombo .= $this->searchControlBuilder->getSimpleSearchTypeCombo($searchGlobalParams["simpleSrchTypeComboOpt"], $searchGlobalParams["simpleSrchTypeComboNot"]) ;
 			$simpleSearchTypeCombo .= "</select>";
 			
 			$this->xt->assign('simpleSearchTypeCombo', $simpleSearchTypeCombo);
 			
-			$simpleSearchFieldCombo = '<select class="' . $selectClass . '" id="simpleSrchFieldsCombo'.$this->id.'" name="simpleSrchFieldsCombo'.$this->id.'" size="1">';
+			$simpleSearchFieldCombo = '<select id="simpleSrchFieldsCombo'.$this->id.'" name="simpleSrchFieldsCombo'.$this->id.'" size="1">';
 			$simpleSearchFieldCombo .= $this->searchControlBuilder->simpleSearchFieldCombo($this->allSearchFields, $searchGlobalParams["simpleSrchFieldsComboOpt"]) ;
 			$simpleSearchFieldCombo .= "</select>";
 			
@@ -106,12 +99,14 @@ class SearchPanelSimple extends SearchPanel {
 		$this->xt->assign("showHideOpt_mess", $showHideOpt_mess);
 		$this->xt->assign("showHideCtrlsOpt_attrs", 'style="display: none;"');
 		
+		//hide the Search panel (by default) on the list, report or chart pages
+//		if( $this->pageObj->pageType == PAGE_LIST || $this->pageObj->pageType == PAGE_REPORT || $this->pageObj->pageType == PAGE_CHART)
+//			$this->xt->assign("srchOpt_attrs", 'style="display: none;"');
+		
 		if($this->searchClauseObj->getUsedCtrlsCount() <= 0)
 			$this->xt->assign("bottomSearchButt_attrs", 'style="display: none;"');
 	
 		$this->assignSearchBlocks();
-		
-		$this->pageObj->controlsMap["search"]["searchPanelRunByUserApi"] = $this->searchClauseObj->isSearchPanelByUserApiRun();
 	}
 	
 	/**
@@ -128,7 +123,9 @@ class SearchPanelSimple extends SearchPanel {
 		$srchCtrlBlocksNumber = 0;
 		
 		$recId = $this->pageObj->genId();
-	
+		// Get the data about the user-added search panel controls
+		$openFiletrsData = $this->getOpenFiltersData();
+		
 		// build search controls for each field, first we need to build used controls, because cached must have last index	
 		foreach($this->allSearchFields as $searchField)
 		{
@@ -140,10 +137,16 @@ class SearchPanelSimple extends SearchPanel {
 			{
 				$defaultValue = $this->pSet->getDefaultValue( $searchField );
 				
+				if( $openFiletrsData[$searchField] )
+				{
+					// add fields that user has added to the search panel
+					for($i = 0; $i < $openFiletrsData[$searchField]; $i++)
+						$srchFields[] = array('opt' => '', 'not' => '', 'value1' => $defaultValue, 'value2' => '');
+				}
 				if( $isSrchPanelField )
 				{
 					$opt = '';
-					//set the field's option chosen for the inflexible search panel 
+					//set the field's option choosen for the inflexible search panel 
 					if( !$this->isFlexibleSearch )
 						$opt = $this->searchOptions[$searchField];
 
@@ -228,6 +231,52 @@ class SearchPanelSimple extends SearchPanel {
 		$recId = $this->pageObj->genId();
 	}
 	
+	/**
+	* Extract the array containing the open search panel control's names
+	* from the Search panel coockie
+	* @return Array
+	*/
+	function getOpenFilters()
+	{
+		$panelsStates = my_json_decode(@$_COOKIE["searchPanel"]);
+		if( !is_array($panelsStates) ) 
+			return array();
+			
+		$panelKey = "panelState_".GoodFieldName( $this->pageObj->tName )."_".$this->pageObj->id;
+		if( !array_key_exists($panelKey, $panelsStates) )	
+			return array();
+
+		$panelStateObj = $panelsStates[$panelKey];			
+		return $this->refineOpenFilters( $panelStateObj["openFilters"] );
+	}
+	
+	/**
+	* Prepare the associative array, that key are
+	* the searchable fields' names and the values
+	* are the number of user-added Search panel controls
+	* @return Array
+	*/
+	function getOpenFiltersData()
+	{
+		$openFiltersData = array();
+	
+		if( $this->searchClauseObj->isUsedSrch() )
+			return $openFiltersData;
+		
+		$openFilters = $this->getOpenfilters();
+		
+		foreach($this->allSearchFields as $field)
+		{
+			$openFiltersData[$field] = 0;
+			foreach($openFilters as $filter)
+			{
+				if($filter == $field)
+					$openFiltersData[$field]++;
+			}
+		}
+		return $openFiltersData;
+	}
+
 	/**
 	* Refine the open seach panel fields array:
 	* It removes all non search fields and each one 

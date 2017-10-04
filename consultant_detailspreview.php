@@ -29,29 +29,43 @@ $xt = new Xtempl();
 
 
 
-$layout = new TLayout("detailspreview_bootstrap", "OfficeOffice", "MobileOffice");
-$layout->version = 3;
-	$layout->bootstrapTheme = "cerulean";
-		$layout->customCssPageName = "consultant_detailspreview";
+$layout = new TLayout("detailspreview", "BoldOrange", "MobileOrange");
+$layout->version = 2;
 $layout->blocks["bare"] = array();
 $layout->containers["dcount"] = array();
 $layout->container_properties["dcount"] = array(  );
-$layout->containers["dcount"][] = array("name"=>"bsdetailspreviewcount",
+$layout->containers["dcount"][] = array("name"=>"detailspreviewheader", 
 	"block"=>"", "substyle"=>1  );
 
-$layout->skins["dcount"] = "";
+$layout->containers["dcount"][] = array("name"=>"detailspreviewdetailsfount", 
+	"block"=>"", "substyle"=>1  );
+
+$layout->containers["dcount"][] = array("name"=>"detailspreviewdispfirst", 
+	"block"=>"display_first", "substyle"=>1  );
+
+$layout->skins["dcount"] = "empty";
 
 $layout->blocks["bare"][] = "dcount";
 $layout->containers["detailspreviewgrid"] = array();
 $layout->container_properties["detailspreviewgrid"] = array(  );
-$layout->containers["detailspreviewgrid"][] = array("name"=>"detailspreviewfields",
+$layout->containers["detailspreviewgrid"][] = array("name"=>"detailspreviewfields", 
 	"block"=>"details_data", "substyle"=>1  );
 
-$layout->skins["detailspreviewgrid"] = "";
+$layout->skins["detailspreviewgrid"] = "grid";
 
 $layout->blocks["bare"][] = "detailspreviewgrid";
 $page_layouts["consultant_detailspreview"] = $layout;
 
+$layout->skinsparams = array();
+$layout->skinsparams["empty"] = array("button"=>"button2");
+$layout->skinsparams["menu"] = array("button"=>"button1");
+$layout->skinsparams["hmenu"] = array("button"=>"button1");
+$layout->skinsparams["undermenu"] = array("button"=>"button1");
+$layout->skinsparams["fields"] = array("button"=>"button1");
+$layout->skinsparams["form"] = array("button"=>"button1");
+$layout->skinsparams["1"] = array("button"=>"button1");
+$layout->skinsparams["2"] = array("button"=>"button1");
+$layout->skinsparams["3"] = array("button"=>"button1");
 
 
 
@@ -60,62 +74,51 @@ $recordsCounter = 0;
 //	process masterkey value
 $mastertable = postvalue("mastertable");
 $masterKeys = my_json_decode(postvalue("masterKeys"));
-$sessionPrefix = "_detailsPreview";
 if($mastertable != "")
 {
-	$_SESSION[$sessionPrefix."_mastertable"]=$mastertable;
+	$_SESSION[$strTableName."_mastertable"]=$mastertable;
 //	copy keys to session
 	$i = 1;
 	if(is_array($masterKeys) && count($masterKeys) > 0)
 	{
 		while(array_key_exists ("masterkey".$i, $masterKeys))
 		{
-			$_SESSION[$sessionPrefix."_masterkey".$i] = $masterKeys["masterkey".$i];
+			$_SESSION[$strTableName."_masterkey".$i] = $masterKeys["masterkey".$i];
 			$i++;
 		}
 	}
-	if(isset($_SESSION[$sessionPrefix."_masterkey".$i]))
-		unset($_SESSION[$sessionPrefix."_masterkey".$i]);
+	if(isset($_SESSION[$strTableName."_masterkey".$i]))
+		unset($_SESSION[$strTableName."_masterkey".$i]);
 }
 else
-	$mastertable = $_SESSION[$sessionPrefix."_mastertable"];
+	$mastertable = $_SESSION[$strTableName."_mastertable"];
 
 $params = array();
 $params['id'] = 1;
 $params['xt'] = &$xt;
 $params['tName'] = $strTableName;
 $params['pageType'] = "detailspreview";
-$pageObject = new DetailsPreview($params);
+$pageObject = new RunnerPage($params);
 
-$pSet = new ProjectSettings($strTableName, PAGE_LIST);
-
-
-$whereClauses = array();
 if($mastertable == "division")
 {
-	$formattedValue = make_db_value("divison_id",$_SESSION[$sessionPrefix."_masterkey1"]);
-	if( $formattedValue == "null" )
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("divison_id") . " is null";
-	else
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("divison_id") . "=" . $formattedValue;
+	$where = "";
+		$where .= $pageObject->getFieldSQLDecrypt("divison_id") . "=" . make_db_value("divison_id",$_SESSION[$strTableName."_masterkey1"]);
 }
 if($mastertable == "employees")
 {
-	$formattedValue = make_db_value("eid",$_SESSION[$sessionPrefix."_masterkey1"]);
-	if( $formattedValue == "null" )
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . " is null";
-	else
-		$whereClauses[] = $pageObject->getFieldSQLDecrypt("eid") . "=" . $formattedValue;
+	$where = "";
+		$where .= $pageObject->getFieldSQLDecrypt("eid") . "=" . make_db_value("eid",$_SESSION[$strTableName."_masterkey1"]);
 }
 
-$whereClauses[] = SecuritySQL("Search", $strTableName);
-$query = $pSet->getSQLQuery();
+$str = SecuritySQL("Search", $strTableName);
+if(strlen($str))
+	$where.=" and ".$str;
+$strSQL = $gQuery->gSQLWhere($where);
 
-$strSQL = $query->buildSQL_default( $whereClauses );
-$rowcount = $pageObject->connection->getFetchedRowsNumber( $strSQL );
+$strSQL.=" ".$gstrOrderBy;
 
-$strSQL .= $pageObject->getOrderByClause();
-
+$rowcount = $gQuery->gSQLRowCount($where, $pageObject->connection);
 $xt->assign("row_count",$rowcount);
 if($rowcount) 
 {
@@ -136,6 +139,7 @@ if($rowcount)
 	$rowinfo = array();
 	
 	require_once getabspath('classes/controls/ViewControlsContainer.php');
+	$pSet = new ProjectSettings($strTableName, PAGE_LIST);
 	$viewContainer = new ViewControlsContainer($pSet, PAGE_LIST);
 	$viewContainer->isDetailsPreview = true;
 
@@ -229,7 +233,7 @@ if($mode!="inline")
 	$layout = GetPageLayout(GoodFieldName($strTableName), 'detailspreview');
 	if($layout)
 	{
-		foreach($layout->getCSSFiles(isRTL(), mobileDeviceDetected() && $layout->version != BOOTSTRAP_LAYOUT) as $css)
+		foreach($layout->getCSSFiles(isRTL(), isMobile()) as $css)
 		{
 			$returnJSON['CSSFiles'][] = $css;
 		}

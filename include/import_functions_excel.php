@@ -60,7 +60,7 @@ function getImportExcelFields($data)
  * @param String dateFormat
  * @return Array
  */
-function ImportDataFromExcel( $fileHandle, $fieldsData, $keys, $importPageObject, $autoinc, $useFirstLine )
+function ImportDataFromExcel( $fileHandle, $fieldsData, $keys, $importPageObject, $autoinc, $useFirstLine, $dateFormat )
 {
 	global $cCharset;
 	
@@ -108,6 +108,9 @@ function ImportDataFromExcel( $fileHandle, $fieldsData, $keys, $importPageObject
 					if( is_a($cellValue, 'PHPExcel_RichText') )
 						$cellValue = $cellValue->getPlainText();					
 										
+					if( IsDateFieldType( $fieldsData[ $col ]["type"] ) )
+						$cellValue = getDBDateValue( $cellValue, $dateFormat );
+					
 					$error_handler = set_error_handler("empty_error_handler");
 					$cellValue = PHPExcel_Shared_String::ConvertEncoding($cellValue, $cCharset, 'UTF-8');				
 					if( $error_handler )
@@ -183,7 +186,7 @@ function getPreviewDataFromExcel( $fileHandle, &$fieldsData )
 					{
 						$cellDateFormat = $fileHandle->getCellXfByIndex( $cell->getXfIndex() )->getNumberFormat()->getFormatCode();
 						$cellTextValue = PHPExcel_Style_NumberFormat::ToFormattedString($cellValue, $cellDateFormat);
-						$cellValue = getTimeStamp($cellTextValue, $cellDateFormat);	
+						$cellValue = getTimeStamp($cellTextValue, $cellDateFormat);
 
 						if( !$columnMatched )
 							$fieldsData[ $col ] = array();

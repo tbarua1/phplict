@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,442 +12,414 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-search" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_searchpage}
-<div {$searchpage_chiddenattr} data-pageid="{$pageid}" data-container="searchpage" class="container    "> 
-
-
-
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-6 col-md-offset-3"> 
+{BEGIN container_search}
+<div class="rnr-c rnr-cv rnr-c-search">
 
 {BEGIN searchheader}
-	<h2 {$bssearchheader_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchheader" >{$pagetitlelabel trainer search}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END searchheader}
+<div  class="rnr-brickcontents style2 rnr-b-srchheader {$brickclass_srchheader}"><span>	<h1>{$pagetitlelabel trainer search}</h1>
+</span></div>{END searchheader}
 
 
-
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_searchpage}
+{BEGIN conditions_block}
+<div  class="rnr-brickcontents style1 rnr-b-srchconditions {$brickclass_srchconditions}">	<center>
+	<span class=fieldname>Criteria:&nbsp;</span>	
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$all_checkbox}><label for="all_checkbox"> All conditions</label>
+	&nbsp;&nbsp;&nbsp;
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$any_checkbox}><label for="any_checkbox"> Any condition</label>
+	</center></div>{END conditions_block}
 
 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$bssearchfields_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchfields" class="form-horizontal" role="form">
-<div class="container">
-	<div class="form-group">
-		<div class="col-md-12" >
-			&nbsp;
-		</div>
-	</div>
-</div>
+<div  class="rnr-brickcontents style1 rnr-b-srchfields {$brickclass_srchfields}"><table class="fieldGrid">
+	<tr>
+		<td>&nbsp;</td>
+		<td>NOT</td>
+		<td colspan=3>&nbsp; </td>
+	</tr>
+	<tr class="{$fielddispclass_id}">
 	{BEGIN id_fieldblock}		
-	<div class="container {$fielddispclass_id}" data-fieldname="id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_id}">
-				{$label trainer id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_id}
-			</div>
-			<div class="col-md-4" >
-				{$id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer id}
+	</td>
+	<td>
+		<input type="checkbox" {$id_notbox}>
+	</td>
+	<td>
+		{$searchtype_id}
+	</td>
+	<td>
+		{$id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$id_editcontrol1}&nbsp;
+	</td>
 {END id_fieldblock}
-	{BEGIN cid_fieldblock}		
-	<div class="container {$fielddispclass_cid}" data-fieldname="cid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_cid}">
-				{$label trainer cid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_cid}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol1}
-			</div>
-		</div>
-	</div>
-{END cid_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_date}">
 	{BEGIN date_fieldblock}		
-	<div class="container {$fielddispclass_date}" data-fieldname="date">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_date}">
-				{$label trainer date}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_date}
-			</div>
-			<div class="col-md-4" >
-				{$date_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$date_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer date}
+	</td>
+	<td>
+		<input type="checkbox" {$date_notbox}>
+	</td>
+	<td>
+		{$searchtype_date}
+	</td>
+	<td>
+		{$date_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$date_editcontrol1}&nbsp;
+	</td>
 {END date_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_emailid}">
 	{BEGIN emailid_fieldblock}		
-	<div class="container {$fielddispclass_emailid}" data-fieldname="emailid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_emailid}">
-				{$label trainer emailid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_emailid}
-			</div>
-			<div class="col-md-4" >
-				{$emailid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$emailid_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer emailid}
+	</td>
+	<td>
+		<input type="checkbox" {$emailid_notbox}>
+	</td>
+	<td>
+		{$searchtype_emailid}
+	</td>
+	<td>
+		{$emailid_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$emailid_editcontrol1}&nbsp;
+	</td>
 {END emailid_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_experience}">
 	{BEGIN experience_fieldblock}		
-	<div class="container {$fielddispclass_experience}" data-fieldname="experience">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_experience}">
-				{$label trainer experience}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_experience}
-			</div>
-			<div class="col-md-4" >
-				{$experience_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$experience_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer experience}
+	</td>
+	<td>
+		<input type="checkbox" {$experience_notbox}>
+	</td>
+	<td>
+		{$searchtype_experience}
+	</td>
+	<td>
+		{$experience_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$experience_editcontrol1}&nbsp;
+	</td>
 {END experience_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_mobile}">
 	{BEGIN mobile_fieldblock}		
-	<div class="container {$fielddispclass_mobile}" data-fieldname="mobile">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_mobile}">
-				{$label trainer mobile}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_mobile}
-			</div>
-			<div class="col-md-4" >
-				{$mobile_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$mobile_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer mobile}
+	</td>
+	<td>
+		<input type="checkbox" {$mobile_notbox}>
+	</td>
+	<td>
+		{$searchtype_mobile}
+	</td>
+	<td>
+		{$mobile_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$mobile_editcontrol1}&nbsp;
+	</td>
 {END mobile_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_name}">
 	{BEGIN name_fieldblock}		
-	<div class="container {$fielddispclass_name}" data-fieldname="name">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_name}">
-				{$label trainer name}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_name}
-			</div>
-			<div class="col-md-4" >
-				{$name_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$name_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer name}
+	</td>
+	<td>
+		<input type="checkbox" {$name_notbox}>
+	</td>
+	<td>
+		{$searchtype_name}
+	</td>
+	<td>
+		{$name_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$name_editcontrol1}&nbsp;
+	</td>
 {END name_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_natianality}">
 	{BEGIN natianality_fieldblock}		
-	<div class="container {$fielddispclass_natianality}" data-fieldname="natianality">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_natianality}">
-				{$label trainer natianality}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_natianality}
-			</div>
-			<div class="col-md-4" >
-				{$natianality_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$natianality_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer natianality}
+	</td>
+	<td>
+		<input type="checkbox" {$natianality_notbox}>
+	</td>
+	<td>
+		{$searchtype_natianality}
+	</td>
+	<td>
+		{$natianality_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$natianality_editcontrol1}&nbsp;
+	</td>
 {END natianality_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_password}">
 	{BEGIN password_fieldblock}		
-	<div class="container {$fielddispclass_password}" data-fieldname="password">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_password}">
-				{$label trainer password}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_password}
-			</div>
-			<div class="col-md-4" >
-				{$password_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$password_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer password}
+	</td>
+	<td>
+		<input type="checkbox" {$password_notbox}>
+	</td>
+	<td>
+		{$searchtype_password}
+	</td>
+	<td>
+		{$password_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$password_editcontrol1}&nbsp;
+	</td>
 {END password_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_qualification}">
 	{BEGIN qualification_fieldblock}		
-	<div class="container {$fielddispclass_qualification}" data-fieldname="qualification">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_qualification}">
-				{$label trainer qualification}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_qualification}
-			</div>
-			<div class="col-md-4" >
-				{$qualification_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$qualification_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer qualification}
+	</td>
+	<td>
+		<input type="checkbox" {$qualification_notbox}>
+	</td>
+	<td>
+		{$searchtype_qualification}
+	</td>
+	<td>
+		{$qualification_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$qualification_editcontrol1}&nbsp;
+	</td>
 {END qualification_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_registeredDate}">
 	{BEGIN registeredDate_fieldblock}		
-	<div class="container {$fielddispclass_registeredDate}" data-fieldname="registeredDate">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_registeredDate}">
-				{$label trainer registeredDate}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_registeredDate}
-			</div>
-			<div class="col-md-4" >
-				{$registeredDate_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$registeredDate_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer registeredDate}
+	</td>
+	<td>
+		<input type="checkbox" {$registeredDate_notbox}>
+	</td>
+	<td>
+		{$searchtype_registeredDate}
+	</td>
+	<td>
+		{$registeredDate_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$registeredDate_editcontrol1}&nbsp;
+	</td>
 {END registeredDate_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_skillset}">
 	{BEGIN skillset_fieldblock}		
-	<div class="container {$fielddispclass_skillset}" data-fieldname="skillset">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_skillset}">
-				{$label trainer skillset}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_skillset}
-			</div>
-			<div class="col-md-4" >
-				{$skillset_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$skillset_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer skillset}
+	</td>
+	<td>
+		<input type="checkbox" {$skillset_notbox}>
+	</td>
+	<td>
+		{$searchtype_skillset}
+	</td>
+	<td>
+		{$skillset_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$skillset_editcontrol1}&nbsp;
+	</td>
 {END skillset_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_skype}">
 	{BEGIN skype_fieldblock}		
-	<div class="container {$fielddispclass_skype}" data-fieldname="skype">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_skype}">
-				{$label trainer skype}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_skype}
-			</div>
-			<div class="col-md-4" >
-				{$skype_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$skype_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer skype}
+	</td>
+	<td>
+		<input type="checkbox" {$skype_notbox}>
+	</td>
+	<td>
+		{$searchtype_skype}
+	</td>
+	<td>
+		{$skype_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$skype_editcontrol1}&nbsp;
+	</td>
 {END skype_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_username}">
 	{BEGIN username_fieldblock}		
-	<div class="container {$fielddispclass_username}" data-fieldname="username">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_username}">
-				{$label trainer username}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_username}
-			</div>
-			<div class="col-md-4" >
-				{$username_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$username_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer username}
+	</td>
+	<td>
+		<input type="checkbox" {$username_notbox}>
+	</td>
+	<td>
+		{$searchtype_username}
+	</td>
+	<td>
+		{$username_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$username_editcontrol1}&nbsp;
+	</td>
 {END username_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_usertype}">
 	{BEGIN usertype_fieldblock}		
-	<div class="container {$fielddispclass_usertype}" data-fieldname="usertype">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_usertype}">
-				{$label trainer usertype}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_usertype}
-			</div>
-			<div class="col-md-4" >
-				{$usertype_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$usertype_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer usertype}
+	</td>
+	<td>
+		<input type="checkbox" {$usertype_notbox}>
+	</td>
+	<td>
+		{$searchtype_usertype}
+	</td>
+	<td>
+		{$usertype_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$usertype_editcontrol1}&nbsp;
+	</td>
 {END usertype_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_whatsapp}">
 	{BEGIN whatsapp_fieldblock}		
-	<div class="container {$fielddispclass_whatsapp}" data-fieldname="whatsapp">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_whatsapp}">
-				{$label trainer whatsapp}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_whatsapp}
-			</div>
-			<div class="col-md-4" >
-				{$whatsapp_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$whatsapp_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer whatsapp}
+	</td>
+	<td>
+		<input type="checkbox" {$whatsapp_notbox}>
+	</td>
+	<td>
+		{$searchtype_whatsapp}
+	</td>
+	<td>
+		{$whatsapp_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$whatsapp_editcontrol1}&nbsp;
+	</td>
 {END whatsapp_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_photo}">
 	{BEGIN photo_fieldblock}		
-	<div class="container {$fielddispclass_photo}" data-fieldname="photo">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_photo}">
-				{$label trainer photo}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_photo}
-			</div>
-			<div class="col-md-4" >
-				{$photo_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$photo_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label trainer photo}
+	</td>
+	<td>
+		<input type="checkbox" {$photo_notbox}>
+	</td>
+	<td>
+		{$searchtype_photo}
+	</td>
+	<td>
+		{$photo_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$photo_editcontrol1}&nbsp;
+	</td>
 {END photo_fieldblock}
-</div>
+	</tr>
+	<tr class="{$fielddispclass_cid}">
+	{BEGIN cid_fieldblock}		
+	<td>
+		{$label trainer cid}
+	</td>
+	<td>
+		<input type="checkbox" {$cid_notbox}>
+	</td>
+	<td>
+		{$searchtype_cid}
+	</td>
+	<td>
+		{$cid_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$cid_editcontrol1}&nbsp;
+	</td>
+{END cid_fieldblock}
+	</tr>
+
+</table></div>
 
 
+{BEGIN searchbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-srchbuttons {$brickclass_srchbuttons}">{BEGIN search_button}
+<a href="#" class="rnr-button main" {$searchbutton_attrs}>Search</a>
+{END search_button} 
+{BEGIN reset_button}
+<a href="#" class="rnr-button" {$resetbutton_attrs}>Reset</a>
+{END reset_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}</div>{END searchbuttons}
 
 
 </div>
 {END container_fields}
 
-
-
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container form-horizontal   "> 
-
-
-
-
-{BEGIN container_bbuttons}
-<div {$bbuttons_chiddenattr} data-pageid="{$pageid}" data-container="bbuttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-10 col-md-offset-2"> 
-
-{BEGIN searchbuttons}
-{BEGIN search_button}
-<button class="btn btn-primary" {$searchbutton_attrs}>Search</button>
-{END search_button} 
-{BEGIN reset_button}
-<button class="btn btn-default" {$resetbutton_attrs}>Reset</button>
-{END reset_button}
-{BEGIN back_button}
-<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{END searchbuttons}
-
+</div>
 
 
 </div>
-{END container_leftbuttons}
-
-
-
-
-
-
-</div>
-{END container_bbuttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
+{END container_search}
 
 
 		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 			</div>
-			<div class="bs-left" {$blockattr_left}>
+			<div class="rnr-center {$blockclass_center}">
 				
 			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
-		<DIV class="bs-bottom">
-        
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
 		</div>
+	</div>
+		
 		{$footer}
 	{END body}
 	</body>

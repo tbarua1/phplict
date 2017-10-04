@@ -6,7 +6,7 @@ class SQLEntity
 {
 	protected $connection = null;
 	
-	function __construct(){}
+	function SQLEntity(){}
 	function IsAggregationFunctionCall() 
 	{
 		return false;
@@ -41,7 +41,7 @@ class SQLEntity
 class SQLNonParsed extends SQLEntity
 {
 	var $m_sql;
-	function __construct($proto)
+	function SQLNonParsed($proto)
 	{
 		$this->m_sql = isset($proto["m_sql"]) ? $proto["m_sql"] : '';
 	}
@@ -71,7 +71,7 @@ class SQLField extends SQLEntity
 	protected $m_srcTableName;
 	
 	
-	function __construct($proto)
+	function SQLField($proto)
 	{
 		$this->m_strName = isset($proto["m_strName"]) ? $proto["m_strName"] : null;
 		$this->m_strTable = isset($proto["m_strTable"]) ? $proto["m_strTable"] : null;
@@ -128,7 +128,7 @@ class SQLFieldListItem extends SQLEntity
 	protected $m_srcTableName;
 	
 	
-	function __construct($proto)
+	function SQLFieldListItem($proto)
 	{
 		$this->m_expr = isset($proto["m_expr"]) ? $proto["m_expr"] : null;
 		$this->m_alias = isset($proto["m_alias"]) ? $proto["m_alias"] : null;
@@ -159,12 +159,8 @@ class SQLFieldListItem extends SQLEntity
 				
 			}
 		}
-		if($this->m_isEncrypted ) 
-		{
-			// ASP conversion requirement
-			if( !$query->cipherer->isEncryptionByPHPEnabled() )
-				$ret = $query->cipherer->GetEncryptedFieldName($ret);
-		}
+		if($this->m_isEncrypted && !isEncryptionByPHPEnabled())
+			$ret = $query->cipherer->GetEncryptedFieldName($ret);
 		
 		if($addAlias)
 		{
@@ -177,14 +173,10 @@ class SQLFieldListItem extends SQLEntity
 			}
 			elseif(is_object($this->m_expr))
 			{
-				if($this->m_expr->IsSQLField() && $query->cipherer != null )
+				if($this->m_expr->IsSQLField() && $query->cipherer != null && !isEncryptionByPHPEnabled())
 				{
-					// ASP conversion requirement
-					if( !$query->cipherer->isEncryptionByPHPEnabled() )
-					{
-						if($query->cipherer->isFieldEncrypted($this->m_expr->m_strName)){
-							$ret .= ' as ' . $this->connection->addFieldWrappers($this->m_expr->m_strName); 
-						}
+					if($query->cipherer->isFieldEncrypted($this->m_expr->m_strName)){
+						$ret .= ' as ' . $this->connection->addFieldWrappers($this->m_expr->m_strName); 
 					}
 				}
 			}
@@ -239,7 +231,7 @@ class SQLFromListItem extends SQLEntity
 	 */
 	protected $m_srcTableName;
 	
-	function __construct($proto)
+	function SQLFromListItem($proto)
 	{
 		$this->m_link = isset($proto["m_link"]) ? $proto["m_link"] : null;
 		$this->m_table = isset($proto["m_table"]) ? $proto["m_table"] : null;
@@ -266,7 +258,18 @@ class SQLFromListItem extends SQLEntity
 		}
 		else
 		{
-			return $this->m_sql;
+			if($this->m_table)
+			{
+				if( false && is_a($this->m_table, 'SQLQuery'))
+				{
+					$ret = $this->m_sql;
+					$skipAlias = true;
+				}
+				else
+				{
+					$ret .= '(' . $this->m_table->toSql($query) . ')';
+				}
+			}
 		}
 		
 		if($this->m_alias != '' && !$skipAlias)
@@ -327,7 +330,7 @@ class SQLJoinOn extends SQLEntity
 	var $m_field1;
 	var $m_field2;
       
-	function __construct($proto)
+	function SQLJoinOn($proto)
 	{
 		$this->m_field1 = isset($proto["m_field1"]) ? $proto["m_field1"] : null;
 		$this->m_field2 = isset($proto["m_field2"]) ? $proto["m_field2"] : null;
@@ -339,7 +342,7 @@ class SQLFunctionCall extends SQLEntity
 	var $m_functiontype;
 	var $m_strFunctionName;
 	var $m_arguments;
-	function __construct($proto)
+	function SQLFunctionCall($proto)
 	{
 		$this->m_functiontype = isset($proto["m_functiontype"]) ? $proto["m_functiontype"] : null;
 		$this->m_strFunctionName = isset($proto["m_strFunctionName"]) ? $proto["m_strFunctionName"] : null;
@@ -395,7 +398,7 @@ class SQLFunctionCall extends SQLEntity
 class SQLGroupByItem extends SQLEntity
 {
 	var $m_column;
-	function __construct($proto)
+	function SQLGroupByItem($proto)
 	{
 		$this->m_column = isset($proto["m_column"]) ? $proto["m_column"] : null;
 	}
@@ -430,7 +433,7 @@ class SQLLogicalExpr extends SQLEntity
 	var $query;
 	var $postSql;
 	
-	function __construct($proto)
+	function SQLLogicalExpr($proto)
 	{
 		$this->m_sql = isset($proto["m_sql"]) ? $proto["m_sql"] : null;
 		$this->m_uniontype = isset($proto["m_uniontype"]) ? $proto["m_uniontype"] : null;
@@ -564,7 +567,7 @@ class SQLOrderByItem extends SQLEntity
 	var $m_column;
 	var $m_bAsc;
 	var $m_nColumn;
-	function __construct($proto)
+	function SQLOrderByItem($proto)
 	{
 		$this->m_column = isset($proto["m_column"]) ? $proto["m_column"] : null;
 		$this->m_bAsc = isset($proto["m_bAsc"]) ? $proto["m_bAsc"] : null;
@@ -605,7 +608,7 @@ class SQLTable extends SQLEntity
 	protected $m_srcTableName;	
 	
 	
-	function __construct($proto)
+	function SQLTable($proto)
 	{
 		$this->m_strName = isset($proto["m_strName"]) ? $proto["m_strName"] : null;
 		$this->m_columns = isset($proto["m_columns"]) ? $proto["m_columns"] : null;
@@ -634,6 +637,7 @@ class SQLQuery extends SQLEntity
 	var $m_strFrom;
 	var $m_strWhere;
 	var $m_strOrderBy;
+	var $m_strTail;
 	var $m_where;
 	var $m_having;
 	var $m_fieldlist;
@@ -641,7 +645,6 @@ class SQLQuery extends SQLEntity
 	var $m_groupby;
 	var $m_orderby;
 	var $bHasAsterisks = false;
-	var $m_proto = array();
 	/**
 	 * Instance of Cypher class for encoding/decoding fields values and names  
 	 *
@@ -649,16 +652,16 @@ class SQLQuery extends SQLEntity
 	 */
 	var $cipherer = null;
 	
-	public $m_srcTableName;
+	protected $m_srcTableName;
 	
-	function __construct($proto)
+	function SQLQuery($proto)
 	{
-		$this->m_proto = $proto;
 		$this->m_strHead = isset($proto["m_strHead"]) ? $proto["m_strHead"] : null;
 		$this->m_strFieldList = isset($proto["m_strFieldList"]) ? $proto["m_strFieldList"] : null;
 		$this->m_strFrom = isset($proto["m_strFrom"]) ? $proto["m_strFrom"] : null;
 		$this->m_strWhere = isset($proto["m_strWhere"]) ? $proto["m_strWhere"] : null;
 		$this->m_strOrderBy = isset($proto["m_strOrderBy"]) ? $proto["m_strOrderBy"] : null;
+		$this->m_strTail = isset($proto["m_strTail"]) ? $proto["m_strTail"] : null;
 		$this->m_where = isset($proto["m_where"]) ? $proto["m_where"] : null;
 		$this->m_having = isset($proto["m_having"]) ? $proto["m_having"] : null;
 		$this->m_fieldlist = isset($proto["m_fieldlist"]) ? $proto["m_fieldlist"] : null;
@@ -666,6 +669,7 @@ class SQLQuery extends SQLEntity
 		$this->m_groupby = isset($proto["m_groupby"]) ? $proto["m_groupby"] : null;
 		$this->m_orderby = isset($proto["m_orderby"]) ? $proto["m_orderby"] : null;
 		$this->cipherer = isset($proto["cipherer"]) ? $proto["cipherer"] : null;
+		
 		$this->m_srcTableName = $proto["m_srcTableName"];
 		
 		for($nCnt = 0; $nCnt < count($this->m_fromlist); $nCnt++)
@@ -685,26 +689,10 @@ class SQLQuery extends SQLEntity
 		}
 	}
 	
-	function updateProto() 
-	{
-		$this->m_proto["m_strHead"] = $this->m_strHead;
-		$this->m_proto["m_strFieldList"] = $this->m_strFieldList;
-		$this->m_proto["m_strFrom"] = $this->m_strFrom;
-		$this->m_proto["m_strWhere"] = $this->m_strWhere;
-		$this->m_proto["m_strOrderBy"] = $this->m_strOrderBy;
-		$this->m_proto["m_where"] = $this->m_where;
-		$this->m_proto["m_having"] = $this->m_having;
-		$this->m_proto["m_fieldlist"] = $this->m_fieldlist;
-		$this->m_proto["m_fromlist"] = $this->m_fromlist;
-		$this->m_proto["m_groupby"] = $this->m_groupby;
-		$this->m_proto["m_orderby"] = $this->m_orderby;
-		$this->m_proto["cipherer"] = $this->cipherer;
-		$this->m_proto["m_srcTableName"] = $this->m_srcTableName;
-	}
-	
 	function CloneObject()
 	{
-		return new SQLQuery( $this->m_proto );
+		$serializedObject = serialize($this);
+		return unserialize($serializedObject);
 	}
 	
 	function FromToSql()
@@ -743,6 +731,11 @@ class SQLQuery extends SQLEntity
 		}
 	
 		return $sql;
+	}
+	
+	function TailToSql()
+	{
+		return $this->m_strTail;
 	}
 	
 	function HavingToSql()
@@ -835,19 +828,6 @@ class SQLQuery extends SQLEntity
 		}
 		return $sql;
 	}
-
-	function GroupByHavingToSql()
-	{
-		$sql = "";
-		$sqlGroup = $this->GroupByToSql();
-		$sqlHaving = $this->HavingToSql();
-		if ( strlen($sqlGroup) )
-			$sql .= $sqlGroup;
-		if ( strlen($sqlHaving) )
-			$sql .= " HAVING ". $sqlHaving;
-
-		return $sql;
-	}
 		
 	function toSql($strwhere = null, $strorderby = null, $strhaving = null, $oneRecordMode = false, $joinFromPart = null)
 	{
@@ -900,7 +880,7 @@ class SQLQuery extends SQLEntity
 			}
 		}
 		
-		if($strorderby !== null)
+		if($strorderby != null)
 		{
 			$sql .= $strorderby . "\r\n";
 		}
@@ -1124,7 +1104,6 @@ class SQLQuery extends SQLEntity
 		
 		$myobj = new SQLFieldListItem($myproto);
 		$this->m_fieldlist[] = $myobj;
-		$this->updateProto();
 	}
 	
 	function replaceField($_field, $_newfield, $_newalias = "")
@@ -1156,7 +1135,6 @@ class SQLQuery extends SQLEntity
 			$myobj = new SQLFieldListItem($myproto);
 			$this->m_fieldlist[$_field] = $myobj;
 		}
-		$this->updateProto();
 	}
 	
 	function deleteField($_field)
@@ -1178,151 +1156,97 @@ class SQLQuery extends SQLEntity
 			array_splice($fieldlist, $_field,1);
 			$this->m_fieldlist = $fieldlist;
 		}
-		$this->updateProto();
-	}
-
-	/**
-	 * Deletes all fields from the SELECT-list except a single field.
-	 * @param Integer idx - 0-based index of the field to leave in the query.
-	 */
-	function deleteAllFieldsExcept( $idx )
-	{
-		$field = $this->m_fieldlist[ $idx ];
-		$this->m_fieldlist = array();
-		$this->m_fieldlist[] = $field;
-	}
-
-	/**
-	 *	DEPRECATED
-	 *	This function exists for backward compatibility only ( webreports etc )
-	 */
-	function gSQLWhere( $where )
-	{
-		return $this->buildSQL_default( array( $where ) );
 	}
 	
-	/**
-	 *
-	 */
-	function getSqlComponents( $oneRecordMode = false ) 
+	function gSQLWhere($where, $having="", $searchCriteria="or")
 	{
-		return array(
-			"head" => $this->HeadToSql( $oneRecordMode ),
-			"from" => $this->FromToSql(),
-			"where" => $this->WhereToSql(),
-			"groupby" => $this->GroupByToSql(),
-			"having" => $this->Having()->toSql($this)
-		);
+		return $this->gSQLWhere_having_fromQuery("", $where, $having, $searchCriteria);
 	}
-
-	function buildSQL_default( $additionalWhere = "" ){
+	
+	function gSQLWhere_having_fromQuery($sqlWhereExpr, $where="", $having="", $criteria = "or"){
+		return SQLQuery::gSQLWhere_having($this->HeadToSql(), $this->FromToSql(), whereAdd($this->WhereToSql(), $sqlWhereExpr)
+			, $this->GroupByToSql(), $this->Having()->toSql($this), $where, $having, $criteria);
+	}
+	
+	static function gSQLWhere_having($sqlHead, $sqlFrom, $sqlWhere, $sqlGroupBy, $sqlHaving, $where="", $having="", $criteria = "or")
+	{
+		$strWhere = whereAdd($sqlWhere,$where);
+		if(strlen($strWhere) && $sqlWhere != '(1=1)')
+			$strWhere=" where ".$strWhere." ";
 		
-		if( !is_array( $additionalWhere ) )
-			$additionalWhere = array( $additionalWhere );
-
-		return SQLQuery::buildSQL( $this->getSqlComponents(), $additionalWhere );
-	}
-
+		$sqlW="";
+		if(strlen($sqlWhere) && $sqlWhere != '(1=1)')
+			$sqlW=" where ".$sqlWhere." ";
 	
-	/**
-	 * Build SQL query from components.
-	 *
-	 * @param Array $sqlParts - array of original SQL parts. Keys are "head", "from", "where", "groupby", "having"
-	 *							All of this comes from the original SQL query. No user input or database data can be added to these parameters. They are treated with DB:PrepareSQL
-	 * @param Array $mandatoryWhere - these are mandatory WHERE cases. Records in the subset must agree with ALL these conditions. Security, master-details, filters, Search with 'all criteria' etc.
-	 * @param Array $mandatoryHaving - the same as $mandatoryWhere.
-	 * @param Array $optionalWhere - these are Search clauses. Records in the subset may agree with AT LEAST ONE of the conditions. Search with 'or' criteria and all-fields search go here.
-	 * @param Array $optionalHaving - the same as $optionalWhere.
-	 * @return String
-	 */
-	
-	static function buildSQL( $sqlParts, $mandatoryWhere = array(), $mandatoryHaving = array(), $optionalWhere = array(), $optionalHaving = array() )
-	{
+		$strHaving = whereAdd($sqlHaving, $having);
+		if (strlen($strHaving) && $strHaving != '(1=1)')
+			$strHaving =" having ".$strHaving." ";
 		
-		//	process templates in SQL
-		$prepSqlParts = array();
-		foreach( $sqlParts as $k => $s ) {
-			$prepSqlParts[ $k ] = DB::PrepareSQL( $s );
+		$sqlH="";
+		if(strlen($sqlHaving) && $sqlHaving != '(1=1)' || $criteria == 'and' && strlen($having) && $having != '(1=1)'){
+			$sqlH = " having ".$sqlHaving;
+			if($criteria == 'and' && strlen($having) && $having != '(1=1)')
+				$sqlH .= " ".(strlen($sqlHaving) && strlen($having) ? ' and ' : '').$having;
+		}
+			
+		$sql1="";
+		$sql2="";
+		$union="";
+		
+		if(strlen($where) && $where != '(1=1)' || !strlen($having) || $having == '(1=1)' || $criteria == "and")
+			$sql1=$sqlHead." ".$sqlFrom.' '.$strWhere.' '.$sqlGroupBy.' '.$sqlH;
+		
+		if (strlen($having) && $having != '(1=1)' && $criteria == "or"){
+			$sql2 = $sqlHead." ".$sqlFrom.' '.$sqlW.' '.$sqlGroupBy.' '.$strHaving;
 		}
 		
-		$sqlHead = $prepSqlParts["head"];
-		if( 0 == strlen( $sqlHead ) )
-			$sqlHead = "select * ";
-		
-		$unionMode = ( $optionalWhere && $optionalHaving );
-		
-		$mWhere = SQLQuery::combineCases( $mandatoryWhere, "and" );
-		$oWhere = SQLQuery::combineCases( $optionalWhere, "or" );
-		$mHaving = SQLQuery::combineCases( $mandatoryHaving, "and" );
-		$oHaving = SQLQuery::combineCases( $optionalHaving, "or" );
-		if( strlen($oWhere) && strlen($oHaving) ) 
-		{
-			//	UNION mode
-			$where1 = SQLQuery::combineCases( array( $mWhere, $oWhere, $prepSqlParts["where"] ), "and" );
-			$having1 = SQLQuery::combineCases( array( $mHaving, $prepSqlParts["having"] ), "and" );
-			$where2 = SQLQuery::combineCases( array( $mWhere, $prepSqlParts["where"] ), "and" );
-			$having2 = SQLQuery::combineCases( array( $mHaving, $oHaving, $prepSqlParts["having"] ), "and" );
+		if($sql1 && $sql2)
+			$union=" union ";
+			
+		$sql = $sql1.$union.$sql2;
 
-			if( 0 != strlen($where1) )
-				$where1 = " WHERE " . $where1;
-			if( 0 != strlen($having1) )
-				$having1 = " HAVING " . $having1;
-			if( 0 != strlen($where2) )
-				$where2 = " WHERE " . $where2;
-			if( 0 != strlen($having2) )
-				$having2 = " HAVING " . $having2;
-			
-			return implode( " ", array( $sqlHead, 
-									$prepSqlParts["from"],  
-									$where1, 
-									$prepSqlParts["groupby"], 
-									$having1,
-									"union",
-									$sqlHead, 
-									$prepSqlParts["from"],  
-									$where2, 
-									$prepSqlParts["groupby"], 
-									$having2
-								) );
-			
-		}
+		return $sql;
+	}
+	
+	/** 
+	 * get count of rows from the query
+	 * @param String where
+	 * @param Connection connection
+	 * @param String having (optional)
+	 * @param String searchCriteria (optional)
+	 */
+	public function gSQLRowCount($where, $connection, $having="", $searchCriteria="or")
+	{
+		return SQLQuery::gSQLRowCount_int($this->HeadToSql(), $this->FromToSql(), $this->WhereToSql(), $this->GroupByToSql()
+			, $this->Having()->toSql($this), $where, $having, $connection, $searchCriteria);
+	}
+	
+	/**
+	 * @param String sqlHead
+	 * @param String sqlFrom
+	 * @param String sqlWhere
+	 * @param String sqlGroupBy
+	 * @param String sqlHaving
+	 * @param String where
+	 * @param String having
+	 * @param Connection connection
+	 * @param String criteria (optional)
+	 */
+	static function gSQLRowCount_int($sqlHead, $sqlFrom, $sqlWhere, $sqlGroupBy, $sqlHaving, $where, $having, $connection, $criteria="or")
+	{		
+		$strWhere = whereAdd($sqlWhere, $where);
+		if( strlen($strWhere) )
+			$strWhere = " where ".$strWhere." ";
+		
+		$useAsSubquery = strlen( $sqlGroupBy ) > 0;
+		
+		if( !$useAsSubquery )
+			$sql = $sqlFrom.$strWhere;
 		else
-		{
-			$where = SQLQuery::combineCases( array( $mWhere, $oWhere, $prepSqlParts["where"] ), "and" );
-			$having = SQLQuery::combineCases( array( $mHaving, $oHaving, $prepSqlParts["having"] ), "and" );
-			
-			if( 0 != strlen($where) )
-				$where = " WHERE " . $where;
-
-			if( 0 != strlen($having) )
-				$having = " HAVING " . $having;
-			
-			return implode( " ", array( $sqlHead, 
-									$prepSqlParts["from"],  
-									$where, 
-									$prepSqlParts["groupby"], 
-									$having 
-								) );
-		}
+			$sql = SQLQuery::gSQLWhere_having($sqlHead, $sqlFrom, $sqlWhere, $sqlGroupBy, $sqlHaving, $where, $having, $criteria);
 		
+		return $connection->getFetchedRowsNumber( $sql, $useAsSubquery );
 	}
-	
-	static function combineCases( $_cases, $operator )
-	{
-		$cases = array();
-		foreach( $_cases as $c ) {
-			if( 0 != strlen( trim( $c ) ) )
-				$cases[] = $c;
-		}
-		
-		$result = implode( " ) " . $operator . " ( ", $cases );
-		if( 0 == strlen( $result ) )
-			return "";
-		return "( " . $result . " )";
-	}
-	
-	
-	
 	
 	/**
 	 * Check whether the column specified by an index is a field that comes from the main table.
@@ -1352,7 +1276,7 @@ class SQLQuery extends SQLEntity
 
 class SQLCountQuery extends SQLQuery
 {
-	function __construct($src)
+	function SQLCountQuery($src)
 	{
 		// copy base class memebers
 		foreach($src as $k => $v)

@@ -76,7 +76,7 @@ class ViewControl
 	 * addJSFiles
 	 * Add control JS files to page object
 	 */
-	public function addJSFiles()
+	function addJSFiles()
 	{
 		//example
 		// $this->AddJSFile("include/mupload.js");
@@ -86,7 +86,7 @@ class ViewControl
 	 * addCSSFiles
 	 * Add control CSS files to page object
 	 */ 
-	public function addCSSFiles()
+	function addCSSFiles()
 	{
 		//example
 		// $this->AddCSSFile("include/mupload.css");
@@ -96,7 +96,7 @@ class ViewControl
 	 * The container's AddCSSFile method wrapper
 	 * @param {String}
 	 */
-	public function AddCSSFile($fileName) 
+	function AddCSSFile($fileName) 
 	{
 		$this->getContainer()->AddCSSFile($fileName);
 	}
@@ -105,12 +105,12 @@ class ViewControl
 	 * The container's AddJSFile method wrapper
 	 * @param {String}
 	 */	
-	public function AddJSFile($fileName, $req1="", $req2="", $req3="") 
+	function AddJSFile($fileName, $req1="", $req2="", $req3="") 
 	{
 		$this->getContainer()->AddJSFile($fileName,  $req1, $req2, $req3);
 	}
 	
-	public function getContainer()
+	function getContainer()
 	{
 		if(!is_null($this->pageObject))
 			return $this->pageObject;
@@ -118,7 +118,7 @@ class ViewControl
 			return $this->container;
 	}
 	
-	public function __construct($field, $container, $pageObject = null)
+	public function ViewControl($field, $container, $pageObject = null)
 	{	
 		$this->useUTF8 = "utf-8" == "utf-8";
 		$this->field = $field;
@@ -155,7 +155,7 @@ class ViewControl
 	 * @param String keylink
 	 * @return String	 
 	 */
-	public function showDBValue(&$data, $keylink)
+	public function showDBValue(&$data, $keylink = "")
 	{
 		$value = $data[$this->field];
 				
@@ -164,7 +164,6 @@ class ViewControl
 			$value = "LONG BINARY DATA - CANNOT BE DISPLAYED";
 			$this->searchHighlight = false; 
 		} 
-		
 		if($value === false)
 			$value = "";
 		
@@ -211,7 +210,7 @@ class ViewControl
 		if( !is_null($this->pageObject) )
 		{
 			$mode = $this->pageObject->mode;
-			$isMobileLookup = ($mode == LIST_LOOKUP) && $this->pageObject->mobileTemplateMode();
+			$isMobileLookup = ($mode == LIST_LOOKUP) && isMobile();
 			$inlineOrFlyMode = $pageType == PAGE_EDIT && ($mode == EDIT_INLINE || $mode == EDIT_POPUP) || $pageType == PAGE_ADD && ($mode == ADD_INLINE || $mode == ADD_POPUP);
 		}
 		$isDetailPreview = $this->container->isDetailsPreview;
@@ -285,7 +284,7 @@ class ViewControl
 		if ( $mode == LIST_LOOKUP )
 			$params.= '&maintable='.$this->pageObject->mainTable.'&mainfield='.$this->pageObject->mainField;
 					
-		return $truncatedValue.' <a href="javascript:void(0);" data-gridlink data-query="'.GetTableLink('fulltext', '', $params).'">'."More".'&nbsp;...</a>';
+		return $truncatedValue.' <a href="javascript:void(0);" data-query="'.GetTableLink('fulltext', '', $params).'">'."More".'&nbsp;...</a>';
 	}
 
 	/**
@@ -838,7 +837,7 @@ class ViewControlTypes
 {
 	public $viewTypes = array();
 		
-	function __construct() 
+	function ViewControlTypes() 
 	{		
 		$this->viewTypes[FORMAT_NONE] = "";
 		$this->viewTypes[FORMAT_DATE_SHORT] = "ViewShortDateField";

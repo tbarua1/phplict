@@ -1,9 +1,9 @@
 <?php
 class CheckboxField extends EditControl
 {
-	function __construct($field, $pageObject, $id, $connection)
+	function CheckboxField($field, $pageObject, $id, $connection)
 	{
-		parent::__construct($field, $pageObject, $id, $connection);
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = EDIT_FORMAT_CHECKBOX;
 	}
 	
@@ -26,7 +26,7 @@ class CheckboxField extends EditControl
 		{
 			echo '<input id="'.$this->ctype.'" type="hidden" name="'.$this->ctype.'" value="checkbox">';
 			echo '<select id="'.$this->cfield.'" '.(($mode == MODE_INLINE_EDIT || $mode == MODE_INLINE_ADD) && $this->is508==true ? 'alt="'
-				.$this->strLabel.'" ' : '').'name="'.$this->cfield.'" class="'. ( $this->pageObject->getLayoutVersion() == BOOTSTRAP_LAYOUT ? ' form-control' : '' ) . '">';
+				.$this->strLabel.'" ' : '').'name="'.$this->cfield.'">';
 				
 			$val = array( "" => array(), "True" => array("on", "1"), "False" => array("off", "0") );		
 			$optval = array("", "on", "off");
@@ -40,12 +40,7 @@ class CheckboxField extends EditControl
 			
 			echo "</select>";
 		}
-		$this->buildControlEnd($validate, $mode);
-	}
-
-	function getFirstElementId()
-	{
-		return $this->cfield;
+		$this->buildControlEnd($validate);
 	}
 	
 	function SQLWhere($SearchFor, $strSearchOption, $SearchFor2, $etype, $isSuggest)

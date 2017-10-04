@@ -148,7 +148,7 @@ function ExportExcelTotals($arrTotal, $arrTotalMessage, $row, $objPHPExcel)
 		$col++;
 	}
 }
-function ExportExcelSave($filename, $format, $objPHPExcel)
+function ExportExcelSave($filename,$format,$objPHPExcel)
 {
 	global $cCharset;
 	$filename = PHPExcel_Shared_String::ConvertEncoding($filename, 'UTF-8', $cCharset);

@@ -14,9 +14,9 @@ class ODBCConnection extends Connection
 	protected $ODBCPWD;
 	
 	
-	function __construct( $params )
+	function ODBCConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -47,7 +47,7 @@ class ODBCConnection extends Connection
 
 		$this->conn = odbc_connect( $this->ODBCString, $uid, $pwd );
 		if( !$this->conn ) 
-			$this->triggerError( $this->lastError() );
+			trigger_error( $this->lastError(), E_USER_ERROR );
 		
 		return $this->conn;
 	}
@@ -72,7 +72,7 @@ class ODBCConnection extends Connection
 		$rs = odbc_exec( $this->conn, $sql );
 		if( !$rs )
 		{
-			$this->triggerError(odbc_error());
+			trigger_error(odbc_error(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -99,15 +99,24 @@ class ODBCConnection extends Connection
 	{
 		return @odbc_errormsg();
 	}
+	
+	/**	
+	 * Get the auto generated id used in the last query
+	 * @return Number
+	 */
+	public function getInsertedId()
+	{
+		return 0;
+	}
 
 	/**
 	 * Fetch a result row as an associative array
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return odbc_fetch_array($qHandle);
+		return odbc_fetch_array($qHanle);
 	}
 	
 	/**	
@@ -115,10 +124,10 @@ class ODBCConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
 		$row = array();
-		odbc_fetch_into($qHandle, $row);
+		odbc_fetch_into($qHanle, $row);
 		
 		return $row;
 	}
@@ -127,9 +136,9 @@ class ODBCConnection extends Connection
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@odbc_free_result($qHandle);
+		@odbc_free_result($qHanle);
 	}
 
 	/**	
@@ -148,9 +157,9 @@ class ODBCConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return @odbc_field_name($qHandle, $offset + 1);
+		return @odbc_field_name($qHanle, $offset + 1);
 	}
 	
 	/**

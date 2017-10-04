@@ -4,9 +4,9 @@ class SQLite3Connection extends Connection
 	protected $dbname;
 	
 	
-	function __construct( $params )
+	function SQLite3Connection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 	
 	/**
@@ -28,7 +28,7 @@ class SQLite3Connection extends Connection
 		$this->conn = new SQLite3( $this->dbname );
 		
 		if (!$this->conn) 
-		  $this->triggerError($this->conn->lastErrorMsg());
+		  trigger_error($this->conn->lastErrorMsg(), E_USER_ERROR);
 		
 		return $this->conn;		
 	}
@@ -53,7 +53,7 @@ class SQLite3Connection extends Connection
 		$ret = $this->conn->query($sql);
 		if( !$ret )
 		{
-			$this->triggerError($this->conn->lastErrorMsg());
+			trigger_error($this->conn->lastErrorMsg(), E_USER_ERROR);
 			return FALSE;
 		}
 
@@ -83,9 +83,9 @@ class SQLite3Connection extends Connection
 	 * Get the auto generated id used in the last query
 	 * @return Number
 	 */
-	public function getInsertedId($key = null, $table = null , $oraSequenceName = false)
+	public function getInsertedId()
 	{
-		return @$this->conn->lastInsertRowID();
+		return 0;
 	}
 	
 	/**	
@@ -93,9 +93,9 @@ class SQLite3Connection extends Connection
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return $qHandle->fetchArray($mode = SQLITE3_ASSOC);
+		return $qHanle->fetchArray($mode = SQLITE3_ASSOC);
 	}
 	
 	/**
@@ -103,18 +103,18 @@ class SQLite3Connection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return $qHandle->fetchArray($mode = SQLITE3_NUM);
+		return $qHanle->fetchArray($mode = SQLITE3_NUM);
 	}
 	
 	/**
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		$qHandle->finalize();
+		$qHanle->finalize();
 	}
 
 	/**	
@@ -133,9 +133,9 @@ class SQLite3Connection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return $qHandle->columnName($offset);
+		return $qHanle->columnName($offset);
 	}
 	
 	/**

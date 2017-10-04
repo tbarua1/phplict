@@ -48,7 +48,6 @@ function InitLookupLinks()
 	$lookupTableLinks["employees"]["batch.local_spoc"]["edit"] = array("table" => "batch", "field" => "local_spoc", "page" => "edit");
 	$lookupTableLinks["employees"]["batch.tech_trainer"]["edit"] = array("table" => "batch", "field" => "tech_trainer", "page" => "edit");
 	$lookupTableLinks["employees"]["batch.soft_skill_trainer"]["edit"] = array("table" => "batch", "field" => "soft_skill_trainer", "page" => "edit");
-	$lookupTableLinks["batch"]["batchschedule.Batchcode"]["edit"] = array("table" => "batchschedule", "field" => "Batchcode", "page" => "edit");
 	$lookupTableLinks["employees"]["consultant.eid"]["edit"] = array("table" => "consultant", "field" => "eid", "page" => "edit");
 	$lookupTableLinks["division"]["consultant.divison_id"]["edit"] = array("table" => "consultant", "field" => "divison_id", "page" => "edit");
 	$lookupTableLinks["division"]["district.division_id"]["edit"] = array("table" => "district", "field" => "division_id", "page" => "edit");

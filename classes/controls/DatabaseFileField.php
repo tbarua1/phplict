@@ -1,9 +1,9 @@
 <?php
 class DatabaseFileField extends EditControl
 {
-	function __construct($field, $pageObject, $id, $connection)
+	function DatabaseFileField($field, $pageObject, $id, $connection)
 	{
-		parent::__construct($field, $pageObject, $id, $connection);
+		parent::EditControl($field, $pageObject, $id, $connection);
 		$this->format = $pageObject->pSetEdit->getEditFormat($field);
 	}
 	
@@ -131,7 +131,7 @@ class DatabaseFileField extends EditControl
 			.(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508 ? 'alt="'.$this->strLabel.'" ' : '').' name="'
 			.$this->cfield.'" >'.$strfilename;
 		echo '<input type="Hidden" id="notempty_'.$this->cfieldname.'" value="'.(strlen($value) ? 1 : 0).'">';
-		$this->buildControlEnd($validate, $mode);
+		$this->buildControlEnd($validate);
 	}
 
 	/** 

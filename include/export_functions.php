@@ -4,124 +4,133 @@ require_once getabspath("include/export_functions_excel.php");
 
 function ExportToExcel($rs, $nPageSize, $eventObj, $cipherer, $pageObj)
 {
-	if( $eventObj->exists("ListFetchArray") )
-		$row = $eventObj->ListFetchArray( $rs, $pageObj );
+	if($eventObj->exists("ListFetchArray"))
+		$row = $eventObj->ListFetchArray($rs, $pageObj);
 	else
 		$row = $cipherer->DecryptFetchedArray( $pageObj->connection->fetch_array( $rs ) );
 	
+	$tmpArr = array();
 	$totals = array();
 	$arrLabel = array();
 	$arrTotal = array();
 	$arrFields = array();
+	$arrTmpTotal = array();
 	$arrColumnWidth = array();
 	$arrTotalMessage = array();
 	
-	foreach( $pageObj->selectedFields as $field )
-	{
-		if( $pageObj->pSet->appearOnExportPage( $field ) )
-			$arrFields[] = $field;
-	}
+	$tmpArr = $pageObj->pSet->getExportFields();
+	
+	foreach($tmpArr as $value)
+		if($pageObj->pSet->appearOnExportPage($value))
+			$arrFields[] = $value;
 	
 	$arrTmpTotal = $pageObj->pSet->getTotalsFields();
-	$pageObj->viewControls->setForExportVar( "excel" );
-	foreach( $arrFields as $field )
+	$pageObj->viewControls->forExport = "excel";
+	foreach($arrFields as $value)
 	{
-		$arrLabel[ $field ] = GetFieldLabel( GoodFieldName( $pageObj->tName ), GoodFieldName( $field ) ); 
-		$arrColumnWidth[ $field ] = 10;
-		$totals[ $field ] = array("value" => 0, "numRows" => 0);
-		
-		foreach( $arrTmpTotal as $tvalue )
+		$arrLabel[$value] = GetFieldLabel(GoodFieldName($pageObj->tName), GoodFieldName($value)); 
+		$arrColumnWidth[$value] = 10;
+		$totals[$value] = array("value" => 0, "numRows" => 0);
+		$totalsType = "";
+		foreach($arrTmpTotal as $tvalue)
 		{
-			if( $tvalue["fName"] == $field ) 
-				$totalsFields[] = array( 'fName' => $field, 'totalsType' => $tvalue["totalsType"], 'viewFormat' => $pageObj->pSet->getViewFormat( $field ) );
+			if($tvalue["fName"] == $value) {
+				$totalsType = $tvalue["totalsType"];
+				$totalsFields[] = array('fName'=>$value, 'totalsType'=>$totalsType, 'viewFormat'=>$pageObj->pSet->getViewFormat($value));
+			}	
 		}
+
 	}
 	
 // write data rows
 	$iNumberOfRows = 0;
 	
-	$objPHPExcel = ExportExcelInit( $arrLabel, $arrColumnWidth );
+	$objPHPExcel = ExportExcelInit($arrLabel,$arrColumnWidth);
 	
-	while( (!$nPageSize || $iNumberOfRows < $nPageSize) && $row )
+	while((!$nPageSize || $iNumberOfRows<$nPageSize) && $row)
 	{
 		countTotals($totals, $totalsFields, $row);
 		
-		$values = array();	
-		foreach( $arrFields as $field )
+		$values = array();
+		$arrData = array();	
+		$arrDataType = array();	
+		
+		foreach($arrFields as $field)
 		{
-			if( IsBinaryType( $pageObj->pSet->getFieldType( $field ) ) )
-				$values[ $field ] = $row[ $field ];
+			if(IsBinaryType($pageObj->pSet->getFieldType($field)))
+				$values[$field] = $row[$field];
 			else
-				$values[ $field ] = $pageObj->getFormattedFieldValue( $field, $row );
+			{
+				$values[$field] = $pageObj->getExportValue($field, $row);
+			}
 		}
 		
 		$eventRes = true;
-		if( $eventObj->exists('BeforeOut') )
-			$eventRes = $eventObj->BeforeOut( $row, $values, $pageObj );
+		if ($eventObj->exists('BeforeOut'))
+			$eventRes = $eventObj->BeforeOut($row, $values, $pageObj);
 		
-		if( $eventRes )
+		if ($eventRes)
 		{
-			$arrData = array();
-			$arrDataType = array();
-			
 			$iNumberOfRows++;
 			$i = 0;
-			foreach( $arrFields as $field )
+			foreach($arrFields as $field)
 			{
-				$vFormat = $pageObj->pSet->getViewFormat( $field );
-				
-				if( IsBinaryType( $pageObj->pSet->getFieldType( $field ) ) )
-					$arrDataType[ $field ] = "binary";
-				elseif( $vFormat == FORMAT_DATE_SHORT || $vFormat == FORMAT_DATE_LONG || $vFormat == FORMAT_DATE_TIME )
-					$arrDataType[ $field ] = "date";
-				elseif( $vFormat == FORMAT_FILE_IMAGE )
-					$arrDataType[ $field ] = "file";
+				if(IsBinaryType($pageObj->pSet->getFieldType($field)))
+					$arrDataType[$field] = "binary";
+				elseif($pageObj->pSet->getViewFormat($field)==FORMAT_DATE_SHORT || $pageObj->pSet->getViewFormat($field)==FORMAT_DATE_LONG || $pageObj->pSet->getViewFormat($field)==FORMAT_DATE_TIME)
+					$arrDataType[$field] = "date";
+				elseif($pageObj->pSet->getViewFormat($field) == FORMAT_FILE_IMAGE)
+					$arrDataType[$field] = "file";
 				else
-					$arrDataType[ $field ] = "";
-					
-				$arrData[ $field ] = $values[ $field ];
+					$arrDataType[$field] = "";
+				$arrData[$field] = $values[$field];
 			}
-			
-			ExportExcelRecord( $arrData, $arrDataType, $iNumberOfRows, $objPHPExcel, $pageObj );
+			ExportExcelRecord($arrData, $arrDataType, $iNumberOfRows, $objPHPExcel,$pageObj);
 		}
 		
-		if( $eventObj->exists("ListFetchArray") )
-			$row = $eventObj->ListFetchArray( $rs, $pageObj );
+		if($eventObj->exists("ListFetchArray"))
+			$row = $eventObj->ListFetchArray($rs, $pageObj);
 		else
 			$row = $cipherer->DecryptFetchedArray( $pageObj->connection->fetch_array( $rs ) );
 	}
 	
-	if( count( $arrTmpTotal ) )
+	if(count($arrTmpTotal))
 	{
-		foreach( $arrFields as $fName )
+		foreach($arrFields as $fName)
 		{
 			$value = array();
-			foreach( $arrTmpTotal as $tvalue )
+			foreach($arrTmpTotal as $tvalue)
 			{
-				if( $tvalue["fName"] == $fName )
+				if($tvalue["fName"] == $fName)
 					$value = $tvalue;
 			}
-			
 			$total = "";
 			$totalMess = "";
-			if( $value["totalsType"] )
+			if($value["totalsType"])
 			{
-				if( $value["totalsType"] == "COUNT" )
+				if($value["totalsType"]=="COUNT")
 					$totalMess = "Count".": ";
-				elseif( $value["totalsType"] == "TOTAL" )
+				elseif($value["totalsType"]=="TOTAL")
 					$totalMess = "Total".": ";
-				elseif( $value["totalsType"] == "AVERAGE" )
+				elseif($value["totalsType"]=="AVERAGE")
 					$totalMess = "Average".": ";
-					
-				$total = GetTotals( $fName, $totals[ $fName ]["value"], $value["totalsType"], $totals[ $fName ]["numRows"], $value["viewFormat"], "export", $pageObj->pSet );
+				$total = GetTotals($fName, $totals[$fName]["value"], $value["totalsType"], $totals[$fName]["numRows"], $value["viewFormat"], "export", $pageObj->pSet);
 			}
-			
-			$arrTotal[ $fName ] = $total;
-			$arrTotalMessage[ $fName ] = $totalMess;
+			$arrTotal[$fName] = $total;
+			$arrTotalMessage[$fName] = $totalMess;
 		}
 	}
 
-	ExportExcelTotals( $arrTotal, $arrTotalMessage, ++$iNumberOfRows, $objPHPExcel );
-	ExportExcelSave( GoodFieldName( $pageObj->tName ).".xlsx", "Excel2007", $objPHPExcel );
+	ExportExcelTotals($arrTotal,$arrTotalMessage,++$iNumberOfRows,$objPHPExcel);
+	
+	$extExcel = ".xlsx";
+	$formatExcel = "Excel2007";
+	if(@$_REQUEST["type"] == "excel5")
+	{
+		$formatExcel = "Excel5";
+		$extExcel = ".xls";
+	}
+	ExportExcelSave(GoodFieldName($pageObj->tName).$extExcel,$formatExcel,$objPHPExcel);
 }
+
 ?>

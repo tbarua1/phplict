@@ -53,7 +53,7 @@ class ViewControlsContainer
 	
 	var $searchHighlight = false;
 	
-	public function __construct($pSet, $pageType, $pageObject = null)
+	public function ViewControlsContainer($pSet, $pageType, $pageObject = null)
 	{
 		$this->pSet = $pSet;
 		$this->pageType = $pageType;
@@ -241,10 +241,6 @@ class ViewControlsContainer
 			if ($this->getControl($arField)->isUserControl())
 				return true;
 		}
-		return false;
-	}
-	function mobileTemplateMode() 
-	{
 		return false;
 	}
 }

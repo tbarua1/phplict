@@ -10,9 +10,9 @@ class MSSQLUnixConnection extends Connection
 	protected $dbname;
 
 	
-	function __construct( $params )
+	function MSSQLUnixConnection( $params )
 	{
-		parent::__construct( $params );
+		parent::Connection( $params );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class MSSQLUnixConnection extends Connection
 	{
 		$this->conn = mssql_connect( $this->host, $this->user, $this->pwd );
 		if( !$this->conn )
-			$this->triggerError( $this->lastError() );
+			trigger_error( $this->lastError(), E_USER_ERROR );
 		
 		mssql_select_db( $this->dbname, $this->conn );
 		return $this->conn;
@@ -61,7 +61,7 @@ class MSSQLUnixConnection extends Connection
 		$ret = mssql_query( $sql, $this->conn );
 		if( !$ret )
 		{
-			$this->triggerError($this->lastError());
+			trigger_error($this->lastError(), E_USER_ERROR);
 			return FALSE;
 		}
 		
@@ -86,15 +86,30 @@ class MSSQLUnixConnection extends Connection
 	{
 		return @mssql_get_last_message();
 	}
+	
+	/**	
+	 * Get the auto generated id used in the last query
+	 * @return Number
+	 */
+	public function getInsertedId()
+	{
+		$qResult = $this->query( "select @@IDENTITY as indent" );
+		if( $qResult )
+		{
+			$row = $qResult->fetchAssoc();
+			return $row["indent"];
+		}
+		return 0;
+	}
 
 	/**	
 	 * Fetch a result row as an associative array
 	 * @param Mixed qHanle		The query handle
 	 * @return Array
 	 */
-	public function fetch_array( $qHandle )
+	public function fetch_array( $qHanle )
 	{
-		return @mssql_fetch_array($qHandle, MSSQL_ASSOC);
+		return @mssql_fetch_array($qHanle, MSSQL_ASSOC);
 	}
 	
 	/**	
@@ -102,18 +117,18 @@ class MSSQLUnixConnection extends Connection
 	 * @param Mixed qHanle		The query handle	 
 	 * @return Array
 	 */
-	public function fetch_numarray( $qHandle )
+	public function fetch_numarray( $qHanle )
 	{
-		return @mssql_fetch_array($qHandle, MSSQL_NUM);
+		return @mssql_fetch_array($qHanle, MSSQL_NUM);
 	}
 	
 	/**	
 	 * Free resources associated with a query result set 
 	 * @param Mixed qHanle		The query handle		 
 	 */
-	public function closeQuery( $qHandle )
+	public function closeQuery( $qHanle )
 	{
-		@mssql_free_result($qHandle);
+		@mssql_free_result($qHanle);
 	}
 
 	/**	
@@ -132,9 +147,9 @@ class MSSQLUnixConnection extends Connection
 	 * @param Number offset
 	 * @return String
 	 */	 
-	public function field_name( $qHandle, $offset )
+	public function field_name( $qHanle, $offset )
 	{
-		return @mssql_field_name($qHandle, $offset);
+		return @mssql_field_name($qHanle, $offset);
 	}
 	
 	/**

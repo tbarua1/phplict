@@ -8,50 +8,14 @@ class ImportPage extends RunnerPage
 	 */
 	public $audit = null;
 	
-	/**
-	 * @type String
-	 */
-	public $action;
 	
-	/**
-	 * @type String
-	 */	
-	public $importType;
-	
-	/**
-	 * @type String
-	 */
-	public $importText; 
-	
-	/**
-	 * @type Boolean
-	 */
-	public $useXHR = false;
-	
-	/**
-	 * @type Array
-	 */
-	public $importData;
-	
-	/**
-	 * The final date format used in the actual import.
-	 * This variable is set in the beginning of the actual import process ( insert into the database ) and used through it.
-	 * @type string
-	 */
-	public $currentDateFormat;
-	
-	
-	/**
-	 * @constructor
-	 * @param &Array params
-	 */
-	function __construct(&$params)
+	function ImportPage(&$params)
 	{
-		parent::__construct($params);
+		parent::RunnerPage($params);
 		
 		$this->audit = GetAuditObject( $this->tName );
 		
-		$this->jsSettings["tableSettings"][ $this->tName ]["importFieldsLables"] = $this->getImportfieldsLabels();
+		$this->jsSettings['tableSettings'][ $this->tName ]["importFieldsLables"] = $this->getImportfieldsLabels();
 	}
 
 	/**
@@ -72,177 +36,15 @@ class ImportPage extends RunnerPage
 	}
 	
 	/**
-	 * Process the page
-	 */
-	public function process()
-	{
-		if( !strlen($this->action) )
-			$this->removeOldTemporaryFiles();
-			
-		//	Before Process event
-		if( $this->eventsObject->exists("BeforeProcessImport") )
-			 $this->eventsObject->BeforeProcessImport( $this );	
-			
-		if( $this->action == "importPreview" ) 
-		{
-			$this->prepareAndSentPreviewData();
-			return;
-		}
-
-		if( $this->action == "importData" )
-		{
-			$this->runImportAndSendResultReport();
-			return;		
-		}
-
-		if( $this->action == "downloadReport" )
-		{
-			$this->downloadReport();
-			return;
-		}
-
-		if( $this->action == "downloadUnprocessed" )
-		{
-			$this->downloadUnprocessed();
-			return;
-		}
-
-		$this->doCommonAssignments();
-		
-		$this->addButtonHandlers();
-		$this->addCommonJs();
-
-		$this->displayImportPage();		
-	}
-	
-	/**
-	 * Send the preview data
-	 */
-	protected function prepareAndSentPreviewData()
-	{
-		$response = array();
-		// prepare the temp import file name
-		$rnrTempFileName = $this->getImportTempFileName();
-		
-		if( $this->importType == "text" )
-		{
-			$response["previewData"] = $this->getPreviewDataFromText( $this->importText );
-
-			// prepare the temp file path
-			$rnrTempImportFilePath = getabspath("templates_c/".$rnrTempFileName.".csv");
-			// save file in a temporary directory
-			runner_save_textfile( $rnrTempImportFilePath, $this->importText );		
-		}
-		else
-		{
-			$ext = getImportFileExtension( "importFile".$this->id );
-			$importTempFileName = getTempImportFileName( "importFile".$this->id );
-			$response["previewData"] = $this->getPreviewDataFromFile( $importTempFileName, $ext );
-			
-			// save file in a temporary directory
-			$importFileData = getImportFileData( "importFile".$this->id );
-			// prepare the temp file path
-			$rnrTempImportFilePath = getabspath("templates_c/".$rnrTempFileName.".".$ext);
-			upload_File( $importFileData, $rnrTempImportFilePath );
-		}
-		
-		// keep the temporary path in the SESSION variable
-		$_SESSION[ $this->sessionPrefix ."_tempImportFilePath" ] = $rnrTempImportFilePath;	
-
-		$returnJSON = printJSON( $response, $this->useXHR );
-		
-		if( $returnJSON != false )
-			echo $returnJSON;
-		else
-			echo "The file you're trying to import cannot be parsed";
-		
-		exit();	
-	}
-	
-	/**
-	 * Import the data and send a report
-	 */
-	protected function runImportAndSendResultReport()
-	{
-		if( $this->eventsObject->exists("BeforeImport") )
-		{
-			$message = "";
-			if( $this->eventsObject->BeforeImport($this, $message) === false )
-			{
-				echo printJSON( array( "failed" => true, "message" => $message ) );
-				exit();
-			}
-		}
-		
-		$rnrTempImportFilePath = $_SESSION[ $this->sessionPrefix ."_tempImportFilePath" ];
-		$resultData = $this->ImportFromFile( $rnrTempImportFilePath, $this->importData );			
-		// remove a temporary import file
-		runner_delete_file( $rnrTempImportFilePath );
-		
-		if( $this->eventsObject->exists("AfterImport") )
-			$this->eventsObject->AfterImport( $resultData["totalRecordsNumber"], $resultData["unprocessedRecordsNumber"], $this);
-		
-		// keep all necessary data in SESSION variables 
-		$_SESSION[ $this->sessionPrefix ."_tempImportLogFilePath" ] = $resultData["logFilePath"];
-		if( $resultData["unprocessedRecordsNumber"] )
-			 $_SESSION[ $this->sessionPrefix ."_tempDataFilePath" ] = $resultData["unprocessedFilePath"];	
-		
-		echo printJSON( $resultData );
-		exit();	
-	}
-	
-	/**
-	 *
-	 */
-	protected function downloadReport()
-	{
-		$logFilePath = $_SESSION[ $this->sessionPrefix ."_tempImportLogFilePath" ];
-		if( !myfile_exists( $logFilePath ) )
-		{
-			$data = array( "success" => false );
-			echo printJSON( $data );
-			exit();
-		}	
-		
-		header("Content-Type: text/plain");
-		header("Content-Disposition: attachment;Filename=importLog.txt");
-		header("Cache-Control: private");
-		
-		printfile( $logFilePath );
-		exit();	
-	}
-	
-	/**
-	 *
-	 */
-	protected function downloadUnprocessed()
-	{
-		$dataFilePath = $_SESSION[ $this->sessionPrefix ."_tempDataFilePath" ];
-		if( !myfile_exists( $dataFilePath ) )
-		{
-			$data = array( "success" => false );
-			echo printJSON( $data );
-			exit();
-		}
-		
-		header("Content-Type: application/csv");
-		header("Content-Disposition: attachment;Filename=unpocessedData.csv");
-
-		printfile( $dataFilePath );
-		exit();		
-	}
-	
-	/**
 	 * Assign 'body' element
 	 */
-	public function doCommonAssignments()
+	public function addCommonHtml()
 	{
-		$this->xt->assign("id", $this->id);
-		
 		// assign body begin
 		$this->body["begin"] = GetBaseScriptsForPage(false);
 		// assign body end
-		$this->body["end"] = XTempl::create_method_assignment( "assignBodyEnd", $this);
+		$this->body["end"] = array();
+		AssignMethod($this->body['end'], "assignBodyEnd", $this);
 
 		$this->xt->assignbyref("body", $this->body);
 	}
@@ -305,7 +107,7 @@ class ImportPage extends RunnerPage
 	 */
 	public function getPreviewDataFromText( $importText )
 	{		
-		$lines = $this->importExplode($importText);	
+		$lines = explode("\r\n", $importText);		
 		$lines = $this->removeEmptyLines( $lines );
 		if( !count($lines) )
 			return array();
@@ -621,12 +423,11 @@ class ImportPage extends RunnerPage
 	{
 		$fieldsData = $this->refineImportFielsData( $importData["importFieldsData"] ); 
 		$dateFormat = getRefinedDateFormat( $this->getImportDateFormat( $importData["dateFormat"] ) );
-		$this->currentDateFormat = $dateFormat;
 		
 		if( $importData["CSV"] )
-			$metaData = $this->importFromCSV( $filePath, $fieldsData, $importData["useHeadersLine"], $importData["delimiter"] );
+			$metaData = $this->importFromCSV( $filePath, $fieldsData, $importData["useHeadersLine"], $importData["delimiter"], $dateFormat );
 		else
-			$metaData = $this->importFromExcel( $filePath, $fieldsData, $importData["useHeadersLine"] );
+			$metaData = $this->importFromExcel( $filePath, $fieldsData, $importData["useHeadersLine"], $dateFormat );
 		
 		
 		$resultData = array();
@@ -689,7 +490,7 @@ class ImportPage extends RunnerPage
 	 * @param String dateFormat
 	 * @return Array
 	 */
-	protected function importFromCSV( $filePath, $fieldsData, $useFirstLine, $delimiter )
+	protected function importFromCSV( $filePath, $fieldsData, $useFirstLine, $delimiter, $dateFormat )
 	{				
 		$metaData = array();
 		$metaData["totalRecords"] = 0;	
@@ -732,7 +533,16 @@ class ImportPage extends RunnerPage
 				$importFieldName = $fieldsData[ $idx ]["fName"];	
 				$fType = $fieldsData[ $idx ]["type"];
 				
-				$fieldsValuesData[ $importFieldName ] = $elem;
+				if( IsDateFieldType($fType) )
+				{
+					$value = localdatetime2db($elem, $dateFormat);
+					if ( $value !== FALSE && strlen($value) && $value != 'null' )
+						$fieldsValuesData[ $importFieldName ] = $value;
+					else
+						$fieldsValuesData[ $importFieldName ] = NULL;
+				}
+				else
+					$fieldsValuesData[ $importFieldName ] = $elem;
 			}
 			
 			$this->importRecord( $fieldsValuesData, $keys, $autoinc, $addedRecords, $updatedRecords, $errorMessages, $unprocessedData );
@@ -764,7 +574,7 @@ class ImportPage extends RunnerPage
 	 * @param String dateFormat
 	 * @return Array
 	 */
-	protected function importFromExcel( $filePath, $fieldsData, $useFirstLine )
+	protected function importFromExcel( $filePath, $fieldsData, $useFirstLine, $dateFormat )
 	{		
 		$ext = getFileExtension( $filePath );
 		$fileHandle = openImportExcelFile( $filePath, $ext );
@@ -779,7 +589,7 @@ class ImportPage extends RunnerPage
 			$this->connection->exec( $sql );
 		}
 		
-		$metaData = ImportDataFromExcel( $fileHandle, $fieldsData, $keys, $this, $autoinc, $useFirstLine );	
+		$metaData = ImportDataFromExcel( $fileHandle, $fieldsData, $keys, $this, $autoinc, $useFirstLine, $dateFormat );	
 		if( $this->connection->dbType == nDATABASE_MSSQLServer && $autoinc )
 		{
 			$sql = "SET IDENTITY_INSERT ".$this->connection->addTableWrappers( $this->strOriginalTableName )." OFF";
@@ -790,16 +600,16 @@ class ImportPage extends RunnerPage
 	}
 	
 	/**
-	 * Check if there is an auto-incremented field among the import fields
+	 * Check if there is an auto-incremented field amoung the import fields
 	 * @param Array fieldsData
 	 * @return Boolean
 	 */
 	protected function hasAutoincImportFields( $fieldsData )
 	{
-//		$importFields = $this->pSet->getImportFields();
-		foreach( $fieldsData as $f )
+		$importFields = $this->pSet->getImportFields();
+		foreach($importFields as $fName)
 		{
-			if( $this->pSet->isAutoincField( $f[ "fName" ] ) )
+			if( $this->pSet->isAutoincField( $fName ) )
 				return true;
 		}
 		
@@ -890,9 +700,7 @@ class ImportPage extends RunnerPage
 		global $locale_info;
 		
 		$refinedFieldsValuesData = array();
-
-		$this->setUpdatedLatLng($fieldsValuesData);
-
+		
 		foreach($fieldsValuesData as $field => $val)
 		{		
 			$type = $this->pSet->getFieldType($field);
@@ -907,19 +715,6 @@ class ImportPage extends RunnerPage
 					$refinedFieldsValuesData[ $field ] = NULL;				
 				
 				continue;			
-			}
-			if( IsDateFieldType($type) )
-			{
-				if( !dateInDbFormat( $val ) )
-					$value = localdatetime2db($val, $this->currentDateFormat);
-				else
-					$value = $val;
-
-				if ( strlen($value) > 0 )
-					$refinedFieldsValuesData[ $field ] = $value;
-				else
-					$refinedFieldsValuesData[ $field ] = NULL;				
-				continue;
 			}
 			
 			if( !IsNumberType($type) )
@@ -965,96 +760,80 @@ class ImportPage extends RunnerPage
 	{		 
 		$rawvalues = $fieldsValuesData;
 		$fieldsValuesData = $this->prepareFiledsValuesData( $fieldsValuesData );	
-		$fieldNames = array_keys( $fieldsValuesData );	
-		
-		$errorMessage="";
-		$failed = false;
-		
-		if( $this->eventsObject->exists("BeforeInsert") )
-		{
-			//	fire event
-			if( $this->eventsObject->BeforeInsert($rawvalues, $fieldsValuesData, $this, $errorMessage) === false )
-				$failed = true;
-		}	
-		
-		if( !$failed )
-		{
-			//	$fieldsValuesData might have been changed in the event
-			$fieldNames = array_keys( $fieldsValuesData );	
 			
-			// try to insert the record
-			$sql = $this->getInsertSQL( $fieldNames, $fieldsValuesData );	
-			if( db_exec_import($sql, $this->connection, $this->connection->addTableWrappers( $this->strOriginalTableName ), $isIdentityOffNeeded) )
-			{
-				//	insert successful
-				$addedRecords = $addedRecords + 1;
-				
-				if( $this->audit )
-					$this->audit->LogAdd( $this->tName, $fieldsValuesData, GetKeysArray($fieldsValuesData, $this, true) );
-				
-				return;	
-			}
-				
-			$errorMessage = $this->connection->lastError();
-
-			//	prepare for updating attempt
-
-			$keyFieldsNames = array_intersect($fieldNames, $keys);
-
-			//	don't update if we don't have all the key field values
-			if( !$keyFieldsNames || count($keyFieldsNames) != count($keys) )
-				$failed = true;
-		}
-
-		if( !$failed )
+		if( $this->eventsObject->exists('BeforeInsert') )
 		{
-			//	prepare update
-			$updateWhere = $this->getUpdateSQLWhere($keyFieldsNames, $fieldsValuesData);
-			$getAllUpdatedSQL = "select * from " .$this->connection->addTableWrappers( $this->strOriginalTableName ). " where " . $updateWhere;
-			
-			$rs = $this->connection->querySilent( $getAllUpdatedSQL );
-			$data = null;
-			if( $rs )
-				$data = $rs->fetchAssoc();
-			if( !$data )
-				$failed = true;
+			if( $this->eventsObject->BeforeInsert($rawvalues, $fieldsValuesData, $this) === false ) 
+				return;
 		}
+		$fieldNames = array_keys( $fieldsValuesData );
 		
-		if( !$failed )
+		// try to insert the record
+		$sql = $this->getInsertSQL( $fieldNames, $fieldsValuesData );	
+		if( db_exec_import($sql, $this->connection, $this->connection->addTableWrappers( $this->strOriginalTableName ), $isIdentityOffNeeded) )
+		{
+			$addedRecords = $addedRecords + 1;
+			
+			if( $this->audit )
+				$this->audit->LogAdd( $this->tName, $fieldsValuesData, GetKeysArray($fieldsValuesData, $this, true) );
+			
+			return;	
+		}
+			
+		$tempErrorMessage = $this->connection->lastError();
+		
+		$keyFieldsNames = array_intersect($fieldNames, $keys);
+		if( !$keyFieldsNames )
+		{
+			if( !count($unprocessedData) )
+				$unprocessedData[] = $this->getImportFieldsLogCSVLine( $fieldNames );
+			$unprocessedData[] = $this->parseValuesDataInLogCSVLine( $fieldsValuesData );
+			$errorMessages[] = $tempErrorMessage;
+			return;	
+		}
+				
+		// try to update the record
+		$updateWhere = $this->getUpdateSQLWhere($keyFieldsNames, $fieldsValuesData);
+		$getAllUpdatedSQL = "select * from " .$this->connection->addTableWrappers( $this->strOriginalTableName ). " where " . $updateWhere;
+		$data = $this->connection->query( $getAllUpdatedSQL )->fetchAssoc();
+						
+		if( $data )
 		{ 			
-			// do update
 			$notKeyFieldsNames = array_diff($fieldNames, $keys);
 			
 			$sql = $this->getUpdateSQL($notKeyFieldsNames, $fieldsValuesData, $updateWhere);
-			if( !db_exec_import($sql, $this->connection, $this->connection->addTableWrappers( $this->strOriginalTableName ), $isIdentityOffNeeded) )
-				$failed = true;
-		}
-		
-		if( !$failed )
-		{
-			// report update successful				
-			$updatedRecords = $updatedRecords + 1;
-			
-			if( $this->audit )
+			if( db_exec_import($sql, $this->connection, $this->connection->addTableWrappers( $this->strOriginalTableName ), $isIdentityOffNeeded) )
 			{
-				$auditOldValues = array();
-				foreach ($data as $key => $val) 
-				{
-					$auditOldValues[ $key ] = $val;
-				}
+				// update successfull				
+				$updatedRecords = $updatedRecords + 1;
 				
-				$this->audit->LogEdit( $this->tName, $fieldsValuesData, $auditOldValues, GetKeysArray($fieldsValuesData, $this) );
+				if( $this->audit )
+				{
+					$auditOldValues = array();
+					foreach ($data as $key => $val) 
+					{
+						$auditOldValues[ $key ] = $val;
+					}
+					
+					$this->audit->LogEdit( $this->tName, $fieldsValuesData, $auditOldValues, GetKeysArray($fieldsValuesData, $this) );
+				}
 			}
+			else
+			{
+				// update not successfull		
+				if( !count($unprocessedData) )
+					$unprocessedData[] = $this->getImportFieldsLogCSVLine( $fieldNames );
+				$unprocessedData[] = $this->parseValuesDataInLogCSVLine( $fieldsValuesData );
+				$errorMessages[] = $this->connection->lastError();
+			}				
 		}
-
-		if( $failed )
+		else 
 		{	
-			// report error
 			if( !count($unprocessedData) )
 				$unprocessedData[] = $this->getImportFieldsLogCSVLine( $fieldNames );			
 			// nothing to update
-			$unprocessedData[] = $this->parseValuesDataInLogCSVLine( $rawvalues );
-			$errorMessages[] = $errorMessage;
+			$unprocessedData[] = $this->parseValuesDataInLogCSVLine( $fieldsValuesData );
+			$errorMessages[] = $tempErrorMessage;
 		}
 	}
 
@@ -1151,7 +930,7 @@ class ImportPage extends RunnerPage
 				}
 				else
 				{
-					$reportText.= $lineBreak.$lineBreak.$errorMessages[ $i ].$lineBreak.$unprocessedData[ $i + 1 ];
+					$reportText.= $lineBreak.$lineBreak.$errorMessages[ $i ].$lineBreak.$unprocessedData[$i + 1];
 				}
 			}
 		}
@@ -1222,58 +1001,6 @@ class ImportPage extends RunnerPage
 					deleteImportTempFile( $tempFilesDirectory.$fileName );
 			}
 		}
-	}
-	
-	public function importExplode($importText)
-	{
-		$flag = true;
-		$tmpText = "";
-		$j = 0;
-		$lines = array();
-		for($i=0;$i<strlen($importText);$i++)
-		{
-			$char = substr($importText,$i,1);
-			$charNext = substr($importText,$i+1,1);
-			if( $char == "\"" )
-			{
-				if( $flag )
-					$flag = false;
-				else
-				{
-					if( $charNext == "\"" )
-					{
-						$i++;
-						$lines[ $j ].= $char;
-					}
-					else
-						$flag = true;
-				}
-			}
-			if( $flag && ord($char) == 13 && ord($charNext) == 10) 
-			{
-				$j++;
-				$i+=1;
-			}
-			else	
-				$lines[ $j ].= $char;
-		}
-		return $lines;
-	}
-	
-	/**
-	 * Display the import page
-	 */
-	protected function displayImportPage()
-	{
-		$templatefile = $this->templatefile;
-		
-		if( $this->eventsObject->exists("BeforeShowImport") )
-			$this->eventsObject->BeforeShowImport($this->xt, $templatefile, $this);
-			
-		$hiddenBricks = array( "import_rawtext_control", "import_preview", "import_process", "import_results", "error_message" );
-		$this->xt->displayBricksHidden( $hiddenBricks );
-		
-		$this->display( $templatefile );	
 	}
 }
 ?>

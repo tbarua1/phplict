@@ -6,7 +6,7 @@ class ViewVideoFileField extends ViewFileField
 	 * addJSFiles
 	 * Add control JS files to page object
 	 */
-	public function addJSFiles()
+	function addJSFiles()
 	{
 				$this->AddJSFile("include/video/projekktor.js");
 		$this->getJSControl();
@@ -68,13 +68,7 @@ class ViewVideoFileField extends ViewFileField
 				{
 					$href = $fileName;
 					if($fileName != "")
-					{
-						$pos = strrpos($fileName,".");
-						$ext = substr($fileName,$pos);
-						$type = getContentTypeByExtension($ext);
-						if($type == "application/octet-stream")
-							$type = "video/flv";
-					}
+						$type = "video/flv";
 				}
 				else
 				{

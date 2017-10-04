@@ -6,7 +6,7 @@ $input.click(function(){$(this).trigger("focus");}).focus(function(){box.data("i
 $('body').bind("mousedown",global_mousedown_listener);box.data("tooltip",boxHtml);show();}).bind('mouseleave',function(e){if(box.data("inUse")){return;}
 prepare_hide();});}
 function align(){var offset=$guideObject.offset();box.css({position:"absolute",top:offset.top+"px",left:offset.left+(Runner.isDirRTL()?-box.outerWidth():$guideObject.outerWidth())+options.incrementLeft+"px"});}
-function show(){clearTimeout($.inputHintBoxer.mostRecentHideTimer);var $tooltipBox=options.div_sub?$(options.div_sub,box):box;$('div.shiny_box').hide();align();$tooltipBox.html(box.data("tooltip"));if($guideObject.offset().top>0){box.show();}}
+function show(){clearTimeout($.inputHintBoxer.mostRecentHideTimer);var $tooltipBox=options.div_sub?$(options.div_sub,box):box;$('div.shiny_box').hide();align();$tooltipBox.html(box.data("tooltip"));if($guideObject.position().top>0){box.show();}}
 function prepare_hide(noTimeout){$('body').click(global_click_listener);if(boxMouseDown){return;}
 if(noTimeout){hide(true);return;}
 $.inputHintBoxer.mostRecentHideTimer=setTimeout(function(){hide()},300);}

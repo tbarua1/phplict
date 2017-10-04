@@ -23,9 +23,9 @@ class ViewLookupWizardField extends ViewControl
 	*/ 
 	protected $lookupConnection;
 	
-	public function __construct($field, $container, $pageObject)
+	public function ViewLookupWizardField($field, $container, $pageObject)
 	{
-		parent::__construct($field, $container, $pageObject);
+		parent::ViewControl($field, $container, $pageObject);
 		
 		$this->lookupPSet = null;
 		$this->cipherer = null; 
@@ -143,26 +143,26 @@ class ViewLookupWizardField extends ViewControl
 	 * @param String in
 	 * @return String
 	 */	
-	protected function getMultiselectLookupResolvingSQL( $value, $in, $withoutWhere = false )
+	protected function getMultiselectLookupResolvingSQL( $value, $in )
 	{
 		if( !$this->pSet->multiSelect($this->field) )
 			return "";		
 		
-		$where = prepareLookupWhere( $this->field, $this->pSet );
-	
+		$where = GetLWWhere($this->field, $this->pSet->getEditPageType());
+		
 		if( $this->nLookupType == LT_QUERY )
 		{
 			$inWhere = RunnerPage::_getFieldSQLDecrypt( $this->linkFieldName, $this->lookupConnection, $this->lookupPSet, $this->cipherer )
 				." in (".$in.")";
-			if( !$withoutWhere && strlen($where) )
+			if( strlen($where) )
 				$inWhere.=" and (".$where.")";
 				
-			$LookupSQL = $this->lookupQueryObj->buildSQL_default( $inWhere );
+			$LookupSQL = $this->lookupQueryObj->toSql(whereAdd($this->lookupQueryObj->m_where->toSql($this->lookupQueryObj), $inWhere));
 		}
 		else
 		{
 			$LookupSQL = $this->LookupSQL.$this->lookupConnection->addFieldWrappers($this->pSet->getLinkField($this->field))." in (".$in.")";
-			if( !$withoutWhere && strlen($where) ) 
+			if( strlen($where) ) 
 				$LookupSQL.=" and (".$where.")";
 		}
 		
@@ -173,27 +173,26 @@ class ViewLookupWizardField extends ViewControl
 	 * @param String value
 	 * @return String
 	 */
-	protected function getNotMultiselectLookupResolvingSQL( $value, $withoutWhere )
+	protected function getNotMultiselectLookupResolvingSQL( $value )
 	{
 		if( $this->pSet->multiSelect($this->field) )
 			return "";
 
-		$where = prepareLookupWhere( $this->field, $this->pSet );
+		$where = GetLWWhere($this->field, $this->pSet->getEditPageType());
 		
 		$strdata = $this->cipherer->MakeDBValue($this->nLookupType == LT_QUERY ? $this->linkFieldName : $this->field, $value, "", true);
 		if( $this->nLookupType == LT_QUERY )
 		{
 			$strWhere = GetFullFieldName($this->linkFieldName, $this->lookupTable, false)." = " . $strdata;
-			if( !$withoutWhere && strlen($where) )
+			if( strlen($where) )
 				$strWhere.= " and (".$where.")";
 				
-			$LookupSQL = $this->lookupQueryObj->buildSQL_default( $strWhere );
-			
+			$LookupSQL = $this->lookupQueryObj->toSql(whereAdd($this->lookupQueryObj->m_where->toSql($this->lookupQueryObj), $strWhere));
 		}
 		else
 		{
 			$strWhere = $this->lookupConnection->addFieldWrappers($this->pSet->getLinkField($this->field))." = " . $strdata;
-			if( !$withoutWhere && strlen($where) )
+			if( strlen($where) )
 				$strWhere.= " and (".$where.")";
 				
 			$LookupSQL = $this->LookupSQL.$strWhere;
@@ -226,24 +225,18 @@ class ViewLookupWizardField extends ViewControl
 		 
 		if( count($this->resolvedLookupValues[ $value ]) )
 			return $this->resolvedLookupValues[ $value ];	
-
-		$withoutWhere = false;
-		for ( $i=0; $i<2; $i++ )
-		{
-			$LookupSQL = $this->getMultiselectLookupResolvingSQL($value, $in, $withoutWhere);
-			LogInfo($LookupSQL);
 		
-			$lookupArr = array(); 
-			$qResult = $this->lookupConnection->query( $LookupSQL );
-			while( $lookuprow = $qResult->fetchNumeric() )
-			{
-				$displayValue = $lookuprow[ $this->displayFieldIndex ];
-				$lookupArr[] = $displayValue;
-				$this->resolvedLinkLookupValues[ $value ][ $displayValue ] = $lookuprow[ $this->linkFieldIndex ];
-			}
-			if ( count($lookupArr) == count(explode(',', $in)) ) break;
-			$withoutWhere = true;
-		}			
+		$LookupSQL = $this->getMultiselectLookupResolvingSQL($value, $in);
+		LogInfo($LookupSQL);
+		
+		$lookupArr = array(); 
+		$qResult = $this->lookupConnection->query( $LookupSQL );
+		while( $lookuprow = $qResult->fetchNumeric() )
+		{
+			$displayValue = $lookuprow[ $this->displayFieldIndex ];
+			$lookupArr[] = $displayValue;
+			$this->resolvedLinkLookupValues[ $value ][ $displayValue ] = $lookuprow[ $this->linkFieldIndex ];
+		}
 		
 		$lookupValues = array();
 		$lookupArr = array_unique( $lookupArr );			
@@ -269,22 +262,15 @@ class ViewLookupWizardField extends ViewControl
 
 		$lookupvalue = $value;			
 			
-		$withoutWhere = false;
-		for ($i=0; $i<2; $i++)
+		$LookupSQL = $this->getNotMultiselectLookupResolvingSQL( $value );
+		LogInfo($LookupSQL);
+		
+		$qResult = $this->lookupConnection->query( $LookupSQL );
+		if( $lookuprow = $qResult->fetchNumeric() )
 		{
-			$LookupSQL = $this->getNotMultiselectLookupResolvingSQL( $value, $withoutWhere );
-			LogInfo($LookupSQL);
-			
-			$qResult = $this->lookupConnection->query( $LookupSQL );
-			if( $lookuprow = $qResult->fetchNumeric() )
-			{
-				$lookupvalue = $this->getDecryptLookupValue( $lookuprow[ $this->displayFieldIndex ] );
-				break;
-			}
-			$withoutWhere = true;
+			$lookupvalue = $this->getDecryptLookupValue( $lookuprow[ $this->displayFieldIndex ] );
+			$this->resolvedLookupValues[ $value ] = $lookupvalue;
 		}
-
-		$this->resolvedLookupValues[ $value ] = $lookupvalue;
 			
 		return array( $lookupvalue );
 	}
@@ -366,8 +352,6 @@ class ViewLookupWizardField extends ViewControl
 	 */
 	public function getExportValue(&$data, $keylink = "")
 	{
-		$this->localControlsContainer->setForExportVar( $this->container->forExport );
-		
 		if( $this->container->forExport == "csv" )
 			return $data[ $this->field ];
 		

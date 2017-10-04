@@ -11,7 +11,7 @@ class RightsPage extends ListPage
 	 */
 	var $tables = array();
 	/**
-	 * Array of non all possible permission masks
+	 * Array of non all possible permission masks 
 	 *
 	 * @var array
 	 */
@@ -45,18 +45,18 @@ class RightsPage extends ListPage
 	var $sortedTables;
 	var $menuOrderedTables;
 	var $alphaOrderedTables;
-
+	
 	/**
 	 * Contructor
 	 *
 	 * @param array $params
 	 * @return RightsPage
 	 */
-	function __construct(&$params)
+	function RightsPage(&$params)
 	{
 		// copy properties to object
-		RunnerPage::__construct($params);
-
+		parent::RunnerPage($params);
+		
 		$this->permissionNames["A"] = true;
 		$this->permissionNames["D"] = true;
 		$this->permissionNames["E"] = true;
@@ -64,7 +64,7 @@ class RightsPage extends ListPage
 		$this->permissionNames["P"] = true;
 		$this->permissionNames["I"] = true;
 		$this->permissionNames["M"] = true;
-
+		
 		$this->cbxNames = array(
 			'add' => array('mask' => 'A', 'rightName' => 'add'),
 			'edt' => array('mask' => 'E', 'rightName' => 'edit'),
@@ -74,18 +74,15 @@ class RightsPage extends ListPage
 			'imp' => array('mask' => 'I', 'rightName' => 'import'),
 			'adm' => array('mask' => 'M')
 		);
-
+		
 		// Set language params, if have more than one language
-		
-		$this->initLogin();
-		
 		$this->setLangParams();
-
+		
 		$this->sortTables();
-
+		
 		$this->fillGroupsArr();
 	}
-
+	
 	/**
 	 *	select groups list
 	 */
@@ -93,82 +90,76 @@ class RightsPage extends ListPage
 	{
 		global $cman;
 		$grConnection = $cman->getForUserGroups();
-
+		
 		$this->groups[-1] = "<"."Admin".">";
 		$this->groups[-2] = "<"."Default".">";
 		$this->groups[-3] = "<"."Guest".">";
-
-		$sql = "select ". $grConnection->addFieldWrappers( "" ) .", ". $grConnection->addFieldWrappers( "" )
+		
+		$sql = "select ". $grConnection->addFieldWrappers( "" ) .", ". $grConnection->addFieldWrappers( "" ) 
 			." from ". $grConnection->addTableWrappers( "" ) ." order by ". $grConnection->addFieldWrappers( "" );
-
+		
 		$qResult = $grConnection->query( $sql );
 		while( $tdata = $qResult->fetchNumeric() )
 		{
 			$this->groups[ $tdata[0] ] = $tdata[1];
 		}
 	}
-
+	
 	/**
 	 * Fill and prepare rights array
 	 * Call it only after save new data, for get fresh data
 	 */
-	function fillSmartyAndRights()
+	function fillSmartyAndRights() 
 	{
-		$first = true;
 		foreach($this->groups as $id => $name)
 		{
 			$sg = array();
 			$sg["group_attrs"] = "value=\"".$id."\"";
-			if( $first )
-			{
-				$sg["group_class"] = "active";
-				$first = false;
-			}		
 			$sg["groupname"] = runner_htmlspecialchars($name);
 			$this->smartyGroups[] = $sg;
 		}
 	}
-
+	
 	/**
 	 * Fill rights array
 	 * Call it only after save new data, for get fresh data
 	 */
-	function getRights()
+	function getRights() 
 	{
 		// It's expected that $this->tName is equal to 'admin_right' so the page's db connection is used #9875
-		$sql = "select ". $this->connection->addFieldWrappers( "" )
+		$sql = "select ". $this->connection->addFieldWrappers( "" ) 
+			.", ". $this->connection->addFieldWrappers( "" ) 
 			.", ". $this->connection->addFieldWrappers( "" )
-			.", ". $this->connection->addFieldWrappers( "" )
-			." from ". $this->connection->addTableWrappers( "" )
+			." from ". $this->connection->addTableWrappers( "" ) 
 			." order by ". $this->connection->addFieldWrappers( "" );
-
+		
 		$qResult = $this->connection->query( $sql );
 		while( $tdata = $qResult->fetchNumeric() )
 		{
 			$group = $tdata[0];
 			$table = $tdata[1];
 			$mask = $tdata[2];
-
+			
 			// check whether the table exists in the project
 			if( !isset($this->tables[ $table ]) )
 				continue;
 
-			// check whether the group exists
+			// check whether the group exists 
 			if( !isset($this->groups[ $group ]) )
 				continue;
-
-			//	add permissions
+				
+			//	add permissions	
 			if( !isset($this->rights[ $table ]) )
 				$this->rights[ $table ] = array();
-
+						
 			$this->rights[ $table ][ $group ] = $this->fixMask($mask, $this->pageMasks[ $table ]);
 		}
 	}
-
+	
 	/**
 	 * Prepare JS arrays with groups and tables data
 	 */
-	function addJsGroupsAndRights()
+	function addJsGroupsAndRights() 
 	{
 		$this->jsSettings['tableSettings'][$this->tName]['warnOnLeaving'] = true;
 		$this->jsSettings['tableSettings'][$this->tName]['rights'] = $this->rights;
@@ -178,19 +169,19 @@ class RightsPage extends ListPage
 		$this->jsSettings['tableSettings'][$this->tName]['menuOrderedTables'] = $this->menuOrderedTables;
 		$this->jsSettings['tableSettings'][$this->tName]['alphaOrderedTables'] = $this->alphaOrderedTables;
 	}
-
-	function commonAssign()
+	
+	function commonAssign() 
 	{
 		$this->xt->assign_loopsection("groups", $this->smartyGroups);
-
+		
 		parent::commonAssign();
-
+		
 		// assign headcheckboxes
 		foreach( $this->permissionNames as $perm => $t )
 		{
 			$this->xt->assign( $perm."_headcheckbox", " id=\"colbox".$perm."\" data-perm=\"".$perm."\"");
 		}
-
+		
 		// assign attrs
 		$this->xt->assign("addgroup_attrs", "id=\"addGroupBtn\"");
 		$this->xt->assign("delgroup_attrs", "id=\"delGroupBtn\"");
@@ -199,7 +190,7 @@ class RightsPage extends ListPage
 		$this->xt->assign("savebutton_attrs", "id=\"saveBtn\"");
 		$this->xt->assign("resetbutton_attrs", "id=\"resetBtn\"");
 		$this->xt->assign("cancelgroup_attrs", "id=\"cancelBtn\"");
-
+				
 		// assign blocks
 		$this->xt->assign("grid_block", true);
 		$this->xt->assign("menu_block", true);
@@ -211,25 +202,23 @@ class RightsPage extends ListPage
 		$this->xt->assign("savebuttons_block", true);
 		$this->xt->assign("search_records_block", true);
 		$this->xt->assign("recordcontrols_block", true);
-
+		
 		// assign user settings
 		// The user might rewrite $_SESSION["UserName"] value with HTML code in an event, so no encoding will be performed while printing this value.
 		$this->xt->assign("username", $_SESSION["UserName"]);
 		if ($this->createLoginPage)
 			$this->xt->assign("userid", runner_htmlspecialchars($_SESSION["UserID"]));
-			
-		$this->xt->displayBrickHidden("message");
 		
-		$this->prepareBreadcrumbs("adminarea");
+		$this->xt->displayBrickHidden("message");
 	}
-
+	
 	/**
 	 * Sort tables array
 	 * @param unknown_type $tables
 	 */
 	function sortTables()
 	{
-		//	build $this->alphaOrderedTables and $this->sortedTables
+		//	build $this->alphaOrderedTables and $this->sortedTables		
 		$this->sortedTables = array();
 		// order tables by caption
 		foreach($this->tables as $table => $tbl)
@@ -243,33 +232,33 @@ class RightsPage extends ListPage
 		{
 			$this->alphaOrderedTables[] = $t[0];
 		}
-
+		
 		//	build $this->menuOrderedTables
 		$this->menuOrderedTables = array();
 		$menu = $this->getMenuNodes();
 		$addedTables = array();
 		$groupsMap = array();
-		$allTables = GetTablesListWithoutSecurity();
-		
 		foreach($menu as $m)
 		{
 			$arr = array();
 			if ( $m["pageType"] == "WebReports" || $m["type"] == "Separator" )
 				continue;
-
-			if( $m["table"] && !$addedTables[ $m["table"] ] && array_search( $m["table"], $allTables ) !== FALSE )
+			
+			if( $m["table"] && !$addedTables[ $m["table"] ] )
 			{
 				$addedTables[ $m["table"] ] = true;
 				$arr["table"] = $m["table"];
-			}
-
+			} 
+			else if( $m["type"] == "Leaf" )
+				continue;
+			
 			if( $m["parent"] )
 			{
 				$arr["parent"] = $groupsMap[ $m["parent"] ];
 				$this->menuOrderedTables[ $arr["parent"] ]["items"][] = count($this->menuOrderedTables);
 			}
-
-			if( true || $m["type"] == "Group" )
+			
+			if( $m["type"] == "Group" )
 			{
 				$groupsMap[ $m["id"] ] = count($this->menuOrderedTables);
 				//	add all groups
@@ -299,7 +288,7 @@ class RightsPage extends ListPage
 			}
 		}
 	}
-
+	
 	/**
 	 * Get items count in group
 	 * @param item index
@@ -311,17 +300,17 @@ class RightsPage extends ListPage
 		{
 			if(isset($this->menuOrderedTables[$idx]["items"]))
 				$count += $this->getItemsCount($idx);
-			if(isset($this->menuOrderedTables[$idx]["table"]))
+			else
 				$count++;
 		}
 		return $count;
 	}
-
+	
 	/**
 	 * Fills info in array about grid.
 	 * @param array $rowInfoArr array with total info, that assignes grid
 	 */
-	function fillTablesGrid(&$rowInfoArr)
+	function fillGridShowInfo(&$rowInfoArr) 
 	{
 		//	fill $rowInfoArr array
 		$rowClass = false;
@@ -342,11 +331,11 @@ class RightsPage extends ListPage
 					$row["tablename"] = runner_htmlspecialchars($table);
 				else
 					$row["tablename"] = "<span dir='LTR'>".runner_htmlspecialchars($caption)."&nbsp;(".runner_htmlspecialchars($table).")</span>";
-
+					
 				$row["tablerowattrs"] = " id=\"row_".$shortTable."\"";
 				$row["tablecheckbox_attrs"]= "id=\"rowbox".$shortTable."\" data-table=\"".$shortTable."\" data-checked=0";
 				$row["tbl_cell"] = " id=\"tblcell".$shortTable."\"";
-
+			
 				// create permission controls
 				$mask = $this->pageMasks[$table];
 				foreach( $this->permissionNames as $perm => $x )
@@ -363,7 +352,7 @@ class RightsPage extends ListPage
 				$title = $tbl["title"];
 				$row = array();
 				$row["tablename"] = runner_htmlspecialchars($title);
-
+					
 				$row["tablecheckbox_attrs"]= " data-checked=-2";
 				$row["tablerowattrs"] = " id=\"grouprow_".$idx."\"";
 			}
@@ -383,15 +372,13 @@ class RightsPage extends ListPage
 				}
 				$row["tblrowclass"] .= "rightsindent" . count($parentStack);
 			}
-
-			$childrenCount = $this->getItemsCount($idx);
-			if( isset($tbl["items"]) && $childrenCount )
+			
+			if( isset($tbl["items"]) && count($tbl["items"]) )
 			{
 				$row["tablename"] .= "<span class='tablecount' dir='LTR'>&nbsp;(".$this->getItemsCount($idx).")</span>";
 				$row["tablerowattrs"] .= " data-groupid=\"".$idx."\"";
 				$row["groupControl"] = true;
 				$row["groupControlState"] = " data-state='closed'";
-				$row["groupControlClass"] = " data-state='closed'";
 				$row["tblrowclass"] .= " menugroup";
 				if( !strlen($table) )
 				{
@@ -399,7 +386,7 @@ class RightsPage extends ListPage
 					//	add the class to hide it in alpha mode
 					$row["tblrowclass"] .= " menugrouponly";
 				}
-			}
+			} 
 			else if( !strlen($table) )
 			{
 				// empty menu group
@@ -412,32 +399,32 @@ class RightsPage extends ListPage
 			}
 
 			$rowInfoArr[] = $row;
-		}
+		}	
 	}
-
+	
 	/**
 	 * Fill premissions grid
 	 */
-	function fillGridData()
+	function fillGridData() 
 	{
 		//	fill $rowinfo array
 		$rowInfo = array();
-		$this->fillTablesGrid($rowInfo);
+		$this->fillGridShowInfo($rowInfo);
 		$this->xt->assign_loopsection("grid_row", $rowInfo);
 	}
-
+	
 	/**
 	 * Fill session vars, override parent, do nothing
 	 */
-	function setSessionVariables()
+	function setSessionVariables() 
 	{
 	}
-
+	
 	/**
 	 * Main function, call to build page
 	 * Do not change methods call oreder!!
 	 */
-	function prepareForBuildPage()
+	function prepareForBuildPage() 
 	{
 		// prepare array, only after save, for get new data
 		$this->fillSmartyAndRights();
@@ -451,44 +438,48 @@ class RightsPage extends ListPage
 		$this->addCommonHtml();
 		// Set common assign
 		$this->commonAssign();
-	}
+		// build admin block
+		$this->assignAdmin();
 
+	}
+	
 	/**
 	 * show page at the end of its proccess, depending on mode
 	 */
-	function showPage()
+	function showPage() 
 	{
 		$this->display($this->templatefile);
 	}
-
+	
 	/**
 	 * Adds HTML and JS
 	 */
-	function addCommonHtml()
+	function addCommonHtml() 
 	{
 		$this->body ["begin"] .= GetBaseScriptsForPage($this->isDisplayLoading);
-
+		
 		// assign body end
-		$this->body['end'] = XTempl::create_method_assignment( "assignBodyEnd", $this );
+		$this->body['end'] = array();
+		AssignMethod($this->body['end'], "assignBodyEnd", $this);
 	}
-
+	
 	/**
 	 * A stub
 	 */
 	function prepareForResizeColumns()
 	{
 	}
-
+	
 	/**
 	 * Add js files and scripts
 	 */
 	function addCommonJs() {
-		// call parent if need RunnerJS API
+		// call parent if need RunnerJS API 
 		RunnerPage::addCommonJs();
-
+		
 		$this->addJsGroupsAndRights();
 	}
-
+	
 	/**
 	 *	Removes permissions from $mask that are not defined in $possibleMask
 	 *	I.e. $mask = "ADE", $possibleMask = "AESP", return "AE"
@@ -504,8 +495,8 @@ class RightsPage extends ListPage
 		}
 		return $outMask;
 	}
-
-	function saveRights( &$modifiedRights )
+	
+	function saveRights( &$modifiedRights ) 
 	{
 		foreach($modifiedRights as $group => $rights)
 		{
@@ -516,7 +507,7 @@ class RightsPage extends ListPage
 		}
 		echo my_json_encode(array( 'success' => true ));
 	}
-
+	
 	/**
 	 * Save permissions for those pages only, that are defined in the project.
 	 * This is required when using the same permission tables in several projects
@@ -525,15 +516,15 @@ class RightsPage extends ListPage
 	 * @param String mask
 	 */
 	function updateTablePermissions( $table, $group, $mask )
-	{
+	{		
 		$rightWTableName = $this->connection->addTableWrappers( "" );
 		$accessMaskWFieldName = $this->connection->addFieldWrappers( "" );
 		$groupisWFieldName = $this->connection->addFieldWrappers( "" );
 		$tableNameWFieldName = $this->connection->addFieldWrappers( "" );
 		$groupWhere = $groupisWFieldName."=". $group ." and ". $tableNameWFieldName ."=". $this->connection->prepareString( $table );
-
-		// It's expected that $this->tName is equal to 'admin_right' so the page's db connection is used #9875
-		$sql = "select ". $accessMaskWFieldName ." from ". $rightWTableName. "where" . $groupWhere;
+		
+		// It's expected that $this->tName is equal to 'admin_right' so the page's db connection is used #9875	
+		$sql = "select ". $accessMaskWFieldName ." from ". $rightWTableName. "where" . $groupWhere;		
 		// select rights from the database
 		$data = $this->connection->query( $sql )->fetchNumeric();
 		if( $data )
@@ -542,7 +533,7 @@ class RightsPage extends ListPage
 			$savedMask = $data[0];
 			$pageMask = $this->pageMasks[$table];
 			$correctedMask = "";
-
+			
 			foreach( $this->permissionNames as $perm => $t )
 			{
 				if( strpos( $pageMask, $perm ) !== false )
@@ -557,12 +548,10 @@ class RightsPage extends ListPage
 				}
 			}
 			$mask = $correctedMask;
-
+			
 			if( strlen($mask) )
-			{
-				//	update the table name as well to address table renaming ( uppercase/lowercase ) issues
-				$sql = "update ". $rightWTableName ." set ". $accessMaskWFieldName ."='". $mask ."',".$tableNameWFieldName."=".$this->connection->prepareString( $table )." where ". $groupWhere;
-			}
+				$sql = "update ". $rightWTableName ." set ". $accessMaskWFieldName ."='". $mask ."' where ". $groupWhere;
+
 			else
 				$sql = "delete from ". $rightWTableName	." where ". $groupWhere;
 
@@ -571,11 +560,11 @@ class RightsPage extends ListPage
 		{
 			if( !strlen($mask) )
 				return;
-
+				
 			$sql = "insert into ". $rightWTableName ." (". $groupisWFieldName .", ".$tableNameWFieldName.", ". $accessMaskWFieldName .")"
 				." values (". $group .", ".$this->connection->prepareString( $table ).", '". $mask ."')";
 		}
-
+		
 		$this->connection->exec( $sql );
 	}
 }

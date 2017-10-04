@@ -1,15 +1,16 @@
 <div {$pageattrs}>
 
-{BEGIN container_column}
-<div class="rnr-c rnr-ch rnr-c-column">
+{BEGIN container_masterlistheader}
+<div class="rnr-c rnr-ch rnr-c-masterlistheader">
 
-{BEGIN masterlist_title}
-<div  class="style1 rnr-bl rnr-b-masterlistheader {$brickclass_masterlistheader}"><a {$backtomasterlink_attrs} class="btn btn-link btn-xs">Back to {$backtomasterlink_caption}</a><span>{$pagetitlelabel courses masterlist}</span></div>
-{END masterlist_title}
+
+<div  class="style1 rnr-bl rnr-b-masterlistheader {$brickclass_masterlistheader}">	<h1>{$pagetitlelabel courses masterlist}</h1>
+</div>
+
 
 <div class="rnr-hfiller"></div>
 </div>
-{END container_column}
+{END container_masterlistheader}
 
 
 
@@ -17,44 +18,27 @@
 
 
 
-	<style>
-	.bs-gridcell[data-field=cid]:before {
-		content: "{$label courses cid}";
-	}
-	.bs-gridcell[data-field=track]:before {
-		content: "{$label courses track}";
-	}
-	.bs-gridcell[data-field=cname]:before {
-		content: "{$label courses cname}";
-	}
-	.bs-gridcell[data-field=chours]:before {
-		content: "{$label courses chours}";
-	}
-	.bs-gridcell[data-field=discription]:before {
-		content: "{$label courses discription}";
-	}
-</style>
-<table {$masterlistgrid_hiddenattr} data-pageid="{$pageid}" data-brick="masterlistgrid" class="table rnr-b-mastergridfields rnr-gridtable bs-flexgrid" >
-		<thead>
-		<tr>
+<table class="rnr-c rnr-cont rnr-c-mastergrid rnr-b-mastergridfields rnr-gridtable" cellpadding="0" >
+	<thead>
+		<tr class="rnr-toprow style1 {$gridHeader_class}" >
 			<th class="{$cid_class}">{$label courses cid}</th>
 			<th class="{$track_class}">{$label courses track}</th>
 			<th class="{$cname_class}">{$label courses cname}</th>
 			<th class="{$chours_class}">{$label courses chours}</th>
 			<th class="{$discription_class}">{$label courses discription}</th>
+			<th class="rnr-edge">&nbsp;</th>
 		</tr>
 	</thead>
-	
 	<tbody>
-		<tr>
-			<td class="{$cid_class} bs-gridcell" data-field=cid>{$cid_mastervalue}</td>
-			<td class="{$track_class} bs-gridcell" data-field=track>{$track_mastervalue}</td>
-			<td class="{$cname_class} bs-gridcell" data-field=cname>{$cname_mastervalue}</td>
-			<td class="{$chours_class} bs-gridcell" data-field=chours>{$chours_mastervalue}</td>
-			<td class="{$discription_class} bs-gridcell" data-field=discription>{$discription_mastervalue}</td>
+		<tr class="rnr-row style1">
+			<td class="{$cid_class}">{$cid_mastervalue}</td>
+			<td class="{$track_class}">{$track_mastervalue}</td>
+			<td class="{$cname_class}">{$cname_mastervalue}</td>
+			<td class="{$chours_class}">{$chours_mastervalue}</td>
+			<td class="{$discription_class}">{$discription_mastervalue}</td>
+			<td class="rnr-edge">&nbsp;</td>
 		</tr>
 	</tbody>
-
 </table> 
 
 

@@ -36,10 +36,10 @@ class MembersPage extends ListPage_Simple
 	 * @param array $params
 	 * @return MembersPage
 	 */
-	function __construct(&$params) 
+	function MembersPage(&$params) 
 	{
 		// call parent
-		parent::__construct($params);
+		parent::ListPage_Simple($params);
 		
 			
 		$this->listAjax = false;
@@ -63,10 +63,16 @@ class MembersPage extends ListPage_Simple
 		
 		$this->xt->assign("search_records_block",true);
 		// The user might rewrite $_SESSION["UserName"] value with HTML code in an event, so no encoding will be performed while printing this value.
-		$this->initLogin();
+		$this->xt->assign("username", $_SESSION["UserName"]);
+		$this->xt->assign("displayusername", $_SESSION["UserName"]);
+		$this->xt->assign("security_block",true);
+		$this->xt->assign("logoutbutton",isSingleSign());
+		$this->xt->assign("left_block",true);
+				
+		$this->xt->assign("message_block", true);
 		$this->xt->displayBrickHidden("message");
 		$this->xt->assign("menu_block",true);
-	}		
+	}	
 	
 	/**
 	 * Fills grid rows and headers
@@ -263,14 +269,15 @@ class MembersPage extends ListPage_Simple
 		$this->seekPageInRecSet($this->querySQL);			
 		// fill grid data
 		$this->fillGridData();
-		$this->buildSearchPanel();
 		$this->fillFields();
 		// add common js code
 		$this->addCommonJs();
 		// add common html code
 		$this->addCommonHtml();
 		// Set common assign
-		$this->commonAssign();	
+		$this->commonAssign();
+		// build admin block
+		$this->assignAdmin();
 	}
 	
 	/**
@@ -328,9 +335,9 @@ class MembersPage extends ListPage_Simple
 		foreach ($groups as $group => $state)
 		{		
 			if ( $state == 1 )
-				$sql = "insert into ". $membersWTableName ." (". $userNameWFieldName .", ". $groupIdWFieldName .") values (". $grConnection->prepareString($user) .",".$group.")";
+				$sql = "insert into ". $membersWTableName ." (". $userNameWFieldName .", ". $groupIdWFieldName .") values ('". $user ."','". $group ."')";
 			else
-				$sql = "delete from ". $membersWTableName ." where ". $userNameWFieldName ."=". $grConnection->prepareString($user) ." and ". $groupIdWFieldName ."=".$group;
+				$sql = "delete from ". $membersWTableName ." where ". $userNameWFieldName ."='". $user ."' and ". $groupIdWFieldName ."='". $group ."'";
 			
 			$grConnection->exec( $sql );	
 		}

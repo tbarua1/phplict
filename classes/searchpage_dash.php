@@ -4,9 +4,9 @@ class SearchPageDash extends SearchPage
 {	
 	public $tableSettings = array();
 	
-	function __construct(&$params)
+	function SearchPageDash(&$params)
 	{
-		parent::__construct($params);
+		parent::SearchPage($params);
 		
 		if ($this->mode == SEARCH_DASHBOARD)
 		{
@@ -52,16 +52,10 @@ class SearchPageDash extends SearchPage
 			{
 				$firstFieldParams['fName'] = $f;
 				$firstFieldParams['eType'] = '';
-				$firstFieldParams['value1'] = $this->pSet->getDefaultValue( $field, $table );
+				$firstFieldParams['value1'] = $fSet->getDefaultValue( $field, $table );
+				$firstFieldParams['opt'] = '';
 				$firstFieldParams['value2'] = '';
 				$firstFieldParams['not'] = false;
-				$firstFieldParams['opt'] = $this->pSet->getDefaultSearchOption( $f );
-				$firstFieldParams['not'] = false;
-				if ( substr($firstFieldParams['opt'], 0, 4) == 'NOT ' )
-				{
-					$firstFieldParams['opt'] = substr($firstFieldParams['opt'], 4);
-					$firstFieldParams['not'] = true;
-				}
 			}
 	// create control	
 			$ctrlBlockArr = $this->searchControlBuilder->buildSearchCtrlBlockArr($this->id, $firstFieldParams['fName'], 0, $firstFieldParams['opt'], $firstFieldParams['not'], false, $firstFieldParams['value1'], $firstFieldParams['value2']);	
@@ -102,39 +96,16 @@ class SearchPageDash extends SearchPage
 	function fillFieldSettings()
 	{		
 		$arrFields = $this->pSet->getAllSearchFields();
-		$this->addFieldsSettings($arrFields, null, true, $this->pageType);
+		$this->addFieldsSettings($arrFields, true, $this->pageType);
 	}
-    
-	function locateDashFieldByOriginal( $table, $field )
-	{
-		foreach($this->pSet->getDashboardSearchFields() as $fname => $data)
-		{
-			if( !$data )
-				continue;
-			if( $data[0]["table"] == $table && $data[0]["field"] == $field )
-			{
-				return $fname;
-			}
-		}
-		return $fname;
-	}
-	
-	
-	function addFieldsSettings($arrFields, $pSet, $pageBased, $pageType)
+        
+	function addFieldsSettings($arrFields, $pageBased, $pageType)
 	{
 		$dashSearchFields = $this->pSet->getDashboardSearchFields();
-		$tableSettingsFilled = array();
 		foreach($arrFields as $fieldName)
 		{
-			$tableName = $dashSearchFields[$fieldName][0]["table"];
-			$pSet = new ProjectSettings( $tableName, $pageType);
+			$pSet = new ProjectSettings($dashSearchFields[$fieldName][0]["table"]);
 			$tableFieldName = $dashSearchFields[$fieldName][0]["field"];
-			
-			if( !$tableSettingsFilled[ $tableName ] )
-			{
-				$this->fillTableSettings( $tableName, $pSet );
-				$tableSettingsFilled[ $tableName ] = true;
-			}
 			if( !array_key_exists($fieldName, $this->jsSettings['tableSettings'][ $this->tName ]['fieldSettings']) )
 				$this->jsSettings['tableSettings'][ $this->tName ]['fieldSettings'][ $fieldName ] = array();
 			
@@ -166,14 +137,6 @@ class SearchPageDash extends SearchPage
 				{
 					$fData = $pSet->getAutoCompleteFields($tableFieldName);
 				}
-				elseif( $key == "parentFields" )
-				{
-					$fData = $pSet->getLookupParentFNames( $tableFieldName );
-					foreach( $fData as $i => $parentField )
-					{
-						$fData[$i] = $this->locateDashFieldByOriginal( $tableName, $parentField );
-					}
-				}
 				
 				$isDefault = false;
 				if( is_array($fData) )
@@ -190,10 +153,6 @@ class SearchPageDash extends SearchPage
 					$this->jsSettings['tableSettings'][ $this->tName ]['fieldSettings'][ $fieldName ][ $pageType ][ $val['jsName'] ] = $fData;
 				}
 			}
-			
-			//add Dash Search-specific settings
-			$this->jsSettings['tableSettings'][ $this->tName ]['fieldSettings'][ $fieldName ][ $pageType ][ 'originalTable' ] = $tableName;
-			$this->jsSettings['tableSettings'][ $this->tName ]['fieldSettings'][ $fieldName ][ $pageType ][ 'originalField' ] = $tableFieldName;
 			
 			$this->jsSettings['tableSettings'][ $this->tName ]['isUseCK'] = $this->isUseCK;
 			

@@ -124,12 +124,6 @@
 	right:auto;
 }
 
-.rnr-buttons-left .rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink {
-	color: inherit;
-	left: initial;
-	position: absolute;
-}
-
 .rnr-expandCollapse[data-state="closed"]:before
 {
 	content: '\25C0';
@@ -149,18 +143,4 @@ table.indenttables > * > .rightsindent4 > td.rightscell.rightscell.rightscell.ri
 }
 table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell:first-child {
 	padding-right: 11em;
-}
-
-.clearable{
-  background: #fff url(data:image/gif;base64,R0lGODlhBwAHAIAAAP///5KSkiH5BAAAAAAALAAAAAAHAAcAAAIMTICmsGrIXnLxuDMLADs=) no-repeat left -10px center;
-  border: 1px solid #999;
-  padding: 3px 18px 3px 4px; /* Use the same right padding (18) in jQ! */
-  border-radius: 3px;
-  transition: background 0.4s;
-}
-.clearable.x  { background-position: left 5px center; }
-
-/* For fix bootstrap calend widget */
-.bootstrap-datetimepicker-widget ul.list-unstyled {
-	padding-right: 0 !important;
 }

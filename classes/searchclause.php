@@ -1,95 +1,95 @@
 <?php
-
-require_once(getabspath('classes/searchclause_base.php'));
-
-class SearchClause extends SearchClauseBase
+class SearchClause
 {
 	/**
 	 * Array with all session data
+	 *
 	 * @var array
 	 */
-	public $_where = array(); //?
+	var $_where = array();
 	
 	/**
 	 * Name of current table, for which instance of class was created
+	 *
 	 * @var string
 	 */
-	public $tName = "";
-	
+	var $tName = "";
 	/**
 	 * Array of fields for basic search
+	 *
 	 * @var array
 	 */
-	protected $searchFieldsArr = array();
+	var $searchFieldsArr = array();
 	
-	protected $googleLikeFields = array();
-	
+	var $googleLikeFields = array();
 	/**
 	 * Type of search
+	 *
 	 * @var string
 	 */
-	protected $srchType = 'integrated';
+	var $srchType = 'integrated';
 	
 	/**
 	 * Session vars pref
+	 *
 	 * @var string
 	 */
-	protected $sessionPrefix = "";
-	
+	var $sessionPrefix = "";
 	/**
 	 * Indicator, if used search it will be true
-	 * @var Boolean
+	 *
+	 * @var bool
 	 */
-	public $bIsUsedSrch = false;
+	var $bIsUsedSrch = false;
 	
 	/**
 	 * An indicator showing if filters functionality is activated 
-	 * @var Boolean
+	 * @var bool
 	 */
-	public $filtersActivated = false;
+	var $filtersActivated = false;
 	
 	/**
 	 * Indicator, if started simple or google-like search" 
-	 * @var Boolean
+	 *
+	 * @var bool
 	 */
-	public $simpleSearchActive = false;
-	
+	var $simpleSearchActive = false;
 	/**
 	 * Indicator, if started search is Advanced or from Search Panel
-	 * @var Boolean
+	 *
+	 * @var bool
 	 */
-	protected $advancedSearchActive = false;
-	
+	var $advancedSearchActive = false;
 	/**
 	 * Indicator, if request have agregate fields it will be true
-	 * @type Boolean
+	 *
+	 * @var bool
 	 */
-	protected $haveAggregateFields = false;
+	var $haveAgregateFields = false;
 	
-	protected $panelSearchFields = array(); //?
+	var $panelSearchFields = array();
 	
-	public $cipherer = null;
-	public $pSetSearch;
+	var $cipherer = null;
 	
-	protected $searchOptions = array();
+	var $searchOptions = array();
 	
-	protected $fieldDelimiterLeft = ')';
-	protected $fieldDelimiterRight = '(';
-	protected $valueDelimiter = '~';
+	var $fieldDelimiterLeft = ')';
+	var $fieldDelimiterRight = '(';
+	var $valueDelimiter = '~';
 
-	protected $fieldsUsedForSearch = array();
-	
+	var $requiredSearchFields = array();
+	var $fieldsUsedForSearch = array();
 	/**
 	 * Local instance of EditControlsContainer. Use only for compatibility with business templates
-	 * @var object
+	 * @var {object}
 	 */
-	protected $localEditControls = null;
-	
+	var $localEditControls = null;
 	/**
 	 * Indicator, if used "show basic search options" field it will be true
+	 * 
 	 * @var boolean
 	 */
-	protected $isShowSimpleSrchOpt = false;
+	var $isShowSimpleSrchOpt = false;
 	
 	/**
 	 * The array to store search params ('q', 'qs', 'f')
@@ -101,10 +101,10 @@ class SearchClause extends SearchClauseBase
 	public $savedSearchIsRun = false;
 	
 	/**
-	 * The associative array containing the filtered fields data  
-	 * @var array
-	 */	
-	public $filteredFields = array(); 
+	* The associative array containing the filtered fields data  
+	* @var array
+	*/	
+	var $filteredFields = array(); 
 	
 	/**
 	 * @type Boolean
@@ -112,57 +112,16 @@ class SearchClause extends SearchClauseBase
 	protected $searchSavingEnabled = false;
 	
 	protected $dashTName = "";
-
 	
-	/**
-	 *	If the whole Dashboard (combined) search is in effect
-	 *	@type bool
-	 */
-	protected $wholeDashboardSearch = false;
+	protected $dashElementName = "";
+	
+	protected $dashElementHasSearch = false;
 	
 	protected $dashboardSearchClause = null;
 	
-	
-	/**
-	 * @type Array
-	 */
-	protected $customFieldSQLConditions;
-	
-	/**
-	 * @constructor
-	 */
-	function __construct(&$params)
+	function SearchClause(&$params)
 	{
-		$this->setSearchOptions();
-		
-		$this->tName = $params['tName'];
-		$this->sessionPrefix = $params['sessionPrefix'] ? $params['sessionPrefix'] : $this->tName;
-		$this->cipherer = $params['cipherer'];
-		
-		$this->pSetSearch = new ProjectSettings($this->tName, PAGE_SEARCH);
-		if( !$this->cipherer )
-			$this->cipherer = new RunnerCipherer( $this->tName, $this->pSetSearch );
-		
-		$this->searchFieldsArr = ( $params['searchFieldsArr'] ? $params['searchFieldsArr'] : $this->pSetSearch->getAllSearchFields() ); // searchable field (could be added to the search panel)
-		$this->panelSearchFields = ($params['panelSearchFields'] ? $params['panelSearchFields'] : $this->pSetSearch->getPanelSearchFields()); // fields that are always on the search panel
-		$this->googleLikeFields = ($params['googleLikeFields'] ? $params['googleLikeFields'] : $this->pSetSearch->getGoogleLikeFields()); // simple search fields
-		
-		$this->isShowSimpleSrchOpt = $this->pSetSearch->showSimpleSearchOptions();
-		$this->searchSavingEnabled = $params['searchSavingEnabled'] ? $params['searchSavingEnabled'] : false;	
-		
-		$this->dashTName = $params['dashTName'] ? $params['dashTName'] : "";
-
-		if( $params['haveAggregateFields'] )
-			$this->haveAggregateFields = true;
-
-		$this->customFieldSQLConditions = array();
-	}
-	
-	/**
-	 * set searchOptions array
-	 */
-	protected function setSearchOptions()
-	{
+		global $strTableName;
 		$this->searchOptions["contains"] = array("option" => "Contains", "not" => false);
 		$this->searchOptions["equals"] = array("option" => "Equals", "not" => false);
 		$this->searchOptions["startswith"] = array("option" => "Starts with", "not" => false);
@@ -170,17 +129,31 @@ class SearchClause extends SearchClauseBase
 		$this->searchOptions["lessthan"] = array("option" => "Less than", "not" => false);
 		$this->searchOptions["between"] = array("option" => "Between", "not" => false);
 		$this->searchOptions["empty"] = array("option" => "Empty", "not" => false);
-		
-		$this->searchOptions["lessequal"] = array("option" => "More than", "not" => true);
-		$this->searchOptions["moreequal"] = array("option" => "Less than", "not" => true); 
-		
 		$this->searchOptions["notcontain"] = array("option" => "Contains", "not" => true);
 		$this->searchOptions["notequal"] = array("option" => "Equals", "not" => true);
 		$this->searchOptions["notstartwith"] = array("option" => "Starts with", "not" => true);
+		
 		$this->searchOptions["notmorethan"] = array("option" => "More than", "not" => true);
+		$this->searchOptions["lessequal"] = array("option" => "More than", "not" => true);
+		
 		$this->searchOptions["notlessthan"] = array("option" => "Less than", "not" => true); 
+		$this->searchOptions["moreequal"] = array("option" => "Less than", "not" => true); 
+		
 		$this->searchOptions["notbetween"] = array("option" => "Between", "not" => true);
-		$this->searchOptions["notempty"] = array("option" => "Empty", "not" => true);		
+		$this->searchOptions["notempty"] = array("option" => "Empty", "not" => true);
+
+		$this->tName = ($params['tName'] ? $params['tName'] : $strTableName);
+		$this->sessionPrefix = ($params['sessionPrefix'] ? $params['sessionPrefix'] : $this->tName);
+		$this->searchFieldsArr = $params['searchFieldsArr'];
+		$this->cipherer = $params['cipherer'];
+		$settings = new ProjectSettings($this->tName, PAGE_SEARCH);
+		$this->panelSearchFields = ($params['panelSearchFields'] ? $params['panelSearchFields'] : $settings->getPanelSearchFields());
+		$this->googleLikeFields = ($params['googleLikeFields'] ? $params['googleLikeFields'] : $settings->getGoogleLikeFields());
+		$this->requiredSearchFields = ($params['requiredSearchFields'] ? $params['requiredSearchFields'] : $settings->getSearchRequiredFields());
+		$this->isShowSimpleSrchOpt = $settings->showSimpleSearchOptions();
+		$this->searchSavingEnabled = $params['searchSavingEnabled'] ? $params['searchSavingEnabled'] : false;	
+		$this->dashTName = $params['dashTName'] ? $params['dashTName'] : "";	
+		$this->dashElementName = $params['dashElementName'] ? $params['dashElementName'] : "";	
 	}
 	
 	/**
@@ -188,29 +161,96 @@ class SearchClause extends SearchClauseBase
 	 * Params are common for advanced search and search panel on list
 	 * Use in new projects
 	 * 
-	 * @param Array fieldsArr	An array of table field names
-	 * @public
+	 * @protected
 	 * @return string
 	 */
-	public function buildItegratedWhere($fieldsArr, $editControls = null) 
+	function buildItegratedWhere($fieldsArr, $editControls = null) 
 	{
-		if( !count($fieldsArr) )
+		if (!count($fieldsArr))
 			return '';
 		
-		if( is_null($editControls) )
-			$editControls = $this->getLocalEditControls();
+		if(is_null($editControls))
+		{
+			if(is_null($this->localEditControls))
+			{
+				include_once getabspath("classes/controls/EditControlsContainer.php");
+				$this->localEditControls = new EditControlsContainer(null, new ProjectSettings($this->tName, PAGE_SEARCH), PAGE_SEARCH, $this->cipherer);
+			}
+			$editControls = $this->localEditControls;
+		}
 			
-		$resWhere = '';
-		if( !$this->haveAggregateFields || !$this->advancedSearchActive ) //#5083
-			$resWhere = $this->getSimpleSearchWhere($fieldsArr, $editControls);
-
-			
+		// get global options
 		$srchCriteriaCombineType = $this->getCriteriaCombineType();
-		$srchFields = &$this->_where["_srchFields" ];
+		$srchFields = &$this->_where[$this->sessionPrefix."_srchFields"];
+		$sWhere = '';
+		if( !$this->haveAgregateFields || !$this->advancedSearchActive )
+		{
+			$simpleSrch = $this->_where[$this->sessionPrefix."_simpleSrch"];
+			if (trim($simpleSrch) === '%')
+			{
+				$simpleSrch = '['.$simpleSrch.']';
+			}
+			$simpleSrchOption = $this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"];
+			// build where for any field contains search
+			if ($simpleSrch != null && strlen($simpleSrch) || $simpleSrchOption == "Empty")
+			{			
+				$simpleSrchField = $this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"];
+				if ($simpleSrch != null && strlen($simpleSrchField))
+				{
+					if (!in_array($simpleSrchField, $fieldsArr)	)
+						return "";
+					$where = $editControls->getControl( $simpleSrchField, SEARCHID_SIMPLE )->getSearchWhere($simpleSrch, $simpleSrchOption, "", "");
+					if($where && $this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"])
+					{
+						$where ="not (".$where.")";
+					}
+					$sWhere = $where;
+				}
+				else 
+				{
+					if($this->isShowSimpleSrchOpt)
+						$simpleSrchArr = array($simpleSrch);
+					else
+						$simpleSrchArr = $this->googleLikeParseString($simpleSrch);
+					
+					$resWhereArr = array();
+					foreach($simpleSrchArr as $ind => $simpleSrchItem)
+					{
+						$sWhere = '';
+						for($i = 0; $i < count($this->searchFieldsArr); $i++)
+						{
+							if (in_array($this->searchFieldsArr[$i], $fieldsArr) &&
+								in_array($this->searchFieldsArr[$i], $this->googleLikeFields))
+							{
+								$control = $editControls->getControl($this->searchFieldsArr[$i], SEARCHID_ALL + $ind);
+								$where = $control->getSearchWhere($simpleSrchItem, $simpleSrchOption, "", "");
+								// add not 
+								if(trim($where) != "" && $this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"])
+								{
+									$where ="not (".$where.")";
+								}
+								if(trim($where) != "")
+								{
+									if($sWhere)
+										$sWhere.= " or ";
+									$sWhere.= $where;
+								}
+							}
+						}
+						if(count($simpleSrchArr) == 1)
+							$resWhereArr[] = $sWhere;
+						elseif( $sWhere )
+							$resWhereArr[] = "(".$sWhere.")";
+					}
+					$sWhere = implode(" and ", $resWhereArr);
+				}
+			}
+		}
 		
+		$resWhere = whereAdd('', $sWhere);
 		// if there are fields for build advanced where
 		$sWhere = '';
-		if( count($srchFields) )
+		if (count($srchFields))
 		{
 			// prepare vars
 			$sWhere = $srchCriteriaCombineType=="and" ? "(1=1" : "(1=0";
@@ -219,7 +259,7 @@ class SearchClause extends SearchClauseBase
 			// build where
 			foreach ($srchFields as $ind => $srchF)
 			{	
-				if( in_array($srchF['fName'], $fieldsArr) && !isset( $this->customFieldSQLConditions[ $srchF['fName'] ] ) )
+				if (in_array($srchF['fName'], $fieldsArr))
 				{
 					$control = $editControls->getControl($srchF['fName'], SEARCHID_PANEL + $ind);
 					$where = $control->getSearchWhere($srchF['value1'], $srchF['opt'], $srchF['value2'], $srchF['eType']);
@@ -248,115 +288,10 @@ class SearchClause extends SearchClauseBase
 			// add ) to final field block clause
 			$sWhere .= ')';
 		}
-		
 		$resWhere = whereAdd($resWhere, $sWhere);
-		
-		foreach( $this->customFieldSQLConditions as $field => $sql )
-		{
-			if( !strlen( $resWhere ) )
-				$resWhere =  "(". $sql .")";
-			else	
-			{
-				if( $srchCriteriaCombineType == "and" )
-					$resWhere.= " and (". $sql .")";
-				else
-					$resWhere.= " or (". $sql .")";
-					
-			}
-		}
 		
 		return $resWhere;
 	}
-	
-	/**
-	 *
-	 */
-	protected function getSimpleSearchWhere($fieldsArr, $editControls)
-	{
-		$simpleSrch = $this->_where["_simpleSrch" ];
-		if( trim($simpleSrch) === '%' )
-			$simpleSrch = '['.$simpleSrch.']';
-		
-		$simpleSrchOption = $this->_where["simpleSrchTypeComboOpt" ];
-		
-		if( ( $simpleSrch == null || !strlen($simpleSrch) ) && $simpleSrchOption != "Empty" )
-			return "";
-		
-		// build where for any field contains search
-
-		$simpleSrchField = $this->_where["simpleSrchFieldsComboOpt" ];
-		if( $simpleSrch != null && strlen($simpleSrchField) && !isset( $this->customFieldSQLConditions[ $simpleSrchField  ] ) )
-		{
-			if( !in_array($simpleSrchField, $fieldsArr)	)
-				return "";
-				
-			$where = $editControls->getControl( $simpleSrchField, SEARCHID_SIMPLE )->getSearchWhere($simpleSrch, $simpleSrchOption, "", "");
-			if( $where && $this->_where["simpleSrchTypeComboNot" ] )
-				$where = "not (". $where .")";
-			
-			return $where;
-		}
-		
-		if( $this->isShowSimpleSrchOpt )
-			$simpleSrchArr = array( $simpleSrch );
-		else
-			$simpleSrchArr = $this->googleLikeParseString( $simpleSrch );
-		
-		$resWhereArr = array();
-		$specLookupFields = array();
-		foreach($simpleSrchArr as $ind => $simpleSrchItem)
-		{
-			$sWhere = '';
-			for($i = 0; $i < count($this->searchFieldsArr); $i++)
-			{
-				if( isset( $this->customFieldSQLConditions[ $this->searchFieldsArr[$i] ] ) )
-					continue;
-					
-				if( in_array($this->searchFieldsArr[$i], $fieldsArr) && in_array($this->searchFieldsArr[$i], $this->googleLikeFields ) )
-				{
-					if( in_array( $this->searchFieldsArr[$i], $specLookupFields ) )
-						$control = $editControls->getControl($this->searchFieldsArr[$i], SEARCHID_ALL); // $ind = 0
-					else	
-						$control = $editControls->getControl($this->searchFieldsArr[$i], SEARCHID_ALL + $ind);
-					
-					$where = $control->getSearchWhere($simpleSrchItem, $simpleSrchOption, "", "");
-
-					if( $control->checkIfDisplayFieldSearch( $simpleSrchOption ) )
-						$specLookupFields[] = $this->searchFieldsArr[$i];
-					
-					// add not 
-					if(trim($where) != "" && $this->_where["simpleSrchTypeComboNot"])
-					{
-						$where ="not (".$where.")";
-					}
-					if(trim($where) != "")
-					{
-						if($sWhere)
-							$sWhere.= " or ";
-						$sWhere.= $where;
-					}
-				}
-			}
-			
-			if( count($simpleSrchArr) == 1 )
-				$resWhereArr[] = $sWhere;
-			elseif( $sWhere )
-				$resWhereArr[] = "(".$sWhere.")";
-		}
-		
-		return implode(" and ", $resWhereArr);	
-	}
-	
-	/**
-	 *
-	 */
-	protected function getLocalEditControls()
-	{
-		include_once getabspath("classes/controls/EditControlsContainer.php");
-		return new EditControlsContainer(null, $this->pSetSearch, PAGE_SEARCH, $this->cipherer);	
-	}
-	
-	
 	/**
 	 * return where clause
 	 *
@@ -387,7 +322,7 @@ class SearchClause extends SearchClauseBase
 	{
 		$joinParts = $this->getJoinFromPartsArrayBasingOnSimpleSearch($editControls);
 			
-		$srchFields = &$this->_where["_srchFields" ];	
+		$srchFields = &$this->_where[$this->sessionPrefix."_srchFields"];	
 		if( !$srchFields )
 			$srchFields = array();
 		
@@ -413,18 +348,18 @@ class SearchClause extends SearchClauseBase
 	protected function getJoinFromPartsArrayBasingOnSimpleSearch($editControls)
 	{
 		$joinParts = array();
-		$simpleSrch = $this->_where["_simpleSrch"];
-		$simpleSrchOpt = $this->_where["simpleSrchTypeComboOpt"];
+		$simpleSrch = $this->_where[$this->sessionPrefix."_simpleSrch"];
+		$simpleSrchOpt = $this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"];
 
-		if( $this->haveAggregateFields && $this->advancedSearchActive || !strlen($simpleSrch) || $simpleSrchOpt != "Contains" && $simpleSrchOpt != "Starts with" )
+		if( $this->haveAgregateFields && $this->advancedSearchActive || !strlen($simpleSrch) || $simpleSrchOpt != "Contains" && $simpleSrchOpt != "Starts with" )
 			return array();
 		
-		$simleSrchField = $this->_where["simpleSrchFieldsComboOpt"];
+		$simleSrchField = $this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"];
 		
 		if( strlen($simleSrchField) )
 		{
 			$control = $editControls->getControl( $simleSrchField, SEARCHID_SIMPLE );
-			$clausesData = $control->getSelectColumnsAndJoinFromPart( $simpleSrch, $simpleSrchOpt, false);
+			$clausesData = $control->getSelectColumnsAndJoinFromPart($simpleSrch, $simpleSrchOpt, false);
 			return array( $clausesData["joinFromPart"] );
 		}
 		
@@ -434,19 +369,15 @@ class SearchClause extends SearchClauseBase
 			$simpleSrchArr = $this->googleLikeParseString($simpleSrch);
 		
 		$joinParts = array();
-		$skipFields = array();
+		
 		foreach($simpleSrchArr as $ind => $simpleSrchItem)
 		{
 			foreach( $this->searchFieldsArr as $sField )
 			{
-				if( in_array($sField, $this->googleLikeFields) && !in_array($sField, $skipFields) )
+				if( in_array($sField, $this->googleLikeFields) )
 				{
 					$control = $editControls->getControl($sField, SEARCHID_ALL + $ind);
-					$clausesData = $control->getSelectColumnsAndJoinFromPart( $simpleSrchItem, $simpleSrchOpt, false );
-					
-					if( $control->checkIfDisplayFieldSearch( $simpleSrchOpt ) )
-						$skipFields[] = $sField;
-						
+					$clausesData = $control->getSelectColumnsAndJoinFromPart($simpleSrchItem, $simpleSrchOpt,false);
 					$joinParts[] = $clausesData["joinFromPart"];
 				}
 			}							
@@ -550,10 +481,12 @@ class SearchClause extends SearchClauseBase
 	* @return String
 	*/
 	function getFilterWhereByType($filterType, $fName, $fValue, $sValue, $parentValues, $connection)
-	{		
-		$fullFieldName = RunnerPage::_getFieldSQLDecrypt( $fName, $connection, $this->pSetSearch, $this->cipherer );
+	{
+		$pSet = new ProjectSettings($this->tName, PAGE_SEARCH);
+		
+		$fullFieldName = RunnerPage::_getFieldSQLDecrypt( $fName, $connection, $pSet, $this->cipherer );
 
-		$fieldType = $this->pSetSearch->getFieldType($fName);
+		$fieldType = $pSet->getFieldType($fName);
 		$dateField = IsDateFieldType($fieldType);
 		$timeField = IsTimeType($fieldType);
 		
@@ -567,13 +500,13 @@ class SearchClause extends SearchClauseBase
 		switch($filterType)
 		{
 			case 'interval':
-				$intervalData = $this->pSetSearch->getFilterIntervalDatabyIndex($fName, $fValue);
+				$intervalData = $pSet->getFilterIntervalDatabyIndex($fName, $fValue);
 				if( !count($intervalData) )
 					return "";
 				
 				include_once getabspath("classes/controls/FilterControl.php");	
 				include_once getabspath("classes/controls/FilterIntervalList.php");
-				return FilterIntervalList::getIntervalFilterWhere($fName, $intervalData, $this->pSetSearch, $this->cipherer, $this->tName, $connection);
+				return FilterIntervalList::getIntervalFilterWhere($fName, $intervalData, $pSet, $this->cipherer, $this->tName, $connection);
 
 			case 'equals':
 				if( !count($parentValues) )
@@ -581,12 +514,11 @@ class SearchClause extends SearchClauseBase
 				
 				$wheres = array();
 				$wheres[] = $fullFieldName."=".$this->cipherer->MakeDBValue($fName, $fValue, "", true);
-				$parentFiltersNames = $this->pSetSearch->getParentFiltersNames($fName);
+				$parentFiltersNames = $pSet->getParentFiltersNames($fName);
 				
 				foreach( $parentFiltersNames as $key => $parentName )
 				{
-					$wheres[] = RunnerPage::_getFieldSQLDecrypt($parentName, $connection, $this->pSetSearch, $this->cipherer)
-						."=".$this->cipherer->MakeDBValue($parentName, $parentValues[$key], "", true);
+					$wheres[] = RunnerPage::_getFieldSQLDecrypt($parentName, $connection, $pSet, $this->cipherer)."=".$this->cipherer->MakeDBValue($parentName, $parentValues[$key], "", true);
 				}
 				
 				return "(".implode(" AND ", $wheres).")";
@@ -599,39 +531,39 @@ class SearchClause extends SearchClauseBase
 				
 				include_once getabspath("classes/controls/Control.php");				
 				include_once getabspath("classes/controls/CheckboxField.php");	
-				return CheckboxField::constructFieldWhere($fullFieldName, $bNeedQuotes, $fValue == "on", $this->pSetSearch->getFieldType($fName), $connection->dbType);
+				return CheckboxField::constructFieldWhere($fullFieldName, $bNeedQuotes, $fValue == "on", $pSet->getFieldType($fName), $connection->dbType);
 			
 			case 'slider':
 				if($dateField)
-					return FilterIntervalDateSlider::getDateSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalDateSlider::getDateSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 
 				if($timeField)
 				{
 					include_once getabspath("classes/controls/FilterIntervalTimeSlider.php");
-					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 				}
 					
 				return $this->cipherer->MakeDBValue($fName, $fValue, "", true)."<=".$fullFieldName." AND ".$fullFieldName."<=".$this->cipherer->MakeDBValue($fName, $sValue, "", true);
 				
 			case 'moreequal':
 				if($dateField)
-					return FilterIntervalDateSlider::getDateSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalDateSlider::getDateSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 
 				if($timeField)
 				{
 					include_once getabspath("classes/controls/FilterIntervalTimeSlider.php");
-					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 				}	
 				return $this->cipherer->MakeDBValue($fName, $fValue, "", true)."<=".$fullFieldName;
 				
 			case 'lessequal':
 				if($dateField)
-					return FilterIntervalDateSlider::getDateSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalDateSlider::getDateSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 
 				if($timeField)
 				{
 					include_once getabspath("classes/controls/FilterIntervalTimeSlider.php");
-					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $this->pSetSearch, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
+					return FilterIntervalTimeSlider::getTimeSliderWhere($fName, $pSet, $this->cipherer, $this->tName, $fValue, $sValue, $filterType, $fullFieldName);
 				}
 				return $fullFieldName."<=".$this->cipherer->MakeDBValue($fName, $fValue, "", true);
 			
@@ -650,67 +582,71 @@ class SearchClause extends SearchClauseBase
 	 */
 	function parseItegratedRequest() 
 	{
-		global $suggestAllContent;
-		
-		$_SESSION[$this->sessionPrefix."_qs"] = postvalue('qs');
-		$_SESSION[$this->sessionPrefix."_q"] = postvalue('q');
-
-		
-		$this->fieldsUsedForSearch = array();
-		
-		$this->_where["simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
-		$this->_where["simpleSrchTypeComboNot"] = false;
-		$this->_where["simpleSrchFieldsComboOpt"] = '';
-
-		$tempArr = $this->parseStringToArray( postvalue('qs') );
-		$simpleQueryArr = $tempArr[0];
-		if( $this->wholeDashboardSearch ) 
-			$simpleQueryArr = $this->getSimpleSearchFromDashboard();
-		
-		$this->_where["_simpleSrch" ] = $this->searchUnEscape( $simpleQueryArr[0] );	
-		$this->simpleSearchActive = $simpleQueryArr[0] != '';
-		
-		if($this->simpleSearchActive && $this->wholeDashboardSearch)
+		$this->dashElementHasSearch = false;
+		if( $this->dashTName && !postvalue('qs') && !postvalue('q') && !postvalue('criteria') )
 		{
-			$this->googleLikeFields = $this->getGoogleLikeFieldsFromDashboard();
-		}
-		
-		if(isset($this->searchOptions[$this->getArrayValueByIndex($simpleQueryArr, 2, true)]))
-		{
-			$simpleSrchTypeComboNot = $this->searchOptions[$simpleQueryArr[2]]["not"];
-			$this->_where["simpleSrchTypeComboOpt"] = $this->searchOptions[$simpleQueryArr[2]]["option"];
-			if (!strlen($this->_where["simpleSrchTypeComboOpt"]))
+			if( isset($_SESSION[$this->dashTName.'_advsearch']) )
 			{
-				$this->_where["simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
+				$this->dashboardSearchClause = SearchClause::UnserializeObject($_SESSION[$this->dashTName.'_advsearch']);
+				$this->dashElementHasSearch = $this->dashboardSearchClause->bIsUsedSrch;
 			}
 		}
 		
+		if(postvalue('qs') == "" && postvalue('q') == "" && !$this->dashElementHasSearch)
+			return $this->parseItegratedRequestOld();
+		
+		global $suggestAllContent;
+		// parse global options
+		
+		$this->fieldsUsedForSearch = array();
+		
+		$this->_where[$this->sessionPrefix."_simpleSrch"] = '';	
+		$this->simpleSearchActive = false;
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"] = false;
+		$this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"] = '';
+		
+		$tempArr = $this->parseStringToArray(postvalue('qs'));
+		$simpleQueryArr = $tempArr[0];
+		if ($this->dashElementHasSearch) $simpleQueryArr = $this->getSimpleSearchFromDashboard();
+		
+		$this->_where[$this->sessionPrefix."_simpleSrch"] = $this->searchUnEscape($simpleQueryArr[0]);	
+		$this->simpleSearchActive = $simpleQueryArr[0] != '';
+		if($this->simpleSearchActive && $this->dashElementHasSearch)
+		{
+			$this->googleLikeFields = $this->getGoogleLikeFieldsFromDashboard();
+		}
+		if(isset($this->searchOptions[$this->getArrayValueByIndex($simpleQueryArr, 2, true)]))
+		{
+			$simpleSrchTypeComboNot = $this->searchOptions[$simpleQueryArr[2]]["not"];
+			$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = $this->searchOptions[$simpleQueryArr[2]]["option"];
+			if (!strlen($this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"]))
+			{
+				$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
+			}
+		}
 		$fieldName = trim($this->getArrayValueByIndex($simpleQueryArr, 1, true));
-		$this->_where["simpleSrchFieldsComboOpt"] = $fieldName;
+		$this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"] = $fieldName;
 		if($fieldName)
 		{
 			$this->fieldsUsedForSearch[$fieldName] = true;
 		}	
 		
-		$srchCriteriaCombineType = postvalue("criteria");
-		if( $this->wholeDashboardSearch ) 
-			$srchCriteriaCombineType = $this->getCriteriaFromDashboard();
+		$srchCriteriaCombineType=postvalue("criteria");
+		if ($this->dashElementHasSearch) $srchCriteriaCombineType=$this->getCriteriaFromDashboard();
 		
-		if( !$srchCriteriaCombineType )
-			$srchCriteriaCombineType = "and";
-			
-		$this->_where["_srchCriteriaCombineType"] = $srchCriteriaCombineType;
-		
-		$_SESSION[$this->sessionPrefix."_criteriaSearch"] = $this->getCriteriaCombineType(); //?
-		
-		
-		$this->_where["_srchFields"] = array();
-		
+		if(!$srchCriteriaCombineType)
+			$srchCriteriaCombineType="and";
+		$_SESSION[$this->sessionPrefix."_criteria"] = $srchCriteriaCombineType;
+		$this->_where[$this->sessionPrefix."_srchCriteriaCombineType"] = $srchCriteriaCombineType;
+		// prepare vars
+		$this->_where[$this->sessionPrefix."_srchFields"] = array();
+		// scan all srch fields
 		$this->advancedSearchActive = false;
+		$pSet = new ProjectSettings($this->tName, PAGE_SEARCH);
 		
 		$searchFieldsArr = $this->parseStringToArray(postvalue('q'), true);
-		if( $this->wholeDashboardSearch ) 
-			$searchFieldsArr = $this->getSearchFieldsFromDashboard();
+		if ($this->dashElementHasSearch) $searchFieldsArr=$this->getSearchFieldsFromDashboard();
 		
 		foreach ($searchFieldsArr as $searchItemArr) 
 		{
@@ -729,7 +665,6 @@ class SearchClause extends SearchClauseBase
 			$srchF['value1'] = $this->getArrayValueByIndex($searchItemArr, 2, true);
 			$opt = $this->getArrayValueByIndex($searchItemArr, 1);
 			$srchF['not'] = false;
-			
 			if(isset($this->searchOptions[$opt]))
 			{
 				$srchF['not'] = $this->searchOptions[$opt]["not"]; 
@@ -737,36 +672,30 @@ class SearchClause extends SearchClauseBase
 			}
 			else 
 			{
-				$srchF['opt'] = $this->getDefaultSearchTypeOption($fName, $this->pSetSearch);
+				$srchF['opt'] = $this->getDefaultSearchTypeOption($fName, $pSet);
 			}
-			
-			if( $this->wholeDashboardSearch )
-			{
-				$srchF['not'] = $this->getArrayValueByIndex($searchItemArr, 5);
-			}
-			
 			$srchF['value2'] = $this->getArrayValueByIndex($searchItemArr, 4, true);	
-			
-			$this->_where["_srchFields"][] = $srchF;
+			$this->_where[$this->sessionPrefix."_srchFields"][] = $srchF;
 			$this->fieldsUsedForSearch[$fName] = true;
 		}
 		
 		// process srch panel attrs, better then use coockies. 
-		$this->_where["_srchOptShowStatus"]= postvalue('srchOptShowStatus')==='1';
-		$this->_where["_ctrlTypeComboStatus"]= postvalue('ctrlTypeComboStatus')==='1';
-		$this->_where["srchWinShowStatus"]= postvalue('srchWinShowStatus')==='1';	
+		$this->_where[$this->sessionPrefix."_srchOptShowStatus"]= postvalue('srchOptShowStatus')==='1';// || count($this->_where[$this->sessionPrefix."_srchFields"])>0;
+		$this->_where[$this->sessionPrefix."_ctrlTypeComboStatus"]= postvalue('ctrlTypeComboStatus')==='1';
+		$this->_where[$this->sessionPrefix."srchWinShowStatus"]= postvalue('srchWinShowStatus')==='1';
+		
 	}
 	
 	/**
 	 * Get criteria from dashboard search clause
 	 * @return String
 	 */
-	protected function getCriteriaFromDashboard()
+	function getCriteriaFromDashboard()
 	{
-		if( $this->dashboardSearchClause )
-			return $this->dashboardSearchClause->_where['_srchCriteriaCombineType' ];
-
-		return "";
+		if($this->dashboardSearchClause)
+			return $this->dashboardSearchClause->_where[$this->dashTName.'_srchCriteriaCombineType'];
+		else
+			return null;
 	}
 	
 	/**
@@ -776,7 +705,7 @@ class SearchClause extends SearchClauseBase
 	function getSimpleSearchFromDashboard()
 	{
 		if($this->dashboardSearchClause)
-			return array(0 => $this->dashboardSearchClause->_where['_simpleSrch']);
+			return array(0 => $this->dashboardSearchClause->_where[$this->dashTName.'_simpleSrch']);
 		else
 			return array(0 => null);
 	}
@@ -789,7 +718,7 @@ class SearchClause extends SearchClauseBase
 	{
 		$result = array();
 		if($this->dashboardSearchClause)
-			$dashSearchFieldsSession = $this->dashboardSearchClause->_where['_srchFields'];
+			$dashSearchFieldsSession = $this->dashboardSearchClause->_where[$this->dashTName.'_srchFields'];
 		else
 			$dashSearchFieldsSession = null;
 		
@@ -800,14 +729,19 @@ class SearchClause extends SearchClauseBase
 			
 			foreach ($dashSearchFieldsSession as $i => $data)
 			{
-				foreach ($dashSearchFields[ $data['fName'] ] as $j => $fData)
+				foreach ($dashSearchFields[$data['fName']] as $j => $fData)
 				{
-					if ($fData['table'] != $this->tName)
-						continue; 
+					if ($fData['table'] == $this->tName)
+					{
+						$dashSearchField = $fData['field'];
+					}
+					else
+					{
+						continue;                            
+					}
 					
 					$resutlData = array();
-					$resutlData[0] = $fData['field'];
-					
+					$resutlData[0] = $dashSearchField;
 					foreach ($this->searchOptions as $opt => $optData)
 					{
 						if ($data['opt'] == $optData['option'])
@@ -816,15 +750,15 @@ class SearchClause extends SearchClauseBase
 							break;
 						}
 					}
-					
 					$resutlData[2] = $data['value1'];
 					if ($data['eType'])
+					{
 						$resutlData[3] = $data['eType'];
-					
+					}
 					if ($data['value2'])
+					{
 						$resutlData[4] = $data['value2'];
-					
-					$resutlData[5] = $data['not'];
+					}
 					
 					$result[] = $resutlData;
 				}
@@ -849,8 +783,12 @@ class SearchClause extends SearchClauseBase
 		{
 			foreach ($dashSearchFields[$field] as $j => $data)
 			{
-				if( $data['table'] == $this->tName )
-					$result[] = $data['field'];
+				if ($data['table'] != $this->tName)
+				{
+					continue;
+				}
+				
+				$result[] = $data['field'];
 			}
 		}
 
@@ -889,13 +827,13 @@ class SearchClause extends SearchClauseBase
 			if($inputString[$i] == $this->valueDelimiter)
 				if($this->isDelimiter($inputString, $startPos, $i))
 				{
-					$valuesArray[] = trim( substr($inputString, $startPos, $i - $startPos) );
+					$valuesArray[] = substr($inputString, $startPos, $i - $startPos);
 					$startPos = $i + 1;
 				}
 			if($i == $strLength - 1 || $inputString[$i] == $this->fieldDelimiterLeft)
 				if($i == $strLength - 1 || $this->isDelimiter($inputString, $startPos, $i, true))
 				{
-					$valuesArray[] = trim( substr($inputString, $startPos, $i - $startPos + ($i == $strLength - 1 ? 1 : 0)) );
+					$valuesArray[] = substr($inputString, $startPos, $i - $startPos + ($i == $strLength - 1 ? 1 : 0));
 					$result[] = $valuesArray;
 					$valuesArray = array();
 					$startPos = $i + 2;
@@ -929,9 +867,6 @@ class SearchClause extends SearchClauseBase
 		return $result; 
 	}
 	
-	/**
-	 *
-	 */
 	function getArrayValueByIndex(&$arr, $index, $isEncoded = false)
 	{
 		$result = "";
@@ -943,10 +878,6 @@ class SearchClause extends SearchClauseBase
 		}
 		return $result;
 	}
-	
-	/**
-	 *
-	 */
 	function getDefaultSearchTypeOption($fName, $pSet) 
 	{
 		$fType = $pSet->getEditFormat($fName);
@@ -965,71 +896,90 @@ class SearchClause extends SearchClauseBase
 		
 		return $option;
 	}
-	
 	/**
-	 *
+	 * Parse form with union search REQUEST (for old versions: 6.1 and older)
+	 * Params are common for advanced search and search panel on list
+	 * Use in new projects
+	 * 
+	 * @protected
+	 * @return string
 	 */
-	protected function removeSessionSearchVariables()
+	function parseItegratedRequestOld() 
 	{
-		if ( @$_SESSION[$this->sessionPrefix."_qs"] )
-			unset($_SESSION[$this->sessionPrefix."_qs"]);
+		global $suggestAllContent;
+		// parse global options
+		$this->_where[$this->sessionPrefix."_simpleSrch"] = trim(postvalue("ctlSearchFor"));	
+		$this->simpleSearchActive = $this->_where[$this->sessionPrefix."_simpleSrch"] != '';
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = trim(postvalue("simpleSrchTypeComboOpt"));
+		if (!strlen($this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"]))
+		{
+			$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
+		}
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"] = trim(postvalue("simpleSrchTypeComboNot")) != '';
+		$this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"] = trim(postvalue("simpleSrchFieldsComboOpt"));
 		
-		if ( @$_SESSION[$this->sessionPrefix."_q"] )
-			unset($_SESSION[$this->sessionPrefix."_q"]);
 		
-		if ( @$_SESSION[$this->sessionPrefix."_criteriaSearch"] )
-			unset($_SESSION[$this->sessionPrefix."_criteriaSearch"]);
+		$srchCriteriaCombineType = postvalue("criteria");
+		if(!$srchCriteriaCombineType)
+			$srchCriteriaCombineType="and";
+		$_SESSION[$this->sessionPrefix."_criteria"] = $srchCriteriaCombineType;
+		$this->_where[$this->sessionPrefix."_srchCriteriaCombineType"] = $srchCriteriaCombineType;
+		// prepare vars
+		$this->_where[$this->sessionPrefix."_srchFields"] = array();
+		$j = 1;
+		// scan all srch fields
+		$this->advancedSearchActive = false;
+		while ($fName = postvalue('field'.$j)) 
+		{
+			// check if field in request exist in searchFieldsArray, for prevent SQL injection
+			if (in_array($fName, $this->searchFieldsArr))
+			{
+				$this->advancedSearchActive = true;
+				$srchF = array();
+				$srchF['fName'] = trim($fName);
+				$srchF['eType'] = trim(postvalue('type'.$j));
+				$srchF['value1'] = trim(postvalue('value'.$j.'1'));
+				$srchF['opt'] = (postvalue('option'.$j) ? postvalue('option'.$j) : 'Contains');
+				$srchF['value2'] = trim(postvalue('value'.$j.'2'));	
+				$srchF['not'] = postvalue('not'.$j) == 'on';
+				$this->_where[$this->sessionPrefix."_srchFields"][] = $srchF;
+			}
+			$j++;
+		}	
+		
+		// process srch panel attrs, better then use coockies. 
+		$this->_where[$this->sessionPrefix."_srchOptShowStatus"]= postvalue('srchOptShowStatus')==='1';// || count($this->_where[$this->sessionPrefix."_srchFields"])>0;
+		$this->_where[$this->sessionPrefix."_ctrlTypeComboStatus"]= postvalue('ctrlTypeComboStatus')==='1';
+		$this->_where[$this->sessionPrefix."srchWinShowStatus"]= postvalue('srchWinShowStatus')==='1';
 	}
 	
 	/**
 	 * Parse REQUEST
+	 * 
+	 * @public
+	 * @return string
 	 */
-	public function parseRequest()
+	function parseRequest()
 	{
-		$this->wholeDashboardSearch = false;
-		
 		//set session if show all records
 		if(@$_REQUEST["a"] == "showall")
 		{
-			$this->_where["_search"] = 0;
+			$this->_where[$this->sessionPrefix."_search"]= 0;
 			$this->srchType = 'showall';
 			$this->bIsUsedSrch = false;
 			$this->clearSearch();
 			$_SESSION[$this->sessionPrefix."_pagenumber"] = 1;
-
-			$this->removeSessionSearchVariables();
-
 			$this->simpleSearchActive = false;
 		}
-		else if( isset($_REQUEST["q"]) || isset($_REQUEST["qs"]) || @$_REQUEST["f"] )
+		else if( isset($_REQUEST["q"]) || isset($_REQUEST["qs"]) || @$_REQUEST["a"] == "integrated" || @$_REQUEST["f"] || $this->dashElementName )
 		{
 			$this->srchType = 'integrated';
 			$this->parseItegratedRequest();
-			$this->bIsUsedSrch = isset($_REQUEST["q"]) && $_REQUEST["q"] !== "" || isset($_REQUEST["qs"]) && $_REQUEST["qs"] !== "";
+			$searchIsRunning = isset($_REQUEST["q"]) && $_REQUEST["q"] !== "" || isset($_REQUEST["qs"]) && $_REQUEST["qs"] !== "" || $this->dashElementHasSearch;	
+			$this->bIsUsedSrch = $searchIsRunning;
 			$_SESSION[$this->sessionPrefix."_pagenumber"] = 1;
 		}
-		else if( $this->dashTName && isset($_SESSION[$this->dashTName.'_advsearch']) )
-		{
-			$this->dashboardSearchClause = SearchClause::UnserializeObject($_SESSION[$this->dashTName.'_advsearch']);
-			$this->wholeDashboardSearch = $this->dashboardSearchClause->bIsUsedSrch;
-			if( $this->wholeDashboardSearch ) 
-			{
-				$this->srchType = 'integrated';
-				$this->parseItegratedRequest();
-				$this->bIsUsedSrch = true;
-			} 
-			else if( $this->dashboardSearchClause->srchType == 'showall' )
-			{
-				$this->_where["_search"] = 0;
-				$this->srchType = 'showall';
-				$this->bIsUsedSrch = false;
-				$this->clearSearch();
-				$this->simpleSearchActive = false;
-
-				$this->removeSessionSearchVariables();		
-			}
-		}
-				
+			
 		//set session for filters
 		if( @$_REQUEST["f"] ) 
 			$_SESSION[$this->sessionPrefix."_filters"] = $_REQUEST["f"];		
@@ -1041,7 +991,7 @@ class SearchClause extends SearchClauseBase
 				$this->savedSearchIsRun = true;
 			else if( ( $this->bIsUsedSrch || $this->filtersActivated ) && !$this->searchHasTheSameSearchParams() || $this->srchType == 'showall' )
 				$this->savedSearchIsRun = false;
-		}
+		}			
 	}
 	
 	/** 
@@ -1058,7 +1008,7 @@ class SearchClause extends SearchClauseBase
 			if( $this->srchType == 'showall' )
 				// reset the simple search and search panel params 
 				$this->searchParams = array( "f" => $this->searchParams["f"] );
-			else if( !@$_REQUEST["goto"] && !@$_REQUEST["orderby"] && !@$_REQUEST["pagesize"] )
+			else if( !@$_REQUEST["goto"] && !@$_REQUEST["orderby"] )
 				// reset all stored params
 				$this->searchParams = array();
 		}
@@ -1084,7 +1034,7 @@ class SearchClause extends SearchClauseBase
 	 */
 	public function searchHasTheSameSearchParams() 
 	{
-		if( @$_REQUEST["goto"] || @$_REQUEST["orderby"] || @$_REQUEST["pagesize"] )
+		if( @$_REQUEST["goto"] || @$_REQUEST["orderby"] )
 			return true;
 		
 		if( !count($this->searchParams) ) 
@@ -1109,141 +1059,169 @@ class SearchClause extends SearchClauseBase
 	 */
 	function clearSearch()
 	{
-		$this->_where["_simpleSrch"] = '';
-		$this->_where["_srchCriteriaCombineType"] = "and";
-		$this->_where["simpleSrchTypeComboOpt"] = "Contains";
-		$this->_where["simpleSrchTypeComboNot"] = false;
-		$this->_where["simpleSrchFieldsComboOpt"] = '';
+		$this->_where[$this->sessionPrefix."_simpleSrch"] = '';
+		$this->_where[$this->sessionPrefix."_srchCriteriaCombineType"] = "and";
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"] = "Contains";
+		$this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"] = false;
+		$this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"] = '';
 		// prepare vars
-		$this->_where["_srchFields"] = array();
+		$this->_where[$this->sessionPrefix."_srchFields"] = array();
 		// process srch panel attrs, better then use coockies. 
-		$this->_where["_srchOptShowStatus"]= false;
-		$this->_where["_ctrlTypeComboStatus"]= false;
-		$this->_where["srchWinShowStatus"]= false;
+		$this->_where[$this->sessionPrefix."_srchOptShowStatus"]= false;
+		$this->_where[$this->sessionPrefix."_ctrlTypeComboStatus"]= false;
+		$this->_where[$this->sessionPrefix."srchWinShowStatus"]= false;
 		
 		$this->fieldsUsedForSearch = array();
 	}
-
+	
 	/**
-	 * @param String fName
-	 * @return Array
-	 */
-	public function getSearchCtrlParams($fName)
+	* deprecated
+	* applyWhere - adds search Where and Having expressions to sql string presented as array
+	*/
+	function applyWhere(&$sql, $simpleFieldsArr, $aggFieldsArr, $editControls)
 	{
-		$resArr = array();	
-		$editControls = $this->getLocalEditControls();		
+		if (!count($simpleFieldsArr) && !count($aggFieldsArr)){
+			return $sql;
+		}
 		
-		if( $this->_where["_srchFields"] )
+		$searchWhereClause = $this->getWhere($simpleFieldsArr, $editControls);
+		$searchHavingClause = $this->getWhere($aggFieldsArr, $editControls);
+		
+		if($searchWhereClause)
 		{
-			foreach( $this->_where["_srchFields"] as $srchField )
+			if($sql[2])
 			{
-				if( strtolower( $srchField['fName'] ) == strtolower( $fName ) )
+				$sql[2] = '('.$sql[2].') AND ';
+			}
+			
+			$sql[2] .= '('.$searchWhereClause.') ';
+		}
+		
+		if($searchHavingClause)
+		{
+			if($sql[4])
+			{
+				$sql[4] = '('.$sql[4].') AND ';
+			}
+			
+			$sql[4] .= '('.$searchHavingClause.') ';
+		}
+		
+		return $sql;
+	}
+	/**
+	 * deprecated
+	 *
+	 * @return unknown
+	 */
+	function getTable()
+	{
+		return $this->_where;
+	}
+	
+	function getSearchCtrlParams($fName)
+	{
+		$resArr = array();
+		if ($this->_where[$this->sessionPrefix."_srchFields"])
+		{
+			foreach ($this->_where[$this->sessionPrefix."_srchFields"] as $srchField)
+			{
+				if (strtolower($srchField['fName']) == strtolower($fName))
 				{
-					$tField = $srchField;				
-					$ctrl = $editControls->getControl( $fName );
-					
-					$eType =  $tField["eType"];
-					if( $ctrl->checkIfDisplayFieldSearch( $tField["opt"] ) )
-						$eType = "display";
-						
-					$tField["value1"] = prepare_for_db( $tField["fName"], $tField["value1"], $eType, "", $this->tName );
-					$tField["value2"] = prepare_for_db( $tField["fName"], $tField["value2"], $eType, "", $this->tName );
-					
+					$tField = $srchField;
+					$tField["value1"] = prepare_for_db($tField["fName"], $tField["value1"], $tField["eType"], "", $this->tName);
+					$tField["value2"] = prepare_for_db($tField["fName"], $tField["value2"], $tField["eType"], "", $this->tName);
 					$resArr[] = $tField;					
 				}
 			}
 		}
-		
 		return $resArr;
 	}
 	
-	/**
-	 * @return Number
-	 */
-	public function getUsedCtrlsCount() 
-	{
-		if( $this->_where["_srchFields" ] )
-			return count( $this->_where["_srchFields" ] );
-		
-		return 0;
+	function getUsedCtrlsCount() {
+		if ($this->_where[$this->sessionPrefix."_srchFields"]){
+			return count($this->_where[$this->sessionPrefix."_srchFields"]);
+		}else{
+			return 0;
+		}
 	}
 	/**
 	 * Global search params: use and|or, srchType panel|adv and simple search value
+	 *
 	 * @return array
 	 */	
-	public function getSearchGlobalParams() 
-	{
-		return array('simpleSrch' => $this->_where["_simpleSrch" ], 
-					 'srchTypeRadio' => $this->getCriteriaCombineType(),
-					 'srchType'=> $this->srchType,
-					 'simpleSrchTypeComboOpt' => $this->_where["simpleSrchTypeComboOpt" ],
-					 'simpleSrchTypeComboNot' => $this->_where["simpleSrchTypeComboNot" ],
-					 'simpleSrchFieldsComboOpt' => $this->_where["simpleSrchFieldsComboOpt" ]
+	function getSearchGlobalParams() {
+		return array('simpleSrch'=>$this->_where[$this->sessionPrefix."_simpleSrch"], 
+					 'srchTypeRadio'=>$this->getCriteriaCombineType(),
+					 'srchType'=>$this->srchType,
+					 'simpleSrchTypeComboOpt' => $this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"],
+					 'simpleSrchTypeComboNot' => $this->_where[$this->sessionPrefix."simpleSrchTypeComboNot"],
+					 'simpleSrchFieldsComboOpt' => $this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"]
 		);
 	}
-	
 	/**
 	 * Search panel status indicators array. Open|closed etc
+	 *
 	 * @return array
 	 */
-	public function getSrchPanelAttrs()
-	{
-		return array('srchOptShowStatus' => ($this->_where["_srchOptShowStatus"] || count($this->panelSearchFields)),
-					 'ctrlTypeComboStatus' => $this->_where["_ctrlTypeComboStatus"],
-					 'srchWinShowStatus' => $this->_where["srchWinShowStatus"]
+	function getSrchPanelAttrs(){
+		return array('srchOptShowStatus' => ($this->_where[$this->sessionPrefix."_srchOptShowStatus"] || count($this->panelSearchFields)),
+					 'ctrlTypeComboStatus' => $this->_where[$this->sessionPrefix."_ctrlTypeComboStatus"],
+					 'srchWinShowStatus' => $this->_where[$this->sessionPrefix."srchWinShowStatus"]
 		);
 	}
-	
 	/**
 	 * Returns indicator is search was init
-	 * @return Boolean
+	 *
+	 * @return unknown
 	 */
-	public function isUsedSrch() 
+	function isUsedSrch() 
 	{
 		return $this->bIsUsedSrch;
 	}
 	
 	/**
 	 * Returns indicator is show button 'Show All'
-	 * @return Boolean
+	 *
+	 * @return unknown
 	 */
-	public function isShowAll() 
+	function isShowAll() 
 	{
 		return $this->bIsUsedSrch;
 	}
 	
 	/**
 	 * Check if search functionality is activated
+	 *
      * @return Boolean
 	 */
-	public function isSearchFunctionalityActivated()
+	function isSearchFunctionalityActivated()
 	{
-		return $this->bIsUsedSrch || $this->filtersActivated || count( $this->getSearchFields() ) > 0; 
+		return $this->bIsUsedSrch || $this->filtersActivated;
 	}
 	
 	/**
-	 * Checks whether required search fields are used for the searching or not 
-	 * @return Boolean
-	 */
-	public function isRequiredSearchRunning() 
+	* Checks whether required search fields are used for the searching or not 
+	*
+	* @return {boolean}
+	*/
+	function isRequiredSearchRunning() 
 	{
 		if(!$this->bIsUsedSrch)
 		{
 			//the search isn't run
 			return false;
 		}
-		
-		if(count($this->pSetSearch)){
-			$requiredSearchFields = $this->pSetSearch->getSearchRequiredFields();
-			foreach($requiredSearchFields as $fName)
+
+		foreach($this->requiredSearchFields as $fName)
+		{
+			if(!$this->fieldsUsedForSearch[$fName])
 			{
-				if( !$this->fieldsUsedForSearch[$fName] )
-				{
-					//a required search field isn't involved in the current search
-					return false;
-				}
+				//a required search field isn't involved in the current search
+				return false;
 			}
 		}
+
 		return true;
 	}
 	
@@ -1254,7 +1232,7 @@ class SearchClause extends SearchClauseBase
 	 * @param Array lookupParams
 	 * @return array | false
 	 */	
-	public function getSearchToHighlight($fname, $lookupParams = array()) 
+	function getSearchToHighlight($fname, $lookupParams = array()) 
 	{
 		// if not in search fields array
 		if (!in_array($fname, $this->searchFieldsArr))
@@ -1263,13 +1241,13 @@ class SearchClause extends SearchClauseBase
 		$options = array();
 		
 		//simple search processing
-		$simpleSearch['fname'] = $this->_where["simpleSrchFieldsComboOpt"];
-		$opt = $this->_where["simpleSrchTypeComboOpt"];
+		$simpleSearch['fname'] = $this->_where[$this->sessionPrefix."simpleSrchFieldsComboOpt"];
+		$opt = $this->_where[$this->sessionPrefix."simpleSrchTypeComboOpt"];
 		
 		if($this->isShowSimpleSrchOpt)
-			$simpleSearch['value'] = array($this->_where["_simpleSrch"]);
+			$simpleSearch['value'] = array($this->_where[$this->sessionPrefix."_simpleSrch"]);
 		else
-			$simpleSearch['value'] = $this->googleLikeParseString($this->_where["_simpleSrch"]);
+			$simpleSearch['value'] = $this->googleLikeParseString($this->_where[$this->sessionPrefix."_simpleSrch"]);
 			
 		if( isset($simpleSearch['value']) && count($simpleSearch['value']) && (!$simpleSearch['fname'] || $simpleSearch['fname'] == $fname) )
 		{
@@ -1281,7 +1259,7 @@ class SearchClause extends SearchClauseBase
 		}
 
 		//integrated search processing
-		$srchFields = $this->_where["_srchFields"];	
+		$srchFields = $this->_where[$this->sessionPrefix."_srchFields"];	
 		if( !$srchFields )
 			$srchFields = array();
 		
@@ -1408,7 +1386,7 @@ class SearchClause extends SearchClauseBase
 	 * @param string $str search string
 	 * @return array
 	 */
-	protected function googleLikeParseString($str)
+	function googleLikeParseString($str)
 	{
 		$ret = array();
 		$matches = array();
@@ -1428,559 +1406,25 @@ class SearchClause extends SearchClauseBase
 	*
 	*  @return string
 	*/
-	public function getCriteriaCombineType()
+	function getCriteriaCombineType()
 	{
-		if( $this->_where["_srchCriteriaCombineType"] == "or" )
+		if( $this->_where[$this->sessionPrefix."_srchCriteriaCombineType"] == "or" )
 			return "or";	
 		
-		if( $this->simpleSearchActive && !count($this->_where["_srchFields"]) )
+		if( $this->simpleSearchActive && !count($this->_where[$this->sessionPrefix."_srchFields"]) )
 			return "or";
 		
 		return "and";
 	}
-
-	/**
-	 *
-	 */
-	public static function UnserializeObject($str)
+	
+	static function UnserializeObject($str)
 	{
 		if(!$str)
 			return null;
-		
-		include_once getabspath("classes/controls/EditControlsContainer.php");
 		$obj = unserialize($str);
-		
-		$obj->pSetSearch = new ProjectSettings($obj->tName, PAGE_SEARCH);
-
-		$obj->cipherer = new RunnerCipherer($obj->tName, $obj->pSetSearch );
-		
+		$pSet = new ProjectSettings($obj->tName, PAGE_SEARCH);
+		$obj->cipherer = new RunnerCipherer($obj->tName, $pSet);
 		return $obj;
-	}
-/*
-	public function Serialize()
-	{
-		return serialize($this);
-		// PHP7 can't serialize connection object which is linked through one of the objects
-		$_pset = $this->pSetSearch;
-		$_cipherer = $obj->cipherer;
-		$this->pSetSearch = null;
-		$obj->cipherer = null;
-		
-		$ret = serialize($this);
-		
-		$this->pSetSearch = $_pset;
-		$obj->cipherer = $_cipherer;
-		
-		return $ret;
-		
-	}
-
-	*/
-	/**
-	 * User Search API
-	 * @return Array
-	 */
-	public function getSearchFields()
-	{
-		$fieldsData = array();
-
-		if(count($this->_where["_srchFields" ])>0){ //for asp
-			foreach( $this->_where["_srchFields" ] as $ind => $sfData )
-			{	
-				if( !$fieldsData[ $sfData['fName'] ] )
-					$fieldsData[ $sfData['fName'] ] = array();				
-				
-				$fieldsData[ $sfData['fName'] ][] = SEARCHID_PANEL + $ind;
-			}
-		}
-		
-		if( $this->haveAggregateFields && $this->advancedSearchActive )
-			return $fieldsData;
-		
-		$simpleSrch = $this->_where["_simpleSrch" ];
-		$simpleSrchOption = $this->_where["simpleSrchTypeComboOpt" ];		
-		
-		if( ( $simpleSrch == null || !strlen($simpleSrch) ) && $simpleSrchOption != "Empty" )
-			return $fieldsData;
-		
-		$simpleSrchField = $this->_where["simpleSrchFieldsComboOpt" ];
-		if( $simpleSrch != null && strlen($simpleSrchField) && in_array($simpleSrchField,  $this->googleLikeFields) )
-		{
-			if( !$fieldsData[ $simpleSrchField ] )
-				$fieldsData[ $simpleSrchField ] = array();				
-			
-			$fieldsData[ $simpleSrchField ][] = SEARCHID_SIMPLE;						
-		}
-	
-		if( $this->isShowSimpleSrchOpt )
-			$simpleSrchArr = array( $simpleSrch );
-		else
-			$simpleSrchArr = $this->googleLikeParseString( $simpleSrch );
-
-		foreach($simpleSrchArr as $ind => $simpleSrchItem)
-		{
-			for($i = 0; $i < count($this->searchFieldsArr); $i++)
-			{
-				if ( in_array($this->searchFieldsArr[$i], $this->googleLikeFields) )
-				{
-					if( !$fieldsData[ $this->searchFieldsArr[$i] ] )
-						$fieldsData[ $this->searchFieldsArr[$i] ] = array();				
-					
-					$fieldsData[ $this->searchFieldsArr[$i] ][] = SEARCHID_ALL + $ind;							
-				}
-			}
-		}
-
-		return $fieldsData;
-	}
-
-	/**
-	 * @return Boolean
-	 */
-	public function isSearchPanelByUserApiRun()
-	{
-		if ( !count( $this->_where["_srchFields" ] ) )
-			return false;
-			
-		foreach( $this->_where["_srchFields" ] as $ind => $sfData )
-		{	
-			if( $sfData['byUserApi'] )
-				return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * User Search API	
-	 * @param String field
-	 * @param Number id
-	 * @return mixed ( String | null )
-	 */
-	public function getFieldValue( $field, $id = null )
-	{
-		$srchFields = &$this->_where["_srchFields" ];
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-				return $srchF['value1'];
-		}
-		
-		if( $this->haveAggregateFields && $this->advancedSearchActive )
-			return null;
-			
-		$simpleSrch = $this->_where["_simpleSrch" ];	
-		$simpleSrchOption = $this->_where["simpleSrchTypeComboOpt" ];		
-		
-		if( ( $simpleSrch == null || !strlen($simpleSrch) ) && $simpleSrchOption != "Empty" || !in_array($field, $this->googleLikeFields) )
-			return null;			
-		
-		$simpleSrchField = $this->_where["simpleSrchFieldsComboOpt" ];
-		if( $simpleSrchField == $field && $simpleSrch != null && ( $id == SEARCHID_SIMPLE || is_null($id) ) )
-			return $simpleSrch;						
-	
-		if( strlen( $simpleSrchField ) )
-			return null;
-	
-		if( $this->isShowSimpleSrchOpt )
-			$simpleSrchArr = array( $simpleSrch );
-		else
-			$simpleSrchArr = $this->googleLikeParseString( $simpleSrch );	
-
-		foreach($simpleSrchArr as $ind => $simpleSrchItem)
-		{
-			for($i = 0; $i < count($this->searchFieldsArr); $i++)
-			{
-				if ( $this->searchFieldsArr[$i] == $field && ( $id == SEARCHID_ALL + $ind || is_null($id) ) )
-					return $simpleSrchItem;	
-			}
-		}
-			
-		return null;
-	}
-	
-	/**
-	 * between case
-	 * User Search API		 
-	 * @param String field
-	 * @param Number id
-	 * @return mixed ( String | null )
-	 */	
-	public function getSecondFieldValue( $field, $id = null )
-	{
-		$srchFields = &$this->_where["_srchFields" ];
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-				return $srchF['value2'];
-		}
-		
-		return null;
-	}	
-
-	/**
-	 * @param String opt
-	 * @param Boolean not
-	 * @return String
-	 */
-	protected function getSearchOptionUserText( $opt, $not )
-	{
-		switch( $opt )
-		{
-			case "Contains":
-				return $not ? NOT_CONTAINS : CONTAINS;
-			case "Equals":
-				return $not ? NOT_EQUALS : EQUALS;
-			case "Starts with":
-				return $not ? NOT_STARTS_WITH : STARTS_WITH;
-			case "More than":
-				return $not ? NOT_MORE_THAN : MORE_THAN;
-			case "Less than":
-				return $not ? NOT_LESS_THAN : LESS_THAN;
-			case "Between":
-				return $not ? NOT_BETWEEN : BETWEEN;
-			case "Empty":
-				return $not ? NOT_EMPTY : EMPTY_SEARCH;
-			default:
-				return CONTAINS;
-		}
-	}
-	
-	/**
-	 * User Search API		
-	 * @param String field
-	 * @param Number id
-	 * @return String
-	 */
-	public function getSearchOption( $field, $id = null )
-	{
-		$srchFields = &$this->_where["_srchFields" ];
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-				return $this->getSearchOptionUserText( $srchF['opt'], $srchF['not'] );
-		}
-		
-		if( $this->haveAggregateFields && $this->advancedSearchActive )
-			return "";	
-					
-		$simpleSrchOption = $this->_where["simpleSrchTypeComboOpt" ];			
-		if( strlen($simpleSrchOption) )
-			return $simpleSrchOption;
-			
-		$simpleSrch = $this->_where["_simpleSrch" ];
-		if( $simpleSrch == null || !strlen($simpleSrch) ) 
-			return "";
-		
-		return CONTAINS;
-	}
-
-	/**
-	 * User Search API		
-	 * Get an all field search control's value
-	 * @return mixed ( String | null )
-	 */
-	public function	getAllFieldsSearchValue()
-	{
-		if( $this->haveAggregateFields && $this->advancedSearchActive )
-			return null;
-
-		return $this->_where["_simpleSrch" ];	
-	}
-	
-	/**
-	 * Add a new search panel control data
-	 * @param String field
-	 * @param String value1
-	 * @param String value2
-	 * @param String opt
-	 * @param Boolean not
-	 * @return Number
-	 */
-	protected function addSPControlData( $field, $value1, $value2, $opt = "", $not = false )
-	{
-		if( !in_array($field, $this->searchFieldsArr) )
-			return -1;
-		
-		if( !$opt )
-			$opt =  $this->getDefaultSearchTypeOption($field, $this->pSetSearch);
-		
-		if( !count( $this->_where["_srchFields" ] ) )
-			$this->_where["_srchFields" ] = array();
-			
-		$srchFields = &$this->_where["_srchFields" ];
-		
-		// add a new control on the search panel
-		$srchF = array();
-		$srchF['fName'] = $field;
-		$srchF['eType'] = $this->getSPCtrlEType( $field, $opt );
-		$srchF['value1'] = $value1;
-		$srchF['not'] = $not;
-		$srchF['opt'] = $opt;
-		$srchF['value2'] = $value2;		
-		$srchF['byUserApi'] = true;		
-		
-		$srchFields[] = $srchF;
-		
-		return SEARCHID_PANEL + count( $srchFields ) - 1;		
-	}
-	
-	/**	
-	 * @param String fName
-	 * @return String
-	 */
-	protected function getSPCtrlEType( $fName, $opt = "" )
-	{
-		$editFormat = $this->pSetSearch->getEditFormat( $fName );
-		
-		if( $editFormat == EDIT_FORMAT_DATE )
-		{
-			$dateEditType = $this->pSetSearch->getDateEditType( $fName );
-			//BOOTSTRAP_LAYOUT?		
-			return "date" . $dateEditType;
-		}
-		
-		if( $editFormat == EDIT_FORMAT_CHECKBOX )
-			return "checkbox";
-	
-		$editControls = $this->getLocalEditControls();
-		$ctrl = $editControls->getControl( $fName );
-		if( $ctrl->checkIfDisplayFieldSearch( $opt ) )
-			return "display";
-	
-		return "";
-	}
-	
-	/**
-	 * @param String field
-	 * @param String value
-	 * @param Number id
-	 * @return Number
-	 */
-	public function setFieldValue( $field, $value, $id = null )
-	{
-		if( !in_array($field, $this->searchFieldsArr) )
-			return -1;
-			
-		$srchFields = &$this->_where["_srchFields" ];	
-		
-		if( $this->isShowSimpleSrchOpt && ( !strlen( $this->_where["simpleSrchFieldsComboOpt" ] ) ||  $this->_where["simpleSrchFieldsComboOpt" ] == $field ) 
-			&& $this->_where["_simpleSrch" ] == '' && ( $id == SEARCHID_SIMPLE || !count($srchFields) && is_null($id) ) )
-		{
-			$this->_where["simpleSrchFieldsComboOpt" ] = $field;
-			$this->_where["_simpleSrch" ] = $value;
-			return SEARCHID_SIMPLE;
-		}
-		
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-			{			
-				$srchFields[ $ind ]['value1'] = $value;
-				return SEARCHID_PANEL + $ind;
-			}
-		}
-		
-		$newId = $this->addSPControlData( $field,  $value, "", "" );
-		return $newId;
-	}
-	
-	/**
-	 * User Search API		
-	 * between case
-	 * @param String field
-	 * @param String value
-	 * @param Number id
-	 * @return Number	 
-	 */
-	public function setSecondFieldValue( $field, $value, $id = null )
-	{
-		if( !in_array($field, $this->searchFieldsArr) )
-			return -1;
-			
-		$srchFields = &$this->_where["_srchFields" ];	
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-			{			
-				$srchFields[ $ind ]['value2'] = $value;
-				return SEARCHID_PANEL + $ind;
-			}
-		}
-		
-		$newId = $this->addSPControlData( $field, "" , $value, "Between" );
-		return $newId;		
-	}
-	
-	/**
-	 * Get the searchOptions prop's key
-	 * @param String opt
-	 * @return String
-	 */
-	protected function convertUserSearchOption( $opt )
-	{
-		switch( $opt )
-		{
-			case CONTAINS: 
-				return "contains";
-			case EQUALS: 
-				return "equals";
-			case STARTS_WITH: 
-				return "startswith";
-			case MORE_THAN: 
-				return "morethan";
-			case LESS_THAN: 
-				return "lessthan";
-			case BETWEEN: 
-				return "between";
-			case EMPTY_SEARCH: 
-				return "empty";
-			case NOT_CONTAINS: 
-				return "notcontain";
-			case NOT_EQUALS: 
-				return "notequal";
-			case NOT_STARTS_WITH: 
-				return "notstartwith";
-			case NOT_MORE_THAN: 
-				return "notmorethan";
-			case NOT_LESS_THAN: 
-				return "notlessthan";
-			case NOT_BETWEEN: 
-				return "notbetween";
-			case NOT_EMPTY: 
-				return "notempty";
-			default:
-				return "contains";
-		}
-	}
-	
-	
-	/**
-	 * User Search API		
-	 * @param String field
-	 * @param String opt
-	 * @param Number id
-	 * @return Number
-	 */
-	public function setSearchOption( $field, $opt, $id = null )
-	{
-		if( !in_array($field, $this->searchFieldsArr) )
-			return -1;
-	
-		$srchFields = &$this->_where["_srchFields" ];	
-	
-		if( $this->isShowSimpleSrchOpt && ( !strlen( $this->_where["simpleSrchFieldsComboOpt" ] ) ||  $this->_where["simpleSrchFieldsComboOpt" ] == $field ) 
-			&& ( $id == SEARCHID_SIMPLE || !count($srchFields) && is_null($id) ) )
-		{
-			$this->_where["simpleSrchFieldsComboOpt" ] = $field;
-			$simpleSrchOption = $this->_where["simpleSrchTypeComboOpt" ] = $opt;
-			return SEARCHID_SIMPLE;
-		}
-			
-		$opt = $this->convertUserSearchOption( $opt );	
-			
-		foreach($srchFields as $ind => $srchF)
-		{
-			if( $srchF['fName'] == $field && ( $id == SEARCHID_PANEL + $ind || is_null($id) ) )
-			{		
-				if( isset($this->searchOptions[$opt]) )
-				{
-					$srchFields[ $ind ]['not'] = $this->searchOptions[$opt]["not"]; 
-					$srchFields[ $ind ]['opt'] =  $this->searchOptions[$opt]["option"];
-				}
-				
-				return SEARCHID_PANEL + $ind;
-			}
-		}		
-	}	
-	
-	/**
-	 * User Search API	
-	 * @param String field
-	 * @param String value	 
-	 */
-	public function addFieldValue( $field, $value )
-	{
-		return $this->addSPControlData( $field,  $value, "", "" );
-	}
-
-	/**
-	 * User Search API		
-	 * @param String value
-	 */
-	public function	setAllFieldsSearchValue( $value )
-	{
-		global $suggestAllContent;
-		if( !$this->haveAggregateFields || !$this->advancedSearchActive /* + ? */)
-		{
-			$this->_where["_simpleSrch" ]	= $value;
-			$this->_where["simpleSrchTypeComboOpt"] = $suggestAllContent ? "Contains" : "Starts with";
-			$this->_where["simpleSrchTypeComboNot"] = false;			
-		}
-	}
-	
-	/**
-	 * User Search API		
-	 * @param String field
-	 * @param String sqlCondition
-	 */
-	public function setSearchSQL( $field, $sqlCondition )
-	{
-		if( in_array( $field, $this->searchFieldsArr) )
-			$this->customFieldSQLConditions[ $field ] = $sqlCondition;
-	}
-	
-	/**
-	 *
-	 * @return SearchClause
-	 */
-	public static function getSearchObject( $tName = "", $dashTName = "", $sessionPrefix = "", $cipherer = null, $searchSavingEnabled = false, $pSet = null )
-	{
-		global $strTableName, $_cachedSeachClauses;
-		
-		if( !$tName )
-			$tName = $strTableName;
-		
-		if( !$sessionPrefix )
-			$sessionPrefix = $dashTName ? $dashTName."_".$tName : $tName;
-
-		if ( !postvalue("saveSearch") )
-			$searchSavingEnabled = true;		
-		
-		if( $_cachedSeachClauses[ $sessionPrefix ] )
-			return $_cachedSeachClauses[ $sessionPrefix ];
-		
-		if( $tName != $strTableName ) //dashboard ??
-			$currentSearchClause = SearchClause::getSearchObject( $strTableName );
-		
-		if( isset( $_SESSION[ $sessionPrefix.'_advsearch' ] ) )
-		{
-			$searchClauseObj = SearchClause::UnserializeObject( $_SESSION[ $sessionPrefix.'_advsearch' ] );
-		}
-		else
-		{
-			$params = array();
-		
-			$params['tName'] = $tName;
-			$params['dashTName'] = $dashTName;
-			$params['sessionPrefix'] = $sessionPrefix;
-			$params['searchSavingEnabled'] = $searchSavingEnabled;
-			
-			if( $cipherer )
-				$params['cipherer'] = $cipherer;
-			
-			if( !$pSet )
-				$pSet = new ProjectSettings( $tName );
-			
-			$params['haveAggregateFields'] = count( $pSet->getListOfFieldsByExprType( true ) ) > 0;
-			
-			$searchClauseObj = new SearchClause( $params );
-		}
-		
-		$searchClauseObj->parseRequest();
-		$_cachedSeachClauses[ $sessionPrefix ] = $searchClauseObj;	
-	
-		return $searchClauseObj;
 	}
 }
 ?>

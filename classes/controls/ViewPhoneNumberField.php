@@ -5,11 +5,15 @@ class ViewPhoneNumberField extends ViewControl
 	{
 		$result = $this->getTextValue( $data );
 
-		if( !$this->container->forExport ||  $this->container->forExport != "excel" && $this->container->forExport != "csv" )	
+		if(!$this->container->forExport || $this->container->forExport && $this->container->forExport != "excel" && $this->container->forExport != "csv")
+		{	
 			$result = runner_htmlspecialchars($result);
+		}
 		
-		if( $this->searchHighlight )
-			$result = $this->highlightSearchWord( $result, true, $data[ $this->field ] );
+		if($this->searchHighlight)
+		{
+			$result = $this->highlightSearchWord($result, true, $data[$this->field]);
+		}
 		
 		return $result;
 	}

@@ -4,9 +4,9 @@ require_once(getabspath("classes/cipherer.php"));
 
 
 
-$tdatadivision = array();
+$tdatadivision = array();	
 	$tdatadivision[".truncateText"] = true;
-	$tdatadivision[".NumberOfChars"] = 80;
+	$tdatadivision[".NumberOfChars"] = 80; 
 	$tdatadivision[".ShortName"] = "division";
 	$tdatadivision[".OwnerID"] = "";
 	$tdatadivision[".OriginalTable"] = "division";
@@ -15,20 +15,16 @@ $tdatadivision = array();
 $fieldLabelsdivision = array();
 $fieldToolTipsdivision = array();
 $pageTitlesdivision = array();
-$placeHoldersdivision = array();
 
 if(mlang_getcurrentlang()=="English")
 {
 	$fieldLabelsdivision["English"] = array();
 	$fieldToolTipsdivision["English"] = array();
-	$placeHoldersdivision["English"] = array();
 	$pageTitlesdivision["English"] = array();
 	$fieldLabelsdivision["English"]["division_id"] = "Division Id";
 	$fieldToolTipsdivision["English"]["division_id"] = "";
-	$placeHoldersdivision["English"]["division_id"] = "";
 	$fieldLabelsdivision["English"]["dname"] = "Dname";
 	$fieldToolTipsdivision["English"]["dname"] = "";
-	$placeHoldersdivision["English"]["dname"] = "";
 	if (count($fieldToolTipsdivision["English"]))
 		$tdatadivision[".isUseToolTips"] = true;
 }
@@ -36,27 +32,25 @@ if(mlang_getcurrentlang()=="")
 {
 	$fieldLabelsdivision[""] = array();
 	$fieldToolTipsdivision[""] = array();
-	$placeHoldersdivision[""] = array();
 	$pageTitlesdivision[""] = array();
 	if (count($fieldToolTipsdivision[""]))
 		$tdatadivision[".isUseToolTips"] = true;
 }
-
-
+	
+	
 	$tdatadivision[".NCSearch"] = true;
 
 
 
 $tdatadivision[".shortTableName"] = "division";
 $tdatadivision[".nSecOptions"] = 0;
-$tdatadivision[".recsPerRowPrint"] = 1;
+$tdatadivision[".recsPerRowList"] = 1;
 $tdatadivision[".mainTableOwnerID"] = "";
 $tdatadivision[".moveNext"] = 1;
-$tdatadivision[".entityType"] = 0;
+$tdatadivision[".nType"] = 0;
 
 $tdatadivision[".strOriginalTableName"] = "division";
 
-	
 
 
 
@@ -80,25 +74,11 @@ $tdatadivision[".listAjax"] = false;
 	$tdatadivision[".locking"] = false;
 
 $tdatadivision[".edit"] = true;
-$tdatadivision[".afterEditAction"] = 1;
-$tdatadivision[".closePopupAfterEdit"] = 1;
-$tdatadivision[".afterEditActionDetTable"] = "";
-
-$tdatadivision[".add"] = true;
-$tdatadivision[".afterAddAction"] = 1;
-$tdatadivision[".closePopupAfterAdd"] = 1;
-$tdatadivision[".afterAddActionDetTable"] = "";
 
 $tdatadivision[".list"] = true;
 
-
-
-$tdatadivision[".reorderRecordsByHeader"] = true;
-
-
-$tdatadivision[".exportFormatting"] = 2;
-$tdatadivision[".exportDelimiter"] = ",";
-		
+$tdatadivision[".inlineEdit"] = true;
+$tdatadivision[".inlineAdd"] = true;
 $tdatadivision[".view"] = true;
 
 $tdatadivision[".import"] = true;
@@ -111,32 +91,21 @@ $tdatadivision[".delete"] = true;
 
 $tdatadivision[".showSimpleSearchOptions"] = false;
 
-// Allow Show/Hide Fields in GRID
-$tdatadivision[".allowShowHideFields"] = false;
-//
-
-// Allow Fields Reordering in GRID
-$tdatadivision[".allowFieldsReordering"] = false;
-//
-
 // search Saving settings
 $tdatadivision[".searchSaving"] = false;
 //
 
 $tdatadivision[".showSearchPanel"] = true;
-		$tdatadivision[".flexibleSearch"] = true;
+		$tdatadivision[".flexibleSearch"] = true;		
 
-$tdatadivision[".isUseAjaxSuggest"] = true;
+if (isMobile())
+	$tdatadivision[".isUseAjaxSuggest"] = false;
+else 
+	$tdatadivision[".isUseAjaxSuggest"] = true;
 
 $tdatadivision[".rowHighlite"] = true;
 
 
-
-
-
-$tdatadivision[".ajaxCodeSnippetAdded"] = false;
-
-$tdatadivision[".buttonsAdded"] = false;
 
 $tdatadivision[".addPageEvents"] = false;
 
@@ -145,6 +114,7 @@ $tdatadivision[".isUseTimeForSearch"] = false;
 
 
 
+$tdatadivision[".useDetailsPreview"] = true;
 
 
 $tdatadivision[".allSearchFields"] = array();
@@ -175,13 +145,9 @@ $tdatadivision[".nPrinterPDFSplitRecords"] = 40;
 
 
 
-$tdatadivision[".geocodingEnabled"] = false;
 
 
-
-
-
-$tdatadivision[".listGridLayout"] = 3;
+	
 
 
 
@@ -209,14 +175,6 @@ $tdatadivision[".sqlHead"] = "SELECT division_id,  	dname";
 $tdatadivision[".sqlFrom"] = "FROM division";
 $tdatadivision[".sqlWhereExpr"] = "";
 $tdatadivision[".sqlTail"] = "";
-
-
-
-
-
-
-
-
 
 
 
@@ -263,10 +221,6 @@ $tdatadivision[".viewFields"][] = "dname";
 $tdatadivision[".addFields"] = array();
 $tdatadivision[".addFields"][] = "dname";
 
-$tdatadivision[".masterListFields"] = array();
-$tdatadivision[".masterListFields"][] = "division_id";
-$tdatadivision[".masterListFields"][] = "dname";
-
 $tdatadivision[".inlineAddFields"] = array();
 $tdatadivision[".inlineAddFields"][] = "dname";
 
@@ -275,10 +229,6 @@ $tdatadivision[".editFields"][] = "dname";
 
 $tdatadivision[".inlineEditFields"] = array();
 $tdatadivision[".inlineEditFields"][] = "dname";
-
-$tdatadivision[".updateSelectedFields"] = array();
-$tdatadivision[".updateSelectedFields"][] = "dname";
-
 
 $tdatadivision[".exportFields"] = array();
 $tdatadivision[".exportFields"][] = "division_id";
@@ -292,7 +242,6 @@ $tdatadivision[".printFields"] = array();
 $tdatadivision[".printFields"][] = "division_id";
 $tdatadivision[".printFields"][] = "dname";
 
-
 //	division_id
 //	Custom field settings
 	$fdata = array();
@@ -300,128 +249,122 @@ $tdatadivision[".printFields"][] = "dname";
 	$fdata["strName"] = "division_id";
 	$fdata["GoodName"] = "division_id";
 	$fdata["ownerTable"] = "division";
-	$fdata["Label"] = GetFieldLabel("division","division_id");
+	$fdata["Label"] = GetFieldLabel("division","division_id"); 
 	$fdata["FieldType"] = 3;
-
 	
+		
 		$fdata["AutoInc"] = true;
-
 	
-			
-		$fdata["bListPage"] = true;
-
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		
+		
+		
+		
+		$fdata["bViewPage"] = true; 
 	
+		$fdata["bAdvancedSearch"] = true; 
 	
+		$fdata["bPrinterPage"] = true; 
 	
+		$fdata["bExportPage"] = true; 
 	
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "division_id";
-
+		$fdata["strField"] = "division_id"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "division_id";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-		$edata["IsRequired"] = true;
-
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-		
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");
-						$edata["validateAs"]["basicValidate"][] = "IsRequired";
-		
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		$edata["IsRequired"] = true; 
 	
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
+	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "number";
+	
+		$edata["EditParams"] = "";
+			
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+				$edata["validateAs"]["basicValidate"][] = getJsValidatorName("Number");	
+						$edata["validateAs"]["basicValidate"][] = "IsRequired";
+			
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Equals", "More than", "Less than", "Between");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatadivision["division_id"] = $fdata;
 //	dname
 //	Custom field settings
@@ -430,137 +373,129 @@ $tdatadivision[".printFields"][] = "dname";
 	$fdata["strName"] = "dname";
 	$fdata["GoodName"] = "dname";
 	$fdata["ownerTable"] = "division";
-	$fdata["Label"] = GetFieldLabel("division","dname");
+	$fdata["Label"] = GetFieldLabel("division","dname"); 
 	$fdata["FieldType"] = 200;
-
 	
+		
+		
+		
+				
+		$fdata["bListPage"] = true; 
 	
+		$fdata["bAddPage"] = true; 
 	
-			
-		$fdata["bListPage"] = true;
-
-		$fdata["bAddPage"] = true;
-
-		$fdata["bInlineAdd"] = true;
-
-		$fdata["bEditPage"] = true;
-
-		$fdata["bInlineEdit"] = true;
-
-		$fdata["bUpdateSelected"] = true;
-
-
-		$fdata["bViewPage"] = true;
-
-		$fdata["bAdvancedSearch"] = true;
-
-		$fdata["bPrinterPage"] = true;
-
-		$fdata["bExportPage"] = true;
-
-		$fdata["strField"] = "dname";
-
+		$fdata["bInlineAdd"] = true; 
+	
+		$fdata["bEditPage"] = true; 
+	
+		$fdata["bInlineEdit"] = true; 
+	
+		$fdata["bViewPage"] = true; 
+	
+		$fdata["bAdvancedSearch"] = true; 
+	
+		$fdata["bPrinterPage"] = true; 
+	
+		$fdata["bExportPage"] = true; 
+	
+		$fdata["strField"] = "dname"; 
+	
 		$fdata["isSQLExpression"] = true;
 	$fdata["FullName"] = "dname";
-
 	
-	
+		
+		
 				$fdata["FieldPermissions"] = true;
-
+	
 				$fdata["UploadFolder"] = "files";
-
+		
 //  Begin View Formats
 	$fdata["ViewFormats"] = array();
-
+	
 	$vdata = array("ViewFormat" => "");
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		$vdata["NeedEncode"] = true;
-
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$vdata["NeedEncode"] = true;
 	
 	$fdata["ViewFormats"]["view"] = $vdata;
 //  End View Formats
 
-//	Begin Edit Formats
+//	Begin Edit Formats 	
 	$fdata["EditFormats"] = array();
-
+	
 	$edata = array("EditFormat" => "Text field");
-
-	
-	
-		
-	
-
-
-	
-	
-	
-			$edata["acceptFileTypes"] = ".+$";
-
-		$edata["maxNumberOfFiles"] = 1;
-
-	
-	
-	
-	
-			$edata["HTML5InuptType"] = "text";
-
-		$edata["EditParams"] = "";
-			$edata["EditParams"].= " maxlength=45";
-
-		$edata["controlWidth"] = 200;
-
-//	Begin validation
-	$edata["validateAs"] = array();
-	$edata["validateAs"]["basicValidate"] = array();
-	$edata["validateAs"]["customMessages"] = array();
-	
-	
-	//	End validation
-
 	
 			
 	
 	
+
+
+		
+		
+		
+		
+			$edata["acceptFileTypes"] = ".+$";
 	
+		$edata["maxNumberOfFiles"] = 1;
+	
+		
+		
+		
+		
+			$edata["HTML5InuptType"] = "text";
+	
+		$edata["EditParams"] = "";
+			$edata["EditParams"].= " maxlength=45";
+	
+		$edata["controlWidth"] = 200;
+	
+//	Begin validation
+	$edata["validateAs"] = array();
+	$edata["validateAs"]["basicValidate"] = array();
+	$edata["validateAs"]["customMessages"] = array();
+		
+		
+	//	End validation
+	
+		
+				
+		
+	
+		
 	$fdata["EditFormats"]["edit"] = $edata;
 //	End Edit Formats
-
-
+	
+	
 	$fdata["isSeparate"] = false;
-
-
-
-
+	
+	
+	
+	
 // the field's search options settings
-		$fdata["defaultSearchOption"] = "Contains";
-
+		
 			// the default search options list
-				$fdata["searchOptionsList"] = array("Contains", "Equals", "Starts with", "More than", "Less than", "Between", "Empty", NOT_EMPTY);
-// the end of search options settings
+				$fdata["searchOptionsList"] = array("Contains", "Equals", "Empty");
+// the end of search options settings	
 
+	
 
-
-
+	
 	$tdatadivision["dname"] = $fdata;
 
-
+	
 $tables_data["division"]=&$tdatadivision;
 $field_labels["division"] = &$fieldLabelsdivision;
 $fieldToolTips["division"] = &$fieldToolTipsdivision;
-$placeHolders["division"] = &$placeHoldersdivision;
 $page_titles["division"] = &$pageTitlesdivision;
 
 // -----------------start  prepare master-details data arrays ------------------------------//
@@ -574,24 +509,21 @@ $detailsTablesData["division"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="batch";
 		$detailsParam["dOriginalTable"] = "batch";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "batch";
 	$detailsParam["dCaptionTable"] = GetTableCaption("batch");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
 	$detailsParam["dispChildCount"] = "1";
-
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["division"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["masterKeys"][]="division_id";
@@ -607,24 +539,21 @@ $detailsTablesData["division"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="consultant";
 		$detailsParam["dOriginalTable"] = "consultant";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "consultant";
 	$detailsParam["dCaptionTable"] = GetTableCaption("consultant");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
-	$detailsParam["dispChildCount"] = "0";
-
+	$detailsParam["dispChildCount"] = "1";
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["division"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["masterKeys"][]="division_id";
@@ -640,24 +569,21 @@ $detailsTablesData["division"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="district";
 		$detailsParam["dOriginalTable"] = "district";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "district";
 	$detailsParam["dCaptionTable"] = GetTableCaption("district");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
-	$detailsParam["dispChildCount"] = "0";
-
+	$detailsParam["dispChildCount"] = "1";
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["division"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["masterKeys"][]="division_id";
@@ -673,24 +599,21 @@ $detailsTablesData["division"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="employees";
 		$detailsParam["dOriginalTable"] = "employees";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "employees";
 	$detailsParam["dCaptionTable"] = GetTableCaption("employees");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
-	$detailsParam["dispChildCount"] = "0";
-
+	$detailsParam["dispChildCount"] = "1";
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["division"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["masterKeys"][]="division_id";
@@ -706,24 +629,21 @@ $detailsTablesData["division"] = array();
 	$detailsParam = array();
 	$detailsParam["dDataSourceTable"]="university";
 		$detailsParam["dOriginalTable"] = "university";
-		$detailsParam["proceedLink"] = true;
 				$detailsParam["dType"]=PAGE_LIST;
 	$detailsParam["dShortTable"] = "university";
 	$detailsParam["dCaptionTable"] = GetTableCaption("university");
 	$detailsParam["masterKeys"] =array();
 	$detailsParam["detailKeys"] =array();
-
-	$detailsParam["dispChildCount"] = "0";
-
+	$detailsParam["dispChildCount"] = "1";
 		$detailsParam["hideChild"] = false;
-						$detailsParam["previewOnList"] = "1";
-		$detailsParam["previewOnAdd"] = 0;
-		$detailsParam["previewOnEdit"] = 0;
-		$detailsParam["previewOnView"] = 0;
-		
+	$detailsParam["previewOnList"] = 1;
+	$detailsParam["previewOnAdd"] = 0;
+	$detailsParam["previewOnEdit"] = 0;
+	$detailsParam["previewOnView"] = 0;
+			
 	$detailsTablesData["division"][$dIndex] = $detailsParam;
-
 	
+		
 		$detailsTablesData["division"][$dIndex]["masterKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["masterKeys"][]="division_id";
@@ -731,7 +651,7 @@ $detailsTablesData["division"] = array();
 				$detailsTablesData["division"][$dIndex]["detailKeys"] = array();
 
 	$detailsTablesData["division"][$dIndex]["detailKeys"][]="division_id";
-
+	
 // tables which are master tables for current table (detail)
 $masterTablesData["division"] = array();
 
@@ -757,102 +677,101 @@ $proto0["m_strFieldList"] = "division_id,  	dname";
 $proto0["m_strFrom"] = "FROM division";
 $proto0["m_strWhere"] = "";
 $proto0["m_strOrderBy"] = "";
-	
-		;
+$proto0["m_strTail"] = "";
 			$proto0["cipherer"] = null;
-$proto2=array();
-$proto2["m_sql"] = "";
-$proto2["m_uniontype"] = "SQLL_UNKNOWN";
+$proto1=array();
+$proto1["m_sql"] = "";
+$proto1["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto2["m_column"]=$obj;
-$proto2["m_contained"] = array();
-$proto2["m_strCase"] = "";
-$proto2["m_havingmode"] = false;
-$proto2["m_inBrackets"] = false;
-$proto2["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto2);
+$proto1["m_column"]=$obj;
+$proto1["m_contained"] = array();
+$proto1["m_strCase"] = "";
+$proto1["m_havingmode"] = false;
+$proto1["m_inBrackets"] = false;
+$proto1["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto1);
 
 $proto0["m_where"] = $obj;
-$proto4=array();
-$proto4["m_sql"] = "";
-$proto4["m_uniontype"] = "SQLL_UNKNOWN";
+$proto3=array();
+$proto3["m_sql"] = "";
+$proto3["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto4["m_column"]=$obj;
-$proto4["m_contained"] = array();
-$proto4["m_strCase"] = "";
-$proto4["m_havingmode"] = false;
-$proto4["m_inBrackets"] = false;
-$proto4["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto4);
+$proto3["m_column"]=$obj;
+$proto3["m_contained"] = array();
+$proto3["m_strCase"] = "";
+$proto3["m_havingmode"] = false;
+$proto3["m_inBrackets"] = false;
+$proto3["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto3);
 
 $proto0["m_having"] = $obj;
 $proto0["m_fieldlist"] = array();
-						$proto6=array();
+						$proto5=array();
 			$obj = new SQLField(array(
 	"m_strName" => "division_id",
 	"m_strTable" => "division",
 	"m_srcTableName" => "division"
 ));
 
-$proto6["m_sql"] = "division_id";
-$proto6["m_srcTableName"] = "division";
-$proto6["m_expr"]=$obj;
-$proto6["m_alias"] = "";
-$obj = new SQLFieldListItem($proto6);
+$proto5["m_sql"] = "division_id";
+$proto5["m_srcTableName"] = "division";
+$proto5["m_expr"]=$obj;
+$proto5["m_alias"] = "";
+$obj = new SQLFieldListItem($proto5);
 
 $proto0["m_fieldlist"][]=$obj;
-						$proto8=array();
+						$proto7=array();
 			$obj = new SQLField(array(
 	"m_strName" => "dname",
 	"m_strTable" => "division",
 	"m_srcTableName" => "division"
 ));
 
-$proto8["m_sql"] = "dname";
-$proto8["m_srcTableName"] = "division";
-$proto8["m_expr"]=$obj;
-$proto8["m_alias"] = "";
-$obj = new SQLFieldListItem($proto8);
+$proto7["m_sql"] = "dname";
+$proto7["m_srcTableName"] = "division";
+$proto7["m_expr"]=$obj;
+$proto7["m_alias"] = "";
+$obj = new SQLFieldListItem($proto7);
 
 $proto0["m_fieldlist"][]=$obj;
 $proto0["m_fromlist"] = array();
-												$proto10=array();
-$proto10["m_link"] = "SQLL_MAIN";
-			$proto11=array();
-$proto11["m_strName"] = "division";
-$proto11["m_srcTableName"] = "division";
-$proto11["m_columns"] = array();
-$proto11["m_columns"][] = "division_id";
-$proto11["m_columns"][] = "dname";
-$obj = new SQLTable($proto11);
-
-$proto10["m_table"] = $obj;
-$proto10["m_sql"] = "division";
-$proto10["m_alias"] = "";
+												$proto9=array();
+$proto9["m_link"] = "SQLL_MAIN";
+			$proto10=array();
+$proto10["m_strName"] = "division";
 $proto10["m_srcTableName"] = "division";
-$proto12=array();
-$proto12["m_sql"] = "";
-$proto12["m_uniontype"] = "SQLL_UNKNOWN";
+$proto10["m_columns"] = array();
+$proto10["m_columns"][] = "division_id";
+$proto10["m_columns"][] = "dname";
+$obj = new SQLTable($proto10);
+
+$proto9["m_table"] = $obj;
+$proto9["m_sql"] = "division";
+$proto9["m_alias"] = "";
+$proto9["m_srcTableName"] = "division";
+$proto11=array();
+$proto11["m_sql"] = "";
+$proto11["m_uniontype"] = "SQLL_UNKNOWN";
 	$obj = new SQLNonParsed(array(
 	"m_sql" => ""
 ));
 
-$proto12["m_column"]=$obj;
-$proto12["m_contained"] = array();
-$proto12["m_strCase"] = "";
-$proto12["m_havingmode"] = false;
-$proto12["m_inBrackets"] = false;
-$proto12["m_useAlias"] = false;
-$obj = new SQLLogicalExpr($proto12);
+$proto11["m_column"]=$obj;
+$proto11["m_contained"] = array();
+$proto11["m_strCase"] = "";
+$proto11["m_havingmode"] = false;
+$proto11["m_inBrackets"] = false;
+$proto11["m_useAlias"] = false;
+$obj = new SQLLogicalExpr($proto11);
 
-$proto10["m_joinon"] = $obj;
-$obj = new SQLFromListItem($proto10);
+$proto9["m_joinon"] = $obj;
+$obj = new SQLFromListItem($proto9);
 
 $proto0["m_fromlist"][]=$obj;
 $proto0["m_groupby"] = array();
@@ -866,10 +785,8 @@ $queryData_division = createSqlQuery_division();
 
 
 	
-		;
-
 		
-
+	
 $tdatadivision[".sqlquery"] = $queryData_division;
 
 $tableEvents["division"] = new eventsBase;

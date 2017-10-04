@@ -8,14 +8,11 @@ class MySQLFunctions extends DBFunctions
 	protected $conn = null;
 	
 	
-	function __construct( $params )
+	function MySQLFunctions( $leftWrapper, $rightWrapper, $extraParams )
 	{
-		parent::__construct($params);
-		$this->strLeftWrapper = "`";
-		$this->strRightWrapper = "`";
-		$this->escapeChars[ '\\' ] = true;
+		parent::DBFunctions( $leftWrapper, $rightWrapper, $extraParams );
 		
-		$this->conn = $params["conn"];	
+		$this->conn = $extraParams["conn"];	
 	}
 	
 	/**
@@ -27,6 +24,14 @@ class MySQLFunctions extends DBFunctions
 		return str_replace(array('\\', '%', '_'), array('\\\\', '\\%', '\\_'), $str);
 	}
 
+	/**
+	 * @param String str
+	 * @return String
+	 */ 
+	public function prepareString( $str )
+	{
+		return "'".$this->addSlashes( $str )."'";
+	}
 	
 	/**
 	 * @param String str
@@ -39,6 +44,13 @@ class MySQLFunctions extends DBFunctions
 			if( $this->conn )
 				return mysqli_real_escape_string( $this->conn, $str );
 		} 
+//	deprecated
+/*
+		else if( function_exists('mysql_real_escape_string') )
+		{
+			mysql_real_escape_string($str);
+		}
+*/		
 		else
 		{
 			//	ODBC connection, no MySQL library included
@@ -58,6 +70,13 @@ class MySQLFunctions extends DBFunctions
 		return "0x".bin2hex($str);
 	}
 
+	/**
+	 * @param String str
+	 */
+	public function stripSlashesBinary( $str )
+	{
+		return $str;
+	}
 
 	/**
 	 * adds wrappers to field name if required
@@ -82,6 +101,14 @@ class MySQLFunctions extends DBFunctions
 		return "upper(".$dbval.")";
 	}
 	
+	/**
+	 * @param Mixed $val
+	 * @return String
+	 */
+	public function addDateQuotes( $val )
+	{
+		return "'".$val."'";
+	}
 	
 	/**
 	 * It's called for Contains and Starts with searches
@@ -105,19 +132,7 @@ class MySQLFunctions extends DBFunctions
 			return "time(".$value.")";
 			
 		return $value;
-	}
-
-	/**
-	 *  Get the auto generated SQL string used in the last query
-	 * @param String key (optional)	
-	 * @param String table (optional)	
-	 * @param String oraSequenceName (optional)	
-	 * @return String
-	 */
-	public function getInsertedIdSQL( $key = null, $table = null, $oraSequenceName = false )
-	{
-		return "SELECT LAST_INSERT_ID()";
-	}
+	}		
 
 	/**
 	 * @param String strName
@@ -127,11 +142,5 @@ class MySQLFunctions extends DBFunctions
 	{
 		return "TIME_TO_SEC(" . $this->addTableWrappers($strName) . ")";
 	}
-
-	public function schemaSupported()
-	{
-		return false;
-	}
-	
 }
 ?>

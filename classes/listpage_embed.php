@@ -2,18 +2,35 @@
 
 class ListPage_Embed extends ListPage
 {
+	/**
+	 * Which type of master page was called detail table
+	 *
+	 * @var string
+	 */
+	var $masterPageType = "";
+	/**
+	 * Which type of main master page was called detail table
+	 *
+	 * @var string
+	 */
+	var $mainMasterPageType = "";
+	/**
+	 * View PDF on view page or not
+	 *
+	 * @var integer
+	 */
 	var $viewPDF = 0;
 	/**
 	 * Constructor, set initial params
 	 *
 	 * @param array $params
 	 */
-	function __construct(&$params)
+	function ListPage_Embed(&$params)
 	{
 		// copy properties to object
 		//RunnerApply($this, $params);
 		// call parent constructor
-		parent::__construct($params);
+		parent::ListPage($params);
 	}
 	/**
 	 * Add common html code for curent mode
@@ -38,20 +55,13 @@ class ListPage_Embed extends ListPage
 			if(!$this->rowsFound)
 				$this->xt->displayBrickHidden("grid");
 		}
-	}
+	}	
 	
-	function importAvailable() {
-		return false;
-	}
-	function printAvailable() {
-		return false;
-	}
-	function advSearchAvailable() {
-		return false;
-	}
-	
-	function exportAvailable() {
-		return false;
+	function getMasterTableSQLClause() 
+	{
+		if($this->masterPageType==PAGE_ADD)
+			return "1=0";
+		return ListPage::getMasterTableSQLClause();
 	}
 }
 ?>

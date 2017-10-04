@@ -26,7 +26,7 @@ class SearchControl
 	 */		
 	var $controlsContainer;
 		
-	function __construct($id, $tName = '', &$searchClauseObj, &$pageObj)
+	function SearchControl($id, $tName = '', &$searchClauseObj, &$pageObj)
 	{
 		$this->tName = $tName;
 		
@@ -95,7 +95,10 @@ class SearchControl
 	{
 		$parameters = $this->buildCtrlParamsArr($fName, $recId, $fieldNum, $value, $opt, $renderHidden, $isCached);
 		
-		return XTempl::create_function_assignment( "xt_buildeditcontrol", $parameters);
+		$control = array();
+		AssignFunction($control, "xt_buildeditcontrol", $parameters);
+		
+		return $control;
 	}
 	
 	/**
@@ -113,7 +116,8 @@ class SearchControl
 		$ctrlsMap['controls']["hidden"] = $hidden;
 		$ctrlsMap['controls']["table"] = $this->tName;
 		
-		$preload = $this->pageObj->fillPreload($fName, array($fName), array($fName => $value), $this->controlsContainer);
+		$vals = array($fName => $value);
+		$preload = $this->pageObj->fillPreload($fName, $vals, $this->controlsContainer);
 		if($preload !== false)
 			$ctrlsMap["controls"]['preloadData'] = $preload;
 				
@@ -174,13 +178,9 @@ class SearchControl
 	{
 		$fType = $this->pSet->getEditFormat($fName);
 		
-		$lookupType = $this->pSet->lookupControlType($fName);
-		if( $this->pageObj->mobileTemplateMode() && $lookupType == LCT_AJAX )
-			$lookupType = LCT_DROPDOWN;
-		
 		if ($fType == EDIT_FORMAT_DATE || $fType == EDIT_FORMAT_TIME || $fType == EDIT_FORMAT_TEXT_FIELD 
 			|| $fType == EDIT_FORMAT_TEXT_AREA || $fType == EDIT_FORMAT_PASSWORD || $fType == EDIT_FORMAT_HIDDEN 
-			|| $fType == EDIT_FORMAT_READONLY || $fType == EDIT_FORMAT_LOOKUP_WIZARD && $lookupType == LCT_AJAX)
+			|| $fType == EDIT_FORMAT_READONLY || $fType == EDIT_FORMAT_LOOKUP_WIZARD && $this->pSet->lookupControlType($fName) == LCT_AJAX)
 		{
 			return true;
 		}
@@ -229,7 +229,7 @@ class SearchControl
 		$visibility = !$flexible || $this->getSrchPanelAttrs['ctrlTypeComboStatus'] || $emptyOption ? '' : 'style="display: none;"';
 		
 		$searchtype = '<span id="'.$this->getCtrlComboContId($recId, $fName).'" '.$visibility.'>';
-		$searchtype.= '<select class="form-control" '.$class.' id="'.$this->getSearchOptionId($fName, $recId).'" name="'.$this->getSearchOptionId($fName, $recId).'" size=1 '.$visibility.'>';
+		$searchtype.= '<select id="'.$this->getSearchOptionId($fName, $recId).'" name="'.$this->getSearchOptionId($fName, $recId).'" size=1 '.$visibility.'>';
 		$searchtype.= $this->getCtrlSearchTypeOptions($fName, $selOpt, $not, $flexible, $both);
 		$searchtype.= "</select></span>";
 		
@@ -258,16 +258,8 @@ class SearchControl
 	
 	function  getDelButtonHtml($fName, $recId)
 	{
-		$text = "";
-		$iconAttr = 'data-icon="remove"';
-		if( $this->pageObj->getLayoutVersion() == BOOTSTRAP_LAYOUT )
-		{
-			$text = '<span class="glyphicon glyphicon-remove"></span>';
-			$iconAttr = "";
-		}
-		
 		$html = '<a id = "'.$this->getDelButtonId($fName, $recId).'" ctrlId="'.$recId.'" fName="'.GoodFieldName($fName)
-			.'" class="searchPanelButton searchpanel-options" '.$iconAttr.' href="#" title="'."Delete control".'">' . $text . '</a>';
+			.'" class="searchPanelButton" data-icon="remove" href="#" title="'."Delete control".'"></a>';
 		return $html;
 	}
 	

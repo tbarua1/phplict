@@ -9,7 +9,7 @@ class MoveFile
 	var $destFilename;
 	var $destPath;
 	var $destPathIsAbsolute;
-	function __construct($source, $name, $path, $abs)
+	function MoveFile($source, $name, $path, $abs)
 	{
 		$this->sourceFilename = $source;
 		$this->destFilename = $name;
@@ -36,7 +36,7 @@ class SaveFile
 	var $destFilename;
 	var $destPath;
 	var $destPathIsAbsolute;
-	function __construct($contents, $name, $path, $abs)
+	function SaveFile($contents, $name, $path, $abs)
 	{
 		$this->fileContents = $contents;
 		$this->destFilename = $name;
@@ -62,7 +62,7 @@ class DeleteFile
 	var $destFilename;
 	var $destPath;
 	var $destPathIsAbsolute;
-	function __construct($name, $path, $abs)
+	function DeleteFile($name, $path, $abs)
 	{
 		$this->destFilename = $name;
 		$this->destPath = $path;

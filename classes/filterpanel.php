@@ -30,7 +30,7 @@ class FilterPanel
 	protected $viewControls;
 	
 	
-	public function __construct(&$params)
+	public function FilterPanel(&$params)
 	{
 		RunnerApply($this, $params);
 			
@@ -46,6 +46,8 @@ class FilterPanel
 		{
 			$this->pageObj->controlsMap["filters"] = array("controls" => array());
 		}
+
+		$this->filterStates = $this->getFiltersState();	
 	}
 	
 	/**
@@ -103,7 +105,10 @@ class FilterPanel
 		
 		$this->xt->assign_loopsection_byValue("filterCtrlBlock".$postfix, $filterCtrlBlocks);
 		
-		$this->xt->assign("collapsedClass".$postfix, "filter-collapsed");			
+		$collapsed = $filterState["collapsed"];
+		// asp. vartype $this->filterStates[$fieldName] is string, not boolean
+		if( !isset($this->filterStates[$fieldName]) && $collapsed || $this->filterStates[$fieldName] && $this->filterStates[$fieldName] == "true" )
+			$this->xt->assign("collapsedClass".$postfix, "filter-collapsed");			
 			
 		$this->xt->assign("filterbutton_attrs".$postfix, $filterButtonParams["attrs"]);
 		$this->xt->assign("filter_button_apply".$postfix, $filterButtonParams["hasApplyBtn"]);
@@ -113,10 +118,25 @@ class FilterPanel
 		$this->xt->assign("selectAll_attrs".$postfix, $filterExtraControls["selectAllAttrs"]);
 		
 		$this->xt->assign("filter_button_showmore".$postfix, $filterState["truncated"]);
-		$this->xt->assign("show_n_more".$postfix, str_replace( "%n%", $filterExtraControls["numberOfExtraItemsToShow"], "Show %n% more" ) );
-		
-		if( $filterState["showMoreHidden"] )
-			$this->xt->assign("showMoreBtnClass".$postfix, "show-more-hidden");
+		$this->xt->assign("numberOfItemsToSHow".$postfix, $filterExtraControls["numberOfExtraItemsToShow"]);
 	}
+		
+	/**
+	 * Extract the array containing the filters 
+	 * states (expanded/collapsed) from the Filter panel coockie
+	 * @return Array
+	 */
+	protected function getFiltersState()
+	{
+		$panelsStates = my_json_decode(@$_COOKIE["filterPanel"]);
+		if( !is_array($panelsStates) ) 
+			return array();
+			
+		$panelKey = "filtersState_".GoodFieldName( $this->tName )."_".$this->id;
+		if( !array_key_exists($panelKey, $panelsStates) )	
+			return array();
+		
+		return $panelsStates[ $panelKey ];
+	}	
 }
 ?>

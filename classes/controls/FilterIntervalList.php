@@ -9,9 +9,9 @@ class FilterIntervalList extends FilterControl
 	protected $showWithNoRecords = false;
 	
 		
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterIntervalList($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterControl($fName, $pageObject, $id, $viewControls);
 
 		$this->separator = "~interval~";
 		$this->filterFormat = FF_INTERVAL_LIST;
@@ -53,22 +53,6 @@ class FilterIntervalList extends FilterControl
 	 */	
 	protected function getTotalString($caseCondition, $idx)
 	{
-		$wName = $this->connection->addFieldWrappers( $this->fName );
-		$wTotalName = $this->connection->addFieldWrappers( $this->totalsfName );
-		
-		$caseStatement = $this->getCaseStatement($caseCondition,  $wName, "null");
-		$totalString = $this->aggregate."(".$caseStatement.") as ".$this->connection->addFieldWrappers($this->fName.$idx)." ";
-			
-		if( $this->useTotals && $this->totalsfName != $this->fName )
-		{
-			$caseStatement = $this->getCaseStatement($caseCondition, $wTotalName, "null");
-			$totalString.= ", ". $this->aggregate."(".$caseStatement.") as ".$this->connection->addFieldWrappers("TOTAL".$idx);
-		}		
-		return $totalString;
-	}
-	
-	protected function getTotalStringOld($caseCondition, $idx)
-	{
 		$fullFieldName = $this->getDbFieldName($this->fName);
 		$fullTotalFieldName = $this->getDbFieldName($this->totalsfName);
 		
@@ -90,14 +74,7 @@ class FilterIntervalList extends FilterControl
 	 */
 	protected function getCaseCondition($interval) 
 	{
-		return FilterIntervalList::getIntervalFilterWhere(
-			$this->fName, 
-			$interval, 
-			$this->pSet, 
-			$this->cipherer, 
-			$this->tName, 
-			$this->connection, 
-			$this->connection->addFieldWrappers( $this->fName ));
+		return FilterIntervalList::getIntervalFilterWhere($this->fName, $interval, $this->pSet, $this->cipherer, $this->tName, $this->connection);
 	}
 	
 	/**
@@ -110,12 +87,9 @@ class FilterIntervalList extends FilterControl
 	 * @param String tableName
 	 * @return String
 	 */ 
-	static function getIntervalFilterWhere($fName, $intervalData, $pSet, $cipherer, $tableName, $connection, $sqlFieldName = "")
+	static function getIntervalFilterWhere($fName, $intervalData, $pSet, $cipherer, $tableName, $connection)
 	{
-		if( $sqlFieldName == "" )
-			$sqlFieldName = RunnerPage::_getFieldSQL($fName, $connection, $pSet); 
-			
-
+		$fullFieldName = RunnerPage::_getFieldSQL($fName, $connection, $pSet); 
 		if( $intervalData["remainder"] )  
 		{
 			$index = $intervalData["index"];
@@ -129,15 +103,15 @@ class FilterIntervalList extends FilterControl
 				if( $intervalData["index"] == $index )
 					continue;
 				
-				$conditions[] = FilterIntervalList::getLimitsConditions($fName, $sqlFieldName, $intervalData, $cipherer, $tableName, $connection, true);
+				$conditions[] = FilterIntervalList::getLimitsConditions($fName, $fullFieldName, $intervalData, $cipherer, $tableName, $connection, true);
 			}
 			return implode(" AND ", $conditions);
 		}
 
 		if( $intervalData["noLimits"] )
-			return $sqlFieldName." is not NULL AND ".$sqlFieldName." <> '' ";;
+			return $fullFieldName." is not NULL AND ".$fullFieldName." <> '' ";;
 		
-		return FilterIntervalList::getLimitsConditions($fName, $sqlFieldName, $intervalData, $cipherer, $tableName, $connection);
+		return FilterIntervalList::getLimitsConditions($fName, $fullFieldName, $intervalData, $cipherer, $tableName, $connection);
 
 	}
 	
@@ -284,7 +258,7 @@ class FilterIntervalList extends FilterControl
 	protected function getValueToShow($index) 
 	{
 		$interval = $this->pSet->getFilterIntervalDatabyIndex($this->fName, $index); 	
-		$showValue = $this->getLabel($interval["intervalLabelNameType"], $interval["intervalLabelText"]);
+		$showValue = $interval["intervalLabelText"];
 
 		return $showValue;
 	}
@@ -333,9 +307,6 @@ class FilterIntervalList extends FilterControl
 	 */
 	protected function getFilterBlockStructure( $filterControl, $visibilityClass, $value, $parentFiltersData = array() )
 	{		
-		if( $this->multiSelect != FM_ALWAYS )
-			$visibilityClass.= " filter-link";
-			
 		return array(
 			$this->gfName."_filter" => $filterControl, 
 			"visibilityClass_".$this->gfName => $visibilityClass,

@@ -1,9 +1,7 @@
-<!doctype html><p align=center><font size=+1 color=red>This website was created by evaluation version of PHPRunner Trial.</font></p>
-<p align=center><font size=+1 color=red>This warning message will not appear on website created by a paid-for version of PHPRunner Trial.</font></p>
+<!doctype html>
 <html  {$html_attrs}>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{$pagetitle}</title>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -14,424 +12,414 @@
 		{BEGIN styleCSSFiles}
 		<link REL="stylesheet" href="{$stylepath}" type="text/css">
 		{END styleCSSFiles}
+		{BEGIN pageCSSFiles}
+		<link REL="stylesheet" href="{$pagestylepath}" type="text/css">
+		{END pageCSSFiles}
 	</head>
-
+	
 	<body class="{$stylename} function-search" {$bodyattrs}>
 	{BEGIN body}
 		{$header}
-		<style>
-			{$containerCss}
-		</style>
-		<DIV class="bs-top">
-        
+	<div class="rnr-page">
+		<div class="rnr-top {$blockclass_top}">
+			
 
-{BEGIN container_searchpage}
-<div {$searchpage_chiddenattr} data-pageid="{$pageid}" data-container="searchpage" class="container    "> 
-
-
-
-
-{BEGIN container_header}
-<div {$header_chiddenattr} data-pageid="{$pageid}" data-container="header" class="   col-md-6 col-md-offset-3"> 
+{BEGIN container_search}
+<div class="rnr-c rnr-cv rnr-c-search">
 
 {BEGIN searchheader}
-	<h2 {$bssearchheader_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchheader" >{$pagetitlelabel batch search}</h2>
-	{BEGIN printtabheader}<h4>{$printtabheader_text}</h4>{END printtabheader}
-
-{END searchheader}
+<div  class="rnr-brickcontents style2 rnr-b-srchheader {$brickclass_srchheader}"><span>	<h1>{$pagetitlelabel batch search}</h1>
+</span></div>{END searchheader}
 
 
-
-</div>
-{END container_header}
-
-
-
-
-
-
-</div>
-{END container_searchpage}
+{BEGIN conditions_block}
+<div  class="rnr-brickcontents style1 rnr-b-srchconditions {$brickclass_srchconditions}">	<center>
+	<span class=fieldname>Criteria:&nbsp;</span>	
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$all_checkbox}><label for="all_checkbox"> All conditions</label>
+	&nbsp;&nbsp;&nbsp;
+	<input type="radio" class="rnr-radio-button" name="srchType{$id}" {$any_checkbox}><label for="any_checkbox"> Any condition</label>
+	</center></div>{END conditions_block}
 
 
+
+<div  class="rnr-brickcontents style1 rnr-b-wrapper {$wrapperclass_fields} rnr-wrapper rnr-cbw-fields">
 
 {BEGIN container_fields}
-<div {$fields_chiddenattr} data-pageid="{$pageid}" data-container="fields" class="   col-md-12 "> 
+<div class="rnr-c rnr-cv rnr-c-fields">
 
 
-<div {$bssearchfields_hiddenattr} data-pageid="{$pageid}" data-brick="bssearchfields" class="form-horizontal" role="form">
-<div class="container">
-	<div class="form-group">
-		<div class="col-md-12" >
-			&nbsp;
-		</div>
-	</div>
-</div>
+<div  class="rnr-brickcontents style1 rnr-b-srchfields {$brickclass_srchfields}"><table class="fieldGrid">
+	<tr>
+		<td>&nbsp;</td>
+		<td>NOT</td>
+		<td colspan=3>&nbsp; </td>
+	</tr>
+	<tr class="{$fielddispclass_batch_id}">
+	{BEGIN batch_id_fieldblock}		
+	<td>
+		{$label batch batch_id}
+	</td>
+	<td>
+		<input type="checkbox" {$batch_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_batch_id}
+	</td>
+	<td>
+		{$batch_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$batch_id_editcontrol1}&nbsp;
+	</td>
+{END batch_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_Batchcode}">
 	{BEGIN Batchcode_fieldblock}		
-	<div class="container {$fielddispclass_Batchcode}" data-fieldname="Batchcode">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_Batchcode}">
-				{$label batch Batchcode}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_Batchcode}
-			</div>
-			<div class="col-md-4" >
-				{$Batchcode_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$Batchcode_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch Batchcode}
+	</td>
+	<td>
+		<input type="checkbox" {$Batchcode_notbox}>
+	</td>
+	<td>
+		{$searchtype_Batchcode}
+	</td>
+	<td>
+		{$Batchcode_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$Batchcode_editcontrol1}&nbsp;
+	</td>
 {END Batchcode_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_fbgroup}">
 	{BEGIN fbgroup_fieldblock}		
-	<div class="container {$fielddispclass_fbgroup}" data-fieldname="fbgroup">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_fbgroup}">
-				{$label batch fbgroup}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_fbgroup}
-			</div>
-			<div class="col-md-4" >
-				{$fbgroup_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$fbgroup_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch fbgroup}
+	</td>
+	<td>
+		<input type="checkbox" {$fbgroup_notbox}>
+	</td>
+	<td>
+		{$searchtype_fbgroup}
+	</td>
+	<td>
+		{$fbgroup_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$fbgroup_editcontrol1}&nbsp;
+	</td>
 {END fbgroup_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_division_id}">
 	{BEGIN division_id_fieldblock}		
-	<div class="container {$fielddispclass_division_id}" data-fieldname="division_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_division_id}">
-				{$label batch division_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_division_id}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$division_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch division_id}
+	</td>
+	<td>
+		<input type="checkbox" {$division_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_division_id}
+	</td>
+	<td>
+		{$division_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$division_id_editcontrol1}&nbsp;
+	</td>
 {END division_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_university_id}">
 	{BEGIN university_id_fieldblock}		
-	<div class="container {$fielddispclass_university_id}" data-fieldname="university_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_university_id}">
-				{$label batch university_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_university_id}
-			</div>
-			<div class="col-md-4" >
-				{$university_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$university_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch university_id}
+	</td>
+	<td>
+		<input type="checkbox" {$university_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_university_id}
+	</td>
+	<td>
+		{$university_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$university_id_editcontrol1}&nbsp;
+	</td>
 {END university_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_department_id}">
 	{BEGIN department_id_fieldblock}		
-	<div class="container {$fielddispclass_department_id}" data-fieldname="department_id">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_department_id}">
-				{$label batch department_id}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_department_id}
-			</div>
-			<div class="col-md-4" >
-				{$department_id_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$department_id_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch department_id}
+	</td>
+	<td>
+		<input type="checkbox" {$department_id_notbox}>
+	</td>
+	<td>
+		{$searchtype_department_id}
+	</td>
+	<td>
+		{$department_id_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$department_id_editcontrol1}&nbsp;
+	</td>
 {END department_id_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_starting_Date}">
 	{BEGIN starting_Date_fieldblock}		
-	<div class="container {$fielddispclass_starting_Date}" data-fieldname="starting_Date">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_starting_Date}">
-				{$label batch starting_Date}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_starting_Date}
-			</div>
-			<div class="col-md-4" >
-				{$starting_Date_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$starting_Date_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch starting_Date}
+	</td>
+	<td>
+		<input type="checkbox" {$starting_Date_notbox}>
+	</td>
+	<td>
+		{$searchtype_starting_Date}
+	</td>
+	<td>
+		{$starting_Date_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$starting_Date_editcontrol1}&nbsp;
+	</td>
 {END starting_Date_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_Track}">
 	{BEGIN Track_fieldblock}		
-	<div class="container {$fielddispclass_Track}" data-fieldname="Track">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_Track}">
-				{$label batch Track}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_Track}
-			</div>
-			<div class="col-md-4" >
-				{$Track_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$Track_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch Track}
+	</td>
+	<td>
+		<input type="checkbox" {$Track_notbox}>
+	</td>
+	<td>
+		{$searchtype_Track}
+	</td>
+	<td>
+		{$Track_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$Track_editcontrol1}&nbsp;
+	</td>
 {END Track_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_cid}">
 	{BEGIN cid_fieldblock}		
-	<div class="container {$fielddispclass_cid}" data-fieldname="cid">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_cid}">
-				{$label batch cid}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_cid}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$cid_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch cid}
+	</td>
+	<td>
+		<input type="checkbox" {$cid_notbox}>
+	</td>
+	<td>
+		{$searchtype_cid}
+	</td>
+	<td>
+		{$cid_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$cid_editcontrol1}&nbsp;
+	</td>
 {END cid_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_status}">
 	{BEGIN status_fieldblock}		
-	<div class="container {$fielddispclass_status}" data-fieldname="status">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_status}">
-				{$label batch status}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_status}
-			</div>
-			<div class="col-md-4" >
-				{$status_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$status_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch status}
+	</td>
+	<td>
+		<input type="checkbox" {$status_notbox}>
+	</td>
+	<td>
+		{$searchtype_status}
+	</td>
+	<td>
+		{$status_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$status_editcontrol1}&nbsp;
+	</td>
 {END status_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_uni_spoc_name}">
 	{BEGIN uni_spoc_name_fieldblock}		
-	<div class="container {$fielddispclass_uni_spoc_name}" data-fieldname="uni_spoc_name">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_uni_spoc_name}">
-				{$label batch uni_spoc_name}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_uni_spoc_name}
-			</div>
-			<div class="col-md-4" >
-				{$uni_spoc_name_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$uni_spoc_name_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch uni_spoc_name}
+	</td>
+	<td>
+		<input type="checkbox" {$uni_spoc_name_notbox}>
+	</td>
+	<td>
+		{$searchtype_uni_spoc_name}
+	</td>
+	<td>
+		{$uni_spoc_name_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$uni_spoc_name_editcontrol1}&nbsp;
+	</td>
 {END uni_spoc_name_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_uni_spoc_contact}">
 	{BEGIN uni_spoc_contact_fieldblock}		
-	<div class="container {$fielddispclass_uni_spoc_contact}" data-fieldname="uni_spoc_contact">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_uni_spoc_contact}">
-				{$label batch uni_spoc_contact}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_uni_spoc_contact}
-			</div>
-			<div class="col-md-4" >
-				{$uni_spoc_contact_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$uni_spoc_contact_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch uni_spoc_contact}
+	</td>
+	<td>
+		<input type="checkbox" {$uni_spoc_contact_notbox}>
+	</td>
+	<td>
+		{$searchtype_uni_spoc_contact}
+	</td>
+	<td>
+		{$uni_spoc_contact_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$uni_spoc_contact_editcontrol1}&nbsp;
+	</td>
 {END uni_spoc_contact_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_ey_spoc}">
 	{BEGIN ey_spoc_fieldblock}		
-	<div class="container {$fielddispclass_ey_spoc}" data-fieldname="ey_spoc">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_ey_spoc}">
-				{$label batch ey_spoc}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_ey_spoc}
-			</div>
-			<div class="col-md-4" >
-				{$ey_spoc_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$ey_spoc_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch ey_spoc}
+	</td>
+	<td>
+		<input type="checkbox" {$ey_spoc_notbox}>
+	</td>
+	<td>
+		{$searchtype_ey_spoc}
+	</td>
+	<td>
+		{$ey_spoc_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$ey_spoc_editcontrol1}&nbsp;
+	</td>
 {END ey_spoc_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_local_spoc}">
 	{BEGIN local_spoc_fieldblock}		
-	<div class="container {$fielddispclass_local_spoc}" data-fieldname="local_spoc">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_local_spoc}">
-				{$label batch local_spoc}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_local_spoc}
-			</div>
-			<div class="col-md-4" >
-				{$local_spoc_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$local_spoc_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch local_spoc}
+	</td>
+	<td>
+		<input type="checkbox" {$local_spoc_notbox}>
+	</td>
+	<td>
+		{$searchtype_local_spoc}
+	</td>
+	<td>
+		{$local_spoc_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$local_spoc_editcontrol1}&nbsp;
+	</td>
 {END local_spoc_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_schedule}">
 	{BEGIN schedule_fieldblock}		
-	<div class="container {$fielddispclass_schedule}" data-fieldname="schedule">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_schedule}">
-				{$label batch schedule}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_schedule}
-			</div>
-			<div class="col-md-4" >
-				{$schedule_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$schedule_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch schedule}
+	</td>
+	<td>
+		<input type="checkbox" {$schedule_notbox}>
+	</td>
+	<td>
+		{$searchtype_schedule}
+	</td>
+	<td>
+		{$schedule_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$schedule_editcontrol1}&nbsp;
+	</td>
 {END schedule_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_tech_trainer}">
 	{BEGIN tech_trainer_fieldblock}		
-	<div class="container {$fielddispclass_tech_trainer}" data-fieldname="tech_trainer">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_tech_trainer}">
-				{$label batch tech_trainer}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_tech_trainer}
-			</div>
-			<div class="col-md-4" >
-				{$tech_trainer_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$tech_trainer_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch tech_trainer}
+	</td>
+	<td>
+		<input type="checkbox" {$tech_trainer_notbox}>
+	</td>
+	<td>
+		{$searchtype_tech_trainer}
+	</td>
+	<td>
+		{$tech_trainer_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$tech_trainer_editcontrol1}&nbsp;
+	</td>
 {END tech_trainer_fieldblock}
+	</tr>
+	<tr class="{$fielddispclass_soft_skill_trainer}">
 	{BEGIN soft_skill_trainer_fieldblock}		
-	<div class="container {$fielddispclass_soft_skill_trainer}" data-fieldname="soft_skill_trainer">
-		<div class="form-group">
-			<label class="col-md-2 control-label" for="{$labelfor_soft_skill_trainer}">
-				{$label batch soft_skill_trainer}
-			</label>
-			<div class="col-md-2 bs-srchoption" >
-				{$searchtype_soft_skill_trainer}
-			</div>
-			<div class="col-md-4" >
-				{$soft_skill_trainer_editcontrol}
-			</div>
-			<div class="col-md-4" >
-				{$soft_skill_trainer_editcontrol1}
-			</div>
-		</div>
-	</div>
+	<td>
+		{$label batch soft_skill_trainer}
+	</td>
+	<td>
+		<input type="checkbox" {$soft_skill_trainer_notbox}>
+	</td>
+	<td>
+		{$searchtype_soft_skill_trainer}
+	</td>
+	<td>
+		{$soft_skill_trainer_editcontrol}&nbsp;
+	</td>
+	<td>
+		{$soft_skill_trainer_editcontrol1}&nbsp;
+	</td>
 {END soft_skill_trainer_fieldblock}
-</div>
+	</tr>
+
+</table></div>
 
 
+{BEGIN searchbuttons}
+<div  class="rnr-brickcontents style2 rnr-b-srchbuttons {$brickclass_srchbuttons}">{BEGIN search_button}
+<a href="#" class="rnr-button main" {$searchbutton_attrs}>Search</a>
+{END search_button} 
+{BEGIN reset_button}
+<a href="#" class="rnr-button" {$resetbutton_attrs}>Reset</a>
+{END reset_button}
+{BEGIN back_button}
+<a href="#" class="rnr-button" {$backbutton_attrs}>Back to list</a>
+{END back_button}</div>{END searchbuttons}
 
 
 </div>
 {END container_fields}
 
-
-
-{BEGIN container_bottombuttons}
-<div {$bottombuttons_chiddenattr} data-pageid="{$pageid}" data-container="bottombuttons" class="container form-horizontal   "> 
-
-
-
-
-{BEGIN container_bbuttons}
-<div {$bbuttons_chiddenattr} data-pageid="{$pageid}" data-container="bbuttons" class=" form-group   "> 
-
-
-
-
-{BEGIN container_leftbuttons}
-<div {$leftbuttons_chiddenattr} data-pageid="{$pageid}" data-container="leftbuttons" class="   col-md-10 col-md-offset-2"> 
-
-{BEGIN searchbuttons}
-{BEGIN search_button}
-<button class="btn btn-primary" {$searchbutton_attrs}>Search</button>
-{END search_button} 
-{BEGIN reset_button}
-<button class="btn btn-default" {$resetbutton_attrs}>Reset</button>
-{END reset_button}
-{BEGIN back_button}
-<button class="btn btn-default" {$backbutton_attrs}>Back to list</button>
-{END back_button}
-{END searchbuttons}
-
+</div>
 
 
 </div>
-{END container_leftbuttons}
-
-
-
-
-
-
-</div>
-{END container_bbuttons}
-
-
-
-
-
-
-</div>
-{END container_bottombuttons}
+{END container_search}
 
 
 		</div>
-		<div class="bs-middle ">
-			<div class="bs-topmiddle">
+		<div class="rnr-middle">
+			<div class="rnr-left {$blockclass_left}">
 				
 			</div>
-			<div class="bs-left" {$blockattr_left}>
+			<div class="rnr-center {$blockclass_center}">
 				
 			</div>
-			<div class="bs-center">
-				
-			</div>
-			<div class="bs-right">
+			<div class="rnr-right {$blockclass_right}">
 				
 			</div>
 		</div>
-		<DIV class="bs-bottom">
-        
+		<div class="rnr-bottom {$blockclass_bottom}">
+			<!--%%bottom%%-->
 		</div>
+	</div>
+		
 		{$footer}
 	{END body}
 	</body>

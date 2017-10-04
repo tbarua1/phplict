@@ -53,6 +53,14 @@ class OracleFunctions extends DBFunctions
 		return $str;
 	}
 
+	/**
+	 * @param String str
+	 * @return String		 
+	 */
+	public function stripSlashesBinary( $str )
+	{
+		return $str;
+	}
 
 	/**
 	 * adds wrappers to field name if required
@@ -77,6 +85,14 @@ class OracleFunctions extends DBFunctions
 		return "upper(".$dbval.")";
 	}
 
+	/**
+	 * @param Mixed val
+	 * @return String
+	 */
+	public function addDateQuotes( $val )
+	{
+		return "'".$val."'";
+	}
 	
 	/**
 	 * @param Mixed value
@@ -96,31 +112,6 @@ class OracleFunctions extends DBFunctions
 	public function field2time($value, $type)
 	{
 		return $value;
-	}
-
-	/**
-	 *  Get the auto generated SQL string used in the last query
-	 * @param String key (optional)	
-	 * @param String table (optional)	
-	 * @param String oraSequenceName (optional)	
-	 * @return String
-	 */
-	public function getInsertedIdSQL( $key = null, $table = null, $oraSequenceName = false )
-	{
-		if ( $oraSequenceName )
-			$lastIdSQL = "SELECT " . $oraSequenceName . ".CURRVAL FROM DUAL";
-		else if ( !is_null($key) && !is_null($table) )
-			$lastIdSQL = "SELECT MAX(" . $this->addFieldWrappers( $key ) . ") FROM " . $this->addTableWrappers( $table );
-		else
-			return false;
-
-		return $lastIdSQL;
-	}		
-
-	public function crossDbSupported()
-	{
-		return false;
-	}
-	
+	}	
 }
 ?>

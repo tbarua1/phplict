@@ -36,14 +36,12 @@ else
 
 if($strTableName == "")
 {
-	if(!$isPDF)
-		echo "<p>No table name received</p>";
+	echo "<p>No table name received</p>";
 	return;
 }
 if($field == "")
 {
-	if(!$isPDF)
-		echo "<p>No field name received</p>";
+	echo "<p>No field name received</p>";
 	return;
 }
 
@@ -156,10 +154,12 @@ switch ($requestAction) {
 					$keys[$tKeys[$i]] = postvalue("key".($i+1));
 			}
 			$strWhereClause = KeyWhere($keys);
+	
 			if($pSet->getAdvancedSecurityType()!=ADVSECURITY_ALL)
 				$strWhereClause = whereAdd($strWhereClause, SecuritySQL("Search"));
+	
 			$queryObj = $pSet->getQueryObject();
-    		if( !$queryObj->HasGroupBy() )
+    		if($queryObj->HasGroupBy())
 			{
 				// Do not select any fields except current (file) field.
 				// If query has 'group by' clause then other fields are used in it and we may not simply cut 'em off.
@@ -251,7 +251,7 @@ switch ($requestAction) {
 			}
 			else
 			{
-				if( false && ($pageType == PAGE_EDIT || $pageType == PAGE_ADD) && $isSRC )
+				if(($pageType == PAGE_EDIT || $pageType == PAGE_ADD) && $isSRC )
 				{
 					$iconShowed = true;
 					$fsFileName = "images/icons/".getIconByFileType($sessionFile["type"], $sessionFile["name"]);
@@ -290,9 +290,6 @@ switch ($requestAction) {
 				return;
 			}
 			
-		
-			$norange = ( postvalue('norange') == 1 );
-		
 			if(postvalue('norange') == 1)
     		{
 				header('Accept-Ranges: none');

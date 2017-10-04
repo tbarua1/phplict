@@ -1,22 +1,139 @@
+/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 2.8.2r1
+*/
+/**
+ * YUI Reset
+ * @module reset
+ * @namespace
+ * @requires 
+ */
+/*Begin reset style*/ 
+	html{color:#000; /*background:#FFF; height: 100%;*/}
+	/*body{height:100%;}*/
+	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td {margin:0; padding:0;}
+	table{border-spacing:0;}
+	body table {border-collapse:separate;}
+	fieldset,img{border:0;}
+	address,caption,cite,code,dfn,th,var,optgroup{font-style:inherit; font-weight:inherit;}
+	del,ins{text-decoration:none;}
+	/*li{list-style:none;}*/
+	h1,h2,h3,h4,h5,h6{font-size:100%; font-weight:normal;}
+	q:before,q:after{content:'';}
+	abbr,acronym{border:0; font-variant:normal;}
+	sup{vertical-align:baseline;}
+	sub{	vertical-align:baseline;}
+	/*because legend doesn't inherit in IE */
+	legend{color:#000;}
+	input,button,textarea,select,optgroup,option{font-family:inherit; font-size:inherit; font-style:normal; font-weight:normal;}
+	/*@purpose To enable resizing for IE */
+	/*@purpose To enable resizing for IE */
+	/*@branch For IE6-Win, IE7-Win */
+	input,button,textarea,select{*font-size:100%;}
+	th {text-align: inherit;}
+/*End reset  style*/ 
 
+/*BEGIN DEFAULT STYLES BLOCK*/
+	* {white-space:inherit;}
+	a {color:inherit; outline:none; text-decoration:underline;}
+	body {font:8pt Tahoma, Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;}	
 
+/* WebKit SVG fix */
+	text, tspan, textPath {white-space: nowrap;}
+	
+	input[type=text], input[type=search], input[type=password], 
+	input[type="number"], input[type="tel"], 
+	select , textarea {
+		padding: 2px;
+		border-radius: 1px;
+		border: 1px solid #c3c2c2;
+		box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+	} 
+	
+	input[type="email"], input[type="url"] {
+		padding: 2px;
+		border-radius: 1px;
+		border: 1px solid #c3c2c2;
+	} 
+	
+	.rnr-control input[type=text], .rnr-control input[type=password], .rnr-control input[type=search],
+	.rnr-control input[type="number"], .rnr-control input[type="email"], .rnr-control input[type="url"], .rnr-control input[type="tel"], 
+	.rnr-control select , .rnr-control textarea {
+		padding: 3px;
+		border-radius: 3px;
+	}
+	
+	.function-login  input[type=text], .function-login input[type=password],
+	.function-remind   input[type=text],
+	.function-changepwd   input[type=password] {
+		width: 200px;
+	}
+	
+	.function-login select  {
+		width: 208px;
+	}
+	
+	.rnr-control input[type="text"]:not(.highlight):focus, .rnr-control input[type="password"]:focus, 
+	.rnr-control input[type="number"]:not(.highlight):focus, .rnr-control input[type="email"]:not(.highlight):focus,
+	.rnr-control input[type="url"]:not(.highlight):focus, .rnr-control input[type="tel"]:not(.highlight):focus, 
+	.rnr-control textarea:focus, .rnr-control select:focus {
+		border-color: rgba(82, 168, 236, 0.8);
+		outline: 0;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 2px rgba(82, 168, 236, 0.6);
+	}
+	
+	.rnr-label:not(.above) {
+		line-height: 1.85em;
+	}
+	.rnr-control {
+		line-height: 1.85em;
+	}
+	
+	.fb_button, .fb_button_rtl {
+		background: url("http://static.ak.fbcdn.net/rsrc.php/v1/yL/r/FGFbc80dUKj.png") no-repeat scroll 0 0 #29447E;
+		cursor: pointer;
+		display: inline-block;
+		outline: medium none;
+		padding: 0 0 0 1px;
+		text-decoration: none;
+	}
+	
+	.fb_button .fb_button_text, .fb_button_rtl .fb_button_text {
+		background: url("http://static.ak.fbcdn.net/rsrc.php/v1/yL/r/FGFbc80dUKj.png") repeat scroll 0 0 #5F78AB;
+		border-bottom: 1px solid #1A356E;
+		border-top: 1px solid #879AC0;
+		color: #FFFFFF;
+		display: block;
+		font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+		font-weight: bold;
+		margin: 1px 1px 0 21px;
+		padding: 2px 6px 3px;
+		text-shadow: none;
+	}
+	.fb_button_medium, .fb_button_medium_rtl {
+		background-position: left -188px;
+		font-size: 11px;
+		line-height: 14px;
+	}
 
-	.rnr-cv
+	.rnr-cv 
 	{
-		/* this is required to get rif of corners projection beyound rounded borders*/
+		/* this is required to get rif of corners projection beyound rounded borders*/	
 		overflow-y: hidden;
 	}
 
-	.rnr-b-wrapper > :last-child > .rnr-c.rnr-c.rnr-c.rnr-c
+	.rnr-b-wrapper > :last-child > .rnr-c.rnr-c.rnr-c.rnr-c 
 	{
 		margin-bottom: 0;
 	}
-
+	
 	.rnr-b-wrapper > * > .rnr-c
 	{
 		box-sizing: border-box;
 	}
-
+	
 	.rnr-cv > * > table
 	{
 		display: inline-table;
@@ -50,7 +167,7 @@
 		white-space:nowrap;
 	}
 
-	.rnr-multialign
+	.rnr-multialign 
 	{
 		position: relative;
 	}
@@ -76,14 +193,14 @@
 		top:2px;
 	}
 
-	.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks > *,
+	.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks.rnr-leftbricks > *, 
 	.rnr-rightbricks.rnr-rightbricks.rnr-rightbricks.rnr-rightbricks.rnr-rightbricks.rnr-rightbricks > *
 	{
 		display: table-cell;
 		vertical-align: middle;
 		background: transparent;
 	}
-
+	
 	.rnr-c-grid
 	{
 		width: 100%;
@@ -95,13 +212,13 @@
 		text-align: right;
 		font-size: 90%;
 	}
-
+	
 	.rnr-pagewrapper .rnr-page
 	{
 		display:table;
 	}
 
-
+	
 	.rnr-middle {
 		display: table;
 	}
@@ -110,37 +227,37 @@
 		display:table-cell;
 		vertical-align: top;
 	}
-
-
+	
+	
 	.rnr-icons img {
 		margin: 0px 3px;
 		vertical-align: middle;
 	}
-
+	
 	*:not(:hover) .rnr-icons img {
 		opacity:0.3;
 		filter:alpha(opacity=30);
 	}
 
-
+	
 	/*set opacity for inline add/edit icons*/
 	.rnr-icons .inline-icons {
 		opacity:1;
 		filter:alpha(opacity=100);
 	}
-
+	
 	.rnr-wrapper  {
 		padding:0;
 	}
-
-
+	
+	
 	/*row separator for vertical container*/
 	.rnr-rs {
 		height:1pt;
 	}
 	/*row separator for grid container*/
 	.rnr-c-grid .rnr-rs {
-		height:23pt;
+		height:23pt; 
 		line-height: 0px;
 	}
 	/*cell separator for grid container*/
@@ -151,60 +268,60 @@
 	.rnr-cg {
 		vertical-align: top;
 	}
-
+	
 	.rnr-rs.rnr-rs.rnr-rs.rnr-rs.rnr-rs.rnr-rs.rnr-rs.rnr-rs.rnr-rs > * {
 		background: transparent;
 		border:none;
 	}
-
+	
 	.rnr-vrecord  {
 		width:100%;
 		min-width: 100px;
 	}
-
+	
 	/*hidden styles for elements*/
-	.rnr-hiddencontainer,
-	.rnr-hiddenbrick.rnr-hiddenbrick.rnr-hiddenbrick.rnr-hiddenbrick.rnr-hiddenbrick.rnr-hiddenbrick,
-	.rnr-hiddenblock.rnr-hiddenblock,
+	.rnr-hiddencontainer, 
+	.rnr-hiddenbrick,
+	.rnr-hiddenblock,
 	.rnr-hiddenelem ,
 	.rnr-button.rnr-button.rnr-button.rnr-hiddenelem,
 	.rnr-hiddenfield,
-	.rnr-hiddenrow,
+	.rnr-hiddenrow, 
 	.rnr-hidden-tab-panel {
 		display: none;
 	}
-
+	
 	.rnr-tab-navigation {
 		display: inline-block;
 	}
-
+	
 	.rnr-tab.rnr-tab-navigation  {
 		padding: 0.3em 0.75em;
 		margin-right: 0.2em;
 	}
-
+	
 	.rnr-visibleelem {
 		visibility: hidden;
 		display: none;
 	}
-
+	
 	/* To define elements visibility only. Don't add 'display: none;'*/
 	.rnr-invisible-button {
 		visibility: hidden;
 	}
 	/**/
-
+	
 	.rnr-nowrap, .rnr-icons{
 		white-space: nowrap;
-	}
-
+	}	
+	
 	.rnr-row .rnr-cc2 {
 		text-align: center;
 	}
 /*End container common style*/
-
-
-/*
+	
+	
+/* 
  ** Begin menu style
 */
 
@@ -218,26 +335,31 @@
 		list-style-type: none;
 		cursor: pointer;
 	}
-
+	
 	/* >> sign for submenus */
 	:not(.runner-cc) > .raquo
 	{
 		float: right;
 	}
-
+	
 	.subcur {
 		display: inline-block;
 	}
-
+	
 	/* give width and height to items with float:___ children */
-	.rnr-b-vmenu.simple li,
+	.rnr-b-vmenu.simple li, 
 	.rnr-b-hmenu li
 	{
 		overflow:hidden;
 	}
+	
+	/* align icons in menu items */
+	.menu-icon 
+	{
+		vertical-align: middle;
+	}
 
-
-/* separator */
+/* separator */	
 	.rnr-b-vmenu hr, .rnr-b-hmenu hr
 	{
 		width:80%;
@@ -245,9 +367,9 @@
 		border-top: solid 1px;
 	}
 	/* remove borders before and after separator */
-	.rnr-b-vmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator,
+	.rnr-b-vmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator, 
 	.rnr-b-hmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator,
-	.rnr-b-vmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator + *,
+	.rnr-b-vmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator + *, 
 	.rnr-b-hmenu .menuSeparator.menuSeparator.menuSeparator.menuSeparator.menuSeparator + *
 	{
 		border-top: none;
@@ -258,20 +380,20 @@
 	{
 		min-width: 15em;
 	}
-/* simple vertical menu: top items appearance */
+/* simple vertical menu: top items appearance */	
 
 	.rnr-b-vmenu.simple > li > div > *,
-	.rnr-b-vmenu.tree > li > div
+	.rnr-b-vmenu.tree > li > div 
 	{
 		text-align: left;
 	}
-
+	
 	.rnr-b-vmenu.tree > li
 	{
 		overflow:hidden;
 	}
-
-/* horizontal menu: top items appearance */
+	
+/* horizontal menu: top items appearance */	
 	.rnr-b-hmenu > *
 	{
 		display:inline-block;
@@ -309,7 +431,7 @@
 		border-top-width: 0;
 		border-left-width: 1em;
 	}
-
+	
 	/* links */
 	.rnr-b-hmenu ul > li  > *:not(ul) > *, .rnr-b-vmenu ul > li  > *:not(ul) > *
 	{
@@ -322,7 +444,7 @@
 	{
 		display:none;
 	}
-
+		
 	/* vertical submenus */
 	.rnr-b-vmenu li:hover > ul
 	{
@@ -332,7 +454,7 @@
 	.rnr-b-vmenu li.touchHover > ul
 	{
 		display:inline-block;
-	}
+	}	
 
 	/* horizontal submenus */
 	.rnr-b-hmenu :hover > ul, .rnr-b-hmenu:hover > ul
@@ -343,11 +465,11 @@
 	.rnr-b-hmenu .touchHover > ul, .rnr-b-hmenu.touchHover > ul
 	{
 		display:block;
-	}
+	}	
 	/**/
-
-/* submenu positioning logic */
-
+	
+/* submenu positioning logic */	
+	
 	/* vertical menu */
 		/* element before submenu */
 		.rnr-b-vmenu.simple li > div
@@ -362,7 +484,7 @@
 		{
 /*			text-align:right;*/
 		}
-
+		
 		/* submenu itself */
 		.rnr-b-vmenu.simple ul
 		{
@@ -370,7 +492,7 @@
 			z-index:2;
 			float: left;
 		}
-
+		
 	/* horizontal menu */
 		/* main items; this rule required to show submenus straight before the main item */
 		.rnr-b-hmenu
@@ -397,7 +519,7 @@
 		{
 			left: 100%;
 		}
-
+		
 /* treelike menu */
 
 	/* indent */
@@ -405,7 +527,7 @@
 	{
 		margin-left:12px;
 	}
-
+	
 	.rnr-b-vmenu.tree > li.level2.level2.level2.level2  > *
 	{
 		padding-left: 1em;
@@ -426,27 +548,21 @@
 	{
 		padding-left: 5em;
 	}
+	
 
-
-/*
+/* 
  ** End menu style
 */
 
-
-
-
+	
+	
+	
 /*Begin buttons style*/
-	.rnr-ff-cwrap > .rnr-button{
-		margin: 0 0;
-	}
+
 	.rnr-button {
 		display: inline-block;
 		margin: 0 5px;
 		white-space: nowrap;
-	}
-
-	.rnr-ff-cwrap > .rnr-button{
-		margin: 0 0;
 	}
 
 	.rnr-button:not(.disabled):not(.filesUpload):not(.rnr-sidelink):active ,
@@ -456,33 +572,33 @@
 		left:  1px;
 		position: relative;
 	}
-
-	.rnr-buttons-group > .rnr-button:not(.disabled):active
+	
+	.rnr-buttons-group > .rnr-button:not(.disabled):active 
 	{
 		top: 0px;
 		left:  0px;
 	}
-
+	
 	.rnr-button-img,
-	.rnr-verticalicons
+	.rnr-verticalicons	
 	{
 		text-decoration: none;
 		display:inline-block;
 	}
-
+	
 	/*End button style*/
 
 	.rnr-icons
 	{
 		width: 60px;
 	}
-
-	.rnr-b-editbuttons, .rnr-b-addbuttons, .rnr-b-viewbuttons, .rnr-b-importbuttons, .rnr-b-regbuttons {
+	
+	.rnr-b-editbuttons, .rnr-b-viewbuttons, .rnr-b-importbuttons {
 		overflow: hidden;
 	}
 
 /* fields on add/edit/view pages */
-
+	
 	.fieldGrid {
 		width: 100%;
 	}
@@ -499,16 +615,16 @@
 		font-weight: normal;
 		text-decoration: none;
 	}
-	.rnr-label.rnr-label.rnr-label.rnr-label.rnr-label ,
+	.rnr-label.rnr-label.rnr-label.rnr-label.rnr-label , 
 	.rnr-control.rnr-control.rnr-control.rnr-control.rnr-control,
 	.rnr-field.rnr-field.rnr-field.rnr-field.rnr-field
 	{
 		color:inherit;
 		background: transparent;
 	}
-
-
-/*	box model, width, align */
+	
+	
+/*	box model, width, align */	
 
 /*	simple */
 	.fieldGrid2 > * > * > .rnr-field > span:not(.above),
@@ -519,7 +635,7 @@
 		display: inline-block;
 	}
 
-/*	2 cols */
+/*	2 cols */	
 	.fieldGrid2 > * > * > td{
 		vertical-align: top;
 	}
@@ -528,7 +644,7 @@
 		width: 50%;
 	}
 
-/*	3 cols */
+/*	3 cols */	
 	.fieldGrid3 > * > * > td{
 		vertical-align: top;
 	}
@@ -537,7 +653,7 @@
 		width: 33%;
 	}
 
-/*	4 cols */
+/*	4 cols */	
 	.fieldGrid4 > * > * > td{
 		vertical-align: top;
 	}
@@ -597,7 +713,7 @@
 		white-space: normal;
 	}
 /* end box model, width, align */
-
+	
 /* paddings */
 	/* 1 column  */
 	.rnr-simplefields .rnr-field.rnr-field.rnr-field.rnr-field
@@ -634,7 +750,7 @@
 		padding-bottom: .25em;
 	}
 /* end paddings */
-
+	
 	.rnr-withsidelink {
 		position:relative;
 	}
@@ -643,13 +759,7 @@
 		right: 0;
 		position: absolute;
 	}
-
-	.rnr-buttons-left .rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink.rnr-sidelink {
-		color: inherit;
-		right: auto;
-		position: absolute;
-	}
-
+	
 	.rnr-list {
 		list-style: none;
 		min-width: 100px;
@@ -658,7 +768,7 @@
 	.rnr-buttons-group {
 		display: inline-block;
 	}
-
+	
 	.rnr-buttons-group .rnr-list {
 		display: none;
 		position: absolute;
@@ -666,15 +776,15 @@
 		margin: 0 5px;
 
 	}
-
+	
 	.rnr-buttons-group > ul.rnr-list .rnr-button {
 		display: block;
 	}
-
+	
 	.rnr-buttons-group:hover:not(.disabled) > .rnr-list {
 		display: block;
 	}
-
+	
 /*	detail tables*/
 	.rnr-dcaption
 	{
@@ -685,6 +795,7 @@
 	/* filters styles begin*/
 	.filter-indicator {
 		float:right;
+		font-size: 75%;
 	}
 	.filter-expander {
 		-webkit-touch-callout: none;
@@ -694,19 +805,24 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.filter-btn-apply {
 		margin-top: 10px;
 	}
 	
-	.show-more-hidden.show-more-hidden,
-	.filter-hidden.filter-hidden,
-	.filter-collapsed.filter-collapsed,
-	.filter-collapsed.filter-collapsed > *,
-	.filter-item-hidden.filter-item-hidden {
+	.filter-hidden,
+	.filter-collapsed,
+	.filter-collapsed > *,
+	.filter-item-hidden {
 		display: none;
+	}	
+	
+	.filter-expander + .filter-collapsed.filter-collapsed.filter-collapsed.filter-collapsed {
+		padding:0;
+		overflow:hidden;
+		height:1px;
+		display: block;
 	}
-
 	.filter-show-more.filter-show-more.filter-show-more.filter-show-more.filter-show-more {
 		padding-top: 5px;
 	}
@@ -722,9 +838,9 @@
 	.filter-slider-values {
 		text-align: center;
 		margin: auto;
-		direction: ltr;
+		direction: ltr;	
 	}
-
+	
 	.filter-values .delete-button {
 		margin-right: 5px;
 		visibility: hidden;
@@ -734,9 +850,9 @@
 	.filter-values .filter-show-more {
 		margin-left: 15px;
 	}
-
+	
 	/*dependent filters styles end*/
-
+	
 	.filter-values:hover .delete-button {
 		visibility: visible;
 	}
@@ -746,23 +862,19 @@
 	.filter-values:hover  {
 		outline-color: #C0C0C0;
 	}
-	
-	.filter-link {
-		cursor: pointer;
-	}
 	/*end of filters styles*/
-
-
+	
+	
 	/*Begin search panel style*/
 	.flexibleSearchPanel {
 		padding-left: 8pt;
 	}
-
+	
 	.srchPanelCell.srchPanel-delBtn {
 		width: 13px;
 	}
 
-/*
+/*	
 	.addOptionLink{
 		margin: 1pt 4pt 10pt 4pt;
 	}
@@ -774,6 +886,46 @@
 	}
 */
 
+	.searchOptions div.rnr-searchtype, .searchOptions div.rnr-searchcontrol {
+		padding: 0;
+	}
+	
+	.addOption
+	{
+		padding: 8px;
+		margin-left:5px;
+	}
+	.srchCritTop
+	{
+		padding: 8px;
+		margin-left:5px;
+	}
+
+	.bottomSearchButt{
+		padding: 8px;
+		margin-left:5px;
+	}
+
+	.controlChooseMenu{
+		position: absolute;
+		display: none;
+		width: auto;
+		text-align: left;
+	}	
+	.srchPanelCell{
+		padding: 2pt;
+		white-space: normal;
+	}	
+	.srchPanelCell select{
+		margin: 0;/*for Chrome*/
+	}
+	.srchPanelCell2{
+		line-height: 1.8;
+	}
+	.controlsBlock{	
+		border-collapse: separate;
+		width: 100%;
+	}
 	.delButt, .searchPanelButton{
 		visibility: hidden;
 	}
@@ -782,7 +934,20 @@
 		visibility: visible;
 	}
 
-
+	.srchPanelRow > * {
+		border-top: dotted 1px transparent;
+		border-bottom: dotted 1px transparent;
+	}
+	.srchPanelRow > *:first-child {
+		border-left: dotted 1px transparent;
+	}
+	.srchPanelRow > *:last-child {
+		border-right: dotted 1px transparent;
+	}
+	.srchPanelRow:hover  > *{
+		border-color: #C0C0C0;
+	}
+	
 	/*End search panel style*/
 
 	/*Begin filters style*/
@@ -790,12 +955,12 @@
 		cursor: pointer;
 	}
 	/*End filters style*/
-
-	.rnr-searchname,
+	
+	.rnr-searchname, 
 	.rnr-delete-search {
 		margin-bottom: 10px;
 	}
-
+	
 	/*Begin search suggest style*/
 	.search_suggest {
 		background-color: #FFFFFF;
@@ -821,7 +986,7 @@
 		cursor: pointer;
 	}
 	/*End search suggest style*/
-
+	
 	/* The Search saving styles*/
 	.rnr-saved-searches {
 		padding: 3px;
@@ -836,16 +1001,16 @@
 		vertical-align: middle;
 	}
 	/**/
-
+	
 	.rnr-orderlink {
 		cursor: pointer;
 		text-decoration: underline;
 	}
-
+	
 	.rnr-gridfieldlabel {
 		white-space: nowrap;
 	}
-
+	
 	/*for wrong values in the Lookup editbox with ajax */
 	.highlight.highlight.highlight {
 		border: 2px solid #D32323;
@@ -864,15 +1029,15 @@
 		display: table;
 		width: 100%;
 	}
-
+	
 	.saveEditing , .revertEditing
 	{
 		text-decoration: none;
 		margin:0px 3px;
 	}
+	
 
-
-
+	
 	/*Begin timepicker styles*/
 	.rnr-imgclock{
 		cursor: pointer;
@@ -909,7 +1074,7 @@
 	/*Begin loading style*/
 	.rnr-loading.show {display: block;}
 	.rnr-loading.hide {display: none;}
-
+	
 	.rnr-loading .fon{
 		position: absolute;
 		width: 100%;
@@ -919,13 +1084,13 @@
 		opacity: 0.20;
 		filter: alpha(opacity=20);
 	}
-
+	
 	.rnr-loading .main{
 		position: absolute;
 		z-index: 4000;
 		padding: 1em 2em;
 	}
-
+	
 	/*Begin loading style for printpage*/
 	.rnr-loading-print .main{
 		display: inline-block;
@@ -933,9 +1098,9 @@
 		margin-bottom: 10px;
 		position: absolute;
 	}
-	/*End loading style for printpage*/
-
-	.rnr-loading .text,
+	/*End loading style for printpage*/	
+	
+	.rnr-loading .text, 
 	.rnr-loading-print .text{
 		margin-left: 8pt;
 		font-size: 9pt;
@@ -945,7 +1110,7 @@
 		font-weight: bold;
 	}
 	/*End loading style*/
-
+	
 	/*Begin multiple sorting hint style*/
 	.rnr-sorthint{
 		width: 170pt;
@@ -957,14 +1122,8 @@
 		white-space: pre;
 		background-color: #ffffe1;
 		border: solid 1pt #747474;
-		color: #333;
 	}
 	/*End multiple sorting hint style*/
-
-	/* Chrome hint box position fix */
-	.titleHintBox {
-		display: inline-block;
-	}
 
 	/*Begin locking style*/
 	.rnr-locking{
@@ -983,24 +1142,23 @@
 		font-size: 10pt;
 	}
 	/*End styles for locking*/
-
+	
 	/*Begin s508 style*/
 	.rnr-s508{
 		width: 1pt;
 		height: 1pt;
 		display: block;
 		overflow: hidden;
-		position: absolute;
 	}
 	/*End s508 style*/
-
+	
 	/*Begin detailspreview in popup style*/
 	.rnr-details-popup	{
 		background-color: #FFF;
 		background-repeat: no-repeat;
 		border: 1px solid #444444;
 		color: black;
-/*		display: none; */
+		display: none;
 		padding: 8pt;
 		position: absolute;
 		z-index: 1001;
@@ -1013,18 +1171,16 @@
 		background-color: #FFF;
 	}
 	/*End detailspreview in popup style*/
-
+	
 	/*Begin field alignment style*/
-
+	
 	.rnr-field-text {text-align:left;}
 	.rnr-field-checkbox{text-align:center;}
 	.rnr-field-number {text-align:right;}
 	.rnr-field-audio {text-align:left;}
 	/*End field alignment style*/
-
-	.rnr-field-file, .rnr-field-crossdate{white-space:nowrap;}
 	
-	
+	.rnr-field-file{white-space:nowrap;}
 	
 	/*Begin details preview style*/
 	.rnr-dpreviewrow .dpinline {
@@ -1036,10 +1192,10 @@
 	}
 
 
-	.rnr-dpreviewrow .dpframe-cc,
-	.rnr-dpreviewrow .dpframe-cc,
-	.rnner-dpreviewrow .dpframe-cl,
-	.rnr-dpreviewrow .dpframe-cl,
+	.rnr-dpreviewrow .dpframe-cc, 
+	.rnr-dpreviewrow .dpframe-cc, 
+	.rnner-dpreviewrow .dpframe-cl, 
+	.rnr-dpreviewrow .dpframe-cl, 
 	.rnr-dpreviewrow .dpframe-cr,
 	.rnr-dpreviewrow .dpframe-cr{
 		border-top: 1px solid darkgray;
@@ -1049,7 +1205,7 @@
 		border-right: 1px solid darkgray;
 	}
 	/*End details preview style*/
-
+	
 	/*Begin admin rights style*/
 
 	.rnr-checkbox
@@ -1078,7 +1234,7 @@
 	{
 		background: #B0B0B0;
 	}
-
+	
 	.rnr-checkbox:before
 	{
 		display: inline-block;
@@ -1100,7 +1256,7 @@
 		border: solid white 2px;
 		background: #C0C0C0;
 	}
-
+	
 	.rnr-checkbox[data-checked="3"]:before
 	{
 		content:"x";
@@ -1121,7 +1277,7 @@
 		display: none;
 	}
 
-	.rnr-linkselect
+	.rnr-linkselect 
 	{
 		position: relative;
 		/*border-bottom: 1px dashed #999;*/
@@ -1157,7 +1313,7 @@
 	.rnr-linkselect-item[data-selected] {
 		font-weight: bold;
 	}
-
+	
 	.rnr-expandCollapse
 	{
 		cursor: pointer;
@@ -1173,7 +1329,7 @@
 	{
 		content: '\25B6';
 	}
-
+	
 	table > * > * > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell {
 		background-color: ghostwhite;
 		background-image: none;
@@ -1182,7 +1338,7 @@
 		background-color: whitesmoke;
 	}
 	table.indenttables > * > .rightsindent2 > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell {
-		background-color: lavender;
+		background-color: ivory;
 	}
 	table.indenttables > * > .rightsindent3 > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell {
 		background-color: azure;
@@ -1193,7 +1349,7 @@
 	table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell {
 		background-color: mintcream;
 	}
-
+	
 	table.groupcontrols > * > .menugroup > td.rightscell.rightscell.rightscell.rightscell.rightscell
 	{
 		font-weight: bold;
@@ -1214,11 +1370,11 @@
 	table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.rightscell.rightscell.rightscell:first-child {
 		padding-left: 11em;
 	}
-	.groupexpander
+	.groupexpander 
 	{
 		display: none;
 	}
-	table.groupcontrols .groupexpander
+	table.groupcontrols .groupexpander 
 	{
 		display: inline;
 	}
@@ -1230,11 +1386,11 @@
 	{
 		display: inline;
 	}
-
+	
 	.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified.rights-modified {
 		background: yellow;
 	}
-
+	
 	.rnr-ugaddarea{
 		display: none;
 		border: solid white 1px;
@@ -1247,26 +1403,26 @@
 		margin-left: 4pt;
 	}
 	.rnr-uglabel{
-		margin: 0 4pt 4pt 4pt;
+		margin: 0 4pt 4pt 4pt; 
 	}
 	.rnr-ugaddarea,
 	.rnr-ugselgroup{
 		margin: 11pt 4pt 0 4pt;
-	}
+	}	
 	.rnr-ugselgroup .group{
 		min-width: 120pt;
 	}
 	/*End admin rights style*/
-
+	
 	/*Begin message style*/
 	.rnr-message {
 		padding: 10px;
 	}
 	.rnr-message .message a {
 		color: #666666;
-	}
+	}	
 	/*End message style*/
-
+	
 	/*Begin calendar style*/
 	.rnr-calTimeBox {
 		text-align: center;
@@ -1278,7 +1434,7 @@
 		margin-top: 10px;
 	}
 	.rnr-calTodaySpan{
-		display: block;
+		display: block; 
 		text-align: center;
 	}
 	.rnr-calMonthDD{
@@ -1289,11 +1445,11 @@
 		margin-right: 5px;
 	}
 	/*End calendar style*/
-
+	
 	/*style for upload types Keep Delete Upload*/
-	.rnr-uploadtype.rnr-uploadtype.rnr-uploadtype {
-		margin-left: 5px;
-		margin-right: 3px;
+	.rnr-uploadtype {
+		margin-left: 4pt;
+		margin-right: 2pt;
 	}
 	/**/
 	.sectionFrame {
@@ -1328,18 +1484,6 @@
 		.rp-noprint {
 			display: none;
 		}
-		.rnr-cv > * > table
-		{
-			display: table;
-		}
-	}
-
-	.rnr-print-details {
-		padding-left: 4em;
-	}
-	.rnr-pd-grid > * > *.rnr-b-grid {
-		width:auto;
-		border-bottom: solid gray 1px;
 	}
 
 	textarea{
@@ -1351,20 +1495,36 @@
 	.rnr-hiddenrow{
 		display: none;
 	}
-
-	.rnr-hiddenControlSubelem.rnr-hiddenControlSubelem.rnr-hiddenControlSubelem {
+	
+	.rnr-hiddenControlSubelem {
 		display: none;
 	}
-
+	
 	.rnr-fixedcell{
 		width: 60%;
 	}
+	
+	.fileinput-button-input {
+	  position: absolute;
+	  top: 0;
+	  margin: 0;
+	  border: solid transparent;
+	  /*border-width: 0 0 100px 200px;*/
+	  opacity: 0;
+	  filter: alpha(opacity=0);
+	  direction: ltr;
+	  cursor: pointer;
+	  vertical-align:center;
+	}
+	
+	.rnr-focusDummy {
+		opacity: 0;
+		filter: alpha(opacity=0);
+	}
 
-
-
-	/* Checkbox and radiobuttons layot styles begin*/
+	/* Checkbox and radiobuttons layot styles begin*/	
 	.rnr-horizontal-lookup.rnr-horizontal-lookup.rnr-horizontal-lookup {
-/*		width: 300px;*/
+		width: 300px;
 		max-width: 400px;
 		white-space: normal;
 	}
@@ -1374,75 +1534,47 @@
 		white-space: nowrap;
 		display: inline-block;
 	}
-
+	
 	.rnr-vertical-lookup.rnr-vertical-lookup.rnr-vertical-lookup  > span {
 		display: block;
 	}
-	/* Checkbox and radiobuttons layot styles end*/
-
-
-	/* Multiupload control begin */
-
-	.mupload-preview-img {
-		max-width: 150px;
-		max-height:70px;
+	/* Checkbox and radiobuttons layot styles end*/	
+	
+	.progress .bar {
+	  width: 0;
+	  height: 18px;
+	  font-size: 12px;
+	  color: #ffffff;
+	  text-align: center;
+	  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	  background-color: #0e90d2;
+	  background-image: -moz-linear-gradient(top, #149bdf, #0480be);
+	  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#149bdf), to(#0480be));
+	  background-image: -webkit-linear-gradient(top, #149bdf, #0480be);
+	  background-image: -o-linear-gradient(top, #149bdf, #0480be);
+	  background-image: linear-gradient(top, #149bdf, #0480be);
+	  background-image: -ms-linear-gradient(top, #149bdf, #0480be);
+	  background-repeat: repeat-x;
+	  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#149bdf', endColorstr='#0480be', GradientType=0);
+	  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+	     -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+	          box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+	  -webkit-box-sizing: border-box;
+	     -moz-box-sizing: border-box;
+	      -ms-box-sizing: border-box;
+	          box-sizing: border-box;
 	}
 	
-	.mupload-files > .files > tr > td.cancel {
-		width: 50px;
+	.progress-success.progress-striped .bar {
+	  background-color: #62c462;
+	  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+	  background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	  background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	  background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	  background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	}
 	
-	.fileupload-progress {
-		margin-top: 5px;
-		margin-bottom:5px;
-	}
-
-
-	.fileupload-progress {
-		display: none;
-	}
-/*
-	.mupload-files > .files > tr > td.name  {
-		min-width: 200px;
-	}
-*/	
-	.mupload-files .progress {
-		min-width: 70px;
-		width: 70px;
-		margin-bottom:0;
-	}
-	
-	.mupload-files > .files > tr > td {
-		padding: 2px 5px;
-		white-space: nowrap;
-	}
-	
-	.mupload-files .progress {
-		height: 15px;
-	}
-	.progress-extended {
-		font-size: 80%;
-	}
-	
-	.mupload-files > .files > tr > td.preview {
-		padding-left: 0;
-		width:1px;
-	}
-	
-	.fileinput-button-input {
-	  position: absolute;
-	  top: 0;
-	  margin: 0;
-	  border: solid transparent;
-	  opacity: 0;
-	  filter: alpha(opacity=0);
-	  direction: ltr;
-	  cursor: pointer;
-	  vertical-align:center;
-	}
-	
-	
-
 	.fileupload-loading {
 	  position: absolute;
 	  left: 50%;
@@ -1451,16 +1583,12 @@
 	  background: url(../images/mupload/loading.gif) center no-repeat;
 	  display: none;
 	}
-
+	
 	.rnr-button.filesUpload
 	{
 		position: relative;
 	}
 	
-	.fileupload-buttonbar .progress {
-		margin-bottom:2px;
-	}
-
 	.rnr-dragndrop-area{
 		color: #000;
 		padding: 5px;
@@ -1469,21 +1597,20 @@
 		width: 50%;
 		min-width: 150px;
 	}
-
+	
 	.fileinput-button {
+/*		position: relative;*/
 		overflow: hidden;
 	}
-
-
+	
+	.start, .cancel, .size, .name, .delete {
+		vertical-align:top;
+	}
+	
 	.template-download > td,
 	.template-upload > td {
 		padding: 2px;
 	}
-
-	/* Multiupload control begin */
-	
-	
-	
 	
 	.rnr-radio-button{
 		vertical-align: middle;
@@ -1494,25 +1621,25 @@
 
 	.rnr-checkbox{
 		vertical-align: middle;
-	}
+	}	
 	.rnr-checkbox-label{
 		vertical-align: middle;
 	}
-
+	
 	.rnr-resize-cellwrapper{
 		overflow: hidden;
 	}
-
+	
 	.rnr-resize-cellwrapper div.viewImage{
 		overflow: hidden;
 	}
-
-	.viewimage-thumblist
+	
+	.viewimage-thumblist 
 	{
 		overflow: auto;
 	}
 
-	/*style could set the import error message*/
+	/*style could set the import error message*/	
 	.rnr-word-breaker {
 		overflow: auto;
 		white-space: -moz-pre-wrap;
@@ -1520,13 +1647,13 @@
 		white-space: pre-wrap;
 		white-space: pre-line;
 		word-wrap: break-word;
-	}
-
+	}	
+	
 	.rnr-small-thumbnails {
 		float: left;
 		margin: 5px 5px 0 0;
 	}
-
+	
 	a.background-picture {
 		display: inline-block;
 		background-position: center center;
@@ -1536,16 +1663,16 @@
 	a.background-picture img {
 		display: none;
 	}
-
+	
 	.rnr-report-gridblock {
 		display: table;
 	}
 	.pagesummary, .globalsummary{
 		white-space:nowrap;
 	}
+	
 
-
-
+	
 /*END DEFAULT STYLES BLOCK*/
 
 
@@ -1559,7 +1686,7 @@
 	text-decoration:none;
 }
 .yui-nav {
-	white-space:normal;
+	white-space:normal;   
 }
 /*temp style*/
 .yui3-widget-ft {
@@ -1815,7 +1942,7 @@
 .ui-timepickr-row {
     margin:0;
     padding:0;
-    margin-top:2px;
+    margin-top:2px; 
     display:none;
     position:relative;
 }
@@ -1884,7 +2011,7 @@
 }
 .shiny_box {
 	width: 210px;
-	overflow: hidden;
+	overflow: hidden;	
 }
 .shiny_box p {
 	margin:10px;
@@ -1899,7 +2026,7 @@
 }
 
 * html .shiny_box_body {
-	height: 1%;
+	height: 1%;	
 }
 
 .simple_box {
@@ -1914,6 +2041,18 @@
 }
 
 /*/////////////////////////////////////////////////END FRAMEWORK STYLES BLOCK////////////////////////////////////////////////////////*/
+
+td > div.field_black,
+td > *:not(font) > div.field_black,
+td > *:not(font) > *:not(font) > div.field_black,
+td > *:not(font) > *:not(font) > *:not(font) > div.field_black,
+td > *:not(font) > *:not(font) > *:not(font) > *:not(font) > div.field_black,
+td font:not([color]) div.field_black
+{
+	color: black !important;
+}
+
+
 
 @font-face {
 	font-family: 'runner-icons';
@@ -1953,19 +2092,6 @@
 	position: relative;
 	top: -1px;
 }
-
-[data-icon=print]:before {
-	content: 'e';
-}
-
-[data-icon=printdown]:before {
-	content: 'l';
-}
-
-[data-icon=printup]:before {
-	content: 'z';
-}
-
 [data-icon=paneldown]:before {
 	content: 'v';
 }
@@ -1977,15 +2103,9 @@
 	position:relative;
 	left: -1px;
 	top: 1.5px;
-
+	
 
 }
-
-[data-icon=details]:before {
-	content: 'm';
-	opacity: 0.6;
-}
-
 [data-icon=edit]:before {
 	content: '`';
 	opacity: 0.6;
@@ -2008,7 +2128,6 @@
 :hover > * > [data-icon=inlineedit]:before ,
 :hover > * > [data-icon=iesave]:before,
 :hover > * > [data-icon=iecancel]:before
-:hover > * > [data-icon=details]:before
 {
 	opacity: 1;
 }
@@ -2047,44 +2166,9 @@
 	top: -1px;
 }
 
-[data-icon=home]:before {
-	content: 'n';
-}
-[data-icon=bars]:before {
-	content: 'o';
-}
-[data-icon=arrowleft]:before {
-	content: '/';
-}
-[data-icon=arrowright]:before {
-	content: 'N';
-}
-[data-icon=chevronleft]:before {
-	content: 'M';
-}
-[data-icon=chevronright]:before {
-	content: '.';
-}
-[data-icon=circleleft]:before {
-	content: '2';
-}
-[data-icon=circleright]:before {
-	content: '4';
-}
-[data-icon=user]:before {
-	content: 'f';
-}
-[data-icon=add]:before {
-	content: 'b';
-}
-[data-icon=trash]:before {
-	content: 'c';
-}
-
-
 .rnr-button.img[data-icon]:before,
 .saveEditing[data-icon]:before ,
-.revertEditing[data-icon]:before
+.revertEditing[data-icon]:before 
 {
 	width: 1em;
 	height: 1em;
@@ -2093,7 +2177,7 @@
 	text-align: center;
 	vertical-align:text-bottom;
 	display: inline-block;
-}
+}	
 
 
 
@@ -2181,8 +2265,8 @@ img.previewicon
 	border-right: solid lightgray 1px;
 }
 */
-.rnr-tabelemheader,
-.rnr-tabelemfooter  {
+.rnr-dbelemheader, 
+.rnr-dbelemfooter  {
 	padding:4px;
 	height: 25px;
 }
@@ -2197,7 +2281,7 @@ img.previewicon
 	display: table-cell;
 	white-space: nowrap;
 }
-.rnr-dbefiller
+.rnr-dbefiller 
 {
 	width: 100%;
 }
@@ -2246,6 +2330,10 @@ img.previewicon
 	font-weight: bold;
 }
 
+.prvcell {
+	border: 1px solid black;
+}
+
 td.prvcell {
 	max-width: 100px;
 	overflow:hidden;
@@ -2261,6 +2349,10 @@ td.prvcell {
 	background: #E5E5E5;
 }
 
+.rnr-import-textarea {
+	width: 400px;
+	height: 200px;
+}
 .rnr-import-settings {
 	padding: 6px 10px;
 }
@@ -2286,306 +2378,5 @@ td.prvcell {
 	min-height: 100px;
 	margin:auto;
 	margin-top: 15px;
-}
-.olMap {
-	position:relative;
-	z-index:0;
-}
-.littleMap
-{
-	position:relative;
-	z-index:0;
-}
+}	
 /* end of temporary import styles*/
-
-
-/* begin multistep control css */
-.rnr-stepnav {
-	/*centering*/
-	display: inline-block;
-/*	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
-	overflow: hidden;
-	border-radius: 5px;
-	/*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
-	counter-reset: flag;
-}
-
-.rnr-stepnav > a {
-	text-decoration: none;
-	outline: none;
-	display: block;
-	float: left;
-	font-size: 12px;
-	line-height: 2.2em;
-	color: black;
-	/*need more margin on the left of links to accomodate the numbers*/
-	padding: 0 0.9em /*10px*/ 0 4.5em /*60px*/;
-	background: white;
-	position: relative;
-}
-/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
-.rnr-stepnav > a:first-child {
-	padding-left: 3.4em /*46px*/;
-	border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
-}
-.rnr-stepnav > a:last-child {
-	border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
-	padding-right: 1.66em /*20px*/;
-}
-
-/*adding the arrows for the rnr-stepnavs using rotated pseudo elements*/
-.rnr-stepnav > a:after {
-	content: '';
-	position: absolute;
-	top: 0;
-	right: -1.1em; /*half of square's length*/
-	/*same dimension as the line-height of .rnr-stepnav a */
-	width: 2.166em;
-	height: 2.166em;
-	/*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's:
-	length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
-	if diagonal required = 1; length = 1/1.414 = 0.707*/
-	transform: scale(0.707) rotate(45deg);
-	/*we need to prevent the arrows from getting buried under the next link*/
-	z-index: 1;
-	box-shadow:
-		2px -2px 0 2px rgba(0, 0, 0, 0.4),
-		3px -3px 0 2px rgba(255, 255, 255, 0.1);
-	/*
-		5px - for rounded arrows and
-		50px - to prevent hover glitches on the border created using shadows*/
-	border-radius: 0 5px 0 4em;
-}
-/*we dont need an arrow after the last link*/
-.rnr-stepnav > a:last-child:after {
-	content: none;
-}
-
-.rnr-stepnav a:first-child:before {
-	left: 1.1em /*14px*/;
-}
-
-/*we will use the :before element to show numbers*/
-.rnr-stepnav > a:before {
-	content: counter(flag);
-	counter-increment: flag;
-	/*some styles now*/
-	border-radius: 100%;
-	width: 1.6em;
-	height: 1.6em;
-	line-height: 1.7em;
-	margin: 0.25em 0;
-	position: absolute;
-	top: 0;
-	left: 2.2em /*30px*/;
-	font-weight: bold;
-	text-align: center;
-}
-/*
-.rnr-stepnav > a.br {
-	border-radius: 0 5px 5px 0;
-    padding-right: 1.66em;
-}
-
-.rnr-stepnav > a.br:after {
-	content: none;
-}
-
-.rnr-stepnav > a.br + a {
-	clear: both;
-	border-radius: 5px 0 0 5px;
-	padding-left: 3.5em;
-}
-
-.rnr-stepnav > a.br + a:before {
-	left: 1.2em;
-}
-/* end  multistep control css */
-
-/* begin AJAX error styles */
-.rnr-error-indicator {
-	background: indianred;
-	padding: 5px 10px;
-	font-size: 14px;
-	text-align: center;
-	color:white;
-	width: 100%;
-	margin-bottom:1px;
-	position: relative;
-	z-index: 100;
-}
-
-.rnr-error-message {
-    display: block;
-	position:absolute;
-	z-index: 100;
-    background: lightyellow;
-    border-style: dashed;
-    border-width: 1px;
-	border-color:red;
-	height: 100%;
-	font-size:12px;
-	padding: 10px;
-	top: 0px;
-	left: 0px;
-	width: calc( 100% - 22px );
-	height:auto;
-}
-
-.rnr-error-message > .removelink {
-	position: absolute;
-	right: 1em;
-	top: 0;
-	font-size:16px;
-}
-/* end AJAX error styles */
-
-.rnr-ff-cwrap, .rnr-ff-vcwrap {
-	white-space: normal;
-	position: absolute;
-	font-weight: normal;
-}
-
-.rnr-ff-vcwrap {
-/*	overflow: auto;*/
-	padding:3px;
-}
-.rnr-ff-cwrap > .rnr-button
-{
-	text-align: center;
-	vertical-align: middle;
-}
-
-.bing-active {
-    border:  dotted red 2px;
-    border-radius: 4px;
-}
-
-.rnr-langlink {
-  margin: 0 0.2em;
-}
-
-/* Print panel - begin */
-.rnr-b-printpanel.rnr-b-printpanel.rnr-b-printpanel.rnr-b-printpanel.rnr-b-printpanel.rnr-b-printpanel {
-	padding:0;
-}
-.rnr-printicon {
-    font-size: 15px;
-    position: relative;
-    top: 4px;
-    cursor: pointer;
-}
-
-.rnr-printpanel {
-    position:  absolute;
-    padding: 0.5em;
-    background-color: white;
-	color: black;
-    border:  solid gray 1px;
-    text-align: left;
-	z-index: 1000;
-	right:0;
-	display:none;
-}
-.rnr-printrecspp {
-	width: 4em;
-}
-
-.rnr-printscope {
-	margin: 0.5em;
-}
-.rnr-printdetails {
-	margin: 0.8em 1em;
-}
-
-
-.rnr-printScopeCell {
-padding: 0.2em 0.5em;
-}
-
-.rnr-printdetailstables {
-	padding: 0.5em 1em;
-	font-szie: 60%;
-}
-
-
-.rnr-printdetailstable {
-	padding: 0.1px 0;
-}
-
-.rnr-printbutton {
-	text-align: center;
-	margin: 0.5em;
-}
-
-.rnr-printpanelblock {
-	position:relative;
-	display:inline-block;
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-}
-
-.rnr-printtab {
-	padding: 0 0.5em;
-}
-
-
-.rnr-printpanelblock.open > .rnr-printpanel{
-	display:block;
-	box-shadow: 0 10px 12px rgba(0, 0, 0, 0.2);
-}
-
-
-.rnr-printpanelblock:not(.open) > .rnr-printtab {
-	padding-top: 1px;
-}
-
-
-.rnr-printpanelblock.open > .rnr-printtab {
-	background: white;
-	border: solid gray 1px;
-	border-bottom: none;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	z-index:10001;
-	position: relative;
-	bottom: -1px;
-}
-
-.rnr-printpanelblock.open .rnr-printicon {
-	top: 3px;
-	left: 1px;
-	color:black;
-}
-
-/* Print panel - end */
-
-.clearable{
-  background: #fff url(data:image/gif;base64,R0lGODlhBwAHAIAAAP///5KSkiH5BAAAAAAALAAAAAAHAAcAAAIMTICmsGrIXnLxuDMLADs=) no-repeat right -10px center;
-  border: 1px solid #999;
-  padding: 3px 18px 3px 4px; /* Use the same right padding (18) in jQ! */
-  border-radius: 3px;
-  transition: background 0.4s;
-}
-.clearable.x  { background-position: right 5px center; }
-.clearable.onX{ cursor: pointer; }
-
-.rnr-exporticons {
-position: relative;
-top:2px;
-}
-
-.header-icon:before	{
-	font-size: 100% !important;
-}
-
-.icon-required:before {
-	content: '*';
-	color: red;
-}
-
-span.bs-ctrlspan {
-	display: block;
-}

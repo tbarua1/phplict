@@ -19,8 +19,6 @@ class FilterValuesList extends FilterControl
 	
 	protected $filteredFieldParentFiltersKeysToIgnore = null;
 
-	protected $hideShowMore = false;
-	
 	/**
 	 * The number of items that should be show 
 	 * according to the 'Show firt N item' setting 
@@ -39,9 +37,9 @@ class FilterValuesList extends FilterControl
 	protected $hiddenExtraItemClassName = "filter-item-hidden";
 	
 	
-	public function __construct($fName, $pageObject, $id, $viewControls)
+	public function FilterValuesList($fName, $pageObject, $id, $viewControls)
 	{
-		parent::__construct($fName, $pageObject, $id, $viewControls);
+		parent::FilterControl($fName, $pageObject, $id, $viewControls);
 		
 		$this->filterFormat = FF_VALUE_LIST;
 		$this->separator = "~equals~";
@@ -101,56 +99,125 @@ class FilterValuesList extends FilterControl
 		$this->dependentFilterNames = $this->pSet->getDependentFiltersNames($this->fName);	
 	}
 	
+	/**
+	 * Form the SQL query string to get then the filter's data 
+	 */	
 	protected function buildSQL()
 	{
-
-		//	build query of the following form:
-		//  select field, ,,, from ( <original query with search, security and filters> ) group by field
+		$dbfName = $this->getDbFieldName($this->fName);	
+		$sqlHead = "SELECT ".$dbfName;
 		
-		$wName = $this->connection->addFieldWrappers( $this->fName );
-		$this->strSQL = "select " . $wName;
-
-		//	add totals		
+		if( $dbfName != $this->connection->addFieldWrappers($this->fName) ) 
+			$sqlHead.= " as ".$this->connection->addFieldWrappers($this->fName);
+		
+		$sqlHead.= $this->getExtraSelectColumns();
+		
 		if($this->useTotals)
-			$this->strSQL .= ", ".$this->getTotals();
-		
-		//	calculate add master filter fields
-		if( $this->dependent )
-		{
-			$parentFields = array();
-			$this->parentFiltersNames = $this->pSet->getParentFiltersNames( $this->fName );
-			foreach( $this->pSet->getParentFiltersNames( $this->fName ) as $p ) 
-				$parentFields[] = $this->connection->addFieldWrappers( $p );
-			$parentFieldsList = implode( ", ", $parentFields );
+			$sqlHead .= ", ".$this->getTotals();
+	
+		$whereComponents = $this->whereComponents;
 			
-			$this->strSQL .= ", " . $parentFieldsList;
-		}
+		$gQuery = $this->pSet->getSQLQuery();
+		$sqlFrom = $gQuery->FromToSql().$whereComponents["joinFromPart"];					
+		$sqlGroupBy = "GROUP BY ".$this->getGroupByColumns( $dbfName ) ;
+		$sqlHaving = $this->getCombinedFilterHaving();
 		
-		$this->strSQL .= " from ( " . $this->buildBasicSQL() . " ) a";
-
-//	NOT NULL clause
-		$this->strSQL .= " where " . implode( ' and ', $this->getNotNullWhere() );
+		$notNullWhere = $this->getNotNullWhere($dbfName);
+		$sqlWhere = whereAdd( $notNullWhere, $this->getCombinedFilterWhere( $this->hasDependent ) );		
 		
+		$searchCombineType = $whereComponents["searchUnionRequired"] ? "or" : "and";
 		
-		//	group by the field and the parents
-		$this->strSQL .= " GROUP BY " . $wName;
-		if( $this->dependent )
-			$this->strSQL .= ", " . $parentFieldsList;
-
-
-
+		$this->strSQL = SQLQuery::gSQLWhere_having($sqlHead, $sqlFrom, $sqlWhere, $sqlGroupBy, $sqlHaving, $whereComponents["searchWhere"], $whereComponents["searchHaving"], $searchCombineType);	
+		
 		// add ORDER BY to sort the result records
 		if( $this->sortingType != SORT_BY_DISP_VALUE ) 
 		{
-			$this->strSQL.= ' ORDER BY '.
-				( $this->sortingType == SORT_BY_GR_VALUE && $this->useTotals ? "2" : "1" ).
-				( $this->isDescendingSortOrder ? ' DESC' : ' ASC');
+			$sortFieldName = $dbfName;
+			if( $this->sortingType == SORT_BY_GR_VALUE && $this->useTotals )
+				$sortFieldName = $this->connection->addFieldWrappers($this->fName."TOTAL");
+				
+			$this->strSQL.= ' ORDER BY '.$sortFieldName.( $this->isDescendingSortOrder ? ' DESC' : ' ASC');
 		}
 	}
+
+	/**
+	 * Get extra select columns list for a dependent filter
+	 * @return String
+	 */
+	protected function getExtraSelectColumns()
+	{
+		if( !$this->dependent ) 
+			return '';
+		
+		$sqlColumns = '';		
+		foreach($this->parentFiltersNamesData as $names)
+		{
+			$sqlColumns.= ", ".$names["dbName"];			
+			
+			if( $names['hasAlias'] ) 
+				$sqlColumns.= " as ".$names["rsName"];			
+		}
+		
+		return $sqlColumns;	
+	}
 	
+	/**
+	 * Get a list of columns for the GROUP BY clause 
+	 * @param String dbfName
+	 * @return String	 
+	 */
+	protected function getGroupByColumns($dbfName)
+	{
+		$mainFieldNames = array();
+		$mainFieldNames[] = $dbfName;
+		
+		if( $this->dependent ) 
+		{
+			foreach($this->parentFiltersNamesData as $names)
+			{
+				$mainFieldNames[] =	$names["dbName"];			
+			}
+			$mainFieldNames = array_reverse( $mainFieldNames );
+		}
+		
+		return implode(", ", $mainFieldNames);
+	}
 	
-	
-	
+	/**
+	 * Get the 'not null' condition to add it to the WHERE clause
+	 * @param String dbfName
+	 * @return String
+	 */
+	protected function getNotNullWhere($dbfName)
+	{
+		$notNullWhere = $dbfName." is not NULL";
+		if( $this->connection->dbType != nDATABASE_Oracle )
+		{	
+			if( IsCharType($this->fieldType) )
+				$notNullWhere = $dbfName."<>'' and ".$notNullWhere;
+		}
+
+			
+		if( !$this->dependent )
+			return $notNullWhere;
+			
+		$notNullWheres = array();
+		foreach($this->parentFiltersNamesData as $pName => $names)
+		{
+			$notNullWhereP = $names['dbName']." is not NULL";
+			
+			if( $this->connection->dbType != nDATABASE_Oracle )
+			{	
+				$fieldType = $this->pSet->getFieldType($pName);
+				if( IsCharType($fieldType) )
+					$notNullWhereP = $names['dbName']."<>'' and ".$notNullWhereP;
+			}
+			
+			$notNullWheres[] = $notNullWhereP; 
+		}		
+			
+		return $notNullWhere." AND ".implode(" AND ", $notNullWheres);
+	}
 	
 	/**
 	 * Set the sorting params
@@ -177,7 +244,8 @@ class FilterValuesList extends FilterControl
 	 */
 	protected function getTotals()
 	{		
-		return $this->aggregate."( ". $this->connection->addFieldWrappers( $this->totalsfName ) .") as ".$this->connection->addFieldWrappers( $this->fName."TOTAL" );
+		$fullTotalFieldName = $this->getDbFieldName($this->totalsfName);
+		return $this->aggregate."(".$fullTotalFieldName.") as ".$this->connection->addFieldWrappers($this->fName."TOTAL");
 	}
 	
 	/**
@@ -314,9 +382,6 @@ class FilterValuesList extends FilterControl
 			$valueData = array($this->fName => $sortValue);
 			$sortValue = $this->viewControl->showDBValue($valueData, "");	
 		}
-		
-		if( $this->multiSelect != FM_ALWAYS )
-			$visibilityClass.= " filter-link";
 				
 		return array(
 			$this->gfName."_filter" => $filterControl, 
@@ -473,39 +538,21 @@ class FilterValuesList extends FilterControl
 		$visbleItemsCounter = $hiddenItemsCounter = 0;
 		foreach($filterCtrlBlocks as $index => $block)
 		{
-			$visible = ( strpos( $block[ "visibilityClass_".$this->gfName ], $this->onDemandHiddenItemClassName ) === FALSE );
+			$visible = $block[ "visibilityClass_".$this->gfName ] != $this->onDemandHiddenItemClassName;
 			if( $visible )
 				$visbleItemsCounter = $visbleItemsCounter + 1;
 			else
 				$hiddenItemsCounter = $hiddenItemsCounter + 1;
 			
-			if( $visible && $visbleItemsCounter > $this->numberOfVisibleItems || !$visible && $hiddenItemsCounter > $this->numberOfVisibleItems )
+			if( $visible && $visbleItemsCounter > $this->numberOfVisibleItems || !$visible && $hiddenItemsCounter = $this->numberOfVisibleItems )
 				$filterCtrlBlocks[ $index ][ "visibilityClass_".$this->gfName ].= " ".$this->hiddenExtraItemClassName;
 		}
 		
-		if( $this->filtered && $this->multiSelect == FM_ON_DEMAND )
-		{
-			if( count($this->filteredFields[ $this->fName ]["values"]) < $this->numberOfVisibleItems && $hiddenItemsCounter > $this->numberOfVisibleItems )
-			{
-				$this->truncated = true;
-				$this->hideShowMore = true;
-				$this->numberOfExtraItemsToShow = $hiddenItemsCounter - $this->numberOfVisibleItems;
-			}
-		} 
-		elseif( $visbleItemsCounter > $this->numberOfVisibleItems )
+		if( $visbleItemsCounter > $this->numberOfVisibleItems )
 		{
 			$this->truncated = true;
 			$this->numberOfExtraItemsToShow = $visbleItemsCounter - $this->numberOfVisibleItems;
 		}			
-	}
-	
-	/**
-     * Check if the "show more" button must be hidden by class attr
-	 * @return Boolean
-	 */
-	protected function isShowMoreHidden()
-	{
-		return $this->hideShowMore;
 	}
 	
 	/**
@@ -595,8 +642,7 @@ class FilterValuesList extends FilterControl
 					$mFilterBlocks[ $key ][ $dBlockName ]["data"][] = $dBlock;
 				}
 				
-				
-				$mFilterBlocks[ $key ]["show_n_more_".$dgName] = str_replace( "%n%", $visibleItemsCounter - $numberOfdItemsToShow, "Show %n% more" );
+				$mFilterBlocks[ $key ]["numberOfItemsToSHow_".$dgName] = $visibleItemsCounter - $numberOfdItemsToShow;
 				$mFilterBlocks[ $key ][ $showMoreBlockName ] = $numberOfdItemsToShow && $numberOfdItemsToShow < $visibleItemsCounter;		
 			}
 		}
